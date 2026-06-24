@@ -23,7 +23,7 @@ python3 -m http.server 8000   # then visit http://localhost:8000
    (so `index.html` is at the top level).
 2. In the repo: **Settings → Pages → Build and deployment → Source: "Deploy from a branch"**,
    pick your branch (e.g. `main`) and **folder `/ (root)`**. Save.
-3. Custom domain: the included **`CNAME`** sets `zaksha.codeunbound.dev`. Point a DNS
+3. Custom domain: the included **`CNAME`** sets `zaksha.com`. Point a DNS
    `CNAME` record for that host at `<your-org>.github.io`. (Delete the `CNAME` file if you
    don't want a custom domain.)
 4. **`.nojekyll`** is included so GitHub serves all files as-is (no Jekyll processing).
