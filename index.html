@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" data-persona="family">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaksha — Schedule the internet on the devices you manage</title>
+  <meta name="description" content="Zaksha is managed DNS-based content filtering for Indian families, businesses and schools. Set time- and group-based schedules — not just category blocks — and run it all from one place." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="Zaksha — Schedule the internet on the devices you manage" />
+  <meta property="og:description" content="Managed DNS-based content filtering for Indian families, businesses and schools. Time- and group-based schedules — not just category blocks — run for you from one place." />
+  <meta property="og:url" content="https://zaksha.com/" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Zaksha" />
+  <meta name="twitter:description" content="Managed content filtering with time- and group-based scheduling for families, businesses and schools." />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+  <style>
+    .hero .hero__grid { padding-top: clamp(28px, 4vw, 44px); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== PERSONA GATE ============================== -->
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate__card">
+      <div class="gate__mark">
+        <svg viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </div>
+      <h2 id="gate-title">What do you do?</h2>
+      <p class="gate__sub">So we can show you the right version of Zaksha. You can switch at any time.</p>
+      <div class="gate__opts">
+        <button class="gate__opt gate__opt--f" onclick="choosePersona('family')">
+          <span class="gate__opt-ic"><i class="ph-fill ph-house-line"></i></span>
+          <span><span class="gate__opt-tt">I'm a parent</span><span class="gate__opt-ds">A calmer internet on my kids' phones and tablets</span></span>
+          <i class="ph ph-arrow-right gate__opt-go"></i>
+        </button>
+        <button class="gate__opt gate__opt--b" onclick="choosePersona('business')">
+          <span class="gate__opt-ic"><i class="ph-fill ph-briefcase"></i></span>
+          <span><span class="gate__opt-tt">I run a business</span><span class="gate__opt-ds">Focused devices for my team, managed from one dashboard</span></span>
+          <i class="ph ph-arrow-right gate__opt-go"></i>
+        </button>
+        <button class="gate__opt gate__opt--s" onclick="choosePersona('school')">
+          <span class="gate__opt-ic"><i class="ph-fill ph-graduation-cap"></i></span>
+          <span><span class="gate__opt-tt">I run a school</span><span class="gate__opt-ds">Safe, scheduled internet on our own isolated instance</span></span>
+          <i class="ph ph-arrow-right gate__opt-go"></i>
+        </button>
+      </div>
+      <p class="gate__skip">Just looking? <button onclick="choosePersona('family')">Show me the parent view</button></p>
+    </div>
+  </div>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="index.html" data-screen-label="logo">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="#why">Why Zaksha</a>
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="pricing.html">Pricing</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com">Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero__lead" data-screen-label="what it is">
+        <h1 class="hero__what">Content filtering that <em>fits</em>.</h1>
+        <p class="hero__deck">Managed across every device — for families, teams and schools. You set the rules; we run it.</p>
+      </div>
+
+      <!-- PERSONA SWITCH -->
+      <div class="persona-bar">
+        <div class="persona-bar__in">
+          <div class="pswitch pswitch--quiet" id="pswitch" role="tablist" aria-label="Choose your view" data-screen-label="persona switch">
+            <button data-p="family" role="tab" onclick="setPersona('family', true)"><i class="ph-fill ph-house-line"></i><span>Families</span></button>
+            <button data-p="business" role="tab" onclick="setPersona('business', true)"><i class="ph-fill ph-briefcase"></i><span>Business</span></button>
+            <button data-p="school" role="tab" onclick="setPersona('school', true)"><i class="ph-fill ph-graduation-cap"></i><span>Schools</span></button>
+          </div>
+        </div>
+      </div>
+      <!-- FAMILY -->
+      <div class="hero__variant" data-for="family" data-screen-label="hero · family">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <span class="eyebrow"><span class="dot"></span> Now in beta</span>
+            <h2>Sensible rules for <span class="accent">every age</span> — on every device they use.</h2>
+            <p class="hero__sub">Managed content filtering for your kids' devices. Pick a child's age and Zaksha applies sensible rules and schedules — homework hours, bedtime, weekend limits — across every device they use. Set it once; it runs itself. No hardware, nothing to install on cooperative devices.</p>
+            <div class="hero__cta">
+              <a class="btn btn--primary btn--lg" href="https://app.zaksha.com">Get started <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--ghost btn--lg" href="#why">See scheduling</a>
+            </div>
+            <div class="hero__trust">
+              <span><i class="ph-fill ph-check-circle"></i> Your whole household</span>
+              <span><i class="ph-fill ph-check-circle"></i> Wi-Fi &amp; mobile data</span>
+              <span><i class="ph-fill ph-check-circle"></i> From ₹149 / month</span>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="phone-glow"></div>
+            <img class="app-shot" src="img/app-family.png" alt="Zaksha family dashboard — devices and schedules" />
+            <div class="float-chip float-chip--a">
+              <i class="ph-fill ph-moon-stars" style="color:var(--teal-600)"></i>
+              <span><b>Bedtime · 9:30 PM</b><small>Applies to every device</small></span>
+            </div>
+            <div class="float-chip float-chip--b">
+              <i class="ph-fill ph-eye-slash" style="color:var(--teal-600)"></i>
+              <span><b>Adult content</b><small>Blocked across the household</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="hero__variant" data-for="business" data-screen-label="hero · business">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <span class="eyebrow"><span class="dot"></span> Now in beta</span>
+            <h2>The office filter that <span class="accent">doesn’t get switched off.</span></h2>
+            <p class="hero__sub">Managed content filtering for the devices you run. A flat DNS block breaks someone's job by lunchtime — Zaksha does groups: each team gets rules that fit its work, scam and phishing domains stay blocked for everyone, and per-employee reports show what's happening on the devices you own. No IT hire needed.</p>
+            <div class="hero__cta">
+              <a class="btn btn--primary btn--lg" href="https://app.zaksha.com">Get started <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--ghost btn--lg" href="#how">See how it works</a>
+            </div>
+            <div class="hero__trust">
+              <span><i class="ph-fill ph-check-circle"></i> Different rules per team</span>
+              <span><i class="ph-fill ph-check-circle"></i> MDM &amp; BYOD setup</span>
+              <span><i class="ph-fill ph-check-circle"></i> From ₹499 / month</span>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="phone-glow"></div>
+            <img class="app-shot app-shot--desk" src="img/app-business.png" alt="Zaksha Fleet console — a company's Windows agents and managed phones in one roster" />
+            <div class="float-chip float-chip--a">
+              <i class="ph-fill ph-shield-check" style="color:var(--slate-600)"></i>
+              <span><b>Scam link blocked</b><small>Automatic, on every device</small></span>
+            </div>
+            <div class="float-chip float-chip--b">
+              <i class="ph-fill ph-squares-four" style="color:var(--slate-600)"></i>
+              <span><b>Marketing · social allowed</b><small>Back office · blocked all day</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHOOL -->
+      <div class="hero__variant" data-for="school" data-screen-label="hero · school">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <span class="eyebrow"><span class="dot"></span> Now in beta</span>
+            <h2>A <span class="accent">safe</span>, age-appropriate internet on every school device.</h2>
+            <p class="hero__sub">Parents trust your school with their children. Zaksha helps you show that trust is kept — age-appropriate rules for every grade, a documented record if a parent or the board ever asks, and exam lockdown — all run for you on your own isolated instance, with support and an SLA.</p>
+            <div class="hero__cta">
+              <a class="btn btn--primary btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20schools">Talk to us <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--ghost btn--lg" href="#how">See how it works</a>
+            </div>
+            <div class="hero__trust">
+              <span><i class="ph-fill ph-check-circle"></i> Dedicated isolated instance</span>
+              <span><i class="ph-fill ph-check-circle"></i> Reporting &amp; 30 / 90-day history</span>
+              <span><i class="ph-fill ph-check-circle"></i> Support &amp; SLA</span>
+            </div>
+          </div>
+          <div class="hero__visual">
+            <div class="phone-glow"></div>
+            <img class="app-shot app-shot--desk" src="img/app-school.png" alt="Zaksha Activity console — per-device record across the school's fleet on a dedicated instance" />
+            <div class="float-chip float-chip--a">
+              <i class="ph-fill ph-exam" style="color:var(--teal-800)"></i>
+              <span><b>Exam lockdown</b><small>Tighten rules for exam week</small></span>
+            </div>
+            <div class="float-chip float-chip--b">
+              <i class="ph-fill ph-file-text" style="color:var(--teal-800)"></i>
+              <span><b>Safeguarding report</b><small>A record for parents &amp; management</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRUST STRIP ============================== -->
+  <div class="strip">
+    <div class="pv" data-for="family">
+      <div class="wrap strip__in">
+        <div class="strip__item"><i class="ph-fill ph-calendar-check"></i> Schedules, not just blocks</div>
+        <div class="strip__item"><i class="ph-fill ph-hard-drives"></i> No router or hardware</div>
+        <div class="strip__item"><i class="ph-fill ph-wifi-high"></i> Works on any network</div>
+        <div class="strip__item"><i class="ph-fill ph-faders"></i> We run it for you</div>
+      </div>
+    </div>
+    <div class="pv" data-for="business">
+      <div class="wrap strip__in">
+        <div class="strip__item"><i class="ph-fill ph-squares-four"></i> Different rules for different teams</div>
+        <div class="strip__item"><i class="ph-fill ph-shield-check"></i> Scam &amp; phishing blocked for all</div>
+        <div class="strip__item"><i class="ph-fill ph-chart-bar"></i> Per-employee reports</div>
+        <div class="strip__item"><i class="ph-fill ph-faders"></i> No IT hire needed</div>
+      </div>
+    </div>
+    <div class="pv" data-for="school">
+      <div class="wrap strip__in">
+        <div class="strip__item"><i class="ph-fill ph-file-text"></i> Documented safeguarding record</div>
+        <div class="strip__item"><i class="ph-fill ph-hard-drives"></i> Your own isolated instance</div>
+        <div class="strip__item"><i class="ph-fill ph-exam"></i> Exam lockdown</div>
+        <div class="strip__item"><i class="ph-fill ph-seal-check"></i> Support &amp; SLA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== SCHEDULING SPOTLIGHT (the differentiator) ============================== -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <!-- FAMILY · schedules ARE the pitch -->
+      <div class="pv" data-for="family">
+      <div class="section-head reveal">
+        <span class="eyebrow">The difference</span>
+        <h2>Schedule the internet — not just block it.</h2>
+        <p class="lead">Anyone can block a category. What Zaksha makes effortless is <b>time</b> and <b>groups</b>: rules that turn on and off by the clock and the calendar, set once on an account and fanned out across every device on it.</p>
+      </div>
+
+      <div class="spotlight">
+        <div>
+          <ul class="sched-points">
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-clock-afternoon"></i></span>
+              <div><h4>Time-based windows</h4><p><code>Allow YouTube only between 6–8pm.</code> Apps and categories switch on and off automatically — no nightly nagging, no manual toggling.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-calendar-dots"></i></span>
+              <div><h4>Weekday vs weekend rules</h4><p><code>Block gaming on weekdays, allow it on weekends.</code> Different rules for school nights and free days, set per day of the week.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-broadcast"></i></span>
+              <div><h4>One toggle, every device</h4><p>Flip a rule on the <b>account</b> and it applies to all that account's devices at once — a child's phone and tablet, or a whole company.</p></div>
+            </li>
+          </ul>
+
+          <div class="stakes">
+            <span class="stakes__lab">Category blocking is included — it's table stakes:</span>
+            <span class="stakes__chip"><i class="ph-fill ph-eye-slash"></i> Adult</span>
+            <span class="stakes__chip"><i class="ph-fill ph-poker-chip"></i> Gambling</span>
+            <span class="stakes__chip"><i class="ph-fill ph-chats-circle"></i> Social</span>
+            <span class="stakes__chip"><i class="ph-fill ph-game-controller"></i> Gaming</span>
+            <span class="stakes__chip"><i class="ph-fill ph-television"></i> Streaming</span>
+          </div>
+        </div>
+
+        <div class="spotlight__visual">
+          <div class="phone-glow"></div>
+          <img class="app-shot app-shot--sm" src="img/app-schedule.png" alt="Zaksha schedule editor — apps, presets and allowed times" />
+        </div>
+      </div>
+      </div>
+
+      <!-- BUSINESS · money → bad click → record -->
+      <div class="pv" data-for="business">
+      <div class="section-head reveal">
+        <span class="eyebrow">The difference</span>
+        <h2>One rule for everyone is why filters get switched off.</h2>
+        <p class="lead">You've probably tried a flat DNS block — and by lunch, marketing needed Instagram. So the block grew holes until someone quietly turned it off. Zaksha is built for how an office actually works: rules per team, a security floor for everyone, and a record you can check.</p>
+      </div>
+
+      <div class="spotlight">
+        <div>
+          <ul class="sched-points">
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-squares-four"></i></span>
+              <div><h4>Groups, not one big switch</h4><p><code>Marketing — social allowed. Accounts — blocked all day.</code> Put devices in groups once and every rule fits the team it's for. New joiner? Add them to the group — done.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-shield-check"></i></span>
+              <div><h4>A floor that's never traded away</h4><p>Allowing social for marketing never means allowing the bad click. Known scam, phishing and malware domains stay blocked for every group — on by default, on every device.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-chart-bar"></i></span>
+              <div><h4>Know if something's wrong</h4><p>Per-employee reports on company-owned devices — top domains and what was blocked, by group. Not surveillance theatre; a record you can act on when something looks off.</p></div>
+            </li>
+          </ul>
+
+          <div class="stakes">
+            <span class="stakes__lab">Category blocking is included — it's table stakes:</span>
+            <span class="stakes__chip"><i class="ph-fill ph-eye-slash"></i> Adult</span>
+            <span class="stakes__chip"><i class="ph-fill ph-poker-chip"></i> Gambling</span>
+            <span class="stakes__chip"><i class="ph-fill ph-chats-circle"></i> Social</span>
+            <span class="stakes__chip"><i class="ph-fill ph-game-controller"></i> Gaming</span>
+            <span class="stakes__chip"><i class="ph-fill ph-television"></i> Streaming</span>
+          </div>
+        </div>
+
+        <div class="spotlight__visual">
+          <div class="phone-glow"></div>
+          <img class="app-shot app-shot--card" src="img/app-groups-business.png" alt="Zaksha groups &amp; schedules — per-team rules and a work-hours schedule for the fleet" />
+        </div>
+      </div>
+      </div>
+
+      <!-- SCHOOL · safeguarding record → school day → isolation -->
+      <div class="pv" data-for="school">
+      <div class="section-head reveal">
+        <span class="eyebrow">The difference</span>
+        <h2>When a parent asks, you'll have the answer.</h2>
+        <p class="lead">Parents trust the school with their children's attention and safety. Zaksha turns that duty into something you can show — age-appropriate filtering on every school device, with a documented record behind it, run for you on your own instance.</p>
+      </div>
+
+      <div class="spotlight">
+        <div>
+          <ul class="sched-points">
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-file-text"></i></span>
+              <div><h4>A record, not a reassurance</h4><p>Per-device history kept for 30 or 90 days on your own server. If a parent or the board asks what happened, the answer is a report — not a shrug.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-exam"></i></span>
+              <div><h4>The right rules for every grade — and every period</h4><p>Class 6 isn't Class 12. Grade-wise groups keep rules age-appropriate, schedules track the timetable and lab periods, and everything tightens into exam lockdown when integrity matters most.</p></div>
+            </li>
+            <li>
+              <span class="sched-points__ic"><i class="ph-fill ph-hard-drives"></i></span>
+              <div><h4>Your students' data, on your server</h4><p>A dedicated, physically isolated instance — never pooled with other customers, supported with an SLA. A line you can repeat to parents.</p></div>
+            </li>
+          </ul>
+
+          <div class="stakes">
+            <span class="stakes__lab">Category blocking is included — it's table stakes:</span>
+            <span class="stakes__chip"><i class="ph-fill ph-eye-slash"></i> Adult</span>
+            <span class="stakes__chip"><i class="ph-fill ph-poker-chip"></i> Gambling</span>
+            <span class="stakes__chip"><i class="ph-fill ph-chats-circle"></i> Social</span>
+            <span class="stakes__chip"><i class="ph-fill ph-game-controller"></i> Gaming</span>
+            <span class="stakes__chip"><i class="ph-fill ph-television"></i> Streaming</span>
+          </div>
+        </div>
+
+        <div class="spotlight__visual">
+          <div class="phone-glow"></div>
+          <img class="app-shot app-shot--card" src="img/app-groups-school.png" alt="Zaksha groups &amp; schedules — grade-wise groups, timetable and exam-week lockdown" />
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== WHY PER-DEVICE (vs router) ============================== -->
+  <section class="section section--tight" id="router" style="background:var(--bg);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Why on the device</span>
+        <h2>Why filtering at the router isn't enough.</h2>
+        <p class="lead">The obvious idea is to block at the <span class="p-only p-family">home</span><span class="p-only p-business">office</span><span class="p-only p-school">school</span> router and be done. It sounds tidy — but a router only guards one Wi-Fi, treats every device the same, and protects nothing the moment <span class="p-only p-family">a phone swaps to mobile data or a friend's Wi-Fi</span><span class="p-only p-business">a laptop or phone hops onto a personal hotspot</span><span class="p-only p-school">a student swaps the school Wi-Fi for a mobile dongle</span>. Zaksha filters on the device itself, so the rules travel with it.</p>
+      </div>
+      <div class="honest reveal">
+        <div class="honest__cols">
+          <div class="honest__col cant">
+            <div class="honest__h cant"><i class="ph-fill ph-wifi-high"></i> Blocking at the router</div>
+            <ul class="honest__list">
+              <li><i class="ph-fill ph-minus"></i> <span><b>Only works on that one Wi-Fi.</b> <span class="p-only p-family">Switch to mobile data or a friend's Wi-Fi and the filter is simply gone — the device is wide open.</span><span class="p-only p-business">Switch to a personal hotspot or mobile data and the filter is simply gone — the laptop is wide open.</span><span class="p-only p-school">Pop in a mobile dongle or data-card — the most common way around school Wi-Fi — and the filter is simply gone; the device is wide open.</span></span></li>
+              <li><i class="ph-fill ph-minus"></i> <span><b>One rule for everyone.</b> <span class="p-only p-family">A router can't tell a 7-year-old's tablet from a parent's laptop — so the whole house gets the same blocklist.</span><span class="p-only p-business">A router can't tell marketing from accounts, or a guest phone from a workstation — so the whole office gets the same blocklist.</span><span class="p-only p-school">A router can't tell a junior-class tablet from a staff laptop, or the library PC from the exam hall — so the whole campus gets the same blocklist.</span></span></li>
+              <li><i class="ph-fill ph-minus"></i> <span><b>No idea which device did what.</b> It can't separate one device from another, so there's no per-device report and no schedule that follows a person.</span></li>
+              <li><i class="ph-fill ph-minus"></i> <span><b>Sidestepped in seconds.</b> Any other network — even a phone's own hotspot — skips the router completely.</span></li>
+            </ul>
+          </div>
+          <div class="honest__col can">
+            <div class="honest__h can"><i class="ph-fill ph-check-circle"></i> Zaksha on each device</div>
+            <ul class="honest__list">
+              <li><i class="ph-fill ph-check"></i> <span><b>Follows the device everywhere.</b> Wi-Fi, mobile data, any network — the same rules apply, because they live on the device, not the wall socket.</span></li>
+              <li><i class="ph-fill ph-check"></i> <span><b>The right rules for the right device.</b> Per-child, per-team and per-device rules and schedules — <span class="p-only p-family">homework hours on one, social allowed on another.</span><span class="p-only p-business">social off for the floor, full access for marketing.</span><span class="p-only p-school">exam lockdown for one grade, research access for another.</span></span></li>
+              <li><i class="ph-fill ph-check"></i> <span><b>A clear per-device record.</b> See what each device reached and what was blocked — something you can actually act on.</span></li>
+              <li><i class="ph-fill ph-check"></i> <span><b>Nothing to plug in.</b> No new router, no hardware — a one-tap profile or a single setting; managed Windows PCs add a tamper-resistant agent.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== HOW IT WORKS ============================== -->
+  <section class="section section--tight" id="how" style="background:var(--bg);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2><span class="p-only p-family">Set up in minutes, not an afternoon.</span><span class="p-only p-business">Onboard the whole office from one key.</span><span class="p-only p-school">Onboard a whole lab from one key.</span></h2>
+        <p class="lead">Three steps, then we run it for you. <span class="p-only p-family">Nothing to plug in, nothing to root or jailbreak.</span><span class="p-only p-business">One installer for every Windows PC — nothing to plug in.</span><span class="p-only p-school">One installer for every lab PC — nothing to plug in.</span></p>
+      </div>
+
+      <!-- FAMILY · device setup -->
+      <div class="howx pv reveal" data-for="family">
+        <div class="howx__list">
+          <button class="howx__step is-active" onclick="howStep(this,0)"><span class="howx__num">01</span><span class="howx__txt"><b>Add a device</b><span>Pick iPhone, Android, Mac or Windows and set it up from a QR or one-tap profile — no app to install on cooperative devices.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,1)"><span class="howx__num">02</span><span class="howx__txt"><b>Apply a schedule</b><span>Choose what to block and when — homework hours, bedtime and weekend rules. Group devices so one rule covers them all.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,2)"><span class="howx__num">03</span><span class="howx__txt"><b>Manage from anywhere</b><span>See what's blocked today and over the last 7 days, block a site or tweak a rule — all from your phone.</span></span></button>
+        </div>
+        <div class="howx__stage">
+          <img class="howx__shot howx__shot--phone is-active" src="img/app-setup-family.png" alt="Add a device — pick a platform, set up from a QR or one-tap profile" />
+          <img class="howx__shot howx__shot--phone" src="img/app-schedule.png" alt="Apply a schedule — apps, presets and allowed times" />
+          <img class="howx__shot howx__shot--phone" src="img/app-family.png" alt="Manage from anywhere — the family dashboard" />
+        </div>
+      </div>
+
+      <!-- BUSINESS · fleet onboarding -->
+      <div class="howx pv reveal" data-for="business">
+        <div class="howx__list">
+          <button class="howx__step is-active" onclick="howStep(this,0)"><span class="howx__num">01</span><span class="howx__txt"><b>Roll out one installer</b><span>Mint a key and download the fleet pack — the Zaksha agent plus a ready-to-run install command. Push it to every company Windows PC; phones and Macs get a profile.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,1)"><span class="howx__num">02</span><span class="howx__txt"><b>Approve machines in bulk</b><span>PCs self-enrol into an approval queue. Eyeball the serials, select all, and approve the whole batch in one click.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,2)"><span class="howx__num">03</span><span class="howx__txt"><b>Watch fleet health</b><span>One roster shows every machine's agent version and status — and flags any that's gone silent or had its filter reverted.</span></span></button>
+        </div>
+        <div class="howx__stage">
+          <img class="howx__shot howx__shot--desk is-active" src="img/app-fleetpack.png" alt="Roll out one installer — mint a key, download the fleet pack, run msiexec" />
+          <img class="howx__shot howx__shot--desk" src="img/app-approve.png" alt="Approve machines in bulk — the enrollment approval queue" />
+          <img class="howx__shot howx__shot--desk" src="img/app-business.png" alt="Watch fleet health — the device roster with statuses" />
+        </div>
+      </div>
+
+      <!-- SCHOOL · fleet onboarding -->
+      <div class="howx pv reveal" data-for="school">
+        <div class="howx__list">
+          <button class="howx__step is-active" onclick="howStep(this,0)"><span class="howx__num">01</span><span class="howx__txt"><b>Roll out one installer</b><span>Mint a key and download the fleet pack — the agent plus a ready-to-run install command. Push it to every lab Windows PC; iPads and Macs get an MDM profile.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,1)"><span class="howx__num">02</span><span class="howx__txt"><b>Approve a whole lab</b><span>Lab PCs self-enrol into an approval queue. Check the serials and approve a whole lab at once — clones with duplicate serials are flagged.</span></span></button>
+          <button class="howx__step" onclick="howStep(this,2)"><span class="howx__num">03</span><span class="howx__txt"><b>Keep the record</b><span>Per-device activity becomes a documented record — what each machine reached and what was blocked, ready when a parent or the board asks.</span></span></button>
+        </div>
+        <div class="howx__stage">
+          <img class="howx__shot howx__shot--desk is-active" src="img/app-fleetpack.png" alt="Roll out one installer — mint a key, download the fleet pack, run msiexec" />
+          <img class="howx__shot howx__shot--desk" src="img/app-approve.png" alt="Approve a whole lab — the enrollment approval queue with duplicate-serial flags" />
+          <img class="howx__shot howx__shot--desk" src="img/app-school.png" alt="Keep the record — the per-device Activity console" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FEATURES ============================== -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Features</span>
+        <h2>Everything you need to draw the line.</h2>
+        <p class="lead"><span class="p-only p-family">Scheduling leads.</span><span class="p-only p-business">Protection leads.</span><span class="p-only p-school">Accountability leads.</span> The rest is thoughtful defaults out of the box, with the controls to go further when you need them.</p>
+      </div>
+      <div class="feat">
+        <div class="feat__item feat__item--fleet reveal"><span class="feat__ic"><i class="ph-fill ph-monitor-check"></i></span><div><h4>Fleet enrolment &amp; health</h4><p>One installer brings every company or school Windows PC on board — approve them in bulk, see each machine's agent version, and spot any that has gone silent or had its filter reverted.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-calendar-check"></i></span><div><h4>Time &amp; group schedules</h4><p>Allowed-time windows per app and category, per day of the week. Group devices so a single rule covers a child or a whole team.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-broadcast"></i></span><div><h4>Account-wide rules</h4><p>One toggle on an account fans out across all its devices — change a rule once instead of device by device.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-squares-four"></i></span><div><h4>Category blocks &amp; custom rules</h4><p>Adult, gambling, social, gaming and streaming — curated blocklists, one tap. Plus block or allow any specific domain, per device or account-wide.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-shield-check"></i></span><div><h4>Scam &amp; malware protection</h4><p>Known phishing, scam and malware domains are blocked automatically on every device — on by default, nothing to configure, on every plan.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-clock-counter-clockwise"></i></span><div><h4>Activity history</h4><p>Top domains and what was allowed or blocked, per device. Home keeps a rolling 7 days, then it's gone — processed and stored in India, never leaving our production environment.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-fingerprint"></i></span><div><h4>Per-device isolation</h4><p>Each device gets its own address, so rules and history never mix up. Logical on shared cloud, physical on a dedicated instance.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PLATFORMS ============================== -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Works everywhere</span>
+        <h2>Every device <span class="p-only p-family">your family actually uses.</span><span class="p-only p-business">your team actually uses.</span><span class="p-only p-school">your students actually use.</span></h2>
+        <p class="lead">A one-tap profile or a single DNS setting — then the same managed filtering follows the device everywhere, on Wi-Fi and mobile data.</p>
+      </div>
+      <div class="plats reveal">
+        <div class="plat"><span class="plat__ic"><i class="ph-fill ph-apple-logo"></i></span><div class="plat__t"><b>iPhone &amp; iPad</b><small>One-tap configuration profile</small></div></div>
+        <div class="plat"><span class="plat__ic"><i class="ph-fill ph-android-logo"></i></span><div class="plat__t"><b>Android</b><small>Private DNS — one setting</small></div></div>
+        <div class="plat"><span class="plat__ic"><i class="ph-fill ph-desktop"></i></span><div class="plat__t"><b>macOS</b><small>Guided configuration profile</small></div></div>
+        <div class="plat plat--hi"><span class="plat__ic"><i class="ph-fill ph-windows-logo"></i></span><div class="plat__t"><b>Windows <span class="plat__tag">New</span></b><small>Bypass-resistant Zaksha agent — or guided DNS</small></div></div>
+        <div class="plat"><span class="plat__ic"><i class="ph-fill ph-linux-logo"></i></span><div class="plat__t"><b>Linux</b><small>Guided DNS-over-HTTPS setup</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PRIVACY · PLAIN WORDS ============================== -->
+  <section class="section" id="privacy">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Your data, simply</span>
+        <h2>What we can see — and what we can't.</h2>
+        <p class="lead">No jargon. Here's exactly what Zaksha looks at, where your information lives and how long it stays — in plain words a normal person can check.</p>
+      </div>
+      <div class="feat">
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-device-mobile-camera"></i></span><div><h4>Nothing to install on phones</h4><p>On phones, tablets and Macs there's no app to download — Zaksha is just a setting we help you switch on. Only managed Windows PCs add a small company agent.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-eye-slash"></i></span><div><h4>We see website names, not what's inside</h4><p>Zaksha works at the address-book level. It sees that a device asked for, say, <code>youtube.com</code> — never your messages, photos, passwords or anything on the page. We couldn't read those if we tried.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-map-pin"></i></span><div><h4>Your data stays in India</h4><p>Everything is processed and stored on our servers in India and never leaves them. No third-party trackers, no sending your activity off to anyone else.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-clock-counter-clockwise"></i></span><div><h4>History deletes itself</h4><p>Home keeps a rolling 7 days of activity, then it's genuinely gone. The window you can see is the only window we keep — nothing is hoarded in the background.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-lock-key"></i></span><div><h4>No ads. Nothing sold.</h4><p>You pay a simple subscription by UPI. We don't show ads and we don't sell or share your browsing — selling your data isn't our business model, your money is.</p></div></div>
+        <div class="feat__item reveal"><span class="feat__ic"><i class="ph-fill ph-fingerprint"></i></span><div><h4>Each device kept separate</h4><p>Every device gets its own private address, so one device's rules and history never mix with another's — or with any other customer's.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== STRAIGHT TALK ============================== -->
+  <section class="section" id="honest" style="background:var(--bg);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Straight talk</span>
+        <h2>What Zaksha can and can't do.</h2>
+        <p class="lead">Filtering is a strong layer, not a magic wall. We'd rather you know exactly where the edges are.</p>
+      </div>
+      <div class="honest reveal">
+        <div class="honest__cols">
+          <div class="honest__col can">
+            <div class="honest__h can"><i class="ph-fill ph-check-circle"></i> Where it's strong</div>
+            <ul class="honest__list">
+              <li><i class="ph-fill ph-check"></i> Cooperative and managed devices — young kids, and MDM-locked company or school devices where the profile can't be removed and VPN installs are restricted.</li>
+              <li><i class="ph-fill ph-check"></i> It neutralises Apple iCloud Private Relay so it can't quietly route around your rules.</li>
+              <li><i class="ph-fill ph-check"></i> Blocks whole categories and specific sites, on schedule, across every device — on Wi-Fi and mobile data.</li>
+              <li><i class="ph-fill ph-check"></i> Gives the account owner a clear, per-device record of what was reached and what was blocked.</li>
+            </ul>
+          </div>
+          <div class="honest__col cant">
+            <div class="honest__h cant"><i class="ph-fill ph-warning-circle"></i> Where the limits are</div>
+            <ul class="honest__list">
+              <li><i class="ph-fill ph-minus"></i> On an adversarial BYOD device — say, a teen who actively wants around it — DNS filtering is bypassable. Anyone who can change the DNS setting or run a VPN can tunnel past it.</li>
+              <li><i class="ph-fill ph-minus"></i> Protect the DNS setting with a Screen Time or device PIN, and restrict VPN installs, to keep rules intact.</li>
+              <li><i class="ph-fill ph-minus"></i> Enforcement is strongest on devices you own and manage. On personal devices it relies on cooperation.</li>
+            </ul>
+            <p style="margin-top:18px; font-size:13.5px; color:var(--ink-400);">A bypass-resistant Android app and school-fleet management for Windows are on our roadmap.</p>
+          </div>
+        </div>
+        <div class="honest__note pv" data-for="business">
+          <b>What you see — and what your team should know.</b> Zaksha reads domain names only — never page content, messages or keystrokes. Reports cover the company-owned devices you enrol, and history is kept for your plan's window, then deleted. Most owners say so up front — our acceptable-use policy templates make that easy.
+        </div>
+        <div class="honest__note pv" data-for="school">
+          <b>What the school sees — and what students should know.</b> Domain names only — never page content, messages or keystrokes. Reports cover school-owned, managed devices, and the record stays on your own instance for 30 or 90 days. It exists to protect students and staff alike — and it's worth saying so openly.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PRICING TEASER ============================== -->
+  <section class="section section--tight" style="background:var(--bg);">
+    <div class="wrap">
+      <div class="pv" data-for="family">
+      <div class="section-head reveal" style="max-width:760px;">
+        <span class="eyebrow">Simple pricing</span>
+        <h2>₹199 a month. The whole household.</h2>
+        <p class="lead">One flat price for up to 5 devices — every feature included, paid by UPI, cancel anytime. Annual saves about 20%.</p>
+        <div style="margin-top:26px; display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="btn btn--primary btn--lg" href="pricing.html">See full pricing <i class="ph ph-arrow-right"></i></a>
+          <a class="btn btn--ghost btn--lg" href="https://app.zaksha.com">Get started</a>
+        </div>
+      </div>
+      </div>
+      <div class="pv" data-for="business">
+      <div class="section-head reveal" style="max-width:760px;">
+        <span class="eyebrow">Simple pricing</span>
+        <h2>₹599 a month. First 10 devices in.</h2>
+        <p class="lead">Then ₹49 per extra device — no cap, and no forced upgrades. GST invoicing included; annual saves about 20%.</p>
+        <div style="margin-top:26px; display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="btn btn--primary btn--lg" href="pricing.html">See full pricing <i class="ph ph-arrow-right"></i></a>
+          <a class="btn btn--ghost btn--lg" href="https://app.zaksha.com">Get started</a>
+        </div>
+      </div>
+      </div>
+      <div class="pv" data-for="school">
+      <div class="section-head reveal" style="max-width:760px;">
+        <span class="eyebrow">Simple pricing</span>
+        <h2>A dedicated instance, sized to your school.</h2>
+        <p class="lead">Enterprise is quoted custom — physical isolation, 30 or 90-day retention, provisioning done for you, support and an SLA. GST invoicing included.</p>
+        <div style="margin-top:26px; display:flex; gap:14px; flex-wrap:wrap;">
+          <a class="btn btn--primary btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20schools">Talk to us <i class="ph ph-arrow-right"></i></a>
+          <a class="btn btn--ghost btn--lg" href="pricing.html">See full pricing</a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item reveal" open><summary>How is this different from a free DNS filter? <i class="ph ph-plus"></i></summary><p>Category blocking is a commodity — every free filter does it, and so do we. Zaksha's value is the layer on top: easy <b>time- and group-based schedules</b>, multi-device management where one rule covers a whole account, effortless onboarding, and a managed service we run for you.</p></details>
+        <details class="faq__item reveal"><summary>Do I need to install an app on every device? <i class="ph ph-plus"></i></summary><p>No. Zaksha works by setting a device's DNS — on iOS and macOS you install a small configuration profile, and on Android you set a Private DNS hostname. We give you guided, device-specific steps for each platform.</p></details>
+        <details class="faq__item reveal"><summary><span>Can <span class="p-only p-family">my child</span><span class="p-only p-business">an employee</span><span class="p-only p-school">a student</span> just turn it off?</span> <i class="ph ph-plus"></i></summary><p>On a device where they can freely change DNS settings, yes — DNS filtering is bypassable by anyone who can change the setting or install a VPN. Protect those settings with a Screen Time passcode or device restrictions. On company- or school-managed devices enrolled via MDM, the profile can't be removed by the user.</p></details>
+        <details class="faq__item reveal"><summary>Is the dashboard real-time? <i class="ph ph-plus"></i></summary><p>Not quite — stats are computed in periodic batches, roughly every half hour. We show you blocked today, the last 24 hours and the last 7 days, rather than a live feed.</p></details>
+        <details class="faq__item reveal"><summary>How long do you keep my activity history? <i class="ph ph-plus"></i></summary><p>On Home, raw query history is kept for a rolling 7 days and then genuinely deleted. The window you can view is the window we retain. Enterprise instances can keep 30 or 90 days on their own dedicated server. Extending the window only adds data going forward — previously-deleted history doesn't come back. All activity data is processed and stored in India, inside our production environment — it never leaves it.</p></details>
+        <details class="faq__item pv" data-for="business"><summary>What can I see about my employees? <i class="ph ph-plus"></i></summary><p>Domain-level activity only — which sites were reached or blocked, per device, on the company-owned devices you enrol. Zaksha is DNS-based: it never reads page content, messages or keystrokes. History is kept for your plan's window and then deleted.</p></details>
+        <details class="faq__item pv" data-for="business"><summary>Do you provide GST invoices? <i class="ph ph-plus"></i></summary><p>Yes — Team and Enterprise plans include GST invoicing. Home plans are paid via UPI.</p></details>
+        <details class="faq__item pv" data-for="school"><summary>Is our school's data separate from other customers? <i class="ph ph-plus"></i></summary><p>Yes. Enterprise runs on a dedicated VPS provisioned for your school — physical isolation, not just logical. History (30 or 90 days) stays on your own instance, and all activity data is processed and stored in India.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA BAND ============================== -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="ctaband reveal">
+        <div class="ctaband__in">
+          <div class="pv" data-for="family">
+            <h2>Decide when the internet is on.</h2>
+            <p>Zaksha is live, in open beta. Set up your first device in minutes — no waitlist.</p>
+            <div class="btns">
+              <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com">Get started <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--onteal-ghost btn--lg" href="#why">See scheduling</a>
+            </div>
+          </div>
+          <div class="pv" data-for="business">
+            <h2>A filter the whole office can live with.</h2>
+            <p>Zaksha is live, in open beta. Group the team's devices in minutes — 10 included from ₹599 a month.</p>
+            <div class="btns">
+              <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com">Get started <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--onteal-ghost btn--lg" href="pricing.html">See pricing</a>
+            </div>
+          </div>
+          <div class="pv" data-for="school">
+            <h2>Show parents the trust is kept.</h2>
+            <p>Tell us about your school — we'll provision a dedicated instance and run it for you.</p>
+            <div class="btns">
+              <a class="btn btn--onteal btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20schools">Talk to us <i class="ph ph-arrow-right"></i></a>
+              <a class="btn btn--onteal-ghost btn--lg" href="#how">See how it works</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+              <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Managed, DNS-based content filtering for families, businesses and schools. Schedules, not just blocks — and we run it for you.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="#why">Why Zaksha</a>
+          <a href="#how">How it works</a>
+          <a href="#features">Features</a>
+          <a href="pricing.html">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4>Who it's for</h4>
+          <a href="#why" onclick="setPersona('family',true)">For parents</a>
+          <a href="#why" onclick="setPersona('business',true)">For businesses</a>
+          <a href="#why" onclick="setPersona('school',true)">For schools</a>
+          <a href="#honest">Straight talk</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="mailto:support@zaksha.com?subject=Zaksha%20enterprise%20enquiry">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html" style="color:inherit; border-bottom:1px solid #243231;">Privacy</a> · <a href="terms.html" style="color:inherit; border-bottom:1px solid #243231;">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Persona system ----------
+    var VALID = ['family', 'business', 'school'];
+    function setPersona(p, persist) {
+      if (VALID.indexOf(p) === -1) p = 'family';
+      document.documentElement.setAttribute('data-persona', p);
+      document.querySelectorAll('#pswitch button').forEach(function (b) {
+        var on = b.getAttribute('data-p') === p;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      if (persist) { try { localStorage.setItem('zaksha_persona', p); } catch (e) {} }
+    }
+    function choosePersona(p) {
+      setPersona(p, true);
+      closeGate();
+    }
+    function closeGate() {
+      var g = document.getElementById('gate');
+      g.classList.remove('is-open');
+    }
+
+    // ---------- "How it works" interactive stepper ----------
+    function howStep(btn, i) {
+      var root = btn.closest('.howx');
+      if (!root) return;
+      root.querySelectorAll('.howx__step').forEach(function (s) { s.classList.toggle('is-active', s === btn); });
+      root.querySelectorAll('.howx__shot').forEach(function (img, idx) { img.classList.toggle('is-active', idx === i); });
+    }
+
+    (function init() {
+      var stored = null;
+      try { stored = localStorage.getItem('zaksha_persona'); } catch (e) {}
+      if (stored && VALID.indexOf(stored) !== -1) {
+        setPersona(stored, false);
+      } else {
+        setPersona('family', false);
+        // show gate only on a genuine first visit
+        document.getElementById('gate').classList.add('is-open');
+      }
+    })();
+
+    // close gate on Escape (falls back to family)
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { choosePersona(document.documentElement.getAttribute('data-persona') || 'family'); }
+    });
+
+    // ---------- Nav shadow ----------
+    var nav = document.getElementById('nav');
+    var onScroll = function () { nav.classList.toggle('is-stuck', window.scrollY > 8); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ---------- Reveal on scroll ----------
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  </script>
+  <script src="icons.js"></script>
+</body>
+</html>
