@@ -710,6 +710,16 @@
     }
 
     (function init() {
+      // ?p=family|business|school (or ?persona=…) opens that view directly, no gate
+      var forced = null;
+      try {
+        var q = new URLSearchParams(location.search);
+        forced = q.get('p') || q.get('persona');
+      } catch (e) {}
+      if (forced && VALID.indexOf(forced) !== -1) {
+        setPersona(forced, true);
+        return;
+      }
       var stored = null;
       try { stored = localStorage.getItem('zaksha_persona'); } catch (e) {}
       if (stored && VALID.indexOf(stored) !== -1) {
