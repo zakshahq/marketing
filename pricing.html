@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Zaksha</title>
+  <meta name="description" content="Zaksha pricing — Home, Team and Enterprise. Monthly or annual, from ₹149/month. Home covers your whole household; Team scales per device; Enterprise runs on a dedicated instance. INR, exclusive of taxes." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="Pricing — Zaksha" />
+  <meta property="og:description" content="Zaksha pricing — Home, Team and Enterprise. Monthly or annual, from ₹149/month. INR, exclusive of taxes." />
+  <meta property="og:url" content="https://zaksha.com/pricing.html" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav is-stuck" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="index.html" data-screen-label="logo">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="index.html#why">Why Zaksha</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#privacy">Privacy</a>
+        <a href="pricing.html">Pricing</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com">Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== PRICE HERO ============================== -->
+  <section class="price-hero">
+    <div class="wrap">
+      <span class="eyebrow" style="margin-bottom:18px;">Pricing</span>
+      <h1>Pricing that scales with you.</h1>
+      <p class="lead">From a single household to a school on its own dedicated instance. Every plan includes time- and group-based scheduling. You move up a plan when you need its features — never just because you added a device.</p>
+      <div class="billing" role="tablist" aria-label="Billing period">
+        <button id="bp-monthly" class="is-active" role="tab" aria-selected="true" onclick="setBilling('monthly')">Monthly</button>
+        <button id="bp-annual" role="tab" aria-selected="false" onclick="setBilling('annual')">Annual <span class="save">Save ~20%</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TIERS ============================== -->
+  <section>
+    <div class="wrap">
+      <div class="tiers">
+
+        <!-- FAMILY -->
+        <div class="tier tier--home">
+          <div class="tier__name">Home</div>
+          <div class="tier__for">For parents protecting their family's devices.</div>
+          <div class="tier__price">
+            <span class="tier__amt" data-monthly="₹199" data-annual="₹149">₹199</span>
+            <span class="tier__per">/ month</span>
+          </div>
+          <div class="tier__sub" data-monthly="Billed monthly · pay via UPI · cancel anytime" data-annual="₹1,788 billed annually · pay via UPI">Billed monthly · pay via UPI · cancel anytime</div>
+          <div class="tier__why"><b>One flat price for the household.</b> Up to 5 devices — on Zaksha's managed shared cloud.</div>
+          <a class="btn btn--primary tier__btn" href="https://app.zaksha.com">Get started</a>
+          <span class="tier__inst"><i class="ph-fill ph-cloud"></i> Shared cloud · logical isolation</span>
+          <div class="tier__divider"></div>
+          <ul class="tier__feats">
+            <li><i class="ph-fill ph-check-circle"></i> <span>Up to 5 devices<sup style="font-size:.7em; color:#9fb6b4;">&nbsp;*</sup></span></li>
+            <li><i class="ph-fill ph-check-circle"></i> Per-child time &amp; group schedules</li>
+            <li><i class="ph-fill ph-check-circle"></i> All content categories</li>
+            <li><i class="ph-fill ph-check-circle"></i> Custom site blocks &amp; allows</li>
+            <li><i class="ph-fill ph-check-circle"></i> 7-day history, then deleted</li>
+            <li><i class="ph-fill ph-check-circle"></i> iOS, Android, macOS &amp; Windows</li>
+          </ul>
+        </div>
+
+        <!-- BUSINESS -->
+        <div class="tier tier--pop">
+          <div class="tier__badge">Most popular</div>
+          <div class="tier__name">Team</div>
+          <div class="tier__for">For the teams — different rules for different groups.</div>
+          <div class="tier__price">
+            <span class="tier__amt" data-monthly="₹599" data-annual="₹499">₹599</span>
+            <span class="tier__per">/ month</span>
+          </div>
+          <div class="tier__sub" data-monthly="First 10 devices · then + ₹49 / device · billed monthly" data-annual="₹5,988 / yr · then + ₹39 / mo per extra device">First 10 devices · then + ₹49 / device · billed monthly</div>
+          <div class="tier__why"><b>Built to run a team.</b> Group policies, bulk MDM enrolment, per-employee reporting and GST invoicing — on Zaksha's managed <b>shared cloud</b>.</div>
+          <a class="btn btn--primary tier__btn" href="https://app.zaksha.com">Get started</a>
+          <span class="tier__inst"><i class="ph-fill ph-cloud"></i> Shared cloud · logical isolation</span>
+          <div class="tier__divider"></div>
+          <ul class="tier__feats">
+            <li><i class="ph-fill ph-check-circle"></i> <span>10 devices included<span class="feat-sub" data-monthly="then + ₹49 / device — no cap" data-annual="then + ₹39 / device — no cap">then + ₹49 / device — no cap</span></span></li>
+            <li><i class="ph-fill ph-check-circle"></i> Company-wide rules &amp; schedules</li>
+            <li><i class="ph-fill ph-check-circle"></i> Per-employee activity reports</li>
+            <li><i class="ph-fill ph-check-circle"></i> 7 / 30-day history, then deleted</li>
+            <li><i class="ph-fill ph-check-circle"></i> MDM &amp; BYOD setup, bulk enrolment</li>
+            <li><i class="ph-fill ph-check-circle"></i> Acceptable-use policy templates</li>
+            <li><i class="ph-fill ph-check-circle"></i> GST invoicing</li>
+          </ul>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="tier tier--ent">
+          <div class="tier__name">Enterprise</div>
+          <div class="tier__for">For privacy-first organisations.</div>
+          <div class="tier__price">
+            <span class="tier__amt" style="font-size:30px;">Custom</span>
+          </div>
+          <div class="tier__sub">Dedicated instance · sized to you · GST invoicing</div>
+          <div class="tier__why"><b>A server of your own.</b> A dedicated, isolated VPS with longer retention, support and an SLA — sized to you.</div>
+          <a class="btn btn--onteal tier__btn" href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Contact us</a>
+          <span class="tier__inst"><i class="ph-fill ph-shield-check"></i> Dedicated VPS · physical isolation</span>
+          <div class="tier__divider"></div>
+          <ul class="tier__feats">
+            <li><i class="ph-fill ph-check-circle"></i> Everything in Team, plus:</li>
+            <li><i class="ph-fill ph-check-circle"></i> Dedicated, isolated VPS</li>
+            <li><i class="ph-fill ph-check-circle"></i> 30 / 90-day history retention</li>
+            <li><i class="ph-fill ph-check-circle"></i> Per-group rules &amp; schedules, at any scale</li>
+            <li><i class="ph-fill ph-check-circle"></i> Custom provisioning, support &amp; SLA</li>
+            <li><i class="ph-fill ph-check-circle"></i> For when you need isolation, longer retention or an SLA</li>
+          </ul>
+        </div>
+
+      </div>
+      <p class="price-note">All prices in INR and exclusive of applicable taxes. Annual plans are billed once a year and save about 20%. You move up a plan for its features, not for device count — choose Team when you need per-employee reporting, GST invoicing or to manage a team, and Enterprise when you need a dedicated, isolated instance, longer retention or an SLA.<br><span style="opacity:.85">* Home covers a single household under fair use (up to 5 devices). Commercial use or larger fleets belong on Team. Team scales per device with no hard cap; very large deployments that need isolation or an SLA are a fit for Enterprise.</span></p>
+    </div>
+  </section>
+
+  <!-- ============================== PRICING FAQ ============================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal" style="max-width:680px;">
+        <span class="eyebrow">Billing questions</span>
+        <h2>Good to know.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item reveal" open><summary>How does device counting work? <i class="ph ph-plus"></i></summary><p>Home is one flat price for your whole household — up to 5 devices — and you never pay per device. Team includes 10 devices at ₹599/month and adds a small per-device fee (₹49/month, or ₹39 on annual) beyond that, with no hard cap. Enterprise is sized in your custom quote. Device count never pushes you between plans — you move up only when you need a plan's features.</p></details>
+        <details class="faq__item reveal"><summary>What's the difference between shared cloud and a dedicated VPS? <i class="ph ph-plus"></i></summary><p>Home and Team run on Zaksha's managed, shared cloud — fast to set up, maintenance-free, with per-device isolation kept <b>logically</b> (each device has its own DNS address and client ID). The shared cloud runs in India (AWS Mumbai region), and all activity data is processed and stored inside it — it never leaves our production environment. Enterprise runs on a dedicated VPS provisioned just for you, giving <b>physical</b> data isolation and longer history retention held on your own instance.</p></details>
+        <details class="faq__item reveal"><summary>How does history retention work if I upgrade? <i class="ph ph-plus"></i></summary><p>The window you can view is the window we retain. Home keeps a rolling 7 days; Team can extend to 30; Enterprise keeps 30 or 90 days on its own instance. Moving to a longer window extends retention from today and fills in over the next N days — it doesn't bring back history that was already deleted.</p></details>
+        <details class="faq__item reveal"><summary>Can I switch plans or billing periods later? <i class="ph ph-plus"></i></summary><p>Yes. You can move between plans as your needs change, and switch between monthly and annual billing at any renewal. Annual billing saves roughly 20% versus paying monthly.</p></details>
+        <details class="faq__item reveal"><summary>How do I pay, and do I get an invoice? <i class="ph ph-plus"></i></summary><p>Home plans are paid via UPI. Team and Enterprise plans include GST invoicing for your records. Get in touch and we'll set you up.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA BAND ============================== -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="ctaband reveal">
+        <div class="ctaband__in">
+          <h2>Not sure which plan fits?</h2>
+          <p>Tell us what you're protecting — a household, a team, or a school — and we'll point you to the right plan.</p>
+          <div class="btns">
+            <a class="btn btn--onteal btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20plan%20help">Talk to us <i class="ph ph-arrow-right"></i></a>
+            <a class="btn btn--onteal-ghost btn--lg" href="index.html">Back to home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+              <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Managed, DNS-based content filtering for families, businesses and schools. Schedules, not just blocks — and we run it for you.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#why">Why Zaksha</a>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#features">Features</a>
+          <a href="pricing.html">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4>Who it's for</h4>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','family')}catch(e){}">For parents</a>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','business')}catch(e){}">For businesses</a>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','school')}catch(e){}">For schools</a>
+          <a href="index.html#honest">Straight talk</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="mailto:support@zaksha.com?subject=Zaksha%20enterprise%20enquiry">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html" style="color:inherit; border-bottom:1px solid #243231;">Privacy</a> · <a href="terms.html" style="color:inherit; border-bottom:1px solid #243231;">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function setBilling(mode) {
+      document.getElementById('bp-monthly').classList.toggle('is-active', mode === 'monthly');
+      document.getElementById('bp-annual').classList.toggle('is-active', mode === 'annual');
+      document.getElementById('bp-monthly').setAttribute('aria-selected', mode === 'monthly');
+      document.getElementById('bp-annual').setAttribute('aria-selected', mode === 'annual');
+      document.querySelectorAll('[data-monthly]').forEach(function (el) {
+        var v = el.getAttribute('data-' + mode);
+        if (v !== null) el.textContent = v;
+      });
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  </script>
+  <script src="icons.js"></script>
+  <script>
+    // mirror the visitor's persona from Home, and mark their plan as "Your plan"
+    try {
+      var bp = localStorage.getItem('zaksha_persona');
+      var PLAN = { family: 'tier--home', business: 'tier--pop', school: 'tier--ent' };
+      if (PLAN[bp]) {
+        document.documentElement.setAttribute('data-persona', bp);
+        // we're personalising now — hide the generic "Most popular" badge
+        document.querySelectorAll('.tier__badge').forEach(function (b) { b.style.display = 'none'; });
+        var el = document.querySelector('.' + PLAN[bp]);
+        if (el) {
+          el.classList.add('tier--yours');
+          var badge = el.querySelector('.tier__badge');
+          if (!badge) { badge = document.createElement('div'); el.insertBefore(badge, el.firstChild); }
+          badge.textContent = 'Your plan';
+          badge.className = 'tier__badge tier__badge--yours';
+          badge.style.display = '';
+        }
+      }
+    } catch (e) {}
+  </script>
+</body>
+</html>
