@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get the Zaksha app</title>
+  <meta name="description" content="Install Zaksha on your child's Android phone or iPhone." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="Get the Zaksha app" />
+  <meta property="og:description" content="Install Zaksha on your child's Android phone or iPhone." />
+  <meta property="og:url" content="https://zaksha.com/get.html" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+  <style>
+    /* ---------- Get page — additions not covered by zaksha-site.css ---------- */
+    .get-hero { padding: clamp(40px, 6vw, 64px) 0 0; text-align: center; }
+    .get-hero .lead { margin-left: auto; margin-right: auto; }
+
+    .get-toggle { display: inline-flex; gap: 0; margin-top: 30px; background: var(--teal-50); border: 1px solid var(--teal-100); border-radius: var(--r-pill); padding: 4px; }
+    .get-toggle button { border: 0; background: transparent; padding: 10px 28px; border-radius: var(--r-pill); font: inherit; font-size: 14.5px; font-weight: 700; color: var(--ink-500); cursor: pointer; transition: color .15s ease, background .2s ease; }
+    .get-toggle button.is-active { background: var(--teal-600); color: #fff; box-shadow: var(--sh-teal); }
+
+    .get-panel { padding: clamp(36px, 5vw, 56px) 0 clamp(56px, 7vw, 88px); }
+    .get-panel[hidden] { display: none; }
+
+    .get-dl { text-align: center; }
+    .get-dl .sub { margin-top: 12px; font-size: 13px; color: var(--ink-400); }
+
+    .get-steps { max-width: 580px; margin: 40px auto 0; }
+    .get-step { display: flex; gap: 16px; padding: 18px 0; border-top: 1px solid var(--line); }
+    .get-step:first-child { border-top: 0; padding-top: 0; }
+    .get-step .n { flex: 0 0 28px; height: 28px; border-radius: 50%; background: var(--teal-50); color: var(--teal-700); font-weight: 800; font-size: 13px; font-family: var(--mono); display: flex; align-items: center; justify-content: center; }
+    .get-step h4 { margin: 2px 0 5px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .get-step p { margin: 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.55; }
+    .get-chip { display: inline-block; background: var(--block-50); color: var(--block); border-radius: 6px; padding: 2px 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .01em; }
+
+    .get-callout { max-width: 580px; margin: 30px auto 0; background: var(--teal-50); border: 1px solid var(--teal-100); border-radius: var(--r-lg); padding: 22px 24px; }
+    .get-callout > b { color: var(--teal-700); font-size: 16px; }
+    .get-callout > p { margin: 8px 0 6px; font-size: 14.5px; color: var(--ink-700); line-height: 1.55; }
+    .get-callout .get-steps { margin-top: 6px; max-width: none; }
+
+    .get-foot { text-align: center; padding: 22px 0; border-top: 1px solid var(--line); background: var(--surface); font-size: 13px; color: var(--ink-400); line-height: 1.7; }
+    .get-foot code { font-family: var(--mono); font-size: 12.5px; color: var(--ink-500); }
+    .get-foot a { color: var(--teal-600); font-weight: 600; }
+    .get-foot a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav is-stuck" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="index.html" data-screen-label="logo">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="index.html#why">Why Zaksha</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#privacy">Privacy</a>
+        <a href="pricing.html">Pricing</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com">Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="get-hero">
+    <div class="wrap">
+      <h1 style="font-size:clamp(30px, 4.4vw, 46px);">Get the Zaksha app</h1>
+      <p class="lead" style="max-width:480px;">The app goes on your child's phone and keeps filtering on wherever they are.
+         You manage everything from your dashboard.</p>
+      <div class="get-toggle" role="tablist" aria-label="Choose your platform">
+        <button id="tab-android" role="tab" onclick="pick('android')">Android</button>
+        <button id="tab-ios" role="tab" onclick="pick('ios')">iPhone</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ANDROID PANEL ============================== -->
+  <section class="get-panel" id="panel-android">
+    <div class="wrap">
+      <div class="get-dl">
+        <a class="btn btn--primary btn--lg" href="https://github.com/zakshahq/agent/releases/download/android-latest/zaksha-agent.apk">Download Zaksha for Android</a>
+        <div class="sub">APK · about 8 MB · Android 8.0 or newer · coming soon to Google Play</div>
+      </div>
+
+      <div class="get-steps">
+        <div class="get-step">
+          <div class="n">1</div>
+          <div>
+            <h4>Open the downloaded file</h4>
+            <p>Tap the download notification, or find <b>zaksha-agent.apk</b> in the
+               Files app.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">2</div>
+          <div>
+            <h4>Allow the install</h4>
+            <p>The phone asks once for permission to install apps from this browser —
+               tap <b>Settings</b>, turn on <b>Allow from this source</b>, and go back.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">3</div>
+          <div>
+            <h4>If Play Protect shows a warning <span class="get-chip">expected</span></h4>
+            <p>Zaksha isn't distributed through the Play Store yet, so Google shows a
+               caution for any app installed outside it. Tap
+               <b>More details → Install anyway</b>. The app is signed by Zaksha — you can
+               verify the file's checksum on our release page below.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">4</div>
+          <div>
+            <h4>Open Zaksha and pair</h4>
+            <p>The app asks for a pairing code — it's showing in your Zaksha dashboard
+               on the Add device screen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="get-callout">
+        <b>Setting up a brand-new or factory-reset phone? (tamper-proof)</b>
+        <p>Skip the download above — the phone installs Zaksha
+        itself and locks filtering on, so it can't be turned off or uninstalled from the
+        phone. Here's the whole flow:</p>
+        <div class="get-steps">
+          <div class="get-step">
+            <div class="n">1</div>
+            <div>
+              <h4>Get the setup code from your dashboard</h4>
+              <p>On <b>app.zaksha.com</b>: Add device → Android → <b>New or reset</b> →
+                 <b>Tamper-proof</b>. A setup QR appears on your screen.</p>
+            </div>
+          </div>
+          <div class="get-step">
+            <div class="n">2</div>
+            <div>
+              <h4>Erase the phone (skip if it's brand-new)</h4>
+              <p>On the child's phone: Settings → System → Reset options →
+                 <b>Erase all data (factory reset)</b>. Back up photos and chats first —
+                 everything on the phone is removed and there's no undo.</p>
+            </div>
+          </div>
+          <div class="get-step">
+            <div class="n">3</div>
+            <div>
+              <h4>Tap the welcome screen 6 times</h4>
+              <p>When the phone restarts to the "Hi there" welcome screen, tap anywhere on
+                 it six times — a QR scanner opens.</p>
+            </div>
+          </div>
+          <div class="get-step">
+            <div class="n">4</div>
+            <div>
+              <h4>Scan the code from your dashboard</h4>
+              <p>Connect to Wi-Fi if the phone asks, then point the camera at the QR on
+                 your dashboard. The phone downloads Zaksha and sets it up on its own.</p>
+            </div>
+          </div>
+          <div class="get-step">
+            <div class="n">5</div>
+            <div>
+              <h4>Finish the phone's setup as usual</h4>
+              <p>Sign in, restore what you need — Zaksha is already protecting the phone
+                 and shows as connected in your dashboard.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== IOS PANEL ============================== -->
+  <section class="get-panel" id="panel-ios" hidden>
+    <div class="wrap">
+      <div class="get-dl">
+        <a class="btn btn--primary btn--lg" href="https://testflight.apple.com/join/ubZSxK8y">Join the iPhone beta on TestFlight</a>
+        <div class="sub">Free · via Apple TestFlight</div>
+      </div>
+
+      <div class="get-steps">
+        <div class="get-step">
+          <div class="n">1</div>
+          <div>
+            <h4>Install TestFlight</h4>
+            <p>Get Apple's <b>TestFlight</b> app from the App Store on your child's iPhone.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">2</div>
+          <div>
+            <h4>Open the invite</h4>
+            <p>Tap the button above (or scan the QR from your dashboard) and accept the
+               Zaksha invite in TestFlight.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">3</div>
+          <div>
+            <h4>Install Zaksha and pair</h4>
+            <p>Install from TestFlight, open the app, and enter the pairing code from your
+               dashboard's Add device screen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRUST FOOTER ============================== -->
+  <div class="get-foot">
+    <div class="wrap">
+      Package <code>com.zaksha.agent</code> · signed by Zaksha ·
+      <a href="https://github.com/zakshahq/agent/releases/tag/android-latest">verify the SHA-256 on the release page</a><br/>
+      Need help? <a href="mailto:support@zaksha.com">support@zaksha.com</a>
+    </div>
+  </div>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+              <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Managed, DNS-based content filtering for families, businesses and schools. Schedules, not just blocks — and we run it for you.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#why">Why Zaksha</a>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#features">Features</a>
+          <a href="pricing.html">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4>Who it's for</h4>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','family')}catch(e){}">For parents</a>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','business')}catch(e){}">For businesses</a>
+          <a href="index.html#why" onclick="try{localStorage.setItem('zaksha_persona','school')}catch(e){}">For schools</a>
+          <a href="index.html#honest">Straight talk</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="mailto:support@zaksha.com?subject=Zaksha%20enterprise%20enquiry">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html" style="color:inherit; border-bottom:1px solid #243231;">Privacy</a> · <a href="terms.html" style="color:inherit; border-bottom:1px solid #243231;">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="icons.js"></script>
+  <script>
+    function pick(platform) {
+      document.getElementById('panel-android').hidden = platform !== 'android';
+      document.getElementById('panel-ios').hidden = platform !== 'ios';
+      document.getElementById('tab-android').classList.toggle('is-active', platform === 'android');
+      document.getElementById('tab-ios').classList.toggle('is-active', platform === 'ios');
+    }
+
+    (function init() {
+      var forced = null;
+      try {
+        forced = new URLSearchParams(location.search).get('platform');
+      } catch (e) {}
+      if (forced === 'android' || forced === 'ios') {
+        pick(forced);
+        return;
+      }
+      var ua = navigator.userAgent || '';
+      pick(/iPhone|iPad|iPod/i.test(ua) ? 'ios' : 'android');
+    })();
+  </script>
+</body>
+</html>
