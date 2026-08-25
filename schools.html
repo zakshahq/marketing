@@ -35,6 +35,64 @@
     .enforce__how b { color: var(--ink-700); }
     .feats--two { grid-template-columns: repeat(2, 1fr); }
     @media (max-width: 700px) { .feats--two { grid-template-columns: 1fr; } }
+
+    /* ---------- click-through demo ---------- */
+    .demo { max-width: 720px; margin: 0 auto; }
+    .demo__frame { overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); box-shadow: var(--sh-2); background: var(--surface); }
+    .demo__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line-2); }
+    .demo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .demo__url { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-400); background: var(--bg); border-radius: var(--r-pill); padding: 4px 14px; }
+    .demo__track { display: flex; transition: transform .35s ease; }
+    .demo__slide { flex: 0 0 100%; min-width: 0; padding: clamp(20px, 3.5vw, 32px); }
+
+    .demo__nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 22px; }
+    .demo__btn {
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink-900);
+      border-radius: var(--r-pill); padding: 10px 22px; font-weight: 700; font-size: 14.5px;
+      transition: border-color .15s, opacity .15s;
+    }
+    .demo__btn:hover { border-color: var(--ink-300); }
+    .demo__btn[disabled] { opacity: .35; cursor: default; }
+    .demo__btn--next { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+    .demo__btn--next:hover { background: var(--teal-700); }
+    .demo__dots { display: flex; gap: 7px; }
+    .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
+    .demo__pip.on { background: var(--teal-600); }
+    .demo__cap { margin-top: 18px; text-align: center; }
+    .demo__cap b { font-size: 16.5px; }
+    .demo__cap p { margin: 6px auto 0; font-size: 14.5px; color: var(--ink-500); max-width: 480px; }
+
+    /* mock-screen bits inside slides */
+    .mk-h { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mk-h b { font-size: 15px; }
+    .mk-h .mono { margin-left: auto; font-size: 11px; color: var(--ink-400); }
+    .mk-row {
+      display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+      border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface);
+    }
+    .mk-row + .mk-row { margin-top: 10px; }
+    .mk-row__ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; background: var(--teal-50); color: var(--teal-700); flex: 0 0 auto; }
+    .mk-row__nm { font-size: 14px; font-weight: 700; display: block; }
+    .mk-row__sub { font-size: 12px; color: var(--ink-400); display: block; margin-top: 1px; }
+    .mk-chip { margin-left: auto; flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; border-radius: var(--r-pill); padding: 4px 11px; white-space: nowrap; }
+    .mk-chip--on { background: var(--allow-50); color: var(--allow); }
+    .mk-chip--off { background: var(--block-50); color: var(--block); }
+    .mk-chip--teal { background: var(--teal-50); color: var(--teal-700); }
+    .mk-sw { margin-left: auto; flex: 0 0 auto; width: 38px; height: 22px; border-radius: 999px; background: var(--line); position: relative; }
+    .mk-sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--sh-1); }
+    .mk-sw.on { background: var(--teal-600); }
+    .mk-sw.on::after { left: auto; right: 3px; }
+    .mk-bar { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+    .mk-bar + .mk-bar { margin-top: 9px; }
+    .mk-bar__lab { flex: 0 0 118px; font-weight: 700; text-align: right; color: var(--ink-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mk-bar__tr { flex: 1; height: 10px; border-radius: 999px; background: var(--line-2); overflow: hidden; }
+    .mk-bar__fl { height: 100%; border-radius: 999px; background: var(--teal-500); }
+    .mk-bar__fl--blk { background: var(--block); }
+    .mk-bar__n { flex: 0 0 44px; font-family: var(--mono); font-size: 11px; color: var(--ink-400); }
+    .mk-qr { display: grid; grid-template-columns: repeat(7, 10px); gap: 3px; padding: 12px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); width: max-content; }
+    .mk-qr span { width: 10px; height: 10px; background: var(--ink-900); border-radius: 2px; }
+    .mk-qr span.o { background: var(--line-2); }
   </style>
 </head>
 <body>
@@ -63,7 +121,7 @@
       <p class="lead">Zaksha filters every school device from one dashboard — content blocked school-wide, internet scheduled around class hours, and a clear record you can stand behind. We run it for you, on a server provisioned just for your school.</p>
       <div class="hero__btns">
         <a class="btn btn--primary btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20Schools">Talk to us</a>
-        <a class="btn btn--ghost btn--lg" href="#enforce">How enforcement works</a>
+        <a class="btn btn--ghost btn--lg" href="#demo">See the demo</a>
       </div>
       <div class="hero__facts">
         <span><i class="ph ph-map-pin"></i> Dedicated instance, data stays in India</span>
@@ -105,8 +163,131 @@
     </div>
   </section>
 
+  <!-- ============================== DEMO ============================== -->
+  <section class="section" id="demo">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Demo</span>
+        <h2>Click through it — two minutes.</h2>
+        <p>The dashboard your admin will actually use, in five screens.</p>
+      </div>
+      <div class="demo">
+        <div class="demo__frame">
+          <div class="demo__bar" aria-hidden="true">
+            <span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
+            <span class="demo__url">app.zaksha.com</span>
+          </div>
+          <div class="demo__track" id="demo-track">
+
+            <!-- 1 · at a glance -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Devices</b><span class="mono">DEDICATED INSTANCE · 84 DEVICES</span></div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-desktop"></i></span>
+                <span><span class="mk-row__nm">Class 9 Computer Lab</span><span class="mk-row__sub">24 devices · Windows</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-books"></i></span>
+                <span><span class="mk-row__nm">Library PCs</span><span class="mk-row__sub">12 devices · Windows</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-moon-stars"></i></span>
+                <span><span class="mk-row__nm">Hostel Tablets</span><span class="mk-row__sub">30 devices · Android</span></span>
+                <span class="mk-chip mk-chip--teal">Off 10:00 PM – 6:00 AM</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-briefcase"></i></span>
+                <span><span class="mk-row__nm">Staffroom</span><span class="mk-row__sub">18 devices · mixed</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+            </div>
+
+            <!-- 2 · categories -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Class 9 Computer Lab</b><span class="mono">CATEGORIES · BLOCKED WHEN ON</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-prohibit"></i></span><span class="mk-row__nm">Adult content</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-poker-chip"></i></span><span class="mk-row__nm">Gambling</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-chats-circle"></i></span><span class="mk-row__nm">Social media</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-game-controller"></i></span><span class="mk-row__nm">Gaming</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-television"></i></span><span class="mk-row__nm">Streaming</span><span class="mk-sw"></span></div>
+            </div>
+
+            <!-- 3 · timetable -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Schedules</b><span class="mono">HOSTEL TABLETS</span></div>
+              <div class="sched" style="box-shadow:none;">
+                <div class="sched__top">
+                  <span class="sched__ic"><i class="ph ph-moon-stars"></i></span>
+                  <span><span class="sched__nm">Lights out</span><span class="sched__mt">Internet off overnight</span></span>
+                  <span class="sched__badge">Active</span>
+                </div>
+                <div class="sched__days">
+                  <span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day on"><b>SAT</b></span><span class="sched__day on"><b>SUN</b></span>
+                </div>
+                <div class="sched__win">Internet off <span class="sched__chip">10:00 PM</span> <span class="sched__dash">—</span> <span class="sched__chip">6:00 AM</span></div>
+              </div>
+              <div class="mk-row" style="margin-top:12px;">
+                <span class="mk-row__ic"><i class="ph ph-clock-afternoon"></i></span>
+                <span><span class="mk-row__nm">Class hours</span><span class="mk-row__sub">Social media &amp; gaming off · MON–FRI</span></span>
+                <span class="mk-chip mk-chip--teal">9:00 AM – 3:00 PM</span>
+              </div>
+            </div>
+
+            <!-- 4 · activity -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Activity — yesterday</b><span class="mono">CLASS 9 LAB · 1,240 REQUESTS · 142 BLOCKED</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">wikipedia.org</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:88%;"></span></span><span class="mk-bar__n">412</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">ncert.nic.in</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:64%;"></span></span><span class="mk-bar__n">301</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">youtube.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:41%;"></span></span><span class="mk-bar__n">188</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">instagram.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:14%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">freefire.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:9%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="mk-row" style="margin-top:16px;">
+                <span class="mk-row__ic"><i class="ph ph-chart-bar"></i></span>
+                <span><span class="mk-row__nm">Per-device detail</span><span class="mk-row__sub">Drill into any device in the group — same domain-level record</span></span>
+              </div>
+            </div>
+
+            <!-- 5 · enrol -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Add devices</b><span class="mono">BULK ENROLMENT</span></div>
+              <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">
+                <div class="mk-qr" aria-hidden="true">
+                  <span></span><span></span><span></span><span class="o"></span><span></span><span></span><span></span>
+                  <span></span><span class="o"></span><span></span><span></span><span class="o"></span><span class="o"></span><span></span>
+                  <span></span><span></span><span class="o"></span><span></span><span></span><span class="o"></span><span></span>
+                  <span class="o"></span><span></span><span></span><span class="o"></span><span></span><span></span><span class="o"></span>
+                  <span></span><span class="o"></span><span></span><span></span><span class="o"></span><span></span><span></span>
+                  <span></span><span></span><span class="o"></span><span class="o"></span><span></span><span class="o"></span><span></span>
+                  <span></span><span></span><span></span><span></span><span class="o"></span><span></span><span></span>
+                </div>
+                <div style="flex:1; min-width:230px;">
+                  <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-android-logo"></i></span><span><span class="mk-row__nm">Android</span><span class="mk-row__sub">Scan this QR during device setup — Zaksha installs itself, tamper-proof</span></span></div>
+                  <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-windows-logo"></i></span><span><span class="mk-row__nm">Windows</span><span class="mk-row__sub">One MSI, rolled out across the fleet — locked to admin accounts</span></span></div>
+                  <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-apple-logo"></i></span><span><span class="mk-row__nm">iPhone &amp; iPad</span><span class="mk-row__sub">Zaksha app + pairing code — MDM lock-on is a conversation, ask us</span></span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="demo__cap" id="demo-cap" aria-live="polite">
+          <b></b>
+          <p></p>
+        </div>
+        <div class="demo__nav">
+          <button class="demo__btn" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i> Back</button>
+          <div class="demo__dots" id="demo-dots"></div>
+          <button class="demo__btn demo__btn--next" id="demo-next" aria-label="Next screen">Next <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================== ENFORCEMENT ============================== -->
-  <section class="section" id="enforce">
+  <section class="section section--wash" id="enforce">
     <div class="wrap">
       <div class="section-head section-head--center">
         <span class="eyebrow">Enforcement</span>
@@ -146,7 +327,7 @@
   </section>
 
   <!-- ============================== ROLLOUT ============================== -->
-  <section class="section section--wash">
+  <section class="section">
     <div class="wrap">
       <div class="section-head section-head--center">
         <span class="eyebrow">Rollout</span>
@@ -173,7 +354,7 @@
   </section>
 
   <!-- ============================== TRANSPARENCY ============================== -->
-  <section class="section">
+  <section class="section section--wash">
     <div class="wrap">
       <div class="section-head section-head--center">
         <span class="eyebrow">Straight talk</span>
@@ -202,7 +383,7 @@
   </section>
 
   <!-- ============================== CTA ============================== -->
-  <section class="section section--wash">
+  <section class="section">
     <div class="wrap">
       <div class="ctaband">
         <h2>Bring us your device list.</h2>
@@ -225,5 +406,41 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script>
+    (function () {
+      var CAPS = [
+        ['Every device, one dashboard', 'Groups for classes, labs, hostel and staff — status across the whole school at a glance.'],
+        ['Block a category with one switch', 'Rules are per group: what Class 9 can reach isn’t what the staffroom can.'],
+        ['Internet on the school’s timetable', 'Social media off during class hours, hostel tablets quiet after lights-out.'],
+        ['The record, when anyone asks', 'Domain-level activity per group and device — what was reached, what was blocked. Never page content.'],
+        ['Enrolment in minutes', 'Android enrols with one QR during setup; Windows rolls out via MSI. Tamper-proof from day one.']
+      ];
+      var i = 0, n = CAPS.length;
+      var track = document.getElementById('demo-track');
+      var prev = document.getElementById('demo-prev');
+      var next = document.getElementById('demo-next');
+      var dots = document.getElementById('demo-dots');
+      var cap = document.getElementById('demo-cap');
+      for (var k = 0; k < n; k++) {
+        var b = document.createElement('button');
+        b.className = 'demo__pip';
+        b.setAttribute('aria-label', 'Screen ' + (k + 1));
+        b.addEventListener('click', (function (k) { return function () { go(k); }; })(k));
+        dots.appendChild(b);
+      }
+      function go(to) {
+        i = Math.max(0, Math.min(n - 1, to));
+        track.style.transform = 'translateX(-' + (i * 100) + '%)';
+        prev.disabled = i === 0;
+        next.disabled = i === n - 1;
+        cap.querySelector('b').textContent = (i + 1) + ' / ' + n + ' — ' + CAPS[i][0];
+        cap.querySelector('p').textContent = CAPS[i][1];
+        Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
+      }
+      prev.addEventListener('click', function () { go(i - 1); });
+      next.addEventListener('click', function () { go(i + 1); });
+      go(0);
+    })();
+  </script>
 </body>
 </html>
