@@ -45,17 +45,19 @@
     .demo__track { display: flex; transition: transform .35s ease; }
     .demo__slide { flex: 0 0 100%; min-width: 0; padding: clamp(20px, 3.5vw, 32px); }
 
-    .demo__nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 22px; }
-    .demo__btn {
-      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-      border: 1px solid var(--line); background: var(--surface); color: var(--ink-900);
-      border-radius: var(--r-pill); padding: 10px 22px; font-weight: 700; font-size: 14.5px;
-      transition: border-color .15s, opacity .15s;
+    .demo__stage { position: relative; }
+    .demo__arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      display: grid; place-items: center; font-size: 19px;
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink-700);
+      box-shadow: var(--sh-1); transition: color .15s, border-color .15s, background .15s;
     }
-    .demo__btn:hover { border-color: var(--ink-300); }
-    .demo__btn[disabled] { opacity: .35; cursor: default; }
-    .demo__btn--next { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
-    .demo__btn--next:hover { background: var(--teal-700); }
+    .demo__arrow:hover { color: var(--teal-700); border-color: var(--teal-600); }
+    .demo__arrow--l { left: -21px; }
+    .demo__arrow--r { right: -21px; }
+    @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
     .demo__dots { display: flex; gap: 7px; }
     .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
     .demo__pip.on { background: var(--teal-600); }
@@ -172,6 +174,9 @@
         <p>What your admin's dashboard looks like, in five screens.</p>
       </div>
       <div class="demo">
+        <div class="demo__stage">
+        <button class="demo__arrow demo__arrow--l" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i></button>
+        <button class="demo__arrow demo__arrow--r" id="demo-next" aria-label="Next screen"><i class="ph ph-arrow-right"></i></button>
         <div class="demo__frame">
           <div class="demo__bar" aria-hidden="true">
             <span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
@@ -193,9 +198,9 @@
                 <span class="mk-chip mk-chip--on">Protected</span>
               </div>
               <div class="mk-row">
-                <span class="mk-row__ic"><i class="ph ph-moon-stars"></i></span>
-                <span><span class="mk-row__nm">Hostel Tablets</span><span class="mk-row__sub">30 devices · Android</span></span>
-                <span class="mk-chip mk-chip--teal">Off 10:00 PM – 6:00 AM</span>
+                <span class="mk-row__ic"><i class="ph ph-device-mobile-camera"></i></span>
+                <span><span class="mk-row__nm">Class 10 Tablets</span><span class="mk-row__sub">30 devices · Android</span></span>
+                <span class="mk-chip mk-chip--teal">Class-hours rules</span>
               </div>
               <div class="mk-row">
                 <span class="mk-row__ic"><i class="ph ph-briefcase"></i></span>
@@ -217,22 +222,22 @@
 
             <!-- 3 · timetable -->
             <div class="demo__slide">
-              <div class="mk-h"><b>Schedules</b><span class="mono">HOSTEL TABLETS</span></div>
+              <div class="mk-h"><b>Schedules</b><span class="mono">CLASS 9 COMPUTER LAB</span></div>
               <div class="sched" style="box-shadow:none;">
                 <div class="sched__top">
-                  <span class="sched__ic"><i class="ph ph-moon-stars"></i></span>
-                  <span><span class="sched__nm">Lights out</span><span class="sched__mt">Internet off overnight</span></span>
+                  <span class="sched__ic"><i class="ph ph-clock-afternoon"></i></span>
+                  <span><span class="sched__nm">Class hours</span><span class="sched__mt">Social media &amp; gaming off</span></span>
                   <span class="sched__badge">Active</span>
                 </div>
                 <div class="sched__days">
-                  <span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day on"><b>SAT</b></span><span class="sched__day on"><b>SUN</b></span>
+                  <span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day"><b>SAT</b></span><span class="sched__day"><b>SUN</b></span>
                 </div>
-                <div class="sched__win">Internet off <span class="sched__chip">10:00 PM</span> <span class="sched__dash">—</span> <span class="sched__chip">6:00 AM</span></div>
+                <div class="sched__win">Blocked <span class="sched__chip">9:00 AM</span> <span class="sched__dash">—</span> <span class="sched__chip">3:00 PM</span></div>
               </div>
               <div class="mk-row" style="margin-top:12px;">
-                <span class="mk-row__ic"><i class="ph ph-clock-afternoon"></i></span>
-                <span><span class="mk-row__nm">Class hours</span><span class="mk-row__sub">Social media &amp; gaming off · MON–FRI</span></span>
-                <span class="mk-chip mk-chip--teal">9:00 AM – 3:00 PM</span>
+                <span class="mk-row__ic"><i class="ph ph-exam"></i></span>
+                <span><span class="mk-row__nm">Exam mornings</span><span class="mk-row__sub">Distractions off in the lab · this week</span></span>
+                <span class="mk-chip mk-chip--teal">8:00 AM – 12:00 PM</span>
               </div>
             </div>
 
@@ -273,15 +278,14 @@
 
           </div>
         </div>
+        </div>
 
         <div class="demo__cap" id="demo-cap" aria-live="polite">
           <b></b>
           <p></p>
         </div>
         <div class="demo__nav">
-          <button class="demo__btn" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i> Back</button>
           <div class="demo__dots" id="demo-dots"></div>
-          <button class="demo__btn demo__btn--next" id="demo-next" aria-label="Next screen">Next <i class="ph ph-arrow-right"></i></button>
         </div>
       </div>
     </div>
@@ -316,6 +320,7 @@
           <p>Coding and reference sites open; torrents, games and chat closed. The lab's bandwidth goes to the lesson, not to downloads.</p>
         </div>
       </div>
+      <p class="seecant__note">Something specific to your school? Rules, categories and monitoring can be designed for you — custom reports on the traffic you care about, on your own instance.</p>
     </div>
   </section>
 
@@ -380,7 +385,7 @@
         <div class="step">
           <div class="step__n">3</div>
           <h3>Set policies per group</h3>
-          <p>Classes, labs, staff, hostel — each group gets its own categories and schedule from one dashboard. Change a rule once, it applies everywhere.</p>
+          <p>Classes, labs, library, staff — each group gets its own categories and schedule from one dashboard. Change a rule once, it applies everywhere.</p>
         </div>
       </div>
     </div>
@@ -443,13 +448,13 @@
   <script>
     (function () {
       var CAPS = [
-        ['Every school device, one dashboard', 'School-owned, managed devices in groups — classes, labs, hostel, staff. Personal phones are never part of it.'],
+        ['Every school device, one dashboard', 'School-owned, managed devices in groups — classes, labs, library, staff. Personal phones are never part of it.'],
         ['Block categories, allow exceptions', 'Torrents, gaming, adult content — off with one switch per group. And when a lesson needs YouTube, allow just that site; everything else stays blocked.'],
-        ['Internet on the school’s timetable', 'Social media off during class hours, hostel tablets quiet after lights-out.'],
+        ['Internet on the school’s timetable', 'Social and gaming off 9-to-3 on school days, exam mornings tightened further. Set once — it runs every week on its own.'],
         ['The record, when anyone asks', 'Domain-level activity per group and device — what was reached, what was blocked. Never page content.'],
         ['Enrolment in minutes', 'Android enrols with one QR during setup; Windows rolls out via MSI. Tamper-proof from day one.']
       ];
-      var i = 0, n = CAPS.length;
+      var i = 0, n = CAPS.length, timer = null;
       var track = document.getElementById('demo-track');
       var prev = document.getElementById('demo-prev');
       var next = document.getElementById('demo-next');
@@ -459,21 +464,30 @@
         var b = document.createElement('button');
         b.className = 'demo__pip';
         b.setAttribute('aria-label', 'Screen ' + (k + 1));
-        b.addEventListener('click', (function (k) { return function () { go(k); }; })(k));
+        b.addEventListener('click', (function (k) { return function () { stopAuto(); go(k); }; })(k));
         dots.appendChild(b);
       }
       function go(to) {
-        i = Math.max(0, Math.min(n - 1, to));
+        i = (to + n) % n;
         track.style.transform = 'translateX(-' + (i * 100) + '%)';
-        prev.disabled = i === 0;
-        next.disabled = i === n - 1;
         cap.querySelector('b').textContent = (i + 1) + ' / ' + n + ' — ' + CAPS[i][0];
         cap.querySelector('p').textContent = CAPS[i][1];
         Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
       }
-      prev.addEventListener('click', function () { go(i - 1); });
-      next.addEventListener('click', function () { go(i + 1); });
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+      prev.addEventListener('click', function () { stopAuto(); go(i - 1); });
+      next.addEventListener('click', function () { stopAuto(); go(i + 1); });
       go(0);
+      // auto-advance once the tour scrolls into view; any manual action stops it
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            io.disconnect();
+            timer = setInterval(function () { go(i + 1); }, 4000);
+          }
+        });
+      }, { threshold: 0.35 });
+      io.observe(track);
     })();
   </script>
 </body>
