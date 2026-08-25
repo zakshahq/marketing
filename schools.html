@@ -57,24 +57,18 @@
     .demo__arrow--l { left: -21px; }
     .demo__arrow--r { right: -21px; }
     @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
-    .demo__guide {
-      position: absolute; z-index: 3; left: -24px; bottom: -26px;
-      max-width: 340px; background: var(--surface);
-      border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--sh-2);
-      padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px;
+    .demo__slide { position: relative; }
+    .tour-chip {
+      position: absolute; z-index: 2; max-width: 250px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--sh-2); padding: 10px 13px;
+      display: flex; align-items: flex-start; gap: 9px;
     }
-    .demo__guide-n {
-      flex: 0 0 auto; font-family: var(--mono); font-size: 11px; font-weight: 500;
-      color: var(--teal-700); background: var(--teal-50); border-radius: var(--r-pill);
-      padding: 4px 10px; margin-top: 1px;
-    }
-    .demo__guide b { font-size: 14px; font-weight: 800; display: block; }
-    .demo__guide p { margin: 3px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-500); }
-    @media (max-width: 800px) {
-      .demo__guide { position: static; max-width: none; margin-top: 14px; }
-    }
-    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 44px; }
-    @media (max-width: 800px) { .demo__nav { margin-top: 18px; } }
+    .tour-chip i { font-size: 17px; color: var(--teal-600); flex: 0 0 auto; margin-top: 1px; }
+    .tour-chip b { font-size: 12.5px; font-weight: 800; display: block; line-height: 1.35; }
+    .tour-chip small { font-size: 11px; color: var(--ink-500); display: block; margin-top: 1px; line-height: 1.4; }
+    @media (max-width: 600px) { .tour-chip { display: none; } }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
     .demo__dots { display: flex; gap: 7px; }
     .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
     .demo__pip.on { background: var(--teal-600); }
@@ -224,6 +218,10 @@
                 <span><span class="mk-row__nm">Staff Laptops</span><span class="mk-row__sub">18 devices · school-issued</span></span>
                 <span class="mk-chip mk-chip--on">Protected</span>
               </div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-squares-four"></i>
+                <span><b>Groups, not devices</b><small>Four decisions cover 84 devices.</small></span>
+              </div>
             </div>
 
             <!-- 2 · categories -->
@@ -256,6 +254,10 @@
                 <span><span class="mk-row__nm">Exam mornings</span><span class="mk-row__sub">Distractions off in the lab · this week</span></span>
                 <span class="mk-chip mk-chip--teal">8:00 AM – 12:00 PM</span>
               </div>
+              <div class="tour-chip" style="left:34px; bottom:26px;">
+                <i class="ph ph-calendar-check"></i>
+                <span><b>Set once</b><small>Runs every week on its own.</small></span>
+              </div>
             </div>
 
             <!-- 4 · activity -->
@@ -269,6 +271,10 @@
               <div class="mk-row" style="margin-top:16px;">
                 <span class="mk-row__ic"><i class="ph ph-chart-bar"></i></span>
                 <span><span class="mk-row__nm">Per-device detail</span><span class="mk-row__sub">Drill into any device in the group — same domain-level record</span></span>
+              </div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-eye-slash"></i>
+                <span><b>Domains only</b><small>Never page content or messages.</small></span>
               </div>
             </div>
 
@@ -291,16 +297,12 @@
                   <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-apple-logo"></i></span><span><span class="mk-row__nm">iPhone &amp; iPad</span><span class="mk-row__sub">Zaksha app + pairing code — MDM lock-on is a conversation, ask us</span></span></div>
                 </div>
               </div>
+              <div class="tour-chip" style="left:34px; bottom:26px;">
+                <i class="ph ph-cloud"></i>
+                <span><b>Nothing to maintain</b><small>We run it — no upkeep for your IT.</small></span>
+              </div>
             </div>
 
-          </div>
-        </div>
-
-        <div class="demo__guide" id="demo-cap" aria-live="polite">
-          <span class="demo__guide-n" id="demo-step"></span>
-          <div>
-            <b></b>
-            <p></p>
           </div>
         </div>
         </div>
@@ -468,19 +470,11 @@
   <script src="icons.js"></script>
   <script>
     (function () {
-      var CAPS = [
-        ['Every school device, one place', 'Classes, labs, library, staff — school-owned devices only, never personal phones.'],
-        ['Block categories, allow exceptions', 'Torrents, gaming, adult content off — YouTube allowed where a lesson needs it.'],
-        ['Internet on the school’s timetable', 'Social and gaming off 9-to-3, tighter on exam mornings. Set once, runs weekly.'],
-        ['The record, when anyone asks', 'What was reached and blocked, per group and device. Never page content.'],
-        ['Enrolment in minutes', 'Android: one QR at setup. Windows: one MSI for the fleet. Tamper-proof from day one.']
-      ];
-      var i = 0, n = CAPS.length, timer = null;
       var track = document.getElementById('demo-track');
+      var i = 0, n = track.children.length, timer = null;
       var prev = document.getElementById('demo-prev');
       var next = document.getElementById('demo-next');
       var dots = document.getElementById('demo-dots');
-      var cap = document.getElementById('demo-cap');
       for (var k = 0; k < n; k++) {
         var b = document.createElement('button');
         b.className = 'demo__pip';
@@ -491,9 +485,6 @@
       function go(to) {
         i = (to + n) % n;
         track.style.transform = 'translateX(-' + (i * 100) + '%)';
-        document.getElementById('demo-step').textContent = (i + 1) + '/' + n;
-        cap.querySelector('b').textContent = CAPS[i][0];
-        cap.querySelector('p').textContent = CAPS[i][1];
         Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
       }
       function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
