@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaksha for Schools</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Safe, scheduled internet across your school's devices — filtering students can't switch off, run for you on a dedicated instance in India." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <style>
+    /* ---------- Schools page — additions not covered by zaksha-site.css ---------- */
+    .enforce { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.5vw, 24px); }
+    @media (max-width: 860px) { .enforce { grid-template-columns: 1fr; } }
+    .enforce__card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; display: flex; flex-direction: column; }
+    .enforce__card--strong { border-color: var(--teal-600); box-shadow: var(--sh-2); }
+    .enforce__top { display: flex; align-items: center; gap: 12px; }
+    .enforce__ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 23px; background: var(--teal-50); color: var(--teal-700); }
+    .enforce__badge {
+      margin-left: auto; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
+      text-transform: uppercase; border-radius: var(--r-pill); padding: 4px 11px;
+      background: var(--teal-600); color: #fff; white-space: nowrap;
+    }
+    .enforce__badge--soft { background: var(--teal-50); color: var(--teal-700); }
+    .enforce__card h3 { font-size: 18px; margin-top: 18px; }
+    .enforce__card p { margin-top: 9px; font-size: 14.5px; color: var(--ink-500); flex: 1; }
+    .enforce__how { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line-2); font-size: 13px; color: var(--ink-400); }
+    .enforce__how b { color: var(--ink-700); }
+    .feats--two { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 700px) { .feats--two { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== NAV (minimal — unlisted page) ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="schools.html">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha <span class="mono" style="font-size:12px; color:var(--ink-400); margin-left:2px;">for Schools</span>
+      </a>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="mailto:support@zaksha.com?subject=Zaksha%20for%20Schools">Talk to us</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Safe, scheduled internet for your whole school.</h1>
+      <p class="lead">Zaksha filters every school device from one dashboard — content blocked school-wide, internet scheduled around class hours, and a clear record you can stand behind. We run it for you, on a server provisioned just for your school.</p>
+      <div class="hero__btns">
+        <a class="btn btn--primary btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20Schools">Talk to us</a>
+        <a class="btn btn--ghost btn--lg" href="#enforce">How enforcement works</a>
+      </div>
+      <div class="hero__facts">
+        <span><i class="ph ph-map-pin"></i> Dedicated instance, data stays in India</span>
+        <span><i class="ph ph-check-circle"></i> 30/90-day retention</span>
+        <span><i class="ph ph-check-circle"></i> GST invoicing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== WHY ============================== -->
+  <section class="section section--wash">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Why schools choose Zaksha</span>
+        <h2>Four problems, one dashboard.</h2>
+      </div>
+      <div class="feats feats--two">
+        <div class="feat">
+          <span class="feat__ic"><i class="ph ph-shield-check"></i></span>
+          <h3>Students protected, school-wide</h3>
+          <p>Adult content, gambling, and anything else you decide — whole categories blocked across every enrolled device with one switch, plus your own block and allow lists.</p>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><i class="ph ph-calendar-check"></i></span>
+          <h3>Focus during class hours</h3>
+          <p>Different rules for different groups, on a schedule: labs open for research periods, social media and gaming off during class, hostel devices quiet after lights-out.</p>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><i class="ph ph-chart-bar"></i></span>
+          <h3>Answers when parents ask</h3>
+          <p>Per-group activity reports show what was reached and what was blocked, per device. When a parent or your management asks, you have the record — not a shrug.</p>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><i class="ph ph-hard-drives"></i></span>
+          <h3>Your data, on your own server</h3>
+          <p>Your school runs on a dedicated, isolated instance — no other customer's data on it. History is kept 30 or 90 days on your instance, processed and stored entirely in India.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ENFORCEMENT ============================== -->
+  <section class="section" id="enforce">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Enforcement</span>
+        <h2>Filtering students can't switch off.</h2>
+        <p>A filter only works if it stays on. On the platforms schools run, Zaksha locks it on.</p>
+      </div>
+      <div class="enforce">
+        <div class="enforce__card enforce__card--strong">
+          <div class="enforce__top">
+            <span class="enforce__ic"><i class="ph ph-windows-logo"></i></span>
+            <span class="enforce__badge">Tamper-proof</span>
+          </div>
+          <h3>Windows — labs &amp; library PCs</h3>
+          <p>The Zaksha agent runs as a system service on school-managed PCs. Students work from standard accounts — without admin rights, the agent can't be stopped, removed or reconfigured.</p>
+          <div class="enforce__how"><b>Rollout:</b> MSI installer, deployed across your fleet in one pass.</div>
+        </div>
+        <div class="enforce__card enforce__card--strong">
+          <div class="enforce__top">
+            <span class="enforce__ic"><i class="ph ph-android-logo"></i></span>
+            <span class="enforce__badge">Tamper-proof</span>
+          </div>
+          <h3>Android — tablets &amp; phones</h3>
+          <p>School devices are set up with Zaksha as the device owner: the phone installs it during setup and locks filtering on. It can't be uninstalled or switched off from the device — a factory reset just re-enrols it.</p>
+          <div class="enforce__how"><b>Rollout:</b> scan one QR during device setup — no per-device fiddling.</div>
+        </div>
+        <div class="enforce__card">
+          <div class="enforce__top">
+            <span class="enforce__ic"><i class="ph ph-apple-logo"></i></span>
+            <span class="enforce__badge enforce__badge--soft">Tamper-evident</span>
+          </div>
+          <h3>iPhone &amp; iPad</h3>
+          <p>The Zaksha app filters on any network and alerts you the moment filtering is quietly switched off — you'll always know. For iPad fleets that need it locked on outright, MDM-based tamper-proofing is a genuine conversation.</p>
+          <div class="enforce__how"><b>Have an Apple fleet?</b> Tell us about it — we'll scope it with you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== ROLLOUT ============================== -->
+  <section class="section section--wash">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Rollout</span>
+        <h2>From device list to filtered in days.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__n">1</div>
+          <h3>We provision your instance</h3>
+          <p>A dedicated, isolated server sized to your school — your devices, your data, nobody else's. We set it up and we keep it running.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">2</div>
+          <h3>Devices enrol in bulk</h3>
+          <p>Windows PCs via the MSI across your fleet, Android via one setup QR per device. No agent to babysit, nothing for your staff to maintain.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">3</div>
+          <h3>Set policies per group</h3>
+          <p>Classes, labs, staff, hostel — each group gets its own categories and schedule from one dashboard. Change a rule once, it applies everywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TRANSPARENCY ============================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Straight talk</span>
+        <h2>What the school sees — and what it doesn't.</h2>
+      </div>
+      <div class="seecant">
+        <div class="seecant__col seecant__col--can">
+          <div class="seecant__h"><i class="ph ph-shield-check"></i> What your school sees</div>
+          <ul>
+            <li><i class="ph ph-check"></i> The website names school devices asked for — and what was blocked, per device and group</li>
+            <li><i class="ph ph-check"></i> Reports covering school-owned, managed devices only</li>
+            <li><i class="ph ph-check"></i> 30 or 90 days of history, kept on your own instance, then deleted</li>
+          </ul>
+        </div>
+        <div class="seecant__col seecant__col--cant">
+          <div class="seecant__h"><i class="ph ph-eye-slash"></i> What it never sees</div>
+          <ul>
+            <li><i class="ph ph-x"></i> Page content, messages or keystrokes — Zaksha reads domain names only</li>
+            <li><i class="ph ph-x"></i> Anything on personal, unenrolled devices</li>
+            <li><i class="ph ph-x"></i> Nothing is sold or shared, and your data never leaves India</li>
+          </ul>
+        </div>
+      </div>
+      <p class="seecant__note">It exists to protect students and staff alike — and it's worth saying so openly. We'll help you word the policy you share with students and parents.</p>
+    </div>
+  </section>
+
+  <!-- ============================== CTA ============================== -->
+  <section class="section section--wash">
+    <div class="wrap">
+      <div class="ctaband">
+        <h2>Bring us your device list.</h2>
+        <p>Tell us how many Windows PCs, Android devices and iPads you run — we'll come back with a plan and a quote sized to your school.</p>
+        <div class="btns">
+          <a class="btn btn--onteal btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20Schools">support@zaksha.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER (minimal) ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bar" style="margin-top:0; padding-top:0; border-top:0;">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="icons.js"></script>
+</body>
+</html>
