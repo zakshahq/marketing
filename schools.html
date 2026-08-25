@@ -57,7 +57,24 @@
     .demo__arrow--l { left: -21px; }
     .demo__arrow--r { right: -21px; }
     @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
-    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
+    .demo__guide {
+      position: absolute; z-index: 3; left: -24px; bottom: -26px;
+      max-width: 340px; background: var(--surface);
+      border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--sh-2);
+      padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px;
+    }
+    .demo__guide-n {
+      flex: 0 0 auto; font-family: var(--mono); font-size: 11px; font-weight: 500;
+      color: var(--teal-700); background: var(--teal-50); border-radius: var(--r-pill);
+      padding: 4px 10px; margin-top: 1px;
+    }
+    .demo__guide b { font-size: 14px; font-weight: 800; display: block; }
+    .demo__guide p { margin: 3px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-500); }
+    @media (max-width: 800px) {
+      .demo__guide { position: static; max-width: none; margin-top: 14px; }
+    }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 44px; }
+    @media (max-width: 800px) { .demo__nav { margin-top: 18px; } }
     .demo__dots { display: flex; gap: 7px; }
     .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
     .demo__pip.on { background: var(--teal-600); }
@@ -278,12 +295,16 @@
 
           </div>
         </div>
+
+        <div class="demo__guide" id="demo-cap" aria-live="polite">
+          <span class="demo__guide-n" id="demo-step"></span>
+          <div>
+            <b></b>
+            <p></p>
+          </div>
+        </div>
         </div>
 
-        <div class="demo__cap" id="demo-cap" aria-live="polite">
-          <b></b>
-          <p></p>
-        </div>
         <div class="demo__nav">
           <div class="demo__dots" id="demo-dots"></div>
         </div>
@@ -448,11 +469,11 @@
   <script>
     (function () {
       var CAPS = [
-        ['Every school device, one dashboard', 'School-owned, managed devices in groups — classes, labs, library, staff. Personal phones are never part of it.'],
-        ['Block categories, allow exceptions', 'Torrents, gaming, adult content — off with one switch per group. And when a lesson needs YouTube, allow just that site; everything else stays blocked.'],
-        ['Internet on the school’s timetable', 'Social and gaming off 9-to-3 on school days, exam mornings tightened further. Set once — it runs every week on its own.'],
-        ['The record, when anyone asks', 'Domain-level activity per group and device — what was reached, what was blocked. Never page content.'],
-        ['Enrolment in minutes', 'Android enrols with one QR during setup; Windows rolls out via MSI. Tamper-proof from day one.']
+        ['Every school device, one place', 'Classes, labs, library, staff — school-owned devices only, never personal phones.'],
+        ['Block categories, allow exceptions', 'Torrents, gaming, adult content off — YouTube allowed where a lesson needs it.'],
+        ['Internet on the school’s timetable', 'Social and gaming off 9-to-3, tighter on exam mornings. Set once, runs weekly.'],
+        ['The record, when anyone asks', 'What was reached and blocked, per group and device. Never page content.'],
+        ['Enrolment in minutes', 'Android: one QR at setup. Windows: one MSI for the fleet. Tamper-proof from day one.']
       ];
       var i = 0, n = CAPS.length, timer = null;
       var track = document.getElementById('demo-track');
@@ -470,7 +491,8 @@
       function go(to) {
         i = (to + n) % n;
         track.style.transform = 'translateX(-' + (i * 100) + '%)';
-        cap.querySelector('b').textContent = (i + 1) + ' / ' + n + ' — ' + CAPS[i][0];
+        document.getElementById('demo-step').textContent = (i + 1) + '/' + n;
+        cap.querySelector('b').textContent = CAPS[i][0];
         cap.querySelector('p').textContent = CAPS[i][1];
         Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
       }
