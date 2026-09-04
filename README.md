@@ -3,12 +3,16 @@
 Static marketing site for Zaksha (managed DNS content filtering for families, businesses
 and schools). Plain HTML/CSS/JS, no build step.
 
-> **Editing this site?** Read **[AGENTS.md](./AGENTS.md)** first — it explains the persona
-> system and the truth/legal constraints that are easy to break.
+> **Editing this site?** Read **[MESSAGING.md](./MESSAGING.md)** first — it's the Home
+> messaging spine: what we claim, what we must not claim, and the anti-bypass language
+> rules. Check every copy change against it.
 
 ## Pages
-- `index.html` — home
-- `pricing.html` — plans (Home / Team / Enterprise)
+- `index.html` — home (Home/family landing)
+- `get.html` — install steps per platform
+- `block.html`, `parental-control-android.html` — unlisted ad landers
+- `schools.html` — unlisted Enterprise/schools page
+- `pricing.html` — redirect to `/#pricing`
 - `terms.html` — Terms & Conditions
 - `privacy.html` — Privacy Policy
 
@@ -32,5 +36,3 @@ Pushing to root vs. a `/docs` folder both work — just match the Pages "folder"
 
 ## Notes
 - Fonts load from Google Fonts; icons are inline SVG via `icons.js` (no webfont).
-- The site remembers a visitor's persona (family/business/school) in `localStorage` and
-  pivots copy accordingly — see AGENTS.md §2.
