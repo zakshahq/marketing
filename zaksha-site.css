@@ -363,7 +363,6 @@ button { font: inherit; }
 .phone:first-child { margin-left: auto; }
 .phone:last-child { margin-right: auto; }
 .phones__hint { display: none; text-align: center; font-size: 12.5px; color: var(--ink-400); margin-top: 10px; }
-@media (max-width: 1040px) { .phones__hint { display: block; } }
 .phone__frame { width: 100%; max-width: 236px; margin: 0 auto; background: #000; border-radius: 34px; padding: 7px; box-shadow: var(--sh-2); }
 .phone__frame img { width: 100%; height: auto; display: block; border-radius: 27px; }
 .phone__cap { max-width: 250px; margin: 16px auto 0; }
