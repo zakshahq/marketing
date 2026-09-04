@@ -205,16 +205,9 @@
           <div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything works as normal, quietly in the background.</span></div>
         </div>
         <div class="phone">
-          <div class="phone__frame"><img src="img/app/paused.png" alt="Zaksha — not protected, apps paused" /></div>
-          <div class="phone__cap"><b>Switched off?</b><span>Their apps stay paused until filtering is back on.</span></div>
+          <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha — apps are paused until filtering is back on" /></div>
+          <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off, and this is all they get.</span></div>
         </div>
-        <!-- TODO(asset): shield-cover slide — screenshot of a watched app locked by the
-             tamper lock (capture on a real device with the lock engaged), e.g.:
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha's tamper lock" /></div>
-          <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off and this is all they get.</span></div>
-        </div>
-        -->
         <div class="phone">
           <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
           <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
@@ -224,7 +217,7 @@
           <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
         </div>
       </div>
-      <p class="phones__hint">Swipe to see more →</p>
+      <p class="phones__hint">Swipe or scroll to see more →</p>
     </div>
   </section>
 
@@ -413,6 +406,14 @@
       if (a) openFaq(a.getAttribute('href'));
     });
     openFaq(location.hash);
+
+    // Show the carousel hint only when the phones row actually overflows.
+    var phones = document.querySelector('.phones'), hint = document.querySelector('.phones__hint');
+    if (phones && hint) {
+      var fitHint = function () { hint.style.display = phones.scrollWidth > phones.clientWidth + 8 ? 'block' : 'none'; };
+      fitHint();
+      window.addEventListener('resize', fitHint);
+    }
   </script>
 </body>
 </html>
