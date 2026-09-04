@@ -165,8 +165,6 @@
   </section>
 
   <!-- ============================== HARD TO BYPASS ============================== -->
-  <!-- MERGE GATE: the app-locking claims below describe the iOS 1.1+/1.2 shield. The App
-       Store build is 1.0 (alerts only) — do not publish this section until 1.2 is live. -->
   <section class="section section--wash" id="stays-on">
     <div class="wrap">
       <div class="section-head section-head--center">
@@ -190,7 +188,7 @@
           <p>You pick the app types to watch. If one is opened while filtering is off, Zaksha locks everything again.</p>
         </div>
       </div>
-      <p class="honesty">We'd rather be straight than sell you a magic wall. On iPhone, the one thing outside our control is your Apple ID password — Apple lets it reset the Screen Time passcode, so keep it private. On Android, the fresh-phone setup goes further: Zaksha installs during device setup and can't be uninstalled from the phone at all. Need a fleet locked down with no way out? Our supervised setup for <a href="schools.html">organisations</a> is fully tamper-proof: enforcement can't be removed.</p>
+      <p class="honesty honesty--link"><a href="#faq-turn-off">Can my child turn it off? Is Zaksha tamper-proof? →</a></p>
     </div>
   </section>
 
@@ -210,11 +208,23 @@
           <div class="phone__frame"><img src="img/app/paused.png" alt="Zaksha — not protected, apps paused" /></div>
           <div class="phone__cap"><b>Switched off?</b><span>Their apps stay paused until filtering is back on.</span></div>
         </div>
+        <!-- TODO(asset): shield-cover slide — screenshot of a watched app locked by the
+             tamper lock (capture on a real device with the lock engaged), e.g.:
+        <div class="phone">
+          <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha's tamper lock" /></div>
+          <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off and this is all they get.</span></div>
+        </div>
+        -->
         <div class="phone">
           <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
           <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
         </div>
+        <div class="phone">
+          <div class="phone__frame"><img src="img/app/manage.png" alt="Zaksha tamper lock settings — allowed apps, watched app types, cooldown" /></div>
+          <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
+        </div>
       </div>
+      <p class="phones__hint">Swipe to see more →</p>
     </div>
   </section>
 
@@ -266,7 +276,7 @@
           <div class="plan__sub">or ₹1,788 billed annually (₹149/month) · UPI or card · cancel anytime</div>
           <a class="btn btn--primary plan__btn" href="https://app.zaksha.com">Get started</a>
           <ul class="plan__feats">
-            <li><i class="ph ph-check-circle"></i> 5 devices included, expandable to 10 — phones, tablets, laptops</li>
+            <li><i class="ph ph-check-circle"></i> 5 devices included, more on request — phones, tablets, laptops</li>
             <li><i class="ph ph-check-circle"></i> Per-child time schedules and rules</li>
             <li><i class="ph ph-check-circle"></i> All content categories, plus your own block list</li>
             <li><i class="ph ph-check-circle"></i> 7-day history, then deleted</li>
@@ -316,9 +326,9 @@
           <summary>Do I need to install an app on every device? <i class="ph ph-plus"></i></summary>
           <p>Android phones and iPhones use the Zaksha app, which keeps filtering on wherever the device goes — Wi-Fi or mobile data. Macs use a small configuration profile and Windows PCs a small agent. You get guided, device-specific steps for each platform on the <a class="inline" href="get.html" style="color:var(--teal-700); font-weight:700;">Get the app</a> page.</p>
         </details>
-        <details class="faq__item">
+        <details class="faq__item" id="faq-turn-off">
           <summary>Can my child turn it off? Is Zaksha tamper-proof? <i class="ph ph-plus"></i></summary>
-          <p>On a family iPhone, set a Screen Time passcode only you know and Zaksha can't be switched off or deleted — turning off filtering just locks your child's apps until it's back on. On Android, Zaksha's setup locks it on so it can't be uninstalled. The one thing outside our control is your Apple ID password (Apple lets it reset the Screen Time passcode), so keep it private. For organisations, our supervised (MDM) setup is fully tamper-proof: enforcement can't be removed at all.</p>
+          <p>On a family iPhone, set a Screen Time passcode only you know and Zaksha can't be switched off or deleted — turning off filtering just locks your child's apps until it's back on. The one thing outside our control there is your Apple ID password (Apple lets it reset the Screen Time passcode), so keep it private. On Android you choose the level: the standard install is tamper-evident — you're alerted the moment it's removed — and the fresh-phone setup is tamper-proof: Zaksha can't be uninstalled from the phone. For <a href="schools.html" style="color:var(--teal-700); font-weight:700;">organisations</a>, our supervised (MDM) setup is tamper-proof across the fleet.</p>
         </details>
         <details class="faq__item">
           <summary>What exactly can Zaksha see? <i class="ph ph-plus"></i></summary>
@@ -391,5 +401,18 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script>
+    // Deep links to a FAQ item (e.g. #faq-turn-off) expand it on arrival.
+    function openFaq(hash) {
+      var el = hash && /^#faq-/.test(hash) && document.getElementById(hash.slice(1));
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    window.addEventListener('hashchange', function () { openFaq(location.hash); });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#faq-"]');
+      if (a) openFaq(a.getAttribute('href'));
+    });
+    openFaq(location.hash);
+  </script>
 </body>
 </html>

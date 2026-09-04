@@ -39,40 +39,40 @@ Lead with these, in this order. Each line is safe to use verbatim.
    with the device — mobile data, a friend's Wi-Fi, anywhere.
 3. **Built to stay on.** Turning filtering off doesn't go unnoticed: parents get a
    WhatsApp message and a push alert the moment a device stops filtering. On iPhone,
-   switching filtering off locks the child's chosen apps until it's back on (see the
-   gate below). On Android, the fresh-phone setup locks Zaksha on so it can't be
-   uninstalled from the phone.
+   switching filtering off locks the child's chosen apps until it's back on. On
+   Android, parents choose the level: the standard setup is tamper-evident (you're
+   alerted), and the fresh-phone setup is tamper-proof — Zaksha can't be uninstalled
+   from the phone.
 4. **Schedules and per-child rules.** Internet off at bedtime, on after homework —
    time windows per day, set per child or per device, all from one dashboard.
 
 Supporting points (true, use freely): 7-day history then deleted for good; domains only,
 never messages or page content; data stays in India; ₹199/month for the household,
-5 devices included, expandable to 10; UPI or card, cancel anytime; managed service —
-nothing to host.
+5 devices included and expandable — parents can ask us for more (no hard cap beyond
+fair use); UPI or card, cancel anytime; managed service — nothing to host.
 
 ## Anti-bypass language (non-negotiable)
 
-Home is **tamper-resistant**, never **tamper-proof**. Only the Enterprise/MDM track
-(supervised fleets, schools.html) may say tamper-proof.
+Home in general is **tamper-resistant**, not **tamper-proof**. Two setups earn the word
+tamper-proof, because enforcement genuinely can't be removed: the **Android fresh-phone
+(device-owner) setup** — a Home option parents can choose over the standard
+tamper-evident install — and the **Enterprise/MDM track** (supervised fleets,
+schools.html). Never apply tamper-proof to the iPhone story or to Home as a whole.
 
 Say for Home: "hard to bypass", "built to stay on", "hard to switch off without you",
-"tamper-resistant", "locks Zaksha on" (Android fresh-phone setup — describe the effect,
-don't use the word tamper-proof even though the in-app label currently says it).
+"tamper-resistant"; for the Android fresh-phone setup specifically, "tamper-proof —
+can't be uninstalled from the phone" is accurate and allowed.
 
 The honest caveat, always nearby when we make the anti-bypass claim: on iPhone the
 Screen Time passcode does the pinning, and Apple lets the Apple ID password reset that
 passcode — so the parent's Apple ID password is the real key. We say this plainly; it's
 also why the claim is credible.
 
-Never say for Home: tamper-proof, unbypassable, impossible to remove, "magic wall",
-100% / guaranteed blocking.
+Never say for Home overall (or for iPhone): tamper-proof, unbypassable, impossible to
+remove, "magic wall", 100% / guaranteed blocking.
 
 ## Claims we must NOT make (as of 2026-09-04)
 
-- **iOS tamper lock (apps pause when filtering is turned off)** — in the 1.1/1.2
-  binaries, NOT in the App Store build customers download today (v1.0). Don't publish
-  this claim until the 1.2 build is live on the App Store. The site sections that make
-  it are staged behind that gate.
 - **Allow lists** — not built for Home. Parents get category toggles plus their own
   block list (5 custom rules per device). Say "your own block list", not "block and
   allow lists".
@@ -80,7 +80,7 @@ Never say for Home: tamper-proof, unbypassable, impossible to remove, "magic wal
   blocked today", never "live" or "real-time".
 - **UPI Autopay / auto-renewing subscription** — verify against prod before claiming;
   "pay by UPI or card, monthly or annual, cancel anytime" is always safe.
-- **Unlimited devices** — it's 5 included, expandable to 10.
+- **Unlimited devices** — it's 5 included, expandable on request.
 - **Email alerts** — removed; the channels are WhatsApp and push.
 
 ## Landing pages
