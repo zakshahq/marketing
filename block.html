@@ -52,9 +52,9 @@
       <p class="lead">Zaksha keeps porn and other categories off your child's phone — on home Wi-Fi and on mobile data, wherever the phone goes. Set it once, from one dashboard.</p>
       <div class="hero__btns">
         <a class="btn btn--primary btn--lg" href="https://app.zaksha.com/signup?ref=GS-BLOCK1">Get started</a>
-        <a class="btn btn--ghost btn--lg" href="/pricing.html">See pricing</a>
       </div>
       <div class="hero__facts">
+        <span><i class="ph ph-check-circle"></i> 14-day free trial, no card</span>
         <span><i class="ph ph-check-circle"></i> ₹199/month, whole household</span>
         <span><i class="ph ph-map-pin"></i> Data stays in India</span>
         <span><i class="ph ph-eye-slash"></i> Never sold or used for ads</span>
@@ -129,7 +129,7 @@
     <div class="wrap">
       <div class="ctaband">
         <h2>Draw the line tonight.</h2>
-        <p>Set up Zaksha in minutes — we run the rest.</p>
+        <p>Start a 14-day free trial — no card needed. Set up in minutes.</p>
         <div class="btns">
           <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup?ref=GS-BLOCK1">Get started</a>
         </div>
@@ -149,10 +149,13 @@
 
   <script src="icons.js"></script>
   <script>
-    // Carry the ad's ?ref= through to the signup CTA so each ad group's code
-    // (e.g. AG3 → GS-BLOCK2) is attributed; no ?ref= keeps this lander's default.
+    // Carry the ad's ?ref= into the signup CTA, and remember it (localStorage) so it
+    // survives navigation within the site — each ad group's code (e.g. AG3 → GS-BLOCK2)
+    // stays attributed. No ?ref= and none stored keeps this lander's default.
     (function () {
+      var KEY = 'zaksha_ref';
       var ref = new URLSearchParams(location.search).get('ref');
+      try { if (ref) localStorage.setItem(KEY, ref); else ref = localStorage.getItem(KEY); } catch (e) {}
       if (!ref) return;
       document.querySelectorAll('a[href*="app.zaksha.com/signup"]').forEach(function (a) {
         var u = new URL(a.href);

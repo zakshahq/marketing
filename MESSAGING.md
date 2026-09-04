@@ -73,9 +73,11 @@ remove, "magic wall", 100% / guaranteed blocking.
 
 ## Claims we must NOT make (as of 2026-09-04)
 
-- **Allow lists** — not built for Home. Parents get category toggles plus their own
-  block list (5 custom rules per device). Say "your own block list", not "block and
-  allow lists".
+- **Content allow lists** — DNS content filtering has no allow side for Home (category
+  toggles + a block list of 5 custom rules per device); don't claim a content allow-list.
+  But the iOS tamper lock IS shield-all with parent-chosen **allowed apps** (exemptions set
+  in Manage — the "You set the terms" shot), so "block and allow lists" / "the apps you
+  allow" is accurate for the iOS app side.
 - **Real-time dashboard** — activity is computed in batches (~30 min). Say "what was
   blocked today", never "live" or "real-time".
 - **UPI Autopay / auto-renewing subscription** — verify against prod before claiming;

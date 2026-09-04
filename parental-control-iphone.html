@@ -48,17 +48,17 @@
   <!-- ============================== HERO ============================== -->
   <section class="hero">
     <div class="wrap">
-      <h1>Parental controls for your child's phone — and every other device.</h1>
+      <h1>Parental controls for iPhone — and every other device.</h1>
       <p class="lead">Zaksha filters adult content on iPhone, iPad, Android, Mac and Windows from one dashboard. If filtering is ever switched off, the phone's apps pause and you get a WhatsApp alert — so a gap never goes unnoticed.</p>
       <div class="hero__btns">
         <a class="btn btn--primary btn--lg" href="https://app.zaksha.com/signup?ref=GS-IOS1">Get started</a>
-        <a class="btn btn--ghost btn--lg" href="/pricing.html">See pricing</a>
       </div>
       <div class="hero__facts">
+        <span><i class="ph ph-check-circle"></i> 14-day free trial, no card</span>
+        <span><i class="ph ph-apple-logo"></i> On the App Store</span>
         <span><i class="ph ph-check-circle"></i> ₹199/month, whole household</span>
         <span><i class="ph ph-map-pin"></i> Data stays in India</span>
         <span><i class="ph ph-eye-slash"></i> Never sold or used for ads</span>
-        <span><i class="ph ph-check-circle"></i> Cancel anytime</span>
       </div>
     </div>
   </section>
@@ -119,7 +119,7 @@
         </details>
         <details class="faq__item">
           <summary>Can my child just turn it off? <i class="ph ph-plus"></i></summary>
-          <p>Straight answer: filtering is a strong layer, not a magic wall. On iPhone, switching Zaksha's filtering off pauses the phone's apps until it's back on and alerts you on WhatsApp — so it's hard to switch off without you knowing. A determined teen who has the device passcode can still change settings; a Screen Time passcode on the phone holds them.</p>
+          <p>Straight answer: filtering is a strong layer, not a magic wall. On iPhone, switching Zaksha's filtering off pauses the phone's apps until it's back on and alerts you on WhatsApp — so it's hard to switch off without you knowing. A determined teen who has the device passcode can still change settings; a Screen Time passcode on the phone holds them — though Apple lets the Apple ID password reset that passcode, so your Apple ID password is the real key.</p>
         </details>
         <details class="faq__item">
           <summary>What exactly can Zaksha see? <i class="ph ph-plus"></i></summary>
@@ -138,7 +138,7 @@
     <div class="wrap">
       <div class="ctaband">
         <h2>Every device, built to stay on.</h2>
-        <p>Set up Zaksha in minutes — we run the rest.</p>
+        <p>Start a 14-day free trial — no card needed. Set up in minutes.</p>
         <div class="btns">
           <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup?ref=GS-IOS1">Get started</a>
         </div>
@@ -158,10 +158,13 @@
 
   <script src="icons.js"></script>
   <script>
-    // Carry the ad's ?ref= through to the signup CTA so each ad group's code
-    // (e.g. AG3 → GS-BLOCK2) is attributed; no ?ref= keeps this lander's default.
+    // Carry the ad's ?ref= into the signup CTA, and remember it (localStorage) so it
+    // survives navigation within the site — each ad group's code (e.g. AG3 → GS-BLOCK2)
+    // stays attributed. No ?ref= and none stored keeps this lander's default.
     (function () {
+      var KEY = 'zaksha_ref';
       var ref = new URLSearchParams(location.search).get('ref');
+      try { if (ref) localStorage.setItem(KEY, ref); else ref = localStorage.getItem(KEY); } catch (e) {}
       if (!ref) return;
       document.querySelectorAll('a[href*="app.zaksha.com/signup"]').forEach(function (a) {
         var u = new URL(a.href);
