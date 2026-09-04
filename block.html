@@ -137,5 +137,18 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script>
+    // Carry the ad's ?ref= through to the signup CTA so each ad group's code
+    // (e.g. AG3 → GS-BLOCK2) is attributed; no ?ref= keeps this lander's default.
+    (function () {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (!ref) return;
+      document.querySelectorAll('a[href*="app.zaksha.com/signup"]').forEach(function (a) {
+        var u = new URL(a.href);
+        u.searchParams.set('ref', ref);
+        a.href = u.toString();
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zaksha — Parental controls that go beyond Android</title>
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="description" content="Zaksha covers Android, iPhone, Mac and Windows from one dashboard, with tamper-proof setup and WhatsApp alerts the moment filtering stops. ₹199/month for the whole household." />
+  <meta name="description" content="Zaksha covers Android, iPhone, Mac and Windows from one dashboard, with tamper-resistant setup and WhatsApp alerts the moment filtering stops. ₹199/month for the whole household." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,12 +18,12 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Zaksha" />
   <meta property="og:title" content="Zaksha — Parental controls that go beyond Android" />
-  <meta property="og:description" content="One dashboard for Android, iPhone, Mac and Windows, tamper-proof setup, and WhatsApp alerts the moment filtering stops." />
+  <meta property="og:description" content="One dashboard for Android, iPhone, Mac and Windows, tamper-resistant setup, and WhatsApp alerts the moment filtering stops." />
   <meta property="og:url" content="https://zaksha.com/parental-control-android.html" />
   <meta property="og:image" content="https://zaksha.com/og-image.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Zaksha" />
-  <meta name="twitter:description" content="One dashboard for Android, iPhone, Mac and Windows, with tamper-proof setup and WhatsApp alerts." />
+  <meta name="twitter:description" content="One dashboard for Android, iPhone, Mac and Windows, with tamper-resistant setup and WhatsApp alerts." />
   <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
 </head>
 <body>
@@ -49,7 +49,7 @@
   <section class="hero">
     <div class="wrap">
       <h1>Parental controls that go beyond Android.</h1>
-      <p class="lead">Family Link is free and does a fair job on Android. Zaksha is a paid step up: one dashboard for every device your kids use — Android, iPhone, Mac and Windows — with tamper-proof setup and an alert on WhatsApp the moment filtering stops.</p>
+      <p class="lead">Family Link is free and does a fair job on Android. Zaksha is a paid step up: one dashboard for every device your kids use — Android, iPhone, Mac and Windows — built to stay on, with an alert on WhatsApp the moment filtering stops.</p>
       <div class="hero__btns">
         <a class="btn btn--primary btn--lg" href="https://app.zaksha.com/signup?ref=GS-PCA1">Get started</a>
         <a class="btn btn--ghost btn--lg" href="/pricing.html">See pricing</a>
@@ -114,7 +114,7 @@
       <div class="faq">
         <details class="faq__item" open>
           <summary>Why pay when Family Link is free? <i class="ph ph-plus"></i></summary>
-          <p>Family Link is a solid free option if your child only uses an Android phone tied to a supervised Google account. Zaksha is for households with a mix of devices — Android, iPhone, Mac, Windows — that want one dashboard, tamper-proof setup, and a WhatsApp alert the moment filtering stops on any of them.</p>
+          <p>Family Link is a solid free option if your child only uses an Android phone tied to a supervised Google account. Zaksha is for households with a mix of devices — Android, iPhone, Mac, Windows — that want one dashboard, filtering that's built to stay on, and a WhatsApp alert the moment filtering stops on any of them.</p>
         </details>
         <details class="faq__item">
           <summary>Can my child just turn it off? <i class="ph ph-plus"></i></summary>
@@ -160,5 +160,18 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script>
+    // Carry the ad's ?ref= through to the signup CTA so each ad group's code
+    // (e.g. AG3 → GS-BLOCK2) is attributed; no ?ref= keeps this lander's default.
+    (function () {
+      var ref = new URLSearchParams(location.search).get('ref');
+      if (!ref) return;
+      document.querySelectorAll('a[href*="app.zaksha.com/signup"]').forEach(function (a) {
+        var u = new URL(a.href);
+        u.searchParams.set('ref', ref);
+        a.href = u.toString();
+      });
+    })();
+  </script>
 </body>
 </html>
