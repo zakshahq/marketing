@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to block adult content on Android — every method compared</title>
+  <meta name="description" content="Four ways to block adult content on Android: free DNS filtering, Family Link, router controls and Zaksha. Costs, what survives mobile data, and what a kid can undo." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="canonical" href="https://zaksha.com/block-adult-content-android" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="How to block adult content on Android — every method compared" />
+  <meta property="og:description" content="Free DNS filtering, Family Link, router controls and Zaksha, compared on cost, mobile data and whether a kid can undo it." />
+  <meta property="og:url" content="https://zaksha.com/block-adult-content-android" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How to block adult content on Android" />
+  <meta name="twitter:description" content="Free DNS filtering, Family Link, router controls and Zaksha, compared on cost, mobile data and whether a kid can undo it." />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+
+  <style>
+    /* ---------- Guide page — additions not covered by zaksha-site.css ---------- */
+    .guide-hero { padding: clamp(48px, 7vw, 80px) 0 clamp(28px, 4vw, 40px); text-align: center; }
+    .guide-hero h1 { font-size: clamp(30px, 4.4vw, 46px); max-width: 780px; margin: 0 auto; }
+    .guide-hero .lead { margin: 18px auto 0; max-width: 640px; }
+    .factcheck { margin-top: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-400); }
+
+    .prose { max-width: 720px; margin: 0 auto; }
+    .prose h2 { font-size: clamp(22px, 3vw, 28px); margin-bottom: 14px; }
+    .prose h2 .num { font-family: var(--mono); color: var(--teal-600); margin-right: 10px; }
+    .prose p { color: var(--ink-700); font-size: 16px; line-height: 1.7; margin-top: 12px; }
+    .prose p + p { margin-top: 14px; }
+    .prose ul { margin: 14px 0 0; padding-left: 20px; color: var(--ink-700); font-size: 16px; line-height: 1.7; }
+    .prose ul li + li { margin-top: 6px; }
+    .prose-section + .prose-section { margin-top: clamp(36px, 5vw, 52px); }
+    .prose .limit, .prose .gain { margin-top: 16px; padding: 14px 18px; border-radius: var(--r-md); font-size: 15px; line-height: 1.6; }
+    .prose .limit { background: var(--slate-50); border: 1px solid var(--slate-100); }
+    .prose .gain { background: var(--teal-50); border: 1px solid var(--teal-200, var(--line)); }
+    .prose .gain b { color: var(--teal-700); }
+    .prose .limit p, .prose .gain p { margin: 0; }
+    .answer { margin: 0 0 clamp(28px, 4vw, 44px); padding: 16px 20px; border-radius: var(--r-md); background: var(--teal-50); border: 1px solid var(--teal-200, var(--line)); border-left: 4px solid var(--teal-600); }
+    .answer p { margin: 0; font-size: 16px; line-height: 1.65; color: var(--ink-700); }
+    .answer b { color: var(--teal-700); }
+    .answer a { color: var(--teal-700); font-weight: 700; }
+
+    .method-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14.5px; }
+    .method-table th, .method-table td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .method-table th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-400); font-weight: 500; }
+    .method-table td:first-child, .method-table th:first-child { font-weight: 800; color: var(--ink-900); }
+    .method-table tr:last-child td { border-bottom: 0; }
+    .method-table tr.row-us td { background: var(--teal-50); }
+    .method-table tr.row-us td:first-child { color: var(--teal-700); }
+    .method-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); margin-top: 8px; }
+    .method-table-wrap .method-table { margin-top: 0; }
+
+    /* tighten the jump from the hero into the first section */
+    .guide-hero + .section { padding-top: clamp(12px, 2.5vw, 24px); }
+
+    /* stack the comparison into one card per method on phones — no sideways scroll */
+    @media (max-width: 620px) {
+      .method-table-wrap { border: 0; background: transparent; overflow-x: visible; }
+      .method-table thead { position: absolute; left: -9999px; }
+      .method-table tr { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); margin-bottom: 12px; padding: 6px 2px; }
+      .method-table tr.row-us { border-color: var(--teal-200, var(--line)); }
+      .method-table tr.row-us td { background: transparent; }
+      .method-table td { display: block; border: 0; padding: 8px 16px; white-space: normal; }
+      .method-table td:first-child { font-size: 16px; padding-top: 12px; }
+      .method-table td:not(:first-child)::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="/">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="/#how">How it works</a>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com?ref=SEO-ANDROID">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="guide-hero">
+    <div class="wrap">
+      <span class="eyebrow">Guide</span>
+      <h1>How to block adult content on Android — every method compared</h1>
+      <p class="lead">Four ways to do it, from a free setting to a paid app. Each one has a real limit — here's what each covers, what it costs, and what a kid can switch back off.</p>
+      <p class="factcheck">Facts checked 7 September 2026.</p>
+    </div>
+  </section>
+
+  <!-- ============================== GUIDE BODY ============================== -->
+  <section class="section">
+    <div class="wrap prose">
+
+      <div class="answer">
+        <p><b>The short answer.</b> The free methods below each cover part of the job, but each leaves a gap a curious kid can find — off in Settings, Chrome-only, or stuck at your front door. For filtering that follows the phone onto any network and pings you the moment it's switched off, use an on-device app: that's what Zaksha does. <a href="https://app.zaksha.com?ref=SEO-ANDROID">Start a free trial</a>, or read the full walk-through first.</p>
+      </div>
+
+      <div class="prose-section">
+        <h2><span class="num">01</span>Free DNS filtering</h2>
+        <p>Android has a built-in setting called Private DNS (Settings → Network &amp; internet → Private DNS, or Connections → More connection settings on Samsung). Point it at a family-safe DNS resolver and the phone routes its lookups through a filter that blocks known adult and gambling domains — on Wi-Fi and mobile data, since it's a device-wide setting rather than a per-network one.</p>
+        <p>It's free and takes one screen to set up.</p>
+        <div class="limit">
+          <p><b>Where this stops.</b> It lives in the same Settings menu a curious teenager already knows how to reach. Turning it off is a few taps, with nothing to stop them and no way for you to find out it happened.</p>
+        </div>
+      </div>
+
+      <div class="prose-section">
+        <h2><span class="num">02</span>Google Family Link</h2>
+        <p>Family Link is Google's free supervision app for Android. Its screen-time tools are genuinely good — app limits, bedtime schedules, location, approval requests for new app downloads. For content, it turns Google SafeSearch on or off and lets you block or allow specific sites in Chrome.</p>
+        <div class="limit">
+          <p><b>Where this stops.</b> No category filtering, and nothing outside Chrome — a kid who opens Firefox or types a URL into an app is unscreened. Supervision also isn't permanent: from age 13 a child can ask to leave it, and once it's gone, so is every setting attached to it.</p>
+        </div>
+      </div>
+
+      <div class="prose-section">
+        <h2><span class="num">03</span>Router and carrier controls</h2>
+        <p>Most home routers ship with a parental-control panel, and some mobile carriers offer a family-safe browsing add-on. Both work by filtering traffic at the network level — the router for Wi-Fi in the house, the carrier for its own SIM.</p>
+        <div class="limit">
+          <p><b>Where this stops.</b> They sit at the front door. Step onto a friend's Wi-Fi, a school network, or plain mobile data from a different provider, and the filtering doesn't come along. For a phone that leaves the house — which is most phones — this covers a fraction of where the browsing actually happens.</p>
+        </div>
+      </div>
+
+      <div class="prose-section">
+        <h2><span class="num">04</span>Zaksha</h2>
+        <p>Zaksha is a paid app that installs on the phone itself rather than on a network, so the same block list applies on home Wi-Fi, a friend's Wi-Fi, or mobile data — anywhere the phone gets online. It blocks adult content, gambling and other categories with one switch per category, per child.</p>
+        <p>The standard install is tamper-evident: if a child finds the app and switches filtering off or removes it, you get a WhatsApp message and a push alert the moment it happens, not at the end of the day. Parents who want to close that gap entirely can set up the phone a different way — fresh out of the box or after a factory reset. That fresh-phone (device-owner) setup is tamper-proof: Zaksha can't be uninstalled from the phone. It's optional, and it only works on a phone set up before a child starts using it — a phone already in daily use would need a factory reset first.</p>
+        <p>₹199/month covers up to 5 devices for the household. There's a 14-day free trial, no card required.</p>
+        <div class="gain">
+          <p><b>Where this holds.</b> Each free method leaves a gap — DNS filtering flips off in Settings with no alert, Family Link misses non-Chrome apps and ends at 13, router rules stop at your front door. Zaksha travels with the phone on any network and can't be switched off quietly: you're alerted the moment it stops, or with the fresh-phone setup it can't be removed at all.</p>
+        </div>
+      </div>
+
+      <div class="prose-section">
+        <h2><span class="num">05</span>The four methods, side by side</h2>
+        <div class="method-table-wrap">
+          <table class="method-table">
+            <thead>
+              <tr><th>Method</th><th>Cost</th><th>Survives mobile data</th><th>Kid can undo it</th></tr>
+            </thead>
+            <tbody>
+              <tr class="row-us"><td>Zaksha</td><td data-label="Cost">₹199/month</td><td data-label="Survives mobile data">Yes</td><td data-label="Kid can undo it">Standard: alerted instantly. Fresh-phone setup: no</td></tr>
+              <tr><td>Private DNS</td><td data-label="Cost">Free</td><td data-label="Survives mobile data">Yes</td><td data-label="Kid can undo it">Yes — no lock, no alert</td></tr>
+              <tr><td>Family Link</td><td data-label="Cost">Free</td><td data-label="Survives mobile data">Yes, but Chrome-only filtering</td><td data-label="Kid can undo it">From age 13, with parent sign-off</td></tr>
+              <tr><td>Router / carrier</td><td data-label="Cost">Free (included)</td><td data-label="Survives mobile data">No — home Wi-Fi or one SIM only</td><td data-label="Kid can undo it">Not applicable outside that network</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section class="section section--wash" id="faq">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item" open>
+          <summary>Is free DNS filtering enough on its own? <i class="ph ph-plus"></i></summary>
+          <p>For a younger child who isn't looking to get around it, yes — it's a real filter for free. For an older kid who knows their way around Settings, it's a five-tap fix with nothing to alert you and nothing to stop them trying again.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Why doesn't Family Link block porn better? <i class="ph ph-plus"></i></summary>
+          <p>It was built around Google's own apps — SafeSearch and Chrome's site lists — not general category filtering. A browser outside Chrome, or an app with its own browsing, isn't covered.</p>
+        </details>
+        <details class="faq__item">
+          <summary>What happens to router controls on mobile data? <i class="ph ph-plus"></i></summary>
+          <p>Nothing — they don't apply. Router rules only run on that router's Wi-Fi, so the moment a phone switches to mobile data or another network, filtering stops.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Is Zaksha tamper-proof? <i class="ph ph-plus"></i></summary>
+          <p>Only in one specific setup: a phone enrolled fresh, before a child uses it, through the device-owner install on the <a href="/get" style="color:var(--teal-700); font-weight:700;">Get the app</a> page — that one can't be uninstalled from the phone. The standard install on a phone already in use is tamper-evident: if it's switched off or removed, you're alerted on WhatsApp and push immediately, not tamper-proof.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA ============================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="ctaband">
+        <h2>Pick the method that survives mobile data.</h2>
+        <p>Start a 14-day free trial — no card needed. Set up in minutes.</p>
+        <div class="btns">
+          <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com?ref=SEO-ANDROID">Get started</a>
+          <a class="btn btn--onteal-ghost btn--lg" href="/get">Get the app</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid footer__grid--4">
+        <div>
+          <a class="brand" href="/">
+            <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+              <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Parental controls and content filtering for Indian families — and the organisations that need it. Made and run in India.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="/#how">How it works</a>
+          <a href="/#features">Features</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/get">Get the app</a>
+        </div>
+        <div class="footer__col">
+          <h4>Guides</h4>
+          <a href="/best-parental-control-app-india">Best parental control app in India</a>
+          <a href="/google-family-link-alternative">Family Link alternative</a>
+          <a href="/block-adult-content-iphone">Block adult content on iPhone</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="icons.js"></script>
+</body>
+</html>
