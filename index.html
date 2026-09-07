@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zaksha — Parental controls that hold. Block adult content on every device.</title>
   <meta name="description" content="Zaksha blocks adult content, gambling and more on your kids' iPhone, Android, Windows and Mac — on any network — and tells you on WhatsApp the moment filtering stops. ₹199/month for the household. Data stays in India." />
+  <link rel="canonical" href="https://zaksha.com/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,13 +25,108 @@
   <meta name="twitter:title" content="Zaksha" />
   <meta name="twitter:description" content="Blocks adult content and more on every device your kids use, on any network — and tells you the moment filtering stops." />
   <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zaksha",
+  "url": "https://zaksha.com/",
+  "logo": "https://zaksha.com/icon-512.png"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Zaksha",
+  "applicationCategory": "ParentalControl",
+  "operatingSystem": "Android, iOS, Windows, macOS",
+  "offers": {
+    "@type": "Offer",
+    "price": "199",
+    "priceCurrency": "INR"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is this different from a free DNS filter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A free filter blocks categories on one network — usually your home router — and that's where it ends. Zaksha puts an app on the device itself, so the same rules follow your child onto mobile data and any Wi-Fi. On top of that: time schedules, per-child rules, one dashboard for every device, a WhatsApp alert if filtering stops, and a setup that's hard for a child to switch off. That layer is what you're paying for."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which categories can I block?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Adult content, gambling, social media, gaming, streaming — and AI chatbots like ChatGPT and Gemini, which parents switch off in exam season. Each category is one switch, set separately for each child's device, and you can add specific sites of your own to the block list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to install an app on every device?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Android phones and iPhones use the Zaksha app, which keeps filtering on wherever the device goes — Wi-Fi or mobile data. Macs use a small configuration profile and Windows PCs a small agent. You get guided, device-specific steps for each platform on the Get the app page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can my child turn it off? Is Zaksha tamper-proof?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On a family iPhone, set a Screen Time passcode only you know and Zaksha can't be switched off or deleted — turning off filtering just locks your child's apps until it's back on. The one thing outside our control there is your Apple ID password (Apple lets it reset the Screen Time passcode), so keep it private. On Android you choose the level: the standard install is tamper-evident — you're alerted the moment it's removed — and the fresh-phone setup is tamper-proof: Zaksha can't be uninstalled from the phone. For organisations, our supervised (MDM) setup is tamper-proof across the fleet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What exactly can Zaksha see?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Website names only — that a device asked for youtube.com, never your messages, photos, passwords or anything on a page. History is kept for a rolling 7 days, then genuinely deleted. Everything is processed and stored on our servers in India and never leaves them. No ads, and nothing is sold."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the dashboard real-time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not quite — stats are computed in periodic batches, roughly every half hour. You see what was blocked today, the last 24 hours and the last 7 days, rather than a live feed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I pay?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UPI, or a debit or credit card — whatever you prefer. Pay monthly, or annually at a discount, and cancel anytime."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "We're an office or a school — is Zaksha for us?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — that's the Enterprise plan. Group policies, bulk enrolment via MDM, per-user reporting, and a dedicated isolated instance with 30- or 90-day retention when you need it. Talk to us and we'll size it to you."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
   <!-- ============================== NAV ============================== -->
   <header class="nav" id="nav">
     <div class="wrap nav__in">
-      <a class="brand" href="index.html">
+      <a class="brand" href="/">
         <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
           <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -318,11 +414,11 @@
         </details>
         <details class="faq__item">
           <summary>Do I need to install an app on every device? <i class="ph ph-plus"></i></summary>
-          <p>Android phones and iPhones use the Zaksha app, which keeps filtering on wherever the device goes — Wi-Fi or mobile data. Macs use a small configuration profile and Windows PCs a small agent. You get guided, device-specific steps for each platform on the <a class="inline" href="get.html" style="color:var(--teal-700); font-weight:700;">Get the app</a> page.</p>
+          <p>Android phones and iPhones use the Zaksha app, which keeps filtering on wherever the device goes — Wi-Fi or mobile data. Macs use a small configuration profile and Windows PCs a small agent. You get guided, device-specific steps for each platform on the <a class="inline" href="/get" style="color:var(--teal-700); font-weight:700;">Get the app</a> page.</p>
         </details>
         <details class="faq__item" id="faq-turn-off">
           <summary>Can my child turn it off? Is Zaksha tamper-proof? <i class="ph ph-plus"></i></summary>
-          <p>On a family iPhone, set a Screen Time passcode only you know and Zaksha can't be switched off or deleted — turning off filtering just locks your child's apps until it's back on. The one thing outside our control there is your Apple ID password (Apple lets it reset the Screen Time passcode), so keep it private. On Android you choose the level: the standard install is tamper-evident — you're alerted the moment it's removed — and the fresh-phone setup is tamper-proof: Zaksha can't be uninstalled from the phone. For <a href="schools.html" style="color:var(--teal-700); font-weight:700;">organisations</a>, our supervised (MDM) setup is tamper-proof across the fleet.</p>
+          <p>On a family iPhone, set a Screen Time passcode only you know and Zaksha can't be switched off or deleted — turning off filtering just locks your child's apps until it's back on. The one thing outside our control there is your Apple ID password (Apple lets it reset the Screen Time passcode), so keep it private. On Android you choose the level: the standard install is tamper-evident — you're alerted the moment it's removed — and the fresh-phone setup is tamper-proof: Zaksha can't be uninstalled from the phone. For <a href="/schools" style="color:var(--teal-700); font-weight:700;">organisations</a>, our supervised (MDM) setup is tamper-proof across the fleet.</p>
         </details>
         <details class="faq__item">
           <summary>What exactly can Zaksha see? <i class="ph ph-plus"></i></summary>
@@ -352,7 +448,7 @@
         <p>Set up Zaksha in minutes — we run the rest.</p>
         <div class="btns">
           <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com">Get started</a>
-          <a class="btn btn--onteal-ghost btn--lg" href="get.html">Get the app</a>
+          <a class="btn btn--onteal-ghost btn--lg" href="/get">Get the app</a>
         </div>
       </div>
     </div>
@@ -361,9 +457,9 @@
   <!-- ============================== FOOTER ============================== -->
   <footer class="footer">
     <div class="wrap">
-      <div class="footer__grid">
+      <div class="footer__grid footer__grid--4">
         <div>
-          <a class="brand" href="index.html">
+          <a class="brand" href="/">
             <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
               <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -377,18 +473,25 @@
           <a href="#how">How it works</a>
           <a href="#features">Features</a>
           <a href="#pricing">Pricing</a>
-          <a href="get.html">Get the app</a>
+          <a href="/get">Get the app</a>
+        </div>
+        <div class="footer__col">
+          <h4>Guides</h4>
+          <a href="/best-parental-control-app-india">Best parental control app in India</a>
+          <a href="/google-family-link-alternative">Family Link alternative</a>
+          <a href="/block-adult-content-android">Block adult content on Android</a>
+          <a href="/block-adult-content-iphone">Block adult content on iPhone</a>
         </div>
         <div class="footer__col">
           <h4>Company</h4>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
           <a href="mailto:support@zaksha.com">Contact us</a>
           <a href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Enterprise enquiry</a>
         </div>
       </div>
       <div class="footer__bar">
-        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
         <span class="mono">zaksha.com</span>
       </div>
     </div>

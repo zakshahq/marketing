@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to block adult content on iPhone — Screen Time and beyond</title>
+  <meta name="description" content="Screen Time, a DNS profile, or an app like Zaksha — what each one actually blocks on iPhone, what a kid can undo, and the limits of every method, honestly." />
+  <link rel="canonical" href="https://zaksha.com/block-adult-content-iphone" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="How to block adult content on iPhone — Screen Time and beyond" />
+  <meta property="og:description" content="Screen Time, a DNS profile, or an app like Zaksha — what each one actually blocks on iPhone, what a kid can undo, and the limits of every method, honestly." />
+  <meta property="og:url" content="https://zaksha.com/block-adult-content-iphone" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How to block adult content on iPhone" />
+  <meta name="twitter:description" content="Screen Time, a DNS profile, or an app like Zaksha — what each one blocks, what a kid can undo, and the limits of every method." />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+  <style>
+    .guide { max-width: 720px; margin: 0 auto; }
+    .guide h2 { font-size: clamp(22px, 3vw, 28px); margin-top: 48px; margin-bottom: 14px; }
+    .guide h2 .step-n { color: var(--teal-600); font-family: var(--mono); margin-right: 10px; }
+    .guide h3 { font-size: 16px; margin-top: 24px; }
+    .guide p, .guide li { font-size: 16px; line-height: 1.7; color: var(--ink-700); }
+    .guide ul { padding-left: 20px; }
+    .guide .limit { margin-top: 18px; padding: 14px 18px; border-radius: var(--r-md); background: var(--slate-50); border: 1px solid var(--slate-100); font-size: 14.5px; color: var(--ink-700); }
+    .guide .gain { margin-top: 18px; padding: 14px 18px; border-radius: var(--r-md); background: var(--teal-50); border: 1px solid var(--teal-200, var(--line)); font-size: 14.5px; color: var(--ink-700); }
+    .guide .gain b { color: var(--teal-700); }
+    .answer { margin: 0 0 clamp(28px, 4vw, 44px); padding: 16px 20px; border-radius: var(--r-md); background: var(--teal-50); border: 1px solid var(--teal-200, var(--line)); border-left: 4px solid var(--teal-600); }
+    .answer p { margin: 0; font-size: 16px; line-height: 1.65; color: var(--ink-700); }
+    .answer b { color: var(--teal-700); }
+    .answer a { color: var(--teal-700); font-weight: 700; }
+    .guide-hero { padding: clamp(48px, 7vw, 80px) 0 clamp(28px, 4vw, 40px); text-align: center; }
+    .guide-hero h1 { font-size: clamp(30px, 4.4vw, 46px); max-width: 780px; margin: 0 auto; }
+    .guide-hero .lead { margin: 18px auto 0; max-width: 640px; }
+    .factcheck { margin-top: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-400); }
+    .cmp-wrap { overflow-x: auto; margin-top: 20px; }
+    table.cmp { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+    table.cmp th, table.cmp td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    table.cmp th { color: var(--ink-500); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .02em; }
+    table.cmp td:first-child, table.cmp th:first-child { font-weight: 700; color: var(--ink-900, var(--ink-700)); }
+    table.cmp .row-us td { background: var(--teal-50); }
+    table.cmp .row-us td:first-child { color: var(--teal-700); }
+
+    /* tighten the jump from the hero into the first section */
+    .guide-hero + .section { padding-top: clamp(12px, 2.5vw, 24px); }
+    .guide h2:first-of-type { margin-top: 0; }
+
+    /* stack the comparison into one card per method on phones — no sideways scroll */
+    @media (max-width: 620px) {
+      .cmp-wrap { overflow-x: visible; }
+      table.cmp thead { position: absolute; left: -9999px; }
+      table.cmp tr { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); margin-bottom: 12px; padding: 6px 2px; }
+      table.cmp .row-us tr, table.cmp tr.row-us { border-color: var(--teal-200, var(--line)); }
+      table.cmp td { display: block; border: 0; padding: 8px 16px; }
+      table.cmp .row-us td { background: transparent; }
+      table.cmp td:first-child { font-size: 16px; padding-top: 12px; }
+      table.cmp .row-us td:first-child { color: var(--teal-700); }
+      table.cmp td:not(:first-child)::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="/">
+        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="/#how">How it works</a>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com?ref=SEO-IPHONE">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="guide-hero">
+    <div class="wrap">
+      <span class="eyebrow">Guide</span>
+      <h1>How to block adult content on iPhone</h1>
+      <p class="lead">Three ways to do it, from what's already on the phone to what actually holds. Each one has a real limit — we'd rather you know it now than find it later.</p>
+      <p class="factcheck">Facts checked 7 September 2026.</p>
+    </div>
+  </section>
+
+  <!-- ============================== GUIDE ============================== -->
+  <section class="section">
+    <div class="wrap guide">
+
+      <div class="answer">
+        <p><b>The short answer.</b> Screen Time and a DNS profile are free and worth setting up, but Screen Time misses non-Safari apps and a DNS profile comes off in a few taps. For category blocking that covers every app on any network and alerts you the moment filtering stops, use an app like Zaksha. <a href="https://app.zaksha.com?ref=SEO-IPHONE">Start a free trial</a>, or read the full walk-through first.</p>
+      </div>
+
+      <h2><span class="step-n">01</span>Screen Time content restrictions</h2>
+      <p>Free, and it's already on the phone. Go to <b>Settings → Screen Time → Content &amp; Privacy Restrictions → Content Restrictions → Web Content</b>, then choose <b>Limit Adult Websites</b>. Apple's filter blocks known adult sites automatically and lets you add your own sites to Always Allow or Never Allow. Turn on Content &amp; Privacy Restrictions first and set a Screen Time passcode, or the setting can simply be switched back off.</p>
+      <p>For younger kids, <b>Allowed Websites Only</b> is stricter — the phone only opens a list you set.</p>
+      <div class="limit">
+        <p><b>Where this stops.</b> The filter works in Safari, and in other browsers that hook into the same system content filter. It doesn't reach inside individual apps — a browser built for privacy, an in-app browser, or content shared through social and chat apps can fall outside it. And the passcode that locks these settings resets with the Apple ID password: go to Settings → Screen Time → Change Screen Time Passcode → Forgot Passcode, and Apple ID sign-in takes over. Apple sets this up as a recovery path for parents, not a hole — but it means the Screen Time passcode is only ever as private as your Apple ID password. Keep that one to yourself.</p>
+      </div>
+
+      <h2><span class="step-n">02</span>DNS profiles and family DNS</h2>
+      <p>Also free. A DNS profile points the phone's web requests through a filtering DNS service — several offer free tiers built for families — and blocks adult sites at the domain level before they load. Install it as a configuration profile: Settings → General → VPN &amp; Device Management, or through the DNS provider's own app.</p>
+      <div class="limit">
+        <p><b>Where this stops.</b> A DNS profile only filters the network it's active on — if it's a router-level setup, it stops working the moment the phone leaves Wi-Fi for mobile data. And a profile installed as a normal configuration profile can be removed from the same VPN &amp; Device Management screen it was installed from, with no passcode needed unless Content &amp; Privacy Restrictions is separately locked down to block profile removal.</p>
+      </div>
+
+      <h2><span class="step-n">03</span>Zaksha</h2>
+      <p>A native iPhone app, ₹199/month for the household, 5 devices, 14-day free trial and no card to start. It blocks by category — adult, gambling, social media, gaming, streaming, and AI chatbots — set per child, plus your own sites on top. Filtering runs on the device itself, so it's the same rules on Wi-Fi and mobile data, not just at home.</p>
+      <p>Where Screen Time only filters Safari and apps that use the system filter, Zaksha blocks at the domain level across every app's web traffic, on Wi-Fi and mobile data alike. And where a DNS profile lifts off with one tap in Settings, Zaksha is pinned on with Screen Time and can't be switched off quietly: flip filtering off and the child's chosen apps lock at once, and you get a WhatsApp message and a push alert the moment it happens.</p>
+      <div class="gain">
+        <p><b>Where this holds.</b> The two free methods each leave a gap — Screen Time misses non-Safari apps, and a DNS profile drops on mobile data or comes off in a few taps. Zaksha closes both. The one limit it can't beat is the iPhone's own, and it's the same for every method here: the Apple ID password resets any Screen Time passcode. Keep that private and the setup holds.</p>
+      </div>
+
+      <h2>Comparing the three</h2>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th>Method</th><th>Cost</th><th>Covers mobile data</th><th>Kid can remove it</th><th>Alerts you</th></tr>
+          </thead>
+          <tbody>
+            <tr class="row-us"><td>Zaksha</td><td data-label="Cost">₹199/month</td><td data-label="Covers mobile data">Yes</td><td data-label="Kid can remove it">With Apple ID password</td><td data-label="Alerts you">WhatsApp + push</td></tr>
+            <tr><td>Screen Time</td><td data-label="Cost">Free</td><td data-label="Covers mobile data">Yes</td><td data-label="Kid can remove it">With Apple ID password</td><td data-label="Alerts you">No</td></tr>
+            <tr><td>DNS profile</td><td data-label="Cost">Free</td><td data-label="Covers mobile data">Only if on-device</td><td data-label="Kid can remove it">Yes, from Settings</td><td data-label="Alerts you">No</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--ink-400); margin-top:10px;">"Kid can remove it" means what a technically curious teenager could do, not an average one on an average day.</p>
+
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section class="section section--wash" id="faq">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq__item" open>
+          <summary>Does Screen Time block adult content inside apps, not just Safari? <i class="ph ph-plus"></i></summary>
+          <p>Only partly. Limit Adult Websites is a web filter — it works in Safari and other apps that use the same system filter. It doesn't reach content shared through social apps, chat apps, or an in-app browser that doesn't hook into it.</p>
+        </details>
+        <details class="faq__item">
+          <summary>My child knows our Apple ID password — does any of this still work? <i class="ph ph-plus"></i></summary>
+          <p>Not the parts that rely on the Screen Time passcode — that includes Screen Time restrictions and Zaksha's iPhone lock, since both pin themselves on the same way. A DNS profile doesn't depend on the Apple ID at all, but it's removable from Settings with no password. If the Apple ID password is shared, changing it is the actual fix, not switching filtering methods.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can I use a DNS profile and Zaksha together? <i class="ph ph-plus"></i></summary>
+          <p>You can, but there's little point — Zaksha's on-device filtering already covers what a DNS profile does, on Wi-Fi and mobile data both, so a second DNS layer just adds a second thing to maintain.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can my child bypass Zaksha on iPhone? <i class="ph ph-plus"></i></summary>
+          <p>It's tamper-resistant, not unbreakable. Zaksha is pinned on with Screen Time, so it's hard for a child to switch off or remove, and doing so locks their apps and pages you immediately. But the Apple ID password can still reset the Screen Time passcode behind it, on any iPhone, for any app built this way. Keep that password to yourself and the setup holds.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA ============================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="ctaband">
+        <h2>Set it up once, get told if it slips.</h2>
+        <p>14-day free trial, no card. ₹199/month for the household after, 5 devices included.</p>
+        <div class="btns">
+          <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com?ref=SEO-IPHONE">Get started</a>
+          <a class="btn btn--onteal-ghost btn--lg" href="/get">Get the app</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid footer__grid--4">
+        <div>
+          <a class="brand" href="/">
+            <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
+              <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Parental controls and content filtering for Indian families — and the organisations that need it. Made and run in India.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="/#how">How it works</a>
+          <a href="/#features">Features</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/get">Get the app</a>
+        </div>
+        <div class="footer__col">
+          <h4>Guides</h4>
+          <a href="/best-parental-control-app-india">Best parental control app in India</a>
+          <a href="/google-family-link-alternative">Family Link alternative</a>
+          <a href="/block-adult-content-android">Block adult content on Android</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="icons.js"></script>
+</body>
+</html>

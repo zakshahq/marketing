@@ -258,7 +258,9 @@ button { font: inherit; }
 /* ---------------- footer ---------------- */
 .footer { border-top: 1px solid var(--line); background: var(--surface); padding: clamp(44px, 6vw, 64px) 0 28px; }
 .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(28px, 5vw, 56px); }
-@media (max-width: 760px) { .footer__grid { grid-template-columns: 1fr; } }
+.footer__grid--4 { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+@media (max-width: 900px) { .footer__grid--4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .footer__grid, .footer__grid--4 { grid-template-columns: 1fr; } }
 .footer__about { margin-top: 14px; font-size: 14px; color: var(--ink-500); max-width: 320px; }
 .footer__col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-400); margin-bottom: 14px; }
 .footer__col a { display: block; font-size: 14.5px; font-weight: 600; color: var(--ink-700); padding: 5px 0; }
