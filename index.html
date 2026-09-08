@@ -150,7 +150,7 @@
       <h1>Parental controls that hold.</h1>
       <p class="lead">Zaksha blocks adult content, gambling and more on every device your kids use — iPhone, Android, Windows, Mac — at home and on mobile data. It schedules the internet off for bedtime and study hours. And if filtering is ever switched off, you know straight away.</p>
       <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" href="https://app.zaksha.com">Get started</a>
+        <a class="btn btn--primary btn--lg" href="https://app.zaksha.com/signup">Get started</a>
         <a class="btn btn--ghost btn--lg" href="#pricing">See pricing</a>
       </div>
       <div class="hero__facts">
@@ -362,7 +362,7 @@
             <span class="plan__per">/ month</span>
           </div>
           <div class="plan__sub">or ₹1,788 billed annually (₹149/month) · UPI or card · cancel anytime</div>
-          <a class="btn btn--primary plan__btn" href="https://app.zaksha.com">Get started</a>
+          <a class="btn btn--primary plan__btn" href="https://app.zaksha.com/signup">Get started</a>
           <ul class="plan__feats">
             <li><i class="ph ph-check-circle"></i> 5 devices included, more on request — phones, tablets, laptops</li>
             <li><i class="ph ph-check-circle"></i> Per-child time schedules and rules</li>
@@ -445,7 +445,7 @@
         <h2>Bedtime is yours again.</h2>
         <p>Set up Zaksha in minutes — we run the rest.</p>
         <div class="btns">
-          <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com">Get started</a>
+          <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup">Get started</a>
           <a class="btn btn--onteal-ghost btn--lg" href="/get">Get the app</a>
         </div>
       </div>
@@ -516,6 +516,22 @@
       fitHint();
       window.addEventListener('resize', fitHint);
     }
+
+    // Carry an ad's ?ref= (e.g. GS-BLOCK2, GS-IOS1) into the signup CTAs, and remember it in
+    // localStorage so it survives navigation within the site. The PWA captures ?ref only on
+    // /signup, so the "Get started" links must reach app.zaksha.com/signup?ref=<code>. No ?ref
+    // and none stored → CTAs stay as-is.
+    (function () {
+      var KEY = 'zaksha_ref';
+      var ref = new URLSearchParams(location.search).get('ref');
+      try { if (ref) localStorage.setItem(KEY, ref); else ref = localStorage.getItem(KEY); } catch (e) {}
+      if (!ref) return;
+      document.querySelectorAll('a[href*="app.zaksha.com/signup"]').forEach(function (a) {
+        var u = new URL(a.href);
+        u.searchParams.set('ref', ref);
+        a.href = u.toString();
+      });
+    })();
   </script>
 </body>
 </html>
