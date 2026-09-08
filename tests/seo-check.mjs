@@ -224,6 +224,20 @@ for (const page of LINK_CHECK_PAGES) {
   }
 }
 
+// --- i. homepage ad ref-forwarding ---
+// Ad channels (AG3/AG4) point at the homepage with ?ref=<code>. The PWA only captures ?ref on
+// its /signup route (persistFirstTouchRef runs in SignupPage), so the homepage must (a) send its
+// "Get started" CTAs to app.zaksha.com/signup and (b) carry an inbound ?ref into those links.
+if (indexHtml === null && exists('index.html')) indexHtml = read('index.html');
+if (indexHtml) {
+  if (!indexHtml.includes('app.zaksha.com/signup')) {
+    fail('index.html: "Get started" CTAs must point to app.zaksha.com/signup (so ?ref is captured)');
+  }
+  if (!/zaksha_ref/.test(indexHtml)) {
+    fail('index.html: missing the ref-forwarding script (carries ?ref= into the signup CTAs)');
+  }
+}
+
 // --- report ---
 if (failures.length > 0) {
   console.error(`FAIL: ${failures.length} check(s) failed:\n`);
