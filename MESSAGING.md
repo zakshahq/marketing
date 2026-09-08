@@ -53,20 +53,20 @@ fair use); UPI or card, cancel anytime; managed service — nothing to host.
 
 ## Anti-bypass language (non-negotiable)
 
-Home in general is **tamper-resistant**, not **tamper-proof**. Three setups earn the word
+Home in general is **tamper-resistant**, not **tamper-proof**. Two setups earn the word
 tamper-proof, because enforcement genuinely can't be removed: the **Android fresh-phone
 (device-owner) setup** — a Home option parents can choose over the standard
-tamper-evident install; the **Windows standard-user setup** — the child on a Standard
-(non-administrator) Windows account while the parent keeps the admin password, so the
-machine-wide system service can't be stopped or uninstalled; and the **Enterprise/MDM
-track** (supervised fleets, schools.html). Never apply tamper-proof to the iPhone story
-or to Home as a whole.
+tamper-evident install — and the **Enterprise/MDM track** (supervised fleets,
+schools.html). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
+whole. **Windows** (standard-user setup) is strongly tamper-resistant — a machine-wide
+system service that's hard to switch off without the admin password — but we do **not**
+lead with a "not removable" / tamper-proof claim.
 
 Say for Home: "hard to bypass", "built to stay on", "hard to switch off without you",
 "tamper-resistant"; for the Android fresh-phone setup specifically, "tamper-proof —
 can't be uninstalled from the phone" is accurate and allowed; for the Windows
-standard-user setup specifically, "installed by you, not removable by them — a standard
-account can't stop or uninstall it" is accurate and allowed.
+standard-user setup specifically, "built to stay on — hard to switch off without the
+admin password" is the framing (not "not removable by them").
 
 The honest caveat, always nearby when we make the anti-bypass claim: on iPhone the
 Screen Time passcode does the pinning, and Apple lets the Apple ID password reset that
@@ -101,7 +101,7 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/get.html` | Install steps per platform | Linked post-signup and from CTAs |
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
-| `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; leads with tamper-proof + the Standard-account qualifier |
+| `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
 | `/schools.html` | Enterprise + schools | Unlisted; the only place unqualified MDM tamper-proof language is allowed |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
