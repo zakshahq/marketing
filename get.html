@@ -86,6 +86,7 @@
       <div class="get-toggle" role="tablist" aria-label="Choose your platform">
         <button id="tab-android" role="tab" onclick="pick('android')">Android</button>
         <button id="tab-ios" role="tab" onclick="pick('ios')">iPhone</button>
+        <button id="tab-windows" role="tab" onclick="pick('windows')">Windows</button>
       </div>
     </div>
   </section>
@@ -223,6 +224,53 @@
     </div>
   </section>
 
+  <!-- ============================== WINDOWS PANEL ============================== -->
+  <section class="get-panel" id="panel-windows" hidden>
+    <div class="wrap">
+      <div class="get-dl">
+        <a class="btn btn--primary btn--lg" href="https://github.com/zakshahq/agent/releases/latest/download/zaksha-agent.msi">Download Zaksha for Windows</a>
+        <div class="sub">MSI installer · Windows 10 &amp; 11 · installs for the whole PC</div>
+      </div>
+
+      <div class="get-steps">
+        <div class="get-step">
+          <div class="n">1</div>
+          <div>
+            <h4>Sign in to the PC as a parent</h4>
+            <p>Install from a parent/administrator account. Your child's own Windows account should be
+               <b>Standard</b>, not Administrator — that's what keeps them from removing the protection.
+               Check under <b>Settings → Accounts → Family &amp; other users</b>.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">2</div>
+          <div>
+            <h4>Get the install command from your dashboard</h4>
+            <p>On <b>app.zaksha.com</b>: <b>Add device → Windows</b>. You'll get the installer plus a one-line
+               command carrying your setup key — that's what enrols this PC to your account.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">3</div>
+          <div>
+            <h4>Run it as Administrator</h4>
+            <p>Press Start, type <b>cmd</b>, right-click <b>Command Prompt</b> and choose
+               <b>Run as administrator</b>, then paste the command from your dashboard and press Enter.
+               Approve the Windows prompt when it appears.</p>
+          </div>
+        </div>
+        <div class="get-step">
+          <div class="n">4</div>
+          <div>
+            <h4>Done — the PC connects on its own</h4>
+            <p>Within a minute the PC shows as connected in your dashboard and filtering is active.
+               Running as a system service, a standard account can't stop or uninstall it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================== TRUST FOOTER ============================== -->
   <div class="get-foot">
     <div class="wrap">
@@ -275,10 +323,10 @@
   <script src="icons.js"></script>
   <script>
     function pick(platform) {
-      document.getElementById('panel-android').hidden = platform !== 'android';
-      document.getElementById('panel-ios').hidden = platform !== 'ios';
-      document.getElementById('tab-android').classList.toggle('is-active', platform === 'android');
-      document.getElementById('tab-ios').classList.toggle('is-active', platform === 'ios');
+      ['android', 'ios', 'windows'].forEach(function (p) {
+        document.getElementById('panel-' + p).hidden = platform !== p;
+        document.getElementById('tab-' + p).classList.toggle('is-active', platform === p);
+      });
     }
 
     (function init() {
@@ -286,12 +334,12 @@
       try {
         forced = new URLSearchParams(location.search).get('platform');
       } catch (e) {}
-      if (forced === 'android' || forced === 'ios') {
+      if (forced === 'android' || forced === 'ios' || forced === 'windows') {
         pick(forced);
         return;
       }
       var ua = navigator.userAgent || '';
-      pick(/iPhone|iPad|iPod/i.test(ua) ? 'ios' : 'android');
+      pick(/iPhone|iPad|iPod/i.test(ua) ? 'ios' : /Windows/i.test(ua) ? 'windows' : 'android');
     })();
   </script>
 </body>

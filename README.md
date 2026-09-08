@@ -10,7 +10,7 @@ and schools). Plain HTML/CSS/JS, no build step.
 ## Pages
 - `index.html` — home (Home/family landing)
 - `get.html` — install steps per platform
-- `block.html`, `parental-control-android.html` — unlisted ad landers
+- `block.html`, `parental-control-android.html`, `parental-control-iphone.html`, `parental-control-windows.html` — unlisted ad landers
 - `schools.html` — unlisted Enterprise/schools page
 - `pricing.html` — redirect to `/#pricing`
 - `terms.html` — Terms & Conditions

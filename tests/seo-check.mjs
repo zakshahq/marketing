@@ -24,6 +24,7 @@ const NOINDEX_PAGES = [
   'block.html',
   'parental-control-android.html',
   'parental-control-iphone.html',
+  'parental-control-windows.html',
   'schools.html',
 ];
 for (const page of NOINDEX_PAGES) {
@@ -65,6 +66,7 @@ const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
   'parental-control-android',
   'parental-control-iphone',
+  'parental-control-windows',
   'schools',
   'pricing',
 ];
