@@ -11,6 +11,68 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="zaksha-site.css" />
+  <style>
+    /* ---------- Windows lander — additions not covered by zaksha-site.css ---------- */
+    /* click-through demo (shared shape with index.html) */
+    .demo { max-width: 720px; margin: 0 auto; }
+    .demo__frame { overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); box-shadow: var(--sh-2); background: var(--surface); }
+    .demo__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line-2); }
+    .demo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .demo__url { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-400); background: var(--bg); border-radius: var(--r-pill); padding: 4px 14px; }
+    .demo__track { display: flex; transition: transform .35s ease; }
+    .demo__slide { flex: 0 0 100%; min-width: 0; padding: clamp(20px, 3.5vw, 32px); position: relative; }
+    .demo__stage { position: relative; }
+    .demo__arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      display: grid; place-items: center; font-size: 19px;
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink-700);
+      box-shadow: var(--sh-1); transition: color .15s, border-color .15s, background .15s;
+    }
+    .demo__arrow:hover { color: var(--teal-700); border-color: var(--teal-600); }
+    .demo__arrow--l { left: -21px; }
+    .demo__arrow--r { right: -21px; }
+    @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
+    .tour-chip {
+      position: absolute; z-index: 2; max-width: 250px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--sh-2); padding: 10px 13px;
+      display: flex; align-items: flex-start; gap: 9px;
+    }
+    .tour-chip i { font-size: 17px; color: var(--teal-600); flex: 0 0 auto; margin-top: 1px; }
+    .tour-chip b { font-size: 12.5px; font-weight: 800; display: block; line-height: 1.35; }
+    .tour-chip small { font-size: 11px; color: var(--ink-500); display: block; margin-top: 1px; line-height: 1.4; }
+    @media (max-width: 600px) { .tour-chip { display: none; } }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
+    .demo__dots { display: flex; gap: 7px; }
+    .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
+    .demo__pip.on { background: var(--teal-600); }
+
+    /* mock-screen bits inside slides */
+    .mk-h { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mk-h b { font-size: 15px; }
+    .mk-h .mono { margin-left: auto; font-size: 11px; color: var(--ink-400); }
+    .mk-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+    .mk-row + .mk-row { margin-top: 10px; }
+    .mk-row__ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; background: var(--teal-50); color: var(--teal-700); flex: 0 0 auto; }
+    .mk-row__nm { font-size: 14px; font-weight: 700; display: block; }
+    .mk-row__sub { font-size: 12px; color: var(--ink-400); display: block; margin-top: 1px; }
+    .mk-chip { margin-left: auto; flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; border-radius: var(--r-pill); padding: 4px 11px; white-space: nowrap; }
+    .mk-chip--on { background: var(--allow-50); color: var(--allow); }
+    .mk-chip--off { background: var(--block-50); color: var(--block); }
+    .mk-chip--teal { background: var(--teal-50); color: var(--teal-700); }
+    .mk-sw { margin-left: auto; flex: 0 0 auto; width: 38px; height: 22px; border-radius: 999px; background: var(--line); position: relative; }
+    .mk-sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--sh-1); }
+    .mk-sw.on { background: var(--teal-600); }
+    .mk-sw.on::after { left: auto; right: 3px; }
+    .mk-bar { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+    .mk-bar + .mk-bar { margin-top: 9px; }
+    .mk-bar__lab { flex: 0 0 118px; font-weight: 700; text-align: right; color: var(--ink-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mk-bar__tr { flex: 1; height: 10px; border-radius: 999px; background: var(--line-2); overflow: hidden; }
+    .mk-bar__fl { display: block; height: 100%; border-radius: 999px; background: var(--teal-500); }
+    .mk-bar__fl--blk { background: var(--block); }
+    .mk-bar__n { flex: 0 0 44px; font-family: var(--mono); font-size: 11px; color: var(--ink-400); }
+  </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -32,10 +94,7 @@
   <header class="nav" id="nav">
     <div class="wrap nav__in">
       <a class="brand" href="index.html">
-        <svg class="brand__mark" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M15 1.5 L27.5 6 V16.5 C27.5 25 21.8 30.4 15 32.5 C8.2 30.4 2.5 25 2.5 16.5 V6 Z" fill="#0e8088"/>
-          <path d="M9.5 17 l3.6 3.6 L21 12.6" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
         Zaksha
       </a>
       <div class="nav__spacer"></div>
@@ -48,38 +107,167 @@
   <!-- ============================== HERO ============================== -->
   <section class="hero">
     <div class="wrap">
-      <h1>Parental controls for Windows — and every other device.</h1>
-      <p class="lead">Zaksha installs on your child's Windows PC as a system service and filters adult content across the web. It's built to stay on — hard to switch off without the admin password — and if filtering ever stops on any device, you get a WhatsApp alert.</p>
+      <h1>Parental controls for Windows that hold.</h1>
+      <p class="lead">Zaksha installs on your child's Windows PC and filters adult content, gambling and more across every browser — at home and on any network. It's built to stay on, hard to switch off without the admin password, and if filtering ever stops on any device, you know straight away.</p>
       <div class="hero__btns">
         <a class="btn btn--primary btn--lg" href="https://app.zaksha.com/signup?ref=GS-WIN1">Get started</a>
+        <a class="btn btn--ghost btn--lg" href="#pricing">See pricing</a>
       </div>
       <div class="hero__facts">
         <span><i class="ph ph-check-circle"></i> 14-day free trial, no card</span>
-        <span><i class="ph ph-windows-logo"></i> Works on Windows 10 &amp; 11</span>
+        <span><i class="ph ph-windows-logo"></i> Windows 10 &amp; 11</span>
         <span><i class="ph ph-check-circle"></i> ₹199/month, whole household</span>
         <span><i class="ph ph-map-pin"></i> Data stays in India</span>
-        <span><i class="ph ph-eye-slash"></i> Never sold or used for ads</span>
       </div>
     </div>
   </section>
 
-  <!-- ============================== WHAT YOU GET ============================== -->
-  <section class="section section--wash">
+  <!-- ============================== PRODUCT TOUR ============================== -->
+  <section class="section section--wash" id="tour">
     <div class="wrap">
       <div class="section-head section-head--center">
-        <span class="eyebrow">Why Zaksha</span>
-        <h2>Set it up once. It stays on.</h2>
+        <span class="eyebrow">Product tour</span>
+        <h2>The dashboard you run it from.</h2>
+        <p>You manage the PC — and every other device — from one place at app.zaksha.com. Here's what it looks like, in four screens.</p>
+      </div>
+      <div class="demo">
+        <div class="demo__stage">
+        <button class="demo__arrow demo__arrow--l" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i></button>
+        <button class="demo__arrow demo__arrow--r" id="demo-next" aria-label="Next screen"><i class="ph ph-arrow-right"></i></button>
+        <div class="demo__frame">
+          <div class="demo__bar" aria-hidden="true">
+            <span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
+            <span class="demo__url">app.zaksha.com</span>
+          </div>
+          <div class="demo__track" id="demo-track">
+
+            <!-- 1 · devices at a glance -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Your devices</b><span class="mono">3 DEVICES PROTECTED</span></div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-desktop"></i></span>
+                <span><span class="mk-row__nm">Family PC</span><span class="mk-row__sub">Windows · the study PC</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-android-logo"></i></span>
+                <span><span class="mk-row__nm">Aarav's phone</span><span class="mk-row__sub">Android · at home and on mobile data</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-apple-logo"></i></span>
+                <span><span class="mk-row__nm">Diya's iPad</span><span class="mk-row__sub">iPadOS · filtering on wherever it goes</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-squares-four"></i>
+                <span><b>Every device, one place</b><small>Windows, iPhone, Android or Mac — same dashboard.</small></span>
+              </div>
+            </div>
+
+            <!-- 2 · categories -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Family PC</b><span class="mono">CATEGORIES · BLOCKED WHEN ON</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-prohibit"></i></span><span class="mk-row__nm">Adult content</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-poker-chip"></i></span><span class="mk-row__nm">Gambling</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-game-controller"></i></span><span class="mk-row__nm">Gaming</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-chats-circle"></i></span><span class="mk-row__nm">Social media</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-check-circle"></i></span><span><span class="mk-row__nm">wikipedia.org</span><span class="mk-row__sub">Kept on for schoolwork — always allowed</span></span><span class="mk-chip mk-chip--on">Always allowed</span></div>
+            </div>
+
+            <!-- 3 · schedule -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Schedules</b><span class="mono">FAMILY PC</span></div>
+              <div class="sched" style="box-shadow:none;">
+                <div class="sched__top">
+                  <span class="sched__ic"><i class="ph ph-moon-stars"></i></span>
+                  <span><span class="sched__nm">Bedtime</span><span class="sched__mt">Internet off overnight</span></span>
+                  <span class="sched__badge">Active</span>
+                </div>
+                <div class="sched__days">
+                  <span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day on"><b>SAT</b></span><span class="sched__day on"><b>SUN</b></span>
+                </div>
+                <div class="sched__win">Internet off <span class="sched__chip">9:30 PM</span> <span class="sched__dash">—</span> <span class="sched__chip">6:30 AM</span></div>
+              </div>
+              <div class="mk-row" style="margin-top:12px;">
+                <span class="mk-row__ic"><i class="ph ph-graduation-cap"></i></span>
+                <span><span class="mk-row__nm">Homework hours</span><span class="mk-row__sub">Games &amp; social off · school nights</span></span>
+                <span class="mk-chip mk-chip--teal">4:00 – 6:00 PM</span>
+              </div>
+              <div class="tour-chip" style="left:34px; bottom:26px;">
+                <i class="ph ph-calendar-check"></i>
+                <span><b>Set once</b><small>Runs every week on its own.</small></span>
+              </div>
+            </div>
+
+            <!-- 4 · activity -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Activity — yesterday</b><span class="mono">FAMILY PC · 486 REQUESTS · 39 BLOCKED</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">wikipedia.org</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:80%;"></span></span><span class="mk-bar__n">176</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">youtube.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:58%;"></span></span><span class="mk-bar__n">128</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">github.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:34%;"></span></span><span class="mk-bar__n">74</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">pornhub.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:15%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">stake.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:8%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-eye-slash"></i>
+                <span><b>Domains only</b><small>Never messages or what's on a page.</small></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        </div>
+        <div class="demo__nav">
+          <div class="demo__dots" id="demo-dots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== HOW IT WORKS ============================== -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">How it works</span>
+        <h2>On the PC in minutes. Then it runs on its own.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__n">1</div>
+          <h3>Create your account</h3>
+          <p>Sign up at app.zaksha.com and pick your plan. Pay by UPI or card — monthly or annual, cancel anytime.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">2</div>
+          <h3>Install on the PC</h3>
+          <p>Download the installer from your dashboard and run it as administrator — it installs machine-wide in a minute. Keep your child on a Standard (non-admin) account so it stays put.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">3</div>
+          <h3>Set the rules</h3>
+          <p>Switch off adult content, gambling and other categories, then schedule when the internet is on — per child, across every device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FEATURES ============================== -->
+  <section class="section section--wash" id="features">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Features</span>
+        <h2>Everything you need to draw the line.</h2>
       </div>
       <div class="feats">
         <div class="feat">
           <span class="feat__ic"><i class="ph ph-prohibit"></i></span>
           <h3>Adult content, blocked</h3>
-          <p>Porn, gambling and other categories stay blocked on the PC — on Wi-Fi and on mobile hotspots alike, the same way as on every other device, plus your own block list.</p>
+          <p>Porn, gambling, gaming, social media and more — whole categories off with one switch on the PC, plus your own block and allow lists.</p>
         </div>
         <div class="feat">
           <span class="feat__ic"><i class="ph ph-lock-key"></i></span>
           <h3>Built to stay on</h3>
-          <p>Zaksha installs machine-wide and runs as a Windows system service. With your child on a Standard (non-administrator) account and the admin password kept by you, it's hard for them to switch off or remove — so it keeps running.</p>
+          <p>Zaksha installs machine-wide as a Windows system service. With your child on a Standard account and the admin password kept by you, it's hard to switch off or remove.</p>
         </div>
         <div class="feat">
           <span class="feat__ic"><i class="ph ph-chats-circle"></i></span>
@@ -87,26 +275,132 @@
           <p>If filtering stops on the PC or any other device, a WhatsApp message and a push reach you right away — no silent gaps.</p>
         </div>
         <div class="feat">
-          <span class="feat__ic"><i class="ph ph-devices"></i></span>
-          <h3>Every device, one dashboard</h3>
-          <p>Windows, iPhone, iPad, Android and Mac all run from a single dashboard, so one set of rules follows your child across every device they use.</p>
+          <span class="feat__ic"><i class="ph ph-calendar-check"></i></span>
+          <h3>Schedules, not screen fights</h3>
+          <p>Set homework hours and a bedtime once and the internet goes off on schedule — no standing over the PC every evening.</p>
         </div>
         <div class="feat">
-          <span class="feat__ic"><i class="ph ph-users-three"></i></span>
-          <h3>One household, per-child rules</h3>
-          <p>Every child and every device shows up in one dashboard, with per-child categories and schedules — set once, and it runs.</p>
+          <span class="feat__ic"><i class="ph ph-squares-four"></i></span>
+          <h3>Every device, one dashboard</h3>
+          <p>Windows, iPhone, iPad, Android and Mac all run from a single dashboard, so one set of rules follows your child across every device.</p>
         </div>
         <div class="feat">
           <span class="feat__ic"><i class="ph ph-eye-slash"></i></span>
           <h3>Private by design</h3>
-          <p>We see website names only — never messages, files or what's on a page. History keeps 7 days, then it's genuinely gone. Stored only in India, never sold or used for ads.</p>
+          <p>We see website names only — never messages, files or what's on a page. History keeps 7 days, then it's gone. Stored only in India, never sold or used for ads.</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============================== BUILT TO STAY ON ============================== -->
+  <section class="section" id="stays-on">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Hard to bypass</span>
+        <h2>Built so a curious kid can't get around it.</h2>
+      </div>
+      <div class="claims">
+        <div class="claim">
+          <span class="claim__ic"><i class="ph ph-hard-drives"></i></span>
+          <h3>Runs machine-wide</h3>
+          <p>Zaksha installs as a Windows system service for the whole PC — not a browser add-on a child can turn off. Switching browsers or opening a new one doesn't get past it.</p>
+        </div>
+        <div class="claim">
+          <span class="claim__ic"><i class="ph ph-lock-key"></i></span>
+          <h3>Locked to the admin password</h3>
+          <p>With your child on a Standard (non-administrator) account, changing or removing Zaksha needs the admin password only you have — the same key that protects the rest of the PC.</p>
+        </div>
+        <div class="claim">
+          <span class="claim__ic"><i class="ph ph-chats-circle"></i></span>
+          <h3>You're alerted if it stops</h3>
+          <p>If filtering is ever switched off — on the PC or any device — you get a WhatsApp alert within minutes. A switched-off filter doesn't go unnoticed.</p>
+        </div>
+      </div>
+      <p class="honesty honesty--link"><a href="#faq-turn-off">Can my child turn it off? Is Zaksha tamper-proof? →</a></p>
+    </div>
+  </section>
+
+  <!-- ============================== PRIVACY ============================== -->
+  <section class="section section--wash" id="privacy">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Your data, simply</span>
+        <h2>What we can see — and what we can't.</h2>
+      </div>
+      <div class="seecant">
+        <div class="seecant__col seecant__col--can">
+          <div class="seecant__h"><i class="ph ph-shield-check"></i> What Zaksha sees</div>
+          <ul>
+            <li><i class="ph ph-check"></i> The website names the PC asked for — that it went to youtube.com, and nothing more</li>
+            <li><i class="ph ph-check"></i> What was blocked and what was allowed, per device</li>
+            <li><i class="ph ph-check"></i> A rolling 7 days of history — then it's deleted for good</li>
+          </ul>
+        </div>
+        <div class="seecant__col seecant__col--cant">
+          <div class="seecant__h"><i class="ph ph-eye-slash"></i> What Zaksha can't see</div>
+          <ul>
+            <li><i class="ph ph-x"></i> Messages, files, photos or anything on a page — we couldn't read them if we tried</li>
+            <li><i class="ph ph-x"></i> Passwords or what your child types</li>
+            <li><i class="ph ph-x"></i> Nothing is sold or shared — no ads, no trackers, and your data never leaves India</li>
+          </ul>
+        </div>
+      </div>
+      <p class="seecant__note">Every device gets its own private address, so one device's rules and history never mix with another's.</p>
+    </div>
+  </section>
+
+  <!-- ============================== PRICING ============================== -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Pricing</span>
+        <h2>One plan for your family. One for everyone else.</h2>
+      </div>
+      <div class="plans">
+
+        <div class="plan plan--home">
+          <div class="plan__name">Home <span class="plan__tag">For families</span></div>
+          <p class="plan__for">One flat price for the whole household.</p>
+          <div class="plan__price">
+            <span class="plan__amt">₹199</span>
+            <span class="plan__per">/ month</span>
+          </div>
+          <div class="plan__sub">or ₹1,788 billed annually (₹149/month) · UPI or card · cancel anytime</div>
+          <a class="btn btn--primary plan__btn" href="https://app.zaksha.com/signup?ref=GS-WIN1">Get started</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> 5 devices included, more on request — PCs, phones, tablets</li>
+            <li><i class="ph ph-check-circle"></i> Per-child time schedules and rules</li>
+            <li><i class="ph ph-check-circle"></i> All content categories, plus your own block list</li>
+            <li><i class="ph ph-check-circle"></i> 7-day history, then deleted</li>
+            <li><i class="ph ph-check-circle"></i> Windows, iPhone, iPad, Android &amp; Mac</li>
+          </ul>
+        </div>
+
+        <div class="plan">
+          <div class="plan__name">Enterprise <span class="plan__tag">Offices &amp; schools</span></div>
+          <p class="plan__for">For teams, offices, schools and larger fleets.</p>
+          <div class="plan__price">
+            <span class="plan__amt" style="font-size:30px;">Custom</span>
+          </div>
+          <div class="plan__sub">Sized to you · GST invoicing · dedicated instance available</div>
+          <a class="btn btn--ghost plan__btn" href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Talk to us</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> Everything in Home, at fleet scale</li>
+            <li><i class="ph ph-check-circle"></i> Group policies and bulk enrolment (MDM)</li>
+            <li><i class="ph ph-check-circle"></i> Per-user activity reports</li>
+            <li><i class="ph ph-check-circle"></i> Dedicated, isolated instance with 30/90-day retention</li>
+            <li><i class="ph ph-check-circle"></i> Support, SLA and GST invoicing</li>
+          </ul>
+        </div>
+
+      </div>
+      <p class="price-note">All prices in INR, exclusive of applicable taxes. Home covers a single household under fair use.</p>
+    </div>
+  </section>
+
   <!-- ============================== FAQ ============================== -->
-  <section class="section">
+  <section class="section section--wash" id="faq">
     <div class="wrap">
       <div class="section-head section-head--center">
         <span class="eyebrow">FAQ</span>
@@ -117,13 +411,21 @@
           <summary>Which devices does Zaksha cover? <i class="ph ph-plus"></i></summary>
           <p>Windows, iPhone, iPad, Android and Mac, all from one dashboard — so the same rules apply across every device your child uses, not just the PC.</p>
         </details>
-        <details class="faq__item">
-          <summary>Can my child just uninstall it? <i class="ph ph-plus"></i></summary>
+        <details class="faq__item" id="faq-turn-off">
+          <summary>Can my child turn it off? Is Zaksha tamper-proof? <i class="ph ph-plus"></i></summary>
           <p>Straight answer: filtering is a strong layer, not a magic wall. On Windows, Zaksha installs machine-wide and runs as a system service, so with your child on a Standard (non-administrator) account it's hard to switch off without the admin password — and if it ever stops you get a WhatsApp alert. Someone with the administrator password — or who wipes and reinstalls Windows — can still change it: the admin password is the real key, the same way the Apple ID password is on iPhone. If your child's own account is an administrator, you're alerted the moment filtering stops rather than it being held in place.</p>
         </details>
         <details class="faq__item">
           <summary>How do I set it up? <i class="ph ph-plus"></i></summary>
           <p>Sign in to the PC as a parent/administrator, download the Zaksha installer from your dashboard and run it — it installs for the whole machine in a minute, then connects on its own. Make sure your child's own Windows account is Standard, not Administrator, so the protection stays put.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Does it slow the PC down? <i class="ph ph-plus"></i></summary>
+          <p>No. Zaksha filters at the network (DNS) level — it doesn't scan files or sit between you and every page. It runs quietly in the background with a negligible footprint, and there's no app window to keep open.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can I protect more than one PC? <i class="ph ph-plus"></i></summary>
+          <p>Yes. The Home plan covers up to 5 devices across the household — any mix of PCs, phones and tablets — and you can add more on request. Each one shows up in the same dashboard.</p>
         </details>
         <details class="faq__item">
           <summary>What exactly can Zaksha see? <i class="ph ph-plus"></i></summary>
@@ -138,13 +440,14 @@
   </section>
 
   <!-- ============================== CTA ============================== -->
-  <section class="section section--wash">
+  <section class="section">
     <div class="wrap">
       <div class="ctaband">
         <h2>Protect the family PC — built to stay on.</h2>
         <p>Start a 14-day free trial — no card needed. Set up in minutes.</p>
         <div class="btns">
           <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup?ref=GS-WIN1">Get started</a>
+          <a class="btn btn--onteal-ghost btn--lg" href="#pricing">See pricing</a>
         </div>
       </div>
     </div>
@@ -162,9 +465,40 @@
 
   <script src="icons.js"></script>
   <script>
-    // Carry the ad's ?ref= into the signup CTA, and remember it (localStorage) so it
-    // survives navigation within the site — each ad group's code (e.g. AG5 → GS-WIN1)
-    // stays attributed. No ?ref= and none stored keeps this lander's default.
+    // Product-tour carousel (same behaviour as index.html)
+    (function () {
+      var track = document.getElementById('demo-track');
+      if (!track) return;
+      var i = 0, n = track.children.length, timer = null;
+      var prev = document.getElementById('demo-prev');
+      var next = document.getElementById('demo-next');
+      var dots = document.getElementById('demo-dots');
+      for (var k = 0; k < n; k++) {
+        var b = document.createElement('button');
+        b.className = 'demo__pip';
+        b.setAttribute('aria-label', 'Screen ' + (k + 1));
+        b.addEventListener('click', (function (k) { return function () { stopAuto(); go(k); }; })(k));
+        dots.appendChild(b);
+      }
+      function go(to) {
+        i = (to + n) % n;
+        track.style.transform = 'translateX(-' + (i * 100) + '%)';
+        Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
+      }
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+      prev.addEventListener('click', function () { stopAuto(); go(i - 1); });
+      next.addEventListener('click', function () { stopAuto(); go(i + 1); });
+      go(0);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { io.disconnect(); timer = setInterval(function () { go(i + 1); }, 4000); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(track);
+    })();
+
+    // Carry the ad's ?ref= into the signup CTAs, and remember it (localStorage) so it
+    // survives navigation within the site — each ad group's code (e.g. AG5 → GS-WIN1) stays attributed.
     (function () {
       var KEY = 'zaksha_ref';
       var ref = new URLSearchParams(location.search).get('ref');
