@@ -65,6 +65,53 @@
       table.cmp .row-us td:first-child { color: var(--teal-700); }
       table.cmp td:not(:first-child)::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 3px; }
     }
+  
+    /* click-through demo + pricing enrichment (shared shape with index.html) */
+    .demo { max-width: 720px; margin: 0 auto; }
+    .demo__frame { overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); box-shadow: var(--sh-2); background: var(--surface); }
+    .demo__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line-2); }
+    .demo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .demo__url { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-400); background: var(--bg); border-radius: var(--r-pill); padding: 4px 14px; }
+    .demo__track { display: flex; transition: transform .35s ease; }
+    .demo__slide { flex: 0 0 100%; min-width: 0; padding: clamp(20px, 3.5vw, 32px); position: relative; }
+    .demo__stage { position: relative; }
+    .demo__arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; font-size: 19px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-700); box-shadow: var(--sh-1); transition: color .15s, border-color .15s, background .15s; }
+    .demo__arrow:hover { color: var(--teal-700); border-color: var(--teal-600); }
+    .demo__arrow--l { left: -21px; }
+    .demo__arrow--r { right: -21px; }
+    @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
+    .tour-chip { position: absolute; z-index: 2; max-width: 250px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--sh-2); padding: 10px 13px; display: flex; align-items: flex-start; gap: 9px; }
+    .tour-chip i { font-size: 17px; color: var(--teal-600); flex: 0 0 auto; margin-top: 1px; }
+    .tour-chip b { font-size: 12.5px; font-weight: 800; display: block; line-height: 1.35; }
+    .tour-chip small { font-size: 11px; color: var(--ink-500); display: block; margin-top: 1px; line-height: 1.4; }
+    @media (max-width: 600px) { .tour-chip { display: none; } }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
+    .demo__dots { display: flex; gap: 7px; }
+    .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
+    .demo__pip.on { background: var(--teal-600); }
+    .mk-h { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mk-h b { font-size: 15px; }
+    .mk-h .mono { margin-left: auto; font-size: 11px; color: var(--ink-400); }
+    .mk-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); }
+    .mk-row + .mk-row { margin-top: 10px; }
+    .mk-row__ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; background: var(--teal-50); color: var(--teal-700); flex: 0 0 auto; }
+    .mk-row__nm { font-size: 14px; font-weight: 700; display: block; }
+    .mk-row__sub { font-size: 12px; color: var(--ink-400); display: block; margin-top: 1px; }
+    .mk-chip { margin-left: auto; flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; border-radius: var(--r-pill); padding: 4px 11px; white-space: nowrap; }
+    .mk-chip--on { background: var(--allow-50); color: var(--allow); }
+    .mk-chip--off { background: var(--block-50); color: var(--block); }
+    .mk-chip--teal { background: var(--teal-50); color: var(--teal-700); }
+    .mk-sw { margin-left: auto; flex: 0 0 auto; width: 38px; height: 22px; border-radius: 999px; background: var(--line); position: relative; }
+    .mk-sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--sh-1); }
+    .mk-sw.on { background: var(--teal-600); }
+    .mk-sw.on::after { left: auto; right: 3px; }
+    .mk-bar { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+    .mk-bar + .mk-bar { margin-top: 9px; }
+    .mk-bar__lab { flex: 0 0 118px; font-weight: 700; text-align: right; color: var(--ink-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mk-bar__tr { flex: 1; height: 10px; border-radius: 999px; background: var(--line-2); overflow: hidden; }
+    .mk-bar__fl { display: block; height: 100%; border-radius: 999px; background: var(--teal-500); }
+    .mk-bar__fl--blk { background: var(--block); }
+    .mk-bar__n { flex: 0 0 44px; font-family: var(--mono); font-size: 11px; color: var(--ink-400); }
   </style>
 </head>
 <body>
@@ -177,7 +224,108 @@
   </section>
 
   <!-- ============================== CTA ============================== -->
-  <section class="section">
+    <!-- ============================== PRODUCT TOUR (enrichment) ============================== -->
+  <section class="section section--wash" id="tour">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Product tour</span>
+        <h2>The dashboard you run it from.</h2>
+        <p>One place for every device your child uses. Here's what you see at app.zaksha.com, in four screens.</p>
+      </div>
+      <div class="demo">
+        <div class="demo__stage">
+        <button class="demo__arrow demo__arrow--l" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i></button>
+        <button class="demo__arrow demo__arrow--r" id="demo-next" aria-label="Next screen"><i class="ph ph-arrow-right"></i></button>
+        <div class="demo__frame">
+          <div class="demo__bar" aria-hidden="true">
+            <span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
+            <span class="demo__url">app.zaksha.com</span>
+          </div>
+          <div class="demo__track" id="demo-track">
+            <div class="demo__slide">
+              <div class="mk-h"><b>Your devices</b><span class="mono">3 DEVICES PROTECTED</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-android-logo"></i></span><span><span class="mk-row__nm">Aarav's phone</span><span class="mk-row__sub">Android · at home and on mobile data</span></span><span class="mk-chip mk-chip--on">Protected</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-apple-logo"></i></span><span><span class="mk-row__nm">Diya's iPad</span><span class="mk-row__sub">iPadOS · filtering on wherever it goes</span></span><span class="mk-chip mk-chip--on">Protected</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-desktop"></i></span><span><span class="mk-row__nm">Family PC</span><span class="mk-row__sub">Windows · the study PC</span></span><span class="mk-chip mk-chip--on">Protected</span></div>
+              <div class="tour-chip" style="right:28px; bottom:26px;"><i class="ph ph-squares-four"></i><span><b>Every device, one place</b><small>Phone, tablet or PC — same dashboard.</small></span></div>
+            </div>
+            <div class="demo__slide">
+              <div class="mk-h"><b>Aarav's phone</b><span class="mono">CATEGORIES · BLOCKED WHEN ON</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-prohibit"></i></span><span class="mk-row__nm">Adult content</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-poker-chip"></i></span><span class="mk-row__nm">Gambling</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-game-controller"></i></span><span class="mk-row__nm">Gaming</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-chats-circle"></i></span><span class="mk-row__nm">Social media</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-check-circle"></i></span><span><span class="mk-row__nm">youtube.com</span><span class="mk-row__sub">Kept on for schoolwork — allowed even with Streaming blocked</span></span><span class="mk-chip mk-chip--on">Always allowed</span></div>
+            </div>
+            <div class="demo__slide">
+              <div class="mk-h"><b>Schedules</b><span class="mono">AARAV'S PHONE</span></div>
+              <div class="sched" style="box-shadow:none;">
+                <div class="sched__top"><span class="sched__ic"><i class="ph ph-moon-stars"></i></span><span><span class="sched__nm">Bedtime</span><span class="sched__mt">Internet off overnight</span></span><span class="sched__badge">Active</span></div>
+                <div class="sched__days"><span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day on"><b>SAT</b></span><span class="sched__day on"><b>SUN</b></span></div>
+                <div class="sched__win">Internet off <span class="sched__chip">9:30 PM</span> <span class="sched__dash">—</span> <span class="sched__chip">6:30 AM</span></div>
+              </div>
+              <div class="mk-row" style="margin-top:12px;"><span class="mk-row__ic"><i class="ph ph-graduation-cap"></i></span><span><span class="mk-row__nm">Homework hours</span><span class="mk-row__sub">Games &amp; social off · school nights</span></span><span class="mk-chip mk-chip--teal">4:00 – 6:00 PM</span></div>
+              <div class="tour-chip" style="left:34px; bottom:26px;"><i class="ph ph-calendar-check"></i><span><b>Set once</b><small>Runs every week on its own.</small></span></div>
+            </div>
+            <div class="demo__slide">
+              <div class="mk-h"><b>Activity — yesterday</b><span class="mono">AARAV'S PHONE · 512 REQUESTS · 47 BLOCKED</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">youtube.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:82%;"></span></span><span class="mk-bar__n">198</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">wikipedia.org</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:54%;"></span></span><span class="mk-bar__n">131</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">whatsapp.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:38%;"></span></span><span class="mk-bar__n">92</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">pornhub.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:16%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">stake.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:9%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="tour-chip" style="right:28px; bottom:26px;"><i class="ph ph-eye-slash"></i><span><b>Domains only</b><small>Never messages or what's on a page.</small></span></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="demo__nav"><div class="demo__dots" id="demo-dots"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PRICING (enrichment) ============================== -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Pricing</span>
+        <h2>One plan for your family. One for everyone else.</h2>
+      </div>
+      <div class="plans">
+        <div class="plan plan--home">
+          <div class="plan__name">Home <span class="plan__tag">For families</span></div>
+          <p class="plan__for">One flat price for the whole household.</p>
+          <div class="plan__price"><span class="plan__amt">₹199</span><span class="plan__per">/ month</span></div>
+          <div class="plan__sub">or ₹1,788 billed annually (₹149/month) · UPI or card · cancel anytime</div>
+          <a class="btn btn--primary plan__btn" href="https://app.zaksha.com/signup">Get started</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> 5 devices included, more on request — phones, tablets, laptops</li>
+            <li><i class="ph ph-check-circle"></i> Per-child time schedules and rules</li>
+            <li><i class="ph ph-check-circle"></i> All content categories, plus your own block list</li>
+            <li><i class="ph ph-check-circle"></i> 7-day history, then deleted</li>
+            <li><i class="ph ph-check-circle"></i> iPhone, Android, iPad, Mac &amp; Windows</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <div class="plan__name">Enterprise <span class="plan__tag">Offices &amp; schools</span></div>
+          <p class="plan__for">For teams, offices, schools and larger fleets.</p>
+          <div class="plan__price"><span class="plan__amt" style="font-size:30px;">Custom</span></div>
+          <div class="plan__sub">Sized to you · GST invoicing · dedicated instance available</div>
+          <a class="btn btn--ghost plan__btn" href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Talk to us</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> Everything in Home, at fleet scale</li>
+            <li><i class="ph ph-check-circle"></i> Group policies and bulk enrolment (MDM)</li>
+            <li><i class="ph ph-check-circle"></i> Per-user activity reports</li>
+            <li><i class="ph ph-check-circle"></i> Dedicated, isolated instance with 30/90-day retention</li>
+            <li><i class="ph ph-check-circle"></i> Support, SLA and GST invoicing</li>
+          </ul>
+        </div>
+      </div>
+      <p class="price-note">All prices in INR, exclusive of applicable taxes. Home covers a single household under fair use.</p>
+    </div>
+  </section>
+
+<section class="section">
     <div class="wrap">
       <div class="ctaband">
         <h2>Set it up once, get told if it slips.</h2>
@@ -232,5 +380,21 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script>
+    (function () {
+      var track = document.getElementById('demo-track');
+      if (!track) return;
+      var i = 0, n = track.children.length, timer = null;
+      var prev = document.getElementById('demo-prev'), next = document.getElementById('demo-next'), dots = document.getElementById('demo-dots');
+      for (var k = 0; k < n; k++) { var b = document.createElement('button'); b.className = 'demo__pip'; b.setAttribute('aria-label', 'Screen ' + (k + 1)); b.addEventListener('click', (function (k) { return function () { stopAuto(); go(k); }; })(k)); dots.appendChild(b); }
+      function go(to) { i = (to + n) % n; track.style.transform = 'translateX(-' + (i * 100) + '%)'; Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); }); }
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+      prev.addEventListener('click', function () { stopAuto(); go(i - 1); });
+      next.addEventListener('click', function () { stopAuto(); go(i + 1); });
+      go(0);
+      var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); timer = setInterval(function () { go(i + 1); }, 4000); } }); }, { threshold: 0.35 });
+      io.observe(track);
+    })();
+  </script>
 </body>
 </html>
