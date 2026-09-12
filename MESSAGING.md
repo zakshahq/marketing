@@ -57,16 +57,24 @@ Home in general is **tamper-resistant**, not **tamper-proof**. Two setups earn t
 tamper-proof, because enforcement genuinely can't be removed: the **Android fresh-phone
 (device-owner) setup** — a Home option parents can choose over the standard
 tamper-evident install — and the **Enterprise/MDM track** (supervised fleets,
-schools.html). Never apply tamper-proof to the iPhone story or to Home as a whole.
+schools.html). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
+whole. **Windows** (standard-user setup) is strongly tamper-resistant — a machine-wide
+system service that's hard to switch off without the admin password — but we do **not**
+lead with a "not removable" / tamper-proof claim.
 
 Say for Home: "hard to bypass", "built to stay on", "hard to switch off without you",
 "tamper-resistant"; for the Android fresh-phone setup specifically, "tamper-proof —
-can't be uninstalled from the phone" is accurate and allowed.
+can't be uninstalled from the phone" is accurate and allowed; for the Windows
+standard-user setup specifically, "built to stay on — hard to switch off without the
+admin password" is the framing (not "not removable by them").
 
 The honest caveat, always nearby when we make the anti-bypass claim: on iPhone the
 Screen Time passcode does the pinning, and Apple lets the Apple ID password reset that
-passcode — so the parent's Apple ID password is the real key. We say this plainly; it's
-also why the claim is credible.
+passcode — so the parent's Apple ID password is the real key. On Windows the admin
+password is the real key, the same shape: someone with it — or who wipes and reinstalls
+Windows — can still remove Zaksha, and if the child's own account is an administrator it
+drops back to tamper-evident + alert. We say this plainly; it's also why the claim is
+credible.
 
 Never say for Home overall (or for iPhone): tamper-proof, unbypassable, impossible to
 remove, "magic wall", 100% / guaranteed blocking.
@@ -93,7 +101,8 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/get.html` | Install steps per platform | Linked post-signup and from CTAs |
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
-| `/schools.html` | Enterprise + schools | Unlisted; the only place tamper-proof (MDM) language is allowed |
+| `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
+| `/schools.html` | Enterprise + schools | Unlisted; the only place unqualified MDM tamper-proof language is allowed |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
 Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram, `YT-*`,
