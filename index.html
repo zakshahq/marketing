@@ -88,11 +88,9 @@
     .devtab.on i { color: #fff; }
     .devpanel { display: none; }
     .devpanel.on { display: block; }
-    .devcard { max-width: 520px; margin: 0 auto; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 40px 32px; box-shadow: var(--sh-1); }
-    .devcard__ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; margin: 0 auto 18px; font-size: 28px; background: var(--teal-50); color: var(--teal-700); }
-    .devcard h3 { font-size: 19px; }
-    .devcard p { margin-top: 10px; font-size: 14.5px; color: var(--ink-500); line-height: 1.6; }
-    .devcard a { color: var(--teal-700); font-weight: 700; }
+    .devnote { max-width: 560px; margin: 28px auto 0; text-align: center; font-size: 13.5px; color: var(--ink-500); line-height: 1.6; }
+    .devnote i { color: var(--teal-700); vertical-align: -1px; }
+    .devnote a { color: var(--teal-700); font-weight: 700; }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -492,8 +490,6 @@
       <div class="devtabs" id="devtabs">
         <button class="devtab on" data-dev="ios"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</button>
         <button class="devtab" data-dev="android"><i class="ph ph-android-logo"></i> Android</button>
-        <button class="devtab" data-dev="mac"><i class="ph ph-desktop"></i> Mac</button>
-        <button class="devtab" data-dev="win"><i class="ph ph-windows-logo"></i> Windows</button>
       </div>
 
       <div class="devpanel on" data-dev="ios">
@@ -536,21 +532,7 @@
         <p class="phones__hint">Swipe or scroll to see more →</p>
       </div>
 
-      <div class="devpanel" data-dev="mac">
-        <div class="devcard">
-          <div class="devcard__ic"><i class="ph ph-desktop"></i></div>
-          <h3>No app to open</h3>
-          <p>On a Mac, Zaksha installs as a small configuration profile and filters quietly in the background — nothing to launch. You set the rules and see the activity from <a href="#tour">your dashboard</a>.</p>
-        </div>
-      </div>
-
-      <div class="devpanel" data-dev="win">
-        <div class="devcard">
-          <div class="devcard__ic"><i class="ph ph-windows-logo"></i></div>
-          <h3>No app to open</h3>
-          <p>On Windows, a small background agent keeps filtering on, locked to admin accounts — nothing for a child to close. You set the rules and see the activity from <a href="#tour">your dashboard</a>.</p>
-        </div>
-      </div>
+      <p class="devnote"><i class="ph ph-desktop"></i> Mac and <i class="ph ph-windows-logo"></i> Windows run quietly in the background — no app to open. You manage them from <a href="#tour">your dashboard</a>.</p>
     </div>
   </section>
 
