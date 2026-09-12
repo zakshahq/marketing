@@ -78,6 +78,21 @@
     .mk-bar__fl { display: block; height: 100%; border-radius: 999px; background: var(--teal-500); }
     .mk-bar__fl--blk { background: var(--block); }
     .mk-bar__n { flex: 0 0 44px; font-family: var(--mono); font-size: 11px; color: var(--ink-400); }
+
+    /* device selector on "on the device" section */
+    .devtabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 28px; }
+    .devtab { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); font-size: 13.5px; font-weight: 700; color: var(--ink-700); cursor: pointer; transition: color .15s, border-color .15s, background .15s; }
+    .devtab i { font-size: 16px; color: var(--teal-700); }
+    .devtab:hover { border-color: var(--teal-600); }
+    .devtab.on { background: var(--teal-600); color: #fff; border-color: var(--teal-600); }
+    .devtab.on i { color: #fff; }
+    .devpanel { display: none; }
+    .devpanel.on { display: block; }
+    .devcard { max-width: 520px; margin: 0 auto; text-align: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 40px 32px; box-shadow: var(--sh-1); }
+    .devcard__ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; margin: 0 auto 18px; font-size: 28px; background: var(--teal-50); color: var(--teal-700); }
+    .devcard h3 { font-size: 19px; }
+    .devcard p { margin-top: 10px; font-size: 14.5px; color: var(--ink-500); line-height: 1.6; }
+    .devcard a { color: var(--teal-700); font-weight: 700; }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -470,28 +485,61 @@
   <section class="section" id="app">
     <div class="wrap">
       <div class="section-head section-head--center">
-        <span class="eyebrow">From the app</span>
-        <h2>What it looks like on their phone.</h2>
+        <span class="eyebrow">On the device</span>
+        <h2>What it looks like, device by device.</h2>
       </div>
-      <div class="phones">
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/protected.png" alt="Zaksha — protected, filtering is active" /></div>
-          <div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything works as normal, quietly in the background.</span></div>
+      <div class="devtabs" id="devtabs">
+        <button class="devtab on" data-dev="ios"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</button>
+        <button class="devtab" data-dev="android"><i class="ph ph-android-logo"></i> Android</button>
+        <button class="devtab" data-dev="mac"><i class="ph ph-desktop"></i> Mac</button>
+        <button class="devtab" data-dev="win"><i class="ph ph-windows-logo"></i> Windows</button>
+      </div>
+
+      <div class="devpanel on" data-dev="ios">
+        <div class="phones">
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/protected.png" alt="Zaksha — protected, filtering is active" /></div>
+            <div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything works as normal, quietly in the background.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha — apps are paused until filtering is back on" /></div>
+            <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off, and this is all they get.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
+            <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/manage.png" alt="Zaksha tamper lock settings — allowed apps, watched app types, cooldown" /></div>
+            <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
+          </div>
         </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha — apps are paused until filtering is back on" /></div>
-          <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off, and this is all they get.</span></div>
-        </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
-          <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
-        </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/manage.png" alt="Zaksha tamper lock settings — allowed apps, watched app types, cooldown" /></div>
-          <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
+        <p class="phones__hint">Swipe or scroll to see more →</p>
+      </div>
+
+      <div class="devpanel" data-dev="android">
+        <div class="devcard">
+          <div class="devcard__ic"><i class="ph ph-android-logo"></i></div>
+          <h3>The same Zaksha app</h3>
+          <p>Installed during phone setup, filtering follows the device onto any Wi-Fi or mobile data — and on a fresh-phone setup, it can't be uninstalled at all. Guided, device-specific steps are on the <a href="get.html">Get the app</a> page.</p>
         </div>
       </div>
-      <p class="phones__hint">Swipe or scroll to see more →</p>
+
+      <div class="devpanel" data-dev="mac">
+        <div class="devcard">
+          <div class="devcard__ic"><i class="ph ph-desktop"></i></div>
+          <h3>No app to open</h3>
+          <p>On a Mac, Zaksha installs as a small configuration profile and filters quietly in the background — nothing to launch. You set the rules and see the activity from <a href="#tour">your dashboard</a>.</p>
+        </div>
+      </div>
+
+      <div class="devpanel" data-dev="win">
+        <div class="devcard">
+          <div class="devcard__ic"><i class="ph ph-windows-logo"></i></div>
+          <h3>No app to open</h3>
+          <p>On Windows, a small background agent keeps filtering on, locked to admin accounts — nothing for a child to close. You set the rules and see the activity from <a href="#tour">your dashboard</a>.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -695,6 +743,21 @@
       fitHint();
       window.addEventListener('resize', fitHint);
     }
+
+    // Device selector on the "On the device" section
+    (function () {
+      var tabs = document.getElementById('devtabs');
+      if (!tabs) return;
+      var btns = tabs.querySelectorAll('.devtab');
+      var panels = document.querySelectorAll('.devpanel');
+      tabs.addEventListener('click', function (e) {
+        var b = e.target.closest('.devtab');
+        if (!b) return;
+        var dev = b.dataset.dev;
+        btns.forEach(function (x) { x.classList.toggle('on', x === b); });
+        panels.forEach(function (p) { p.classList.toggle('on', p.dataset.dev === dev); });
+      });
+    })();
 
     // Product-tour carousel (same behaviour as schools.html)
     (function () {
