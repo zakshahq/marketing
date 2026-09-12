@@ -9,6 +9,89 @@
 
   <link rel="stylesheet" href="/fonts.css" />
   <link rel="stylesheet" href="zaksha-site.css" />
+  <style>
+    /* ---------- Home page — additions not covered by zaksha-site.css ---------- */
+    /* OS support badges (under hero) */
+    .osbadges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px; }
+    .osbadge { display: inline-flex; align-items: center; gap: 7px; padding: 8px 15px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); font-size: 13px; font-weight: 700; color: var(--ink-700); box-shadow: var(--sh-1); }
+    .osbadge i { font-size: 16px; color: var(--teal-700); }
+
+    /* ---------- click-through demo (shared shape with schools.html) ---------- */
+    .demo { max-width: 720px; margin: 0 auto; }
+    .demo__frame { overflow: hidden; border-radius: var(--r-lg); border: 1px solid var(--line); box-shadow: var(--sh-2); background: var(--surface); }
+    .demo__bar { display: flex; align-items: center; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--line-2); }
+    .demo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+    .demo__url { margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-400); background: var(--bg); border-radius: var(--r-pill); padding: 4px 14px; }
+    .demo__track { display: flex; transition: transform .35s ease; }
+    .demo__slide { flex: 0 0 100%; min-width: 0; padding: clamp(20px, 3.5vw, 32px); position: relative; }
+    .demo__stage { position: relative; }
+    .demo__arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      display: grid; place-items: center; font-size: 19px;
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink-700);
+      box-shadow: var(--sh-1); transition: color .15s, border-color .15s, background .15s;
+    }
+    .demo__arrow:hover { color: var(--teal-700); border-color: var(--teal-600); }
+    .demo__arrow--l { left: -21px; }
+    .demo__arrow--r { right: -21px; }
+    @media (max-width: 800px) { .demo__arrow--l { left: 8px; } .demo__arrow--r { right: 8px; } }
+    .tour-chip {
+      position: absolute; z-index: 2; max-width: 250px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--sh-2); padding: 10px 13px;
+      display: flex; align-items: flex-start; gap: 9px;
+    }
+    .tour-chip i { font-size: 17px; color: var(--teal-600); flex: 0 0 auto; margin-top: 1px; }
+    .tour-chip b { font-size: 12.5px; font-weight: 800; display: block; line-height: 1.35; }
+    .tour-chip small { font-size: 11px; color: var(--ink-500); display: block; margin-top: 1px; line-height: 1.4; }
+    @media (max-width: 600px) { .tour-chip { display: none; } }
+    .demo__nav { display: flex; align-items: center; justify-content: center; margin-top: 20px; }
+    .demo__dots { display: flex; gap: 7px; }
+    .demo__pip { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: 0; padding: 0; cursor: pointer; transition: background .15s; }
+    .demo__pip.on { background: var(--teal-600); }
+
+    /* mock-screen bits inside slides */
+    .mk-h { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mk-h b { font-size: 15px; }
+    .mk-h .mono { margin-left: auto; font-size: 11px; color: var(--ink-400); }
+    .mk-row {
+      display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+      border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface);
+    }
+    .mk-row + .mk-row { margin-top: 10px; }
+    .mk-row__ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; background: var(--teal-50); color: var(--teal-700); flex: 0 0 auto; }
+    .mk-row__nm { font-size: 14px; font-weight: 700; display: block; }
+    .mk-row__sub { font-size: 12px; color: var(--ink-400); display: block; margin-top: 1px; }
+    .mk-chip { margin-left: auto; flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; border-radius: var(--r-pill); padding: 4px 11px; white-space: nowrap; }
+    .mk-chip--on { background: var(--allow-50); color: var(--allow); }
+    .mk-chip--off { background: var(--block-50); color: var(--block); }
+    .mk-chip--teal { background: var(--teal-50); color: var(--teal-700); }
+    .mk-sw { margin-left: auto; flex: 0 0 auto; width: 38px; height: 22px; border-radius: 999px; background: var(--line); position: relative; }
+    .mk-sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--sh-1); }
+    .mk-sw.on { background: var(--teal-600); }
+    .mk-sw.on::after { left: auto; right: 3px; }
+    .mk-bar { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+    .mk-bar + .mk-bar { margin-top: 9px; }
+    .mk-bar__lab { flex: 0 0 118px; font-weight: 700; text-align: right; color: var(--ink-700); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mk-bar__tr { flex: 1; height: 10px; border-radius: 999px; background: var(--line-2); overflow: hidden; }
+    .mk-bar__fl { display: block; height: 100%; border-radius: 999px; background: var(--teal-500); }
+    .mk-bar__fl--blk { background: var(--block); }
+    .mk-bar__n { flex: 0 0 44px; font-family: var(--mono); font-size: 11px; color: var(--ink-400); }
+
+    /* device selector on "on the device" section */
+    .devtabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 28px; }
+    .devtab { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--surface); font-size: 13.5px; font-weight: 700; color: var(--ink-700); cursor: pointer; transition: color .15s, border-color .15s, background .15s; }
+    .devtab i { font-size: 16px; color: var(--teal-700); }
+    .devtab:hover { border-color: var(--teal-600); }
+    .devtab.on { background: var(--teal-600); color: #fff; border-color: var(--teal-600); }
+    .devtab.on i { color: #fff; }
+    .devpanel { display: none; }
+    .devpanel.on { display: block; }
+    .devnote { max-width: 560px; margin: 28px auto 0; text-align: center; font-size: 13.5px; color: var(--ink-500); line-height: 1.6; }
+    .devnote i { color: var(--teal-700); vertical-align: -1px; }
+    .devnote a { color: var(--teal-700); font-weight: 700; }
+  </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -159,6 +242,13 @@
         <span><i class="ph ph-map-pin"></i> Data stays in India</span>
         <span><i class="ph ph-eye-slash"></i> Never sold or used for ads</span>
       </div>
+      <div class="osbadges">
+        <span class="osbadge"><i class="ph ph-apple-logo"></i> iPhone</span>
+        <span class="osbadge"><i class="ph ph-apple-logo"></i> iPad</span>
+        <span class="osbadge"><i class="ph ph-android-logo"></i> Android</span>
+        <span class="osbadge"><i class="ph ph-desktop"></i> Mac</span>
+        <span class="osbadge"><i class="ph ph-windows-logo"></i> Windows</span>
+      </div>
 
       <div class="hero__visual">
         <div class="sched" aria-hidden="true">
@@ -185,6 +275,108 @@
             <span class="sched__dash">—</span>
             <span class="sched__chip">6:30 AM</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== PRODUCT TOUR ============================== -->
+  <section class="section" id="tour">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Product tour</span>
+        <h2>The dashboard you run it from.</h2>
+        <p>One place for every device — phone, tablet or PC. Here's what you see at app.zaksha.com, in four screens.</p>
+      </div>
+      <div class="demo">
+        <div class="demo__stage">
+        <button class="demo__arrow demo__arrow--l" id="demo-prev" aria-label="Previous screen"><i class="ph ph-arrow-left"></i></button>
+        <button class="demo__arrow demo__arrow--r" id="demo-next" aria-label="Next screen"><i class="ph ph-arrow-right"></i></button>
+        <div class="demo__frame">
+          <div class="demo__bar" aria-hidden="true">
+            <span class="demo__dot"></span><span class="demo__dot"></span><span class="demo__dot"></span>
+            <span class="demo__url">app.zaksha.com</span>
+          </div>
+          <div class="demo__track" id="demo-track">
+
+            <!-- 1 · devices at a glance -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Your devices</b><span class="mono">3 DEVICES PROTECTED</span></div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-android-logo"></i></span>
+                <span><span class="mk-row__nm">Aarav's phone</span><span class="mk-row__sub">Android · at home and on mobile data</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-apple-logo"></i></span>
+                <span><span class="mk-row__nm">Diya's iPad</span><span class="mk-row__sub">iPadOS · filtering on wherever it goes</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="mk-row">
+                <span class="mk-row__ic"><i class="ph ph-desktop"></i></span>
+                <span><span class="mk-row__nm">Family laptop</span><span class="mk-row__sub">Windows · shared PC in the study</span></span>
+                <span class="mk-chip mk-chip--on">Protected</span>
+              </div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-squares-four"></i>
+                <span><b>Every device, one place</b><small>iPhone, Android, Mac or Windows — same dashboard.</small></span>
+              </div>
+            </div>
+
+            <!-- 2 · categories -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Aarav's phone</b><span class="mono">CATEGORIES · BLOCKED WHEN ON</span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-prohibit"></i></span><span class="mk-row__nm">Adult content</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-poker-chip"></i></span><span class="mk-row__nm">Gambling</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-game-controller"></i></span><span class="mk-row__nm">Gaming</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-chats-circle"></i></span><span class="mk-row__nm">Social media</span><span class="mk-sw on"></span></div>
+              <div class="mk-row"><span class="mk-row__ic"><i class="ph ph-check-circle"></i></span><span><span class="mk-row__nm">youtube.com</span><span class="mk-row__sub">Kept on for schoolwork — allowed even with Streaming blocked</span></span><span class="mk-chip mk-chip--on">Always allowed</span></div>
+            </div>
+
+            <!-- 3 · schedule -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Schedules</b><span class="mono">AARAV'S PHONE</span></div>
+              <div class="sched" style="box-shadow:none;">
+                <div class="sched__top">
+                  <span class="sched__ic"><i class="ph ph-moon-stars"></i></span>
+                  <span><span class="sched__nm">Bedtime</span><span class="sched__mt">Internet off overnight</span></span>
+                  <span class="sched__badge">Active</span>
+                </div>
+                <div class="sched__days">
+                  <span class="sched__day on"><b>MON</b></span><span class="sched__day on"><b>TUE</b></span><span class="sched__day on"><b>WED</b></span><span class="sched__day on"><b>THU</b></span><span class="sched__day on"><b>FRI</b></span><span class="sched__day on"><b>SAT</b></span><span class="sched__day on"><b>SUN</b></span>
+                </div>
+                <div class="sched__win">Internet off <span class="sched__chip">9:30 PM</span> <span class="sched__dash">—</span> <span class="sched__chip">6:30 AM</span></div>
+              </div>
+              <div class="mk-row" style="margin-top:12px;">
+                <span class="mk-row__ic"><i class="ph ph-graduation-cap"></i></span>
+                <span><span class="mk-row__nm">Study hours</span><span class="mk-row__sub">Social &amp; gaming off · school nights</span></span>
+                <span class="mk-chip mk-chip--teal">4:00 – 6:00 PM</span>
+              </div>
+              <div class="tour-chip" style="left:34px; bottom:26px;">
+                <i class="ph ph-calendar-check"></i>
+                <span><b>Set once</b><small>Runs every week on its own.</small></span>
+              </div>
+            </div>
+
+            <!-- 4 · activity -->
+            <div class="demo__slide">
+              <div class="mk-h"><b>Activity — yesterday</b><span class="mono">AARAV'S PHONE · 512 REQUESTS · 47 BLOCKED</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">youtube.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:82%;"></span></span><span class="mk-bar__n">198</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">wikipedia.org</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:54%;"></span></span><span class="mk-bar__n">131</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">whatsapp.com</span><span class="mk-bar__tr"><span class="mk-bar__fl" style="width:38%;"></span></span><span class="mk-bar__n">92</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">pornhub.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:16%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="mk-bar"><span class="mk-bar__lab">stake.com</span><span class="mk-bar__tr"><span class="mk-bar__fl mk-bar__fl--blk" style="width:9%;"></span></span><span class="mk-bar__n mk-chip--off" style="flex-basis:auto; border-radius:999px; padding:2px 8px;">blocked</span></div>
+              <div class="tour-chip" style="right:28px; bottom:26px;">
+                <i class="ph ph-eye-slash"></i>
+                <span><b>Domains only</b><small>Never messages or what's on a page.</small></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        </div>
+        <div class="demo__nav">
+          <div class="demo__dots" id="demo-dots"></div>
         </div>
       </div>
     </div>
@@ -288,31 +480,59 @@
   </section>
 
   <!-- ============================== APP SHOWCASE ============================== -->
+
   <section class="section" id="app">
     <div class="wrap">
       <div class="section-head section-head--center">
-        <span class="eyebrow">From the app</span>
-        <h2>What it looks like on their phone.</h2>
+        <span class="eyebrow">On the device</span>
+        <h2>What it looks like, device by device.</h2>
       </div>
-      <div class="phones">
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/protected.png" alt="Zaksha — protected, filtering is active" /></div>
-          <div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything works as normal, quietly in the background.</span></div>
-        </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha — apps are paused until filtering is back on" /></div>
-          <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off, and this is all they get.</span></div>
-        </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
-          <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
-        </div>
-        <div class="phone">
-          <div class="phone__frame"><img src="img/app/manage.png" alt="Zaksha tamper lock settings — allowed apps, watched app types, cooldown" /></div>
-          <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
-        </div>
+      <div class="devtabs" id="devtabs">
+        <button class="devtab on" data-dev="ios"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</button>
+        <button class="devtab" data-dev="android"><i class="ph ph-android-logo"></i> Android</button>
       </div>
-      <p class="phones__hint">Swipe or scroll to see more →</p>
+
+      <div class="devpanel on" data-dev="ios">
+        <div class="phones">
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/protected.png" alt="Zaksha — protected, filtering is active" /></div>
+            <div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything works as normal, quietly in the background.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/shield.png" alt="A watched app locked by Zaksha — apps are paused until filtering is back on" /></div>
+            <div class="phone__cap"><b>What a locked app shows</b><span>Open a watched app while filtering is off, and this is all they get.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/countdown.png" alt="Zaksha — filtering active again" /></div>
+            <div class="phone__cap"><b>Back on, protected</b><span>Filtering active again, watched apps back under the rules.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/manage.png" alt="Zaksha tamper lock settings — allowed apps, watched app types, cooldown" /></div>
+            <div class="phone__cap"><b>You set the terms</b><span>Pick the app types to watch, what stays allowed, and the cooldown.</span></div>
+          </div>
+        </div>
+        <p class="phones__hint">Swipe or scroll to see more →</p>
+      </div>
+
+      <div class="devpanel" data-dev="android">
+        <div class="phones">
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/android-setup.jpg" alt="Zaksha on Android — set up this device with an 8-digit pairing code" /></div>
+            <div class="phone__cap"><b>Set up in seconds</b><span>A parent adds the device and shares an 8-digit code — nothing to create on the phone itself.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/android-protected.jpg" alt="Zaksha on Android — protected, filtering active on every network" /></div>
+            <div class="phone__cap"><b>Filtering on</b><span>Filtering stays active on every network — Wi-Fi or mobile data — quietly in the background.</span></div>
+          </div>
+          <div class="phone">
+            <div class="phone__frame"><img src="img/app/android-notprotected.jpg" alt="Zaksha on Android — not protected, one tap to turn filtering back on" /></div>
+            <div class="phone__cap"><b>If it ever stops, you know</b><span>Turn filtering off and the parent is alerted within minutes — one tap turns it back on.</span></div>
+          </div>
+        </div>
+        <p class="phones__hint">Swipe or scroll to see more →</p>
+      </div>
+
+      <p class="devnote"><i class="ph ph-desktop"></i> Mac and <i class="ph ph-windows-logo"></i> Windows run quietly in the background — no app to open. You manage them from <a href="#tour">your dashboard</a>.</p>
     </div>
   </section>
 
@@ -509,13 +729,63 @@
     });
     openFaq(location.hash);
 
-    // Show the carousel hint only when the phones row actually overflows.
-    var phones = document.querySelector('.phones'), hint = document.querySelector('.phones__hint');
-    if (phones && hint) {
-      var fitHint = function () { hint.style.display = phones.scrollWidth > phones.clientWidth + 8 ? 'block' : 'none'; };
-      fitHint();
-      window.addEventListener('resize', fitHint);
+    // Show each carousel's hint only when its phones row actually overflows.
+    function fitHints() {
+      document.querySelectorAll('.phones').forEach(function (p) {
+        var h = p.parentElement.querySelector('.phones__hint');
+        if (h) h.style.display = p.scrollWidth > p.clientWidth + 8 ? 'block' : 'none';
+      });
     }
+    fitHints();
+    window.addEventListener('resize', fitHints);
+
+    // Device selector on the "On the device" section
+    (function () {
+      var tabs = document.getElementById('devtabs');
+      if (!tabs) return;
+      var btns = tabs.querySelectorAll('.devtab');
+      var panels = document.querySelectorAll('.devpanel');
+      tabs.addEventListener('click', function (e) {
+        var b = e.target.closest('.devtab');
+        if (!b) return;
+        var dev = b.dataset.dev;
+        btns.forEach(function (x) { x.classList.toggle('on', x === b); });
+        panels.forEach(function (p) { p.classList.toggle('on', p.dataset.dev === dev); });
+        if (typeof fitHints === 'function') fitHints();
+      });
+    })();
+
+    // Product-tour carousel (same behaviour as schools.html)
+    (function () {
+      var track = document.getElementById('demo-track');
+      if (!track) return;
+      var i = 0, n = track.children.length, timer = null;
+      var prev = document.getElementById('demo-prev');
+      var next = document.getElementById('demo-next');
+      var dots = document.getElementById('demo-dots');
+      for (var k = 0; k < n; k++) {
+        var b = document.createElement('button');
+        b.className = 'demo__pip';
+        b.setAttribute('aria-label', 'Screen ' + (k + 1));
+        b.addEventListener('click', (function (k) { return function () { stopAuto(); go(k); }; })(k));
+        dots.appendChild(b);
+      }
+      function go(to) {
+        i = (to + n) % n;
+        track.style.transform = 'translateX(-' + (i * 100) + '%)';
+        Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
+      }
+      function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+      prev.addEventListener('click', function () { stopAuto(); go(i - 1); });
+      next.addEventListener('click', function () { stopAuto(); go(i + 1); });
+      go(0);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { io.disconnect(); timer = setInterval(function () { go(i + 1); }, 4000); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(track);
+    })();
 
     // Carry an ad's ?ref= (e.g. GS-BLOCK2, GS-IOS1) into the signup CTAs, and remember it in
     // localStorage so it survives navigation within the site. The PWA captures ?ref only on
