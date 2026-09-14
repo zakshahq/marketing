@@ -1,0 +1,11 @@
+{
+  // Static-assets Worker for the Zaksha marketing site (plain HTML/CSS/JS, no build step).
+  // Committed so the Git-connected Cloudflare Workers Build has a config to `wrangler deploy`.
+  // Deploys were previously done by manual local `wrangler deploy`; git-triggered builds had no
+  // config and failed. All request-time logic (e.g. carrying ?ref into the signup CTA) is
+  // client-side JS in the HTML, so no Worker script is needed.
+  "name": "zaksha-marketing",
+  "compatibility_date": "2026-09-11",
+  "assets": { "directory": "./" },
+  "observability": { "enabled": true }
+}
