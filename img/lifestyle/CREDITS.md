@@ -8,7 +8,8 @@ Resized/compressed from the originals for the web.
 |---|---|---|---|---|---|---|
 | child-tablet-cozy.jpg | homepage hero | Child relaxed in an armchair using a tablet, window light, potted plants | Pexels | Anna Pou | https://www.pexels.com/photo/a-child-using-a-tablet-9345618/ | Pexels License |
 | parent-child-reading.jpg | homepage privacy section background | Parent and child reading a book on a couch, warm evening light | Pexels | olia danilevich | https://www.pexels.com/photo/a-mother-and-daughter-reading-a-book-on-a-couch-5490045/ | Pexels License |
-| family-meal.jpg | homepage schedules ("Set a routine") background | Indian mother serving her son a meal at the family table | Pexels | Anna Pou | https://www.pexels.com/photo/woman-in-pink-and-white-long-sleeve-shirt-eating-9345665/ | Pexels License |
+| study-evening.jpg | homepage schedules ("Set a routine") background | Child doing homework at a desk under a lamp in the evening | Pexels | Tima Miroshnichenko | https://www.pexels.com/photo/5303779/ | Pexels License |
+| family-devices.jpg | homepage "Every device" section background | Family together on a sofa — mother on a laptop, teen on a phone, child alongside | Pexels | Tiger Lily | https://www.pexels.com/photo/8260523/ | Pexels License |
 
 ## App / brand logos (img/appicons/)
 

@@ -76,12 +76,17 @@ Approximate domain counts from the upstream lists the renderer compiles
 DOWN with a "+" so they stay true as the lists shift. Safe to state:
 
 - Adult sites: **70,000+** (hagezi nsfw.txt ~74k)
-- Malware & phishing: **180,000+** (hagezi tif.mini ~184k — the Basic Security category)
+- Malware & phishing: **2,400,000+** (hagezi full **tif.txt** ~2.476M, version 2026.0916 — the Security
+  category moved from tif.mini to the full Threat Intelligence Feeds list)
 - Ad & tracker domains: **220,000+** (hagezi pro.txt ~226k)
-- On the block list overall: **900,000+** (union across all lists ~915k; the code notes ~941k)
+- On the block list overall: **3,000,000+** (union across all lists; old ~915k with tif.mini, plus the
+  ~2.29M net that full tif adds → ~3.2M)
 - (Gambling ~427k and streaming lists also load, category-gated.)
 
 Do not state exact figures — these upstream lists change; the "+" rounding is the claim.
+
+Site display uses Indian units (K for thousands, Lakh at ≥1 lakh): **70K+** adult, **24 Lakh+**
+malware/phishing, **2.2 Lakh+** ads/trackers, **30 Lakh+** on the block list.
 
 ## Anti-bypass language (non-negotiable)
 
