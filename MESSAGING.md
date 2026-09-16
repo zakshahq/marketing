@@ -15,6 +15,11 @@ changes, update this file in the same push as the site change that uses it.
 
 Shorter, for ads (30-char headline territory): "Parental controls that hold."
 
+Homepage hero (outcome-led, since 2026-09-16): "Let them have the phone. You can
+stop watching it." — support line: "Zaksha keeps your kids to the internet you're
+comfortable with — on every device, on any network — and holds the line when they
+try to switch it off."
+
 ## Who it's for
 
 Indian parents with school-age kids and a mix of devices — an Android phone, maybe an
@@ -50,6 +55,33 @@ Supporting points (true, use freely): 7-day history then deleted for good; domai
 never messages or page content; data stays in India; ₹199/month for the household,
 5 devices included and expandable — parents can ask us for more (no hard cap beyond
 fair use); UPI or card, cancel anytime; managed service — nothing to host.
+
+Pricing display (site, since 2026-09-16): list price **₹249/month**, shown with a
+time-bound **Diwali offer of ₹199/month** (₹149/mo billed yearly). The ₹199/₹149 offer
+prices are exactly what checkout charges today, so the offer is honest to run now; the
+₹249 list price only becomes a real claim once the PWA/Razorpay checkout is updated to
+charge it after the festive offer ends (not yet done — track before the offer lapses).
+Discount framing: "Diwali sale · up to 40% off" — annual ₹149/mo is 40% off ₹249, monthly
+₹199 is 20% off; "up to 40%" covers both honestly.
+
+Free trial (verified in `gates.go` — `const trialDays = 14`, first charge deferred):
+every account starts with a **14-day free trial**. Safe to lead CTAs with "Start your
+free trial" / "14 days free, then ₹199/month · cancel anytime". Don't use "Free to Start"
+(ads-policy phrasing to avoid); a plain "free trial" is fine.
+
+## Block list scale (verified 2026-09-16)
+
+Approximate domain counts from the upstream lists the renderer compiles
+(`control-plane/config/lists.txt` — hagezi + Perflyst; refreshed on a cadence). Rounded
+DOWN with a "+" so they stay true as the lists shift. Safe to state:
+
+- Adult sites: **70,000+** (hagezi nsfw.txt ~74k)
+- Malware & phishing: **180,000+** (hagezi tif.mini ~184k — the Basic Security category)
+- Ad & tracker domains: **220,000+** (hagezi pro.txt ~226k)
+- On the block list overall: **900,000+** (union across all lists ~915k; the code notes ~941k)
+- (Gambling ~427k and streaming lists also load, category-gated.)
+
+Do not state exact figures — these upstream lists change; the "+" rounding is the claim.
 
 ## Anti-bypass language (non-negotiable)
 
