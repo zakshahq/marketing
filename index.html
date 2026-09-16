@@ -9,15 +9,16 @@
 
   <link rel="stylesheet" href="/fonts.css" />
   <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="preload" as="image" href="img/lifestyle/child-tablet-cozy.jpg" fetchpriority="high" />
   <style>
     /* ---------- Home page v3 — additions not covered by zaksha-site.css ---------- */
     .osbadges { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:24px; }
 
     /* Diwali promo bar (top) */
-    .promobar{ background:var(--teal-800); color:#fff; text-align:center; font-size:13.5px; font-weight:600; padding:9px 16px; line-height:1.4; }
-    .promobar .amt{ color:#ffcf99; font-weight:800; }
-    .promobar a{ color:#fff; font-weight:800; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
-    .promobar i{ color:#ffcf99; vertical-align:-2px; }
+    .promobar{ background:#fbf0db; color:#8f481f; text-align:center; font-size:13.5px; font-weight:600; padding:9px 16px; line-height:1.4; border-bottom:1px solid #f0dcb4; }
+    .promobar .amt{ color:#a54f1a; font-weight:800; }
+    .promobar a{ color:#a54f1a; font-weight:800; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
+    .promobar i{ color:#a54f1a; vertical-align:-2px; }
     @media (max-width:560px){ .promobar{ font-size:12.5px; } }
 
     /* hero — full-bleed family photo */
@@ -57,7 +58,7 @@
     .marquee{ position:relative; overflow:hidden; padding:6px 0; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); }
     .marquee__track{ display:flex; width:max-content; animation:marq 40s linear infinite; }
     .marquee:hover .marquee__track{ animation-play-state:paused; }
-    @keyframes marq{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+    @keyframes marq{ from{ transform:translateX(0); } to{ transform:translateX(-33.3333%); } }
     .marquee__set{ display:flex; gap:16px; padding-right:16px; flex:0 0 auto; }
     .marquee .appic{ width:58px; height:58px; border-radius:15px; } .marquee .appic img{ width:34px; height:34px; }
     @media (prefers-reduced-motion: reduce){ .marquee__track{ animation:none; } .marquee{ overflow-x:auto; } }
@@ -84,14 +85,15 @@
     .stay .wrap{ padding-top:clamp(60px,8vw,100px); padding-bottom:clamp(60px,8vw,100px); }
     .stay__head{ max-width:680px; margin:0 auto clamp(34px,5vw,52px); text-align:center; }
     .stay__head .eyebrow{ color:#4fd0d8; } .stay__head h2{ color:#fff; font-size:clamp(27px,3.6vw,42px); margin-top:12px; } .stay__head p{ color:#9fb3b2; margin-top:14px; font-size:17px; }
-    .zig{ display:flex; flex-direction:column; gap:clamp(28px,4vw,52px); max-width:940px; margin:0 auto; }
-    .zstep{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:center; }
+    .zig{ display:flex; flex-direction:column; gap:clamp(24px,3vw,40px); max-width:900px; margin:0 auto; }
+    .zstep{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,52px); align-items:center; }
     .zstep:nth-child(even) .zstep__media{ order:-1; }
     @media (max-width:760px){ .zstep{ grid-template-columns:1fr; } .zstep:nth-child(even) .zstep__media{ order:0; } }
     .zstep__n{ display:inline-grid; place-items:center; width:34px; height:34px; border-radius:50%; background:#4fd0d8; color:#062224; font-family:var(--mono); font-weight:700; font-size:15px; }
     .zstep h3{ color:#fff; font-size:clamp(20px,2.4vw,26px); margin-top:14px; } .zstep p{ color:#9fb3b2; margin-top:10px; font-size:15.5px; line-height:1.6; }
-    .zstep__media{ display:flex; justify-content:center; }
-    .zphone{ width:100%; max-width:220px; background:#000; border-radius:30px; padding:6px; box-shadow:0 20px 50px rgba(0,0,0,.5); border:1px solid #26383a; } .zphone img{ width:100%; border-radius:24px; display:block; }
+    .zstep__media{ display:flex; justify-content:center; position:relative; }
+    .zstep__media::before{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(92%,420px); height:440px; border-radius:50%; background:radial-gradient(circle, rgba(14,128,136,.30), transparent 68%); filter:blur(14px); pointer-events:none; }
+    .zphone{ position:relative; width:100%; max-width:250px; background:#000; border-radius:30px; padding:6px; box-shadow:0 20px 50px rgba(0,0,0,.5); border:1px solid #26383a; } .zphone img{ width:100%; max-height:430px; object-fit:cover; object-position:top center; border-radius:24px; display:block; }
     .blockcomp{ position:relative; }
     .blockcomp__yt{ position:absolute; left:-14px; top:26px; width:52px; height:52px; border-radius:14px; background:#ff0000; display:grid; place-items:center; box-shadow:0 8px 20px rgba(0,0,0,.4); z-index:4; }
     .blockcomp__arr{ position:absolute; left:40px; top:44px; color:#4fd0d8; font-size:20px; z-index:4; }
@@ -114,7 +116,7 @@
     /* privacy with background image */
     .privbg{ position:relative; overflow:hidden; }
     .privbg__img{ position:absolute; inset:0; } .privbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; }
-    .privbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.94) 0%, rgba(247,250,249,.8) 40%, rgba(8,40,44,.55) 100%); }
+    .privbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
     .privbg .wrap{ position:relative; }
     .priv3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.5vw,24px); }
     @media (max-width:760px){ .priv3{ grid-template-columns:1fr; max-width:420px; margin:0 auto; } }
@@ -125,38 +127,46 @@
     /* schedules — blurred photo background (same idea as privacy) */
     .schedbg{ position:relative; overflow:hidden; }
     .schedbg__img{ position:absolute; inset:0; } .schedbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 35%; filter:blur(3px); transform:scale(1.06); }
-    .schedbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.93) 0%, rgba(247,250,249,.84) 50%, rgba(247,250,249,.92) 100%); }
+    .schedbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
     .schedbg .wrap{ position:relative; }
+    /* every-device — blurred photo behind the header, fading to clean wash before the matrix */
+    .dvxbg{ position:relative; overflow:hidden; }
+    .dvxbg__img{ position:absolute; inset:0; } .dvxbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 38%; filter:blur(2px); transform:scale(1.05); }
+    .dvxbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
+    .dvxbg .wrap{ position:relative; }
 
-    /* comparison table — protection vs surveillance */
-    .cmp{ max-width:840px; margin:0 auto; border:1px solid var(--line); border-radius:var(--r-xl); overflow:hidden; background:var(--surface); box-shadow:var(--sh-1); }
-    .cmp__row{ display:grid; grid-template-columns:1fr 120px 120px; align-items:stretch; }
-    .cmp__row + .cmp__row{ border-top:1px solid var(--line-2); }
-    .cmp__row--head .cmp__feat, .cmp__row--head .cmp__o{ font-family:var(--mono); font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-500); }
-    .cmp__feat{ padding:15px 22px; font-size:14.5px; font-weight:600; color:var(--ink-800); display:flex; align-items:center; }
-    .cmp__z, .cmp__o{ padding:14px 8px; display:grid; place-items:center; }
-    .cmp__z{ background:var(--teal-50); border-left:1px solid var(--teal-100); }
-    .cmp__row--head .cmp__z{ font-family:var(--mono); font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--teal-700); font-weight:700; }
-    .cmp__z i{ color:var(--teal-600); font-size:22px; } .cmp__o i{ color:var(--ink-300); font-size:20px; }
-    .cmp__note{ max-width:840px; margin:14px auto 0; text-align:center; font-size:12.5px; color:var(--ink-400); }
-    @media (max-width:560px){ .cmp__row{ grid-template-columns:1fr 62px 62px; } .cmp__feat{ font-size:12.5px; padding:13px 14px; } .cmp__z i{ font-size:19px; } }
+    /* why zaksha — what we do vs what we'll never do */
+    .split{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.4vw,26px); max-width:1000px; margin:0 auto; }
+    @media (max-width:760px){ .split{ grid-template-columns:1fr; max-width:520px; } }
+    .panel{ border-radius:var(--r-xl); padding:clamp(26px,3vw,34px); box-shadow:var(--sh-1); }
+    .panel--do{ background:var(--teal-600); color:#fff; }
+    .panel--dont{ background:var(--surface); border:1px solid var(--line); }
+    .panel h3{ font-size:18px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; }
+    .panel--do h3 i{ font-size:22px; }
+    .panel--dont h3{ color:var(--ink-900); } .panel--dont h3 i{ font-size:22px; color:var(--ink-400); }
+    .panel .sub{ font-size:13px; margin-top:6px; opacity:.85; }
+    .panel--dont .sub{ color:var(--ink-500); opacity:1; }
+    .panel ul{ list-style:none; margin:20px 0 0; padding:0; }
+    .panel li{ display:flex; gap:11px; align-items:flex-start; font-size:14.5px; line-height:1.5; }
+    .panel li + li{ margin-top:14px; }
+    .panel--do li i{ color:#bff0ea; font-size:19px; flex:none; }
+    .panel--dont li{ color:var(--ink-700); } .panel--dont li i{ color:var(--ink-300); font-size:19px; flex:none; }
 
     /* per-device feature / setup matrix */
     .fm-head{ text-align:center; max-width:720px; margin:0 auto clamp(24px,3vw,34px); }
     .fm-head .eyebrow{ margin-bottom:8px; } .fm-head h2{ font-size:clamp(24px,3.2vw,36px); letter-spacing:-0.03em; } .fm-head p{ margin-top:12px; font-size:16px; color:var(--ink-500); }
     .fm2wrap{ max-width:1000px; margin:0 auto; border:1px solid var(--line); border-radius:var(--r-xl); box-shadow:var(--sh-1); overflow-x:auto; }
-    .fm2{ width:100%; min-width:860px; border-collapse:collapse; background:var(--surface); }
+    .fm2{ width:100%; min-width:680px; border-collapse:collapse; background:var(--surface); }
     .fm2 th, .fm2 td{ padding:14px 16px; font-size:13.5px; line-height:1.5; text-align:center; vertical-align:top; border-left:1px solid var(--line-2); }
     .fm2 thead th{ vertical-align:bottom; background:var(--bg); border-bottom:1px solid var(--line); }
     .fm2 tbody tr + tr td, .fm2 tbody tr + tr th{ border-top:1px solid var(--line-2); }
     .fm2 .feat{ text-align:left; font-weight:700; color:var(--ink-800); width:210px; background:var(--bg); border-left:none; font-size:13.5px; }
     .fm2 .dev b{ font-size:15px; display:block; } .fm2 .dev .s{ font-size:12px; color:var(--ink-400); display:block; margin-top:2px; }
     .fm2 .dev .badges{ display:flex; flex-direction:column; gap:5px; align-items:center; margin-top:9px; }
-    .fm__lvl{ font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:4px 9px; border-radius:999px; white-space:nowrap; display:inline-block; }
-    .fm__lvl--proof{ background:var(--teal-600); color:#fff; } .fm__lvl--evident{ background:var(--teal-50); color:var(--teal-700); border:1px solid var(--teal-100); }
+    .fm2 .feat a{ color:var(--teal-700); text-decoration:underline; text-underline-offset:2px; }
     .fm2 .yes i{ color:var(--teal-600); font-size:20px; }
-    .fm2 .no i{ color:var(--teal-600); font-size:19px; } .fm2 .meh i{ color:var(--ink-300); font-size:19px; }
-    .fm__note{ max-width:720px; margin:16px auto 0; text-align:center; font-size:12.5px; color:var(--ink-400); }
+    .fm2 .txt{ color:var(--ink-600); font-size:12.5px; line-height:1.45; }
+    .fm__note{ max-width:720px; margin:16px auto 0; text-align:center; font-size:12.5px; color:rgba(255,255,255,.72); text-shadow:0 1px 3px rgba(0,0,0,.35); }
 
     /* device selector — reuses .phones showcase */
     .dvx__tabs{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:18px; }
@@ -194,7 +204,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Can my child turn it off? Is Zaksha tamper-proof?", "acceptedAnswer": { "@type": "Answer", "text": "On a family iPhone a child can switch DNS filtering off — Screen Time doesn't prevent that — but Zaksha then blocks the app types you've chosen and alerts you on WhatsApp, keeping them paused for a 30-minute cooldown once it's back on; a Screen Time passcode you set stops them deleting the app. Keep your Apple ID password private, since Apple lets it reset that passcode. On Android you choose the level: the standard install is tamper-evident (you're alerted the moment it's removed), and the fresh-phone setup is tamper-proof — Zaksha can't be uninstalled. For offices and schools, our supervised (MDM) setup is tamper-proof across the fleet." } },
+    { "@type": "Question", "name": "What is tamper protection? Can my child turn it off?", "acceptedAnswer": { "@type": "Answer", "text": "On a family iPhone a child can switch DNS filtering off — Screen Time doesn't prevent that — but Zaksha then blocks the app types you've chosen and alerts you on WhatsApp, keeping them paused for a 30-minute cooldown once it's back on; a Screen Time passcode you set stops them deleting the app. Keep your Apple ID password private, since Apple lets it reset that passcode. On Android you choose the level: the standard install is tamper-evident (you're alerted the moment it's removed), and the fresh-phone setup is tamper-proof — Zaksha can't be uninstalled. For offices and schools, our supervised (MDM) setup is tamper-proof across the fleet." } },
     { "@type": "Question", "name": "Does it work on mobile data, not just home Wi-Fi?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Zaksha app lives on the device, so filtering follows your child onto mobile data and any Wi-Fi — not just your home network." } },
     { "@type": "Question", "name": "What exactly can Zaksha see?", "acceptedAnswer": { "@type": "Answer", "text": "Website names only — that a device asked for youtube.com, never your messages, photos, passwords or what's on a page. History is kept for a rolling 7 days, then deleted. Everything is processed and stored on our servers in India. No ads, and nothing is sold." } },
     { "@type": "Question", "name": "Which categories can I block?", "acceptedAnswer": { "@type": "Answer", "text": "Adult content, gambling, social media, gaming, streaming — and AI chatbots like ChatGPT and Gemini. Each is one switch, set per child, and you can add specific sites of your own to the block list." } },
@@ -209,7 +219,7 @@
 
   <!-- DIWALI PROMO BAR -->
   <div class="promobar">
-    <i class="ph ph-moon-stars"></i> Diwali sale — <span class="amt">40% off</span> the yearly plan.
+    <i class="ph ph-sparkle"></i> Diwali sale — <span class="amt">40% off</span> the yearly plan.
     <a href="https://app.zaksha.com/signup">Start your free trial →</a>
   </div>
 
@@ -222,8 +232,8 @@
       </a>
       <nav class="nav__links">
         <a href="#block">What it blocks</a>
+        <a href="#why">Why Zaksha</a>
         <a href="#device">On the phone</a>
-        <a href="#stay">Stays on</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -237,7 +247,7 @@
 
   <!-- HERO -->
   <section class="fhero">
-    <div class="fhero__bg"><img src="img/lifestyle/child-tablet-cozy.jpg" alt="A child relaxing in a chair by a window at home, using a tablet" /></div>
+    <div class="fhero__bg"><img fetchpriority="high" decoding="async" src="img/lifestyle/child-tablet-cozy.jpg" alt="A child relaxing in a chair by a window at home, using a tablet" /></div>
     <div class="fhero__scrim"></div>
     <div class="wrap fhero__in">
       <span class="eyebrow">Parental controls for Indian families</span>
@@ -270,43 +280,60 @@
   <!-- WHAT YOU CAN BLOCK -->
   <section class="section" id="block">
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">What you can block</span><h2>The apps you know, off with one switch.</h2><p>Flip a category and every app and site in it goes — in the app and the browser.</p></div>
+      <div class="f-head"><span class="eyebrow">What you can block</span><h2>Block a whole category in one tap.</h2><p>Flip a category and every app and site in it gets blocked — both in the app and the browser.</p></div>
     </div>
     <div class="marquee">
       <div class="marquee__track">
         <div class="marquee__set">
-          <span class="appic"><img src="img/appicons/real/instagram.png" alt="Instagram" /></span>
-          <span class="appic"><img src="img/appicons/real/youtube.png" alt="YouTube" /></span>
-          <span class="appic"><img src="img/appicons/real/snapchat.png" alt="Snapchat" /></span>
-          <span class="appic"><img src="img/appicons/real/x.png" alt="X" /></span>
-          <span class="appic"><img src="img/appicons/real/facebook.png" alt="Facebook" /></span>
-          <span class="appic"><img src="img/appicons/real/netflix.png" alt="Netflix" /></span>
-          <span class="appic"><img src="img/appicons/real/primevideo.png" alt="Prime Video" /></span>
-          <span class="appic"><img src="img/appicons/real/hotstar.png" alt="Hotstar" /></span>
-          <span class="appic"><img src="img/appicons/real/spotify.png" alt="Spotify" /></span>
-          <span class="appic"><img src="img/appicons/real/roblox.png" alt="Roblox" /></span>
-          <span class="appic"><img src="img/appicons/real/steam.png" alt="Steam" /></span>
-          <span class="appic"><img src="img/appicons/real/epicgames.png" alt="Epic Games" /></span>
-          <span class="appic"><img src="img/appicons/real/chatgpt.png" alt="ChatGPT" /></span>
-          <span class="appic"><img src="img/appicons/real/gemini.png" alt="Gemini" /></span>
-          <span class="appic"><img src="img/appicons/real/claude.png" alt="Claude" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="Instagram" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="YouTube" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="Snapchat" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="X" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="Facebook" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="Netflix" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/primevideo.png" alt="Prime Video" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/hotstar.png" alt="Hotstar" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="Spotify" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="Roblox" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="Steam" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="Epic Games" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="ChatGPT" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="Gemini" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="Claude" /></span>
         </div>
         <div class="marquee__set" aria-hidden="true">
-          <span class="appic"><img src="img/appicons/real/instagram.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/youtube.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/snapchat.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/x.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/facebook.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/netflix.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/primevideo.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/hotstar.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/spotify.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/roblox.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/steam.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/epicgames.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/chatgpt.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/gemini.png" alt="" /></span>
-          <span class="appic"><img src="img/appicons/real/claude.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/primevideo.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/hotstar.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="" /></span>
+        </div>
+        <div class="marquee__set" aria-hidden="true">
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/primevideo.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/hotstar.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="" /></span>
         </div>
       </div>
     </div>
@@ -326,10 +353,10 @@
 
   <!-- SCHEDULES -->
   <section class="section schedbg">
-    <div class="schedbg__img"><img src="img/lifestyle/family-meal.jpg" alt="A family sharing a meal at home" /></div>
+    <div class="schedbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/study-evening.jpg" alt="A child doing homework at a desk under a lamp in the evening" /></div>
     <div class="schedbg__scrim"></div>
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Set a routine, once</span><h2>The day runs itself.</h2><p>Pick a time, pick what pauses. It repeats every week on its own.</p></div>
+      <div class="f-head"><span class="eyebrow">Set a routine, once</span><h2>Bedtime and study hours, handled.</h2><p>Pick a time, pick what pauses. It repeats every week on its own.</p></div>
       <div class="demo3">
         <div class="demorow">
           <div><span class="eyebrow">Bedtime</span><h3>Internet off at bedtime.</h3><p>The phone goes quiet overnight, so no one's scrolling at midnight.</p></div>
@@ -347,25 +374,58 @@
     </div>
   </section>
 
+  <!-- WHY ZAKSHA — protection vs surveillance -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Why Zaksha</span><h2>Protection, not surveillance.</h2><p>Zaksha blocks what you don't want — without reading over your child's shoulder.</p></div>
+      <div class="split">
+        <div class="panel panel--do">
+          <h3><i class="ph ph-shield-check"></i>What Zaksha does</h3>
+          <p class="sub">Everything you need to keep them to a safer internet.</p>
+          <ul>
+            <li><i class="ph ph-check-circle"></i>Blocks adult, gambling, social, streaming, gaming, ads &amp; AI</li>
+            <li><i class="ph ph-check-circle"></i>Blocks in the app and the browser</li>
+            <li><i class="ph ph-check-circle"></i>Filtering follows onto mobile data &amp; any Wi-Fi</li>
+            <li><i class="ph ph-check-circle"></i>Bedtime &amp; study-hour schedules, pause on demand</li>
+            <li><i class="ph ph-check-circle"></i>Holds on when your child switches it off</li>
+            <li><i class="ph ph-check-circle"></i>Works without your child's passwords</li>
+          </ul>
+        </div>
+        <div class="panel panel--dont">
+          <h3><i class="ph ph-prohibit"></i>What we'll never do</h3>
+          <p class="sub">The things monitoring apps sell — we refuse them by design.</p>
+          <ul>
+            <li><i class="ph ph-x"></i>Read their messages or chats</li>
+            <li><i class="ph ph-x"></i>Track their location</li>
+            <li><i class="ph ph-x"></i>Log every site they visit</li>
+            <li><i class="ph ph-x"></i>Need your child's passwords</li>
+            <li><i class="ph ph-x"></i>Keep history beyond 7 days</li>
+            <li><i class="ph ph-x"></i>Sell or share your family's data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- BUILT TO STAY ON -->
   <section class="stay" id="stay">
     <div class="wrap">
       <div class="stay__head">
         <span class="eyebrow">Built to stay on</span>
-        <h2>Switch it off, and it works against them.</h2>
+        <h2>Turn Zaksha off, and the fun stops too.</h2>
         <p>Most parental controls come off the moment a child deletes the app. Here's what happens on a Zaksha phone instead.</p>
       </div>
       <div class="zig">
         <div class="zstep">
           <div><span class="zstep__n">1</span><h3>They switch filtering off.</h3><p>A child can turn Zaksha's filtering off on their own phone — on an iPhone, even Screen Time won't stop that. So Zaksha is built for exactly this moment.</p></div>
-          <div class="zstep__media"><div class="zphone"><img src="img/app/android-notprotected.jpg" alt="Zaksha showing filtering is off" /></div></div>
+          <div class="zstep__media"><div class="zphone"><img loading="lazy" decoding="async" src="img/app/notprotected-ios.png" alt="Zaksha showing 'Not protected' — filtering switched off" /></div></div>
         </div>
         <div class="zstep">
           <div><span class="zstep__n">2</span><h3>The apps you picked are blocked.</h3><p>The instant filtering is off, the apps you chose — social, games, whatever you set — are blocked and won't open. Calls, messages and the basics keep working.</p></div>
           <div class="zstep__media"><div class="blockcomp">
             <span class="blockcomp__yt"><svg viewBox="0 0 28 20" width="28" height="20"><rect width="28" height="20" rx="5" fill="#ff0000"/><path d="M11 6l7 4-7 4z" fill="#fff"/></svg></span>
             <span class="blockcomp__arr"><i class="ph ph-arrow-right"></i></span>
-            <div class="zphone"><img src="img/app/shield.png" alt="Apps are paused because filtering is off" /></div>
+            <div class="zphone"><img loading="lazy" decoding="async" src="img/app/shield.png" alt="Apps are paused because filtering is off" /></div>
           </div></div>
         </div>
         <div class="zstep">
@@ -391,10 +451,10 @@
     <div class="wrap">
       <div class="f-head"><span class="eyebrow">One switch, a lot of ground covered</span><h2>What flips on when you turn a category on.</h2></div>
       <div class="stats">
-        <div class="stat"><i class="ph ph-prohibit"></i><b>70,000+</b><span>Adult sites</span></div>
-        <div class="stat"><i class="ph ph-shield-check"></i><b>180,000+</b><span>Malware &amp; phishing</span></div>
-        <div class="stat"><i class="ph ph-eye-slash"></i><b>220,000+</b><span>Ad &amp; tracker domains</span></div>
-        <div class="stat"><i class="ph ph-globe"></i><b>900,000+</b><span>On the block list</span></div>
+        <div class="stat"><i class="ph ph-prohibit"></i><b>70K+</b><span>Adult sites</span></div>
+        <div class="stat"><i class="ph ph-shield-check"></i><b>24 Lakh+</b><span>Malware &amp; phishing</span></div>
+        <div class="stat"><i class="ph ph-eye-slash"></i><b>2.2 Lakh+</b><span>Ad &amp; tracker domains</span></div>
+        <div class="stat"><i class="ph ph-globe"></i><b>30 Lakh+</b><span>On the block list</span></div>
       </div>
       <p class="stat__note">Counts across the block lists Zaksha loads, refreshed regularly. Turn on only the categories you want — each is a separate switch.</p>
     </div>
@@ -402,10 +462,10 @@
 
   <!-- PRIVACY -->
   <section class="section privbg" id="privacy">
-    <div class="privbg__img"><img src="img/lifestyle/parent-child-reading.jpg" alt="A parent and child reading together at home" /></div>
+    <div class="privbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/parent-child-reading.jpg" alt="A parent and child reading together at home" /></div>
     <div class="privbg__scrim"></div>
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Your privacy</span><h2>We see website names, not your data.</h2></div>
+      <div class="f-head"><span class="eyebrow">Your privacy</span><h2>We check the door, not what's inside.</h2></div>
       <div class="priv3">
         <div class="pcard"><span class="pcard__ic"><i class="ph ph-eye-slash"></i></span><h3>Your private life stays private</h3><p>We can see that a device asked for youtube.com — never your messages, photos, passwords, or what's on a page. We couldn't read them if we tried.</p></div>
         <div class="pcard"><span class="pcard__ic"><i class="ph ph-clock-counter-clockwise"></i></span><h3>History that doesn't pile up</h3><p>Activity is kept for 7 days so you can check in on the week, then it's deleted for good. Nothing builds up a permanent profile.</p></div>
@@ -417,27 +477,31 @@
   <!-- SEE IT BY DEVICE -->
   <section class="section" id="device">
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">See it by device</span><h2>Your dashboard, and their phone.</h2><p>You run everything from one dashboard. Pick a device to see what it looks like on the child's phone.</p></div>
+      <div class="f-head"><span class="eyebrow">See it by device</span><h2>One dashboard. Every device.</h2><p>You run everything from one dashboard. Pick a device to see what it looks like on the child's phone.</p></div>
       <div class="dvx__tabs" id="dvx-tabs">
         <button class="dvx__tab on" data-os="ios"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</button>
         <button class="dvx__tab" data-os="android"><i class="ph ph-android-logo"></i> Android</button>
       </div>
       <div class="dvx__panel on" data-os="ios">
         <div class="phones">
-          <div class="phone"><span class="phone__tag phone__tag--you">You</span><div class="phone__frame"><img src="img/app-family.png" alt="Zaksha parent dashboard" /></div><div class="phone__cap"><b>Your dashboard</b><span>Every device, one place.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their iPhone</span><div class="phone__frame"><img src="img/app/protected.png" alt="Filtering on" /></div><div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything just works.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their iPhone</span><div class="phone__frame"><img src="img/app/shield.png" alt="Apps are paused" /></div><div class="phone__cap"><b>Switched off? Apps blocked</b><span>Watched apps won't open until it's back on.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their iPhone</span><div class="phone__frame"><img src="img/app/countdown.png" alt="Back on, protected" /></div><div class="phone__cap"><b>Back on, protected</b><span>A short cooldown, then back to normal.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their iPhone</span><div class="phone__frame"><img src="img/app/manage.png" alt="You set the terms" /></div><div class="phone__cap"><b>You set the terms</b><span>Watched apps, allowed apps, cooldown.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-family.png" alt="Zaksha parent dashboard" /></div><div class="phone__cap"><b>Your dashboard</b><span>Every device, one place.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-setup-family.png" alt="Add a device — iPhone, Android, Mac or Windows" /></div><div class="phone__cap"><b>Add any device</b><span>iPhone, Android, Mac or Windows — one flow.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-schedule.png" alt="Set schedules per child" /></div><div class="phone__cap"><b>Set the week once</b><span>Study hours and weekends, per child.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/protected.png" alt="Filtering on" /></div><div class="phone__cap"><b>Filtering on</b><span>The shield's green and everything just works.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/shield.png" alt="Apps are paused" /></div><div class="phone__cap"><b>Switched off? Apps blocked</b><span>Watched apps won't open until it's back on.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/countdown.png" alt="Back on, protected" /></div><div class="phone__cap"><b>Back on, protected</b><span>A short cooldown, then back to normal.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/manage.png" alt="You set the terms" /></div><div class="phone__cap"><b>You set the terms</b><span>Watched apps, allowed apps, cooldown.</span></div></div>
         </div>
         <p class="phones__hint" style="display:block;">Swipe or scroll to see more →</p>
       </div>
       <div class="dvx__panel" data-os="android">
         <div class="phones">
-          <div class="phone"><span class="phone__tag phone__tag--you">You</span><div class="phone__frame"><img src="img/app-family.png" alt="Zaksha parent dashboard" /></div><div class="phone__cap"><b>Your dashboard</b><span>Every device, one place.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their Android</span><div class="phone__frame"><img src="img/app/android-setup.jpg" alt="Set up with a code" /></div><div class="phone__cap"><b>Set up in seconds</b><span>Share an 8-digit code — nothing to make on the phone.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their Android</span><div class="phone__frame"><img src="img/app/android-protected.jpg" alt="Filtering on every network" /></div><div class="phone__cap"><b>On every network</b><span>Wi-Fi or mobile data — same rules.</span></div></div>
-          <div class="phone"><span class="phone__tag phone__tag--them">Their Android</span><div class="phone__frame"><img src="img/app/android-notprotected.jpg" alt="If it stops, you know" /></div><div class="phone__cap"><b>If it stops, you know</b><span>A WhatsApp alert within minutes.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-family.png" alt="Zaksha parent dashboard" /></div><div class="phone__cap"><b>Your dashboard</b><span>Every device, one place.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-setup-family.png" alt="Add a device — iPhone, Android, Mac or Windows" /></div><div class="phone__cap"><b>Add any device</b><span>iPhone, Android, Mac or Windows — one flow.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--you">Parent</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app-schedule.png" alt="Set schedules per child" /></div><div class="phone__cap"><b>Set the week once</b><span>Study hours and weekends, per child.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/android-setup.jpg" alt="Set up with a code" /></div><div class="phone__cap"><b>Set up in seconds</b><span>Share an 8-digit code — nothing to make on the phone.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/android-protected.jpg" alt="Filtering on every network" /></div><div class="phone__cap"><b>On every network</b><span>Wi-Fi or mobile data — same rules.</span></div></div>
+          <div class="phone"><span class="phone__tag phone__tag--them">Child</span><div class="phone__frame"><img loading="lazy" decoding="async" src="img/app/android-notprotected.jpg" alt="If it stops, you know" /></div><div class="phone__cap"><b>If it stops, you know</b><span>A WhatsApp alert within minutes.</span></div></div>
         </div>
         <p class="phones__hint" style="display:block;">Swipe or scroll to see more →</p>
       </div>
@@ -446,7 +510,9 @@
   </section>
 
   <!-- EVERY DEVICE — feature / setup matrix -->
-  <section class="section section--wash" id="devices-detail">
+  <section class="section section--wash dvxbg" id="devices-detail">
+    <div class="dvxbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/family-devices.jpg" alt="A family together at home, one on a laptop and one on a phone" /></div>
+    <div class="dvxbg__scrim"></div>
     <div class="wrap">
       <div class="fm-head">
         <span class="eyebrow">Every device</span>
@@ -458,40 +524,22 @@
           <thead>
             <tr>
               <th class="feat"></th>
-              <th class="dev"><b>iPhone &amp; iPad</b><span class="s">app on the device</span></th>
-              <th class="dev"><b>Android</b><span class="badges"><span class="fm__lvl fm__lvl--proof">Tamper-proof</span></span></th>
-              <th class="dev"><b>Android</b><span class="badges"><span class="fm__lvl fm__lvl--evident">Tamper-evident</span></span></th>
-              <th class="dev"><b>Windows</b><span class="s">system service</span></th>
-              <th class="dev"><b>Mac</b><span class="s">config profile</span></th>
+              <th class="dev"><b>iPhone &amp; iPad</b></th>
+              <th class="dev"><b>Android</b></th>
+              <th class="dev"><b>Windows</b></th>
+              <th class="dev"><b>Mac</b></th>
             </tr>
           </thead>
           <tbody>
-            <tr><th class="feat">Blocks adult content &amp; every category</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Bedtime &amp; study-hour schedules</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Filtering on every network</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Requires formatting the phone</th><td class="no"><i class="ph ph-x"></i></td><td class="meh"><i class="ph ph-check-circle"></i></td><td class="no"><i class="ph ph-x"></i></td><td class="no"><i class="ph ph-x"></i></td><td class="no"><i class="ph ph-x"></i></td></tr>
+            <tr><th class="feat">Blocks adult content &amp; every category</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Bedtime &amp; study-hour schedules</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Filtering on every network</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Runs as</th><td class="txt">App</td><td class="txt">App</td><td class="txt">System service</td><td class="txt">Config profile</td></tr>
+            <tr><th class="feat"><a href="#faq-turn-off">Tamper protection</a></th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="txt">Requires factory reset</td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
           </tbody>
         </table>
       </div>
       <p class="fm__note">You get guided, step-by-step setup for each platform when you add a device.</p>
-    </div>
-  </section>
-
-  <!-- WHY ZAKSHA — comparison + platform levels -->
-  <section class="section" id="why">
-    <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Why Zaksha</span><h2>Protection, not surveillance.</h2><p>Zaksha blocks what you don't want — without reading over your child's shoulder.</p></div>
-      <div class="cmp">
-        <div class="cmp__row cmp__row--head"><span class="cmp__feat">What matters</span><span class="cmp__z">Zaksha</span><span class="cmp__o">Others</span></div>
-        <div class="cmp__row"><span class="cmp__feat">Blocks adult content, gambling &amp; more</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-check"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">Filtering follows the phone onto mobile data &amp; any Wi-Fi</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">Holds on when your child switches it off</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">Leaves your child's messages and chats private</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">No location tracking, no scanning photos</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">Works without your child's passwords</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-        <div class="cmp__row"><span class="cmp__feat">Data kept in India, never sold</span><span class="cmp__z"><i class="ph ph-check-circle"></i></span><span class="cmp__o"><i class="ph ph-x"></i></span></div>
-      </div>
-      <p class="cmp__note">"Others" means typical monitoring and parental apps — what each does varies by product.</p>
     </div>
   </section>
 
@@ -502,7 +550,7 @@
       <div class="plans">
         <div class="plan plan--home">
           <div class="plan__name">Home <span class="plan__tag">For families</span></div>
-          <p class="plan__for" style="margin-top:10px;"><span class="diwali"><i class="ph ph-moon-stars"></i> Diwali sale · up to 40% off</span></p>
+          <p class="plan__for" style="margin-top:10px;"><span class="diwali"><i class="ph ph-sparkle"></i> Diwali sale · up to 40% off</span></p>
           <div class="plan__price"><span class="was">₹249</span><span class="plan__amt">₹199</span><span class="plan__per">/ month</span></div>
           <div class="plan__sub">or ₹1,788 / year — just ₹149/mo, <b style="color:var(--teal-700);">40% off</b> · UPI or card · cancel anytime · ends this festive season</div>
           <a class="btn btn--primary plan__btn" href="https://app.zaksha.com/signup">Start your free trial</a>
@@ -540,7 +588,7 @@
       <div class="f-head"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
       <div class="faq">
         <details class="faq__item" id="faq-turn-off" open>
-          <summary>Can my child turn it off? Is Zaksha tamper-proof? <i class="ph ph-plus"></i></summary>
+          <summary>What is tamper protection? Can my child turn it off? <i class="ph ph-plus"></i></summary>
           <p>On a family iPhone a child can switch DNS filtering off — Screen Time doesn't prevent that — but Zaksha then blocks the app types you've chosen and alerts you on WhatsApp, keeping them paused for a 30-minute cooldown once it's back on; a Screen Time passcode you set stops them deleting the app. Keep your Apple ID password private, since Apple lets it reset that passcode. On Android you choose the level: the standard install is tamper-evident — you're alerted the moment it's removed — and the fresh-phone setup is tamper-proof: Zaksha can't be uninstalled. For <a href="/schools" style="color:var(--teal-700);font-weight:700;">offices and schools</a>, our supervised (MDM) setup is tamper-proof across the fleet.</p>
         </details>
         <details class="faq__item">
