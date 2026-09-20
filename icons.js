@@ -119,3 +119,33 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { hydrate(); });
   else hydrate();
 })();
+
+/* ════════════════════════════════════════════════════════════════
+   Ad-attribution forwarding — carry ad-click params from the lander
+   URL onto the app CTA links so the app (app.zaksha.com) can capture
+   them on load. localStorage is per-origin, so the params MUST ride
+   the URL across the lander→app hop. Allowlist mirrors the app's
+   AD_PARAMS (pwa/src/lib/adAttribution.ts). forwardHref is mirrored
+   in ad-forward.selfcheck.mjs — keep the two in sync.
+   ponytail: forwards to app.zaksha.com links only, not lander→lander
+   internal hops (/get). Add internal-hop forwarding only if a detour
+   path must preserve gclid.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  var ALLOW = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'utm_source', 'utm_medium', 'utm_term', 'utm_campaign', 'gclsrc', 'gad_source', 'gad_campaignid'];
+  function forwardHref(href, search) {
+    var here = new URLSearchParams(search);
+    var u;
+    try { u = new URL(href); } catch (e) { return href; }
+    ALLOW.forEach(function (k) { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
+    return u.toString();
+  }
+  function forward() {
+    var here = new URLSearchParams(location.search);
+    if (!ALLOW.some(function (k) { return here.has(k); })) return; // no ad params → leave links untouched
+    document.querySelectorAll('a[href*="app.zaksha.com"]').forEach(function (a) { a.href = forwardHref(a.href, location.search); });
+  }
+  window.ZakshaAd = { forwardHref: forwardHref };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', forward);
+  else forward();
+})();
