@@ -28,7 +28,7 @@ found the gap: rules that stop at the front door, or that the kid switched off i
 Price-sensitive, WhatsApp-first, pay by UPI. English copy, Indian context (exam prep,
 study hours, one phone shared in the family).
 
-Enterprise (schools, colleges, offices) is a separate track with its own pages (`/business`) — never fold it into
+Enterprise (schools, colleges, companies) is a separate track with its own page (`/business`) — never fold it into
 the Home story, and never frame Home as a small-business product.
 
 ## The four things it does
@@ -94,7 +94,7 @@ Home in general is **tamper-resistant**, not **tamper-proof**. Two setups earn t
 tamper-proof, because enforcement genuinely can't be removed: the **Android fresh-phone
 (device-owner) setup** — a Home option parents can choose over the standard
 tamper-evident install — and the **Enterprise/MDM track** (supervised fleets,
-schools.html). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
+`/business`). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
 whole. **Windows** (standard-user setup) is strongly tamper-resistant — a machine-wide
 system service that's hard to switch off without the admin password — but we do **not**
 lead with a "not removable" / tamper-proof claim.
@@ -139,13 +139,8 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
 | `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
-| `/business` | Enterprise hub: three segment cards, 4-step pilot, pricing, FAQ, enquiry form | Indexed; links to `/schools`, `/colleges`, `/offices` |
-| `/schools` | Enterprise: schools | Indexed; the only place unqualified MDM tamper-proof language is allowed |
-| `/colleges` | Enterprise: college computer labs | Indexed; no exam mode / lockdown / allow-list claims; campus Wi-Fi mentioned once, "talk to us", with the VPN / encrypted-DNS caveat |
-| `/offices` | Enterprise: company Windows laptops | Indexed; Windows standard-account wording, no tamper-proof |
-| `/lp-schools.html` | Ad lander, schools | `?ref=GS-ENT-SCH1` baked into the form's hidden `ref`; noindex, nofollow |
-| `/lp-colleges.html` | Ad lander, colleges | `GS-ENT-COL1`; noindex, nofollow |
-| `/lp-offices.html` | Ad lander, offices | `GS-ENT-OFF1`; noindex, nofollow |
+| `/business` | The one Enterprise page, problem first: four hero variants, what changes, devices, pricing, pilot, FAQ, enquiry form | Indexed. Ads use `?for=school`, `?for=college` or `?for=team`; the visitor type is picked in the form, not in the site structure. Replaces the former `/schools`, `/colleges`, `/offices` pages and the `lp-*` landers (2026-10-16) |
+| `/schools.html` | Redirect to `/business?for=school` | noindex, canonical to `/business` |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
 Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram, `YT-*`,
@@ -159,8 +154,9 @@ exclamation marks, no fear-mongering about children; parents know why they're he
 
 ## Enterprise ref codes
 
-Enterprise ad landers carry their ref in the enquiry form's hidden `ref` field (sent to
-`/api/v1/public/leads`), not in a signup link: `GS-ENT-SCH1` (schools), `GS-ENT-COL1`
-(colleges), `GS-ENT-OFF1` (offices). Enterprise pricing copy, everywhere: "From ₹79 per
+Enterprise ads land on `/business?for=school|college|team`. The page script shows the matching hero,
+preselects the form's segment and sets the form's `ref` to `BIZ-SCH` (school), `BIZ-COL`
+(college) or `BIZ-TEAM` (team), unless the URL already has `?ref=`. The ref goes to
+`/api/v1/public/leads`, not into a signup link. Enterprise pricing copy, everywhere: "From ₹79 per
 device per month, ₹65 billed yearly, minimum 10 devices. Pilot: 3 months at 10% of the
 quote." Never claim SOC2, ISO or "compliance-ready".

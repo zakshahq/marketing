@@ -8,19 +8,21 @@ globalThis.window = globalThis;
 globalThis.location = { search: '' };
 globalThis.document = { readyState: 'complete', querySelectorAll: () => [], addEventListener() {} };
 require('./icons.js');
-const { buildPayload, classify, send } = require('./lead-form.js');
+const { buildPayload, classify, send, audienceFor } = require('./lead-form.js');
 
 const fields = {
-  segment: 'colleges', org_name: ' Sunrise College ', contact_name: 'A. Rao', email: 'a@sunrise.edu',
-  phone: '', devices: '120', message: '', ref: 'GS-ENT-COL1', website: '',
+  segment: 'college', org_name: ' Sunrise College ', contact_name: 'A. Rao', email: 'a@sunrise.edu',
+  phone: '', devices: '200', message: '', ref: 'BIZ-COL', website: '',
 };
 
 // field mapping, trimming, devices as a number
 let p = buildPayload(fields, '');
 assert.deepEqual(p, {
-  segment: 'colleges', org_name: 'Sunrise College', contact_name: 'A. Rao', email: 'a@sunrise.edu',
-  phone: '', devices: 120, message: '', ref: 'GS-ENT-COL1', ad_attribution: '{}', website: '',
+  segment: 'college', org_name: 'Sunrise College', contact_name: 'A. Rao', email: 'a@sunrise.edu',
+  phone: '', devices: 200, message: '', ref: 'BIZ-COL', ad_attribution: '{}', website: '',
 });
+// devices select values pass through as numbers
+for (const v of ['10', '50', '200', '500']) assert.equal(buildPayload({ ...fields, devices: v }, '').devices, Number(v));
 // optional devices left blank or non-numeric -> null
 assert.equal(buildPayload({ ...fields, devices: '' }, '').devices, null);
 assert.equal(buildPayload({ ...fields, devices: 'lots' }, '').devices, null);
@@ -30,9 +32,19 @@ assert.equal(typeof p.ad_attribution, 'string');
 assert.deepEqual(JSON.parse(p.ad_attribution), { gclid: 'G1', utm_source: 'google', utm_campaign: 'ent' });
 // ref falls back to ?ref= when the form has none; the form's own value wins
 assert.equal(buildPayload({ ...fields, ref: '' }, '?ref=IG-1').ref, 'IG-1');
-assert.equal(buildPayload(fields, '?ref=IG-1').ref, 'GS-ENT-COL1');
+assert.equal(buildPayload(fields, '?ref=IG-1').ref, 'BIZ-COL');
 // honeypot value is passed through untouched
 assert.equal(buildPayload({ ...fields, website: 'http://spam' }, '').website, 'http://spam');
+
+// audienceFor: ?for= picks segment, ref and hero; an explicit ?ref= wins; anything else is the default hero
+assert.deepEqual(audienceFor('?for=school'), { segment: 'school', ref: 'BIZ-SCH', hero: 'hero-school' });
+assert.deepEqual(audienceFor('?for=college'), { segment: 'college', ref: 'BIZ-COL', hero: 'hero-college' });
+assert.deepEqual(audienceFor('?for=team'), { segment: 'team', ref: 'BIZ-TEAM', hero: 'hero-team' });
+assert.equal(audienceFor('?for=school&ref=GS-X1').ref, 'GS-X1');
+assert.equal(audienceFor('?gclid=G1&for=team').segment, 'team');
+for (const q of ['', '?for=', '?for=office', '?for=constructor', '?for=toString', '?for=SCHOOL', '?ref=IG-1', '?x=1']) {
+  assert.deepEqual(audienceFor(q), { segment: '', ref: '', hero: 'hero-default' }, q);
+}
 
 // response handling per status
 assert.equal(classify(201, {}).kind, 'success');

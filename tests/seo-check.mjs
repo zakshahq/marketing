@@ -25,9 +25,7 @@ const NOINDEX_PAGES = [
   'parental-control-android.html',
   'parental-control-iphone.html',
   'parental-control-windows.html',
-  'lp-schools.html',
-  'lp-colleges.html',
-  'lp-offices.html',
+  'schools.html',
 ];
 for (const page of NOINDEX_PAGES) {
   if (!exists(page)) {
@@ -64,9 +62,6 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/block-adult-content-android',
   'https://zaksha.com/block-adult-content-iphone',
   'https://zaksha.com/business',
-  'https://zaksha.com/schools',
-  'https://zaksha.com/colleges',
-  'https://zaksha.com/offices',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
@@ -76,6 +71,9 @@ const FORBIDDEN_SITEMAP_SLUGS = [
   'lp-schools',
   'lp-colleges',
   'lp-offices',
+  'schools',
+  'colleges',
+  'offices',
   'pricing',
 ];
 function urlToFile(url) {
@@ -127,9 +125,6 @@ const CANONICAL_PAGES = {
   'block-adult-content-android.html': 'https://zaksha.com/block-adult-content-android',
   'block-adult-content-iphone.html': 'https://zaksha.com/block-adult-content-iphone',
   'business.html': 'https://zaksha.com/business',
-  'schools.html': 'https://zaksha.com/schools',
-  'colleges.html': 'https://zaksha.com/colleges',
-  'offices.html': 'https://zaksha.com/offices',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -145,17 +140,35 @@ for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   }
 }
 
-// --- e. pricing.html canonical ---
-if (!exists('pricing.html')) {
-  fail('pricing.html: file missing');
-} else {
-  const html = read('pricing.html');
+// --- e. redirect pages: canonical + target ---
+const REDIRECTS = {
+  'pricing.html': { canonical: 'https://zaksha.com/', to: '/#pricing' },
+  'schools.html': { canonical: 'https://zaksha.com/business', to: '/business?for=school' },
+};
+for (const [page, { canonical, to }] of Object.entries(REDIRECTS)) {
+  if (!exists(page)) {
+    fail(`${page}: file missing`);
+    continue;
+  }
+  const html = read(page);
   const matches = [...html.matchAll(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/g)];
   if (matches.length !== 1) {
-    fail(`pricing.html: expected exactly one <link rel="canonical">, found ${matches.length}`);
-  } else if (matches[0][1] !== 'https://zaksha.com/') {
-    fail(`pricing.html: canonical href is "${matches[0][1]}", expected "https://zaksha.com/"`);
+    fail(`${page}: expected exactly one <link rel="canonical">, found ${matches.length}`);
+  } else if (matches[0][1] !== canonical) {
+    fail(`${page}: canonical href is "${matches[0][1]}", expected "${canonical}"`);
   }
+  if (!html.includes(`<meta http-equiv="refresh" content="0; url=${to}" />`)) fail(`${page}: missing meta refresh to ${to}`);
+  if (!html.includes(`location.replace('${to}')`)) fail(`${page}: missing location.replace('${to}')`);
+}
+
+// --- e2. removed enterprise pages are gone, and nothing links to them ---
+const REMOVED = ['colleges.html', 'offices.html', 'lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
+for (const page of REMOVED) if (exists(page)) fail(`${page}: must be removed (one unified /business page)`);
+const REMOVED_REF = /href="\/?(schools|colleges|offices)(\.html)?["#?]|(lp-(schools|colleges|offices)|colleges|offices)\.html|zaksha\.com\/(schools|colleges|offices)\b/;
+const SCAN = [...readdirSync(ROOT).filter((f) => /\.(html|js|xml)$/.test(f) && f !== 'schools.html'), 'README.md'];
+for (const file of SCAN) {
+  const hit = read(file).match(REMOVED_REF);
+  if (hit) fail(`${file}: still links to a removed page ("${hit[0]}")`);
 }
 
 // --- f/g. JSON-LD on index.html ---
@@ -226,7 +239,7 @@ const LINK_CHECK_PAGES = [
   'index.html', 'get.html', 'privacy.html', 'terms.html',
   'best-parental-control-app-india.html', 'google-family-link-alternative.html',
   'block-adult-content-android.html', 'block-adult-content-iphone.html',
-  'business.html', 'schools.html', 'colleges.html', 'offices.html',
+  'business.html',
 ];
 for (const page of LINK_CHECK_PAGES) {
   if (!exists(page)) continue;
@@ -253,19 +266,17 @@ if (indexHtml) {
   }
 }
 
-// --- j. enterprise pages: indexable ---
-const ENT_INDEXED = ['business.html', 'schools.html', 'colleges.html', 'offices.html'];
-const ENT_LANDERS = ['lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
+// --- j. enterprise page: indexable ---
+const ENT_INDEXED = ['business.html'];
+const INSTITUTION_PAGES = ENT_INDEXED;
 for (const page of ENT_INDEXED) {
   if (!exists(page)) { fail(`${page}: file missing`); continue; }
   if (/<meta name="robots"[^>]*noindex/i.test(read(page))) fail(`${page}: must be indexable (no noindex)`);
 }
 
 // --- k. audience switch ("For families | For institutions") in every page header ---
-const INSTITUTION_PAGES = [...ENT_INDEXED, ...ENT_LANDERS];
-const ALL_PAGES = readdirSync(ROOT).filter((f) => f.endsWith('.html') && f !== 'pricing.html');
-for (const page of new Set([...ALL_PAGES, ...INSTITUTION_PAGES])) {
-  if (!exists(page)) { fail(`${page}: file missing`); continue; }
+const ALL_PAGES = readdirSync(ROOT).filter((f) => f.endsWith('.html') && !Object.hasOwn(REDIRECTS, f));
+for (const page of ALL_PAGES) {
   const html = read(page);
   const sw = html.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
   if (!sw) { fail(`${page}: missing audience switch (<div class="aud">)`); continue; }
@@ -280,40 +291,58 @@ for (const page of new Set([...ALL_PAGES, ...INSTITUTION_PAGES])) {
   }
 }
 
-// --- l. enquiry form on the enterprise pages and landers ---
-const SEGMENT = { 'schools.html': 'schools', 'colleges.html': 'colleges', 'offices.html': 'offices',
-  'lp-schools.html': 'schools', 'lp-colleges.html': 'colleges', 'lp-offices.html': 'offices' };
-const LANDER_REF = { 'lp-schools.html': 'GS-ENT-SCH1', 'lp-colleges.html': 'GS-ENT-COL1', 'lp-offices.html': 'GS-ENT-OFF1' };
-for (const page of INSTITUTION_PAGES) {
-  if (!exists(page)) continue;
-  const html = read(page);
-  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${page}: missing lead-form.js`);
-  const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
-  if (!form) { fail(`${page}: missing <form class="lead-form">`); continue; }
-  const body = form[1];
-  if (!/id="enquire"/.test(html)) fail(`${page}: missing #enquire anchor`);
-  if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail(`${page}: form needs the default data-endpoint`);
-  for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
-    if (!new RegExp(`name="${n}"`).test(body)) fail(`${page}: form missing field "${n}"`);
-  }
-  if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"|autocomplete="off"[^>]*name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*autocomplete="off"[^>]*name="website"|name="website"[^>]*autocomplete="off"[^>]*tabindex="-1"/.test(body)) {
-    fail(`${page}: honeypot "website" needs tabindex="-1" and autocomplete="off"`);
-  }
-  if (SEGMENT[page] && !new RegExp(`name="segment"[^>]*value="${SEGMENT[page]}"`).test(body)) fail(`${page}: segment must be preselected as "${SEGMENT[page]}"`);
-  if (LANDER_REF[page] && !new RegExp(`<input type="hidden" name="ref" value="${LANDER_REF[page]}"`).test(body)) fail(`${page}: hidden ref must be ${LANDER_REF[page]}`);
-  if (!html.includes('wa.me/918919468618')) fail(`${page}: missing WhatsApp link`);
-}
-if (exists('business.html') && !/<select[^>]*name="segment"/.test(read('business.html'))) fail('business.html: segment must be a <select>');
-for (const page of ENT_LANDERS) {
-  if (exists(page) && /<nav class="nav__links"/.test(read(page))) fail(`${page}: lander should not carry the full nav links`);
-}
-
-// --- m. business hub links to the three segments, pricing + pilot copy ---
+// --- l. one unified page: four heros, one form, ?for= wiring ---
 if (exists('business.html')) {
   const html = read('business.html');
-  for (const h of ['/schools', '/colleges', '/offices']) if (!html.includes(`href="${h}"`)) fail(`business.html: missing link to ${h}`);
+  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail('business.html: missing lead-form.js');
+  const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
+  if (!form) fail('business.html: missing <form class="lead-form">');
+  else {
+    const body = form[1];
+    if (!/id="enquire"/.test(html)) fail('business.html: missing #enquire anchor');
+    if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail('business.html: form needs the default data-endpoint');
+    for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
+      if (!new RegExp(`name="${n}"`).test(body)) fail(`business.html: form missing field "${n}"`);
+    }
+    if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"|autocomplete="off"[^>]*name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*autocomplete="off"[^>]*name="website"|name="website"[^>]*autocomplete="off"[^>]*tabindex="-1"/.test(body)) {
+      fail('business.html: honeypot "website" needs tabindex="-1" and autocomplete="off"');
+    }
+    const opts = (name) => {
+      const sel = body.match(new RegExp(`<select[^>]*name="${name}"[^>]*>([\\s\\S]*?)</select>`));
+      return sel ? [...sel[1].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)].map((m) => [(m[1].match(/value="([^"]*)"/) || [])[1], m[2].trim()]) : null;
+    };
+    const seg = opts('segment');
+    if (!seg) fail('business.html: segment must be a <select>');
+    else if (JSON.stringify(seg) !== JSON.stringify([['', 'Choose one'], ['school', 'A school'], ['college', 'A college or institute'], ['team', 'A company or team']])) fail(`business.html: segment options wrong: ${JSON.stringify(seg)}`);
+    const dev = opts('devices');
+    if (!dev) fail('business.html: devices must be a <select>');
+    else if (JSON.stringify(dev) !== JSON.stringify([['', ''], ['10', 'Up to 10'], ['50', '11–50'], ['200', '51–200'], ['500', 'More than 200']])) fail(`business.html: devices options wrong: ${JSON.stringify(dev)}`);
+    if (/value="(office|schools|colleges)"/.test(body)) fail('business.html: old segment value in form');
+    if (!/<input type="hidden" name="ref" value=""/.test(body)) fail('business.html: hidden ref must start empty (the page script sets it)');
+    if (!/<button[^>]*type="submit"[^>]*>Talk to us<\/button>/.test(body)) fail('business.html: submit button must read "Talk to us"');
+  }
+  if (!html.includes('wa.me/918919468618')) fail('business.html: missing WhatsApp link');
+  // hero variants: default visible without JS, others hidden until the script picks one
+  for (const id of ['hero-default', 'hero-school', 'hero-college', 'hero-team']) {
+    const m = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>`));
+    if (!m) { fail(`business.html: missing hero #${id}`); continue; }
+    const hidden = /\bhidden\b/.test(m[0]);
+    if (id === 'hero-default' && hidden) fail('business.html: default hero must be visible without JS');
+    if (id !== 'hero-default' && !hidden) fail(`business.html: #${id} must carry the hidden attribute`);
+    if (!new RegExp(`id="${id}"[\\s\\S]*?<h1>`).test(html)) fail(`business.html: #${id} needs an <h1>`);
+  }
+  if (!/ZakshaLead\.audienceFor\(/.test(html)) fail('business.html: page script must call ZakshaLead.audienceFor');
+  if (/app-business\.png|app-fleetpack\.png/.test(html)) fail('business.html: must not use the old-brand screenshots');
+  for (const needle of ['id="how"', 'id="devices"', 'id="pricing"']) if (!html.includes(needle)) fail(`business.html: missing section ${needle}`);
+}
+
+// --- m. business page: pricing, pilot, device honesty ---
+if (exists('business.html')) {
+  const html = read('business.html');
   if (!html.includes('From ₹79')) fail('business.html: missing "From ₹79" pricing');
   if (!/3-month pilot at 10%/.test(html)) fail('business.html: missing pilot terms');
+  if (!/VPN/.test(html)) fail('business.html: campus Wi-Fi mention needs the VPN caveat');
+  if (!/Private DNS/.test(html)) fail('business.html: Android Private DNS caveat missing');
 }
 
 // --- n. pricing cards and footers send Enterprise to the enquiry form ---
@@ -329,26 +358,23 @@ for (const page of ALL_PAGES) {
 
 // --- o. claim rules on the new pages (MESSAGING.md) ---
 const BANNED_CLAIMS = /SOC ?2|ISO ?27|compliance-ready|exam mode|exam lockdown|allow-?list|seamless|robust|comprehensive|leverage|empower|unlock|elevate|streamline|crucial|pivotal/i;
-for (const page of [...ENT_INDEXED, ...ENT_LANDERS]) {
+for (const page of ENT_INDEXED) {
   if (!exists(page)) continue;
   const text = read(page);
   const hit = text.match(BANNED_CLAIMS);
   if (hit) fail(`${page}: banned claim or word "${hit[0]}"`);
-  if (page !== 'schools.html' && /tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is only allowed on schools.html`);
-}
-if (exists('colleges.html')) {
-  const c = read('colleges.html');
-  if (!/VPN/.test(c)) fail('colleges.html: campus Wi-Fi mention needs the VPN / encrypted-DNS caveat');
-  if (!/lab/i.test(c)) fail('colleges.html: missing lab copy');
+  if (/tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is not used on the enterprise page`);
 }
 
 // --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref codes ---
 if (exists('privacy.html') && !/enquiry form[^<]*Google Ads[^<]*qualified lead/i.test(read('privacy.html'))) {
   fail('privacy.html: missing the enquiry-form Google Ads qualified-lead disclosure');
 }
-for (const code of ['GS-ENT-SCH1', 'GS-ENT-COL1', 'GS-ENT-OFF1']) {
-  if (!read('MESSAGING.md').includes(code)) fail(`MESSAGING.md: missing ref code ${code}`);
+for (const code of ['BIZ-SCH', 'BIZ-COL', 'BIZ-TEAM', '?for=']) {
+  if (!read('MESSAGING.md').includes(code)) fail(`MESSAGING.md: missing ${code}`);
 }
+
+if (/GS-ENT|lp-(schools|colleges|offices)/.test(read('MESSAGING.md'))) fail('MESSAGING.md: old GS-ENT-* / lp-* lander entries must go');
 
 // --- report ---
 if (failures.length > 0) {
