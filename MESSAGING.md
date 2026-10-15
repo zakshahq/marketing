@@ -28,7 +28,7 @@ found the gap: rules that stop at the front door, or that the kid switched off i
 Price-sensitive, WhatsApp-first, pay by UPI. English copy, Indian context (exam prep,
 study hours, one phone shared in the family).
 
-Enterprise (offices, schools) is a separate track with its own page — never fold it into
+Enterprise (schools, colleges, offices) is a separate track with its own pages (`/business`) — never fold it into
 the Home story, and never frame Home as a small-business product.
 
 ## The four things it does
@@ -139,7 +139,13 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
 | `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
-| `/schools.html` | Enterprise + schools | Unlisted; the only place unqualified MDM tamper-proof language is allowed |
+| `/business` | Enterprise hub: three segment cards, 4-step pilot, pricing, FAQ, enquiry form | Indexed; links to `/schools`, `/colleges`, `/offices` |
+| `/schools` | Enterprise: schools | Indexed; the only place unqualified MDM tamper-proof language is allowed |
+| `/colleges` | Enterprise: college computer labs | Indexed; no exam mode / lockdown / allow-list claims; campus Wi-Fi mentioned once, "talk to us", with the VPN / encrypted-DNS caveat |
+| `/offices` | Enterprise: company Windows laptops | Indexed; Windows standard-account wording, no tamper-proof |
+| `/lp-schools.html` | Ad lander, schools | `?ref=GS-ENT-SCH1` baked into the form's hidden `ref`; noindex, nofollow |
+| `/lp-colleges.html` | Ad lander, colleges | `GS-ENT-COL1`; noindex, nofollow |
+| `/lp-offices.html` | Ad lander, offices | `GS-ENT-OFF1`; noindex, nofollow |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
 Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram, `YT-*`,
@@ -150,3 +156,11 @@ Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram
 Plain, specific, a little dry. Numbers over adjectives (₹199, 5 devices, 7 days — not
 "affordable", "generous", "strong"). Admit limits before the reader finds them. No
 exclamation marks, no fear-mongering about children; parents know why they're here.
+
+## Enterprise ref codes
+
+Enterprise ad landers carry their ref in the enquiry form's hidden `ref` field (sent to
+`/api/v1/public/leads`), not in a signup link: `GS-ENT-SCH1` (schools), `GS-ENT-COL1`
+(colleges), `GS-ENT-OFF1` (offices). Enterprise pricing copy, everywhere: "From ₹79 per
+device per month, ₹65 billed yearly, minimum 10 devices. Pilot: 3 months at 10% of the
+quote." Never claim SOC2, ISO or "compliance-ready".

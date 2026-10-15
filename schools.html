@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zaksha for Schools</title>
-  <meta name="robots" content="noindex, nofollow" />
+  <title>Zaksha for Schools: content filtering for school devices</title>
+  <link rel="canonical" href="https://zaksha.com/schools" />
   <meta name="description" content="Safe, scheduled internet across your school's devices — filtering students can't switch off, run for you on a dedicated instance in India." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -110,16 +110,20 @@
 </head>
 <body>
 
-  <!-- ============================== NAV (minimal — unlisted page) ============================== -->
+  <!-- ============================== NAV ============================== -->
   <header class="nav" id="nav">
     <div class="wrap nav__in">
-      <a class="brand" href="schools.html">
+      <a class="brand" href="/schools">
         <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
         Zaksha <span class="mono" style="font-size:12px; color:var(--ink-400); margin-left:2px;">for Schools</span>
       </a>
       <div class="nav__spacer"></div>
+      <div class="aud" aria-label="Choose your audience">
+        <a href="/">For families</a>
+        <a href="/business" aria-current="page">For institutions</a>
+      </div>
       <div class="nav__cta">
-        <a class="btn btn--primary btn--sm" target="_blank" rel="noopener" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20school.">Chat with us</a>
+        <a class="btn btn--primary btn--sm" href="#enquire">Talk to us</a>
       </div>
     </div>
   </header>
@@ -130,7 +134,7 @@
       <h1>Safe, scheduled internet for your whole school.</h1>
       <p class="lead">Zaksha filters every school device from one dashboard — content blocked school-wide, internet scheduled around class hours, and a clear record you can stand behind. We run it for you, on a server provisioned just for your school.</p>
       <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" target="_blank" rel="noopener" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20school.">Chat on WhatsApp</a>
+        <a class="btn btn--primary btn--lg" href="#enquire">Talk to us</a>
         <a class="btn btn--ghost btn--lg" href="#demo">Take the tour</a>
       </div>
       <div class="hero__facts">
@@ -440,17 +444,54 @@
     </div>
   </section>
 
-  <!-- ============================== CTA ============================== -->
+  <!-- ============================== PRICING + ENQUIRY ============================== -->
   <section class="section section--wash">
     <div class="wrap">
-      <div class="ctaband">
-        <h2>Bring us your device list.</h2>
-        <p>Tell us how many Windows PCs, Android devices and iPads you run — we'll come back with a plan and a quote sized to your school.</p>
-        <div class="btns">
-          <a class="btn btn--onteal btn--lg" target="_blank" rel="noopener" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20school.">Chat on WhatsApp</a>
-          <a class="btn btn--onteal-ghost btn--lg" href="mailto:support@zaksha.com?subject=Zaksha%20for%20Schools">Email us</a>
-        </div>
+      <div class="section-head section-head--center">
+        <span class="eyebrow">Pricing</span>
+        <h2>Priced per device.</h2>
       </div>
+      <p class="price-line"><b>From ₹79 per device per month</b>, ₹65 billed yearly, minimum 10 devices.
+        <small>Pilot: 3 months at 10% of the quote. GST invoicing. A dedicated, isolated instance is available on paid contracts.</small></p>
+    </div>
+  </section>
+
+  <section class="section" id="enquire">
+    <div class="wrap">
+      <div class="section-head section-head--center">
+        <h2>Bring us your device list</h2>
+        <p>Tell us how many devices you run. We call within one working day with a plan and a quote sized to your school.</p>
+      </div>
+      <form class="lead-form" data-endpoint="https://api.zaksha.com/api/v1/public/leads">
+        <input type="hidden" name="segment" value="schools" />
+        <input type="hidden" name="ref" value="" />
+        <label>Organisation
+          <input type="text" name="org_name" autocomplete="organization" required />
+        </label>
+        <div class="lead-form__row">
+          <label>Your name
+            <input type="text" name="contact_name" autocomplete="name" required />
+          </label>
+          <label>Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+        <div class="lead-form__row">
+          <label>Phone <small>optional</small>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+          <label>Number of devices <small>optional</small>
+            <input type="number" name="devices" min="1" inputmode="numeric" />
+          </label>
+        </div>
+        <label>Message <small>optional</small>
+          <textarea name="message"></textarea>
+        </label>
+        <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+        <button class="btn btn--primary btn--lg" type="submit">Talk to us</button>
+        <p class="lead-form__status" role="status"></p>
+        <p class="lead-form__alt">Prefer WhatsApp? <a href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">+91 89194 68618</a></p>
+      </form>
     </div>
   </section>
 
@@ -458,13 +499,14 @@
   <footer class="footer">
     <div class="wrap">
       <div class="footer__bar" style="margin-top:0; padding-top:0; border-top:0;">
-        <span>© 2026 Zaksha. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span>
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
         <span class="mono">zaksha.com</span>
       </div>
     </div>
   </footer>
 
   <script src="icons.js"></script>
+  <script src="lead-form.js"></script>
   <script>
     (function () {
       var track = document.getElementById('demo-track');

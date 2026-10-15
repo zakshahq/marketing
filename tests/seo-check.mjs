@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // SEO baseline checks for the Zaksha marketing site. Run: node tests/seo-check.mjs
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -25,7 +25,9 @@ const NOINDEX_PAGES = [
   'parental-control-android.html',
   'parental-control-iphone.html',
   'parental-control-windows.html',
-  'schools.html',
+  'lp-schools.html',
+  'lp-colleges.html',
+  'lp-offices.html',
 ];
 for (const page of NOINDEX_PAGES) {
   if (!exists(page)) {
@@ -61,13 +63,19 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/google-family-link-alternative',
   'https://zaksha.com/block-adult-content-android',
   'https://zaksha.com/block-adult-content-iphone',
+  'https://zaksha.com/business',
+  'https://zaksha.com/schools',
+  'https://zaksha.com/colleges',
+  'https://zaksha.com/offices',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
   'parental-control-android',
   'parental-control-iphone',
   'parental-control-windows',
-  'schools',
+  'lp-schools',
+  'lp-colleges',
+  'lp-offices',
   'pricing',
 ];
 function urlToFile(url) {
@@ -118,6 +126,10 @@ const CANONICAL_PAGES = {
   'google-family-link-alternative.html': 'https://zaksha.com/google-family-link-alternative',
   'block-adult-content-android.html': 'https://zaksha.com/block-adult-content-android',
   'block-adult-content-iphone.html': 'https://zaksha.com/block-adult-content-iphone',
+  'business.html': 'https://zaksha.com/business',
+  'schools.html': 'https://zaksha.com/schools',
+  'colleges.html': 'https://zaksha.com/colleges',
+  'offices.html': 'https://zaksha.com/offices',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -214,6 +226,7 @@ const LINK_CHECK_PAGES = [
   'index.html', 'get.html', 'privacy.html', 'terms.html',
   'best-parental-control-app-india.html', 'google-family-link-alternative.html',
   'block-adult-content-android.html', 'block-adult-content-iphone.html',
+  'business.html', 'schools.html', 'colleges.html', 'offices.html',
 ];
 for (const page of LINK_CHECK_PAGES) {
   if (!exists(page)) continue;
@@ -238,6 +251,103 @@ if (indexHtml) {
   if (!/zaksha_ref/.test(indexHtml)) {
     fail('index.html: missing the ref-forwarding script (carries ?ref= into the signup CTAs)');
   }
+}
+
+// --- j. enterprise pages: indexable ---
+const ENT_INDEXED = ['business.html', 'schools.html', 'colleges.html', 'offices.html'];
+const ENT_LANDERS = ['lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
+for (const page of ENT_INDEXED) {
+  if (!exists(page)) { fail(`${page}: file missing`); continue; }
+  if (/<meta name="robots"[^>]*noindex/i.test(read(page))) fail(`${page}: must be indexable (no noindex)`);
+}
+
+// --- k. audience switch ("For families | For institutions") in every page header ---
+const INSTITUTION_PAGES = [...ENT_INDEXED, ...ENT_LANDERS];
+const ALL_PAGES = readdirSync(ROOT).filter((f) => f.endsWith('.html') && f !== 'pricing.html');
+for (const page of new Set([...ALL_PAGES, ...INSTITUTION_PAGES])) {
+  if (!exists(page)) { fail(`${page}: file missing`); continue; }
+  const html = read(page);
+  const sw = html.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
+  if (!sw) { fail(`${page}: missing audience switch (<div class="aud">)`); continue; }
+  const links = [...sw[1].matchAll(/<a\b([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ attrs: m[1], text: m[2].trim() }));
+  const fam = links.find((l) => l.text === 'For families' && /href="\/"/.test(l.attrs));
+  const inst = links.find((l) => l.text === 'For institutions' && /href="\/business"/.test(l.attrs));
+  if (!fam || !inst) { fail(`${page}: audience switch needs "For families" -> / and "For institutions" -> /business`); continue; }
+  const marked = links.filter((l) => /aria-current="page"/.test(l.attrs));
+  const want = INSTITUTION_PAGES.includes(page) ? inst : fam;
+  if (marked.length !== 1 || marked[0] !== want) {
+    fail(`${page}: audience switch must mark exactly "${want.text}" with aria-current="page"`);
+  }
+}
+
+// --- l. enquiry form on the enterprise pages and landers ---
+const SEGMENT = { 'schools.html': 'schools', 'colleges.html': 'colleges', 'offices.html': 'offices',
+  'lp-schools.html': 'schools', 'lp-colleges.html': 'colleges', 'lp-offices.html': 'offices' };
+const LANDER_REF = { 'lp-schools.html': 'GS-ENT-SCH1', 'lp-colleges.html': 'GS-ENT-COL1', 'lp-offices.html': 'GS-ENT-OFF1' };
+for (const page of INSTITUTION_PAGES) {
+  if (!exists(page)) continue;
+  const html = read(page);
+  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${page}: missing lead-form.js`);
+  const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
+  if (!form) { fail(`${page}: missing <form class="lead-form">`); continue; }
+  const body = form[1];
+  if (!/id="enquire"/.test(html)) fail(`${page}: missing #enquire anchor`);
+  if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail(`${page}: form needs the default data-endpoint`);
+  for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
+    if (!new RegExp(`name="${n}"`).test(body)) fail(`${page}: form missing field "${n}"`);
+  }
+  if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"|autocomplete="off"[^>]*name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*autocomplete="off"[^>]*name="website"|name="website"[^>]*autocomplete="off"[^>]*tabindex="-1"/.test(body)) {
+    fail(`${page}: honeypot "website" needs tabindex="-1" and autocomplete="off"`);
+  }
+  if (SEGMENT[page] && !new RegExp(`name="segment"[^>]*value="${SEGMENT[page]}"`).test(body)) fail(`${page}: segment must be preselected as "${SEGMENT[page]}"`);
+  if (LANDER_REF[page] && !new RegExp(`<input type="hidden" name="ref" value="${LANDER_REF[page]}"`).test(body)) fail(`${page}: hidden ref must be ${LANDER_REF[page]}`);
+  if (!html.includes('wa.me/918919468618')) fail(`${page}: missing WhatsApp link`);
+}
+if (exists('business.html') && !/<select[^>]*name="segment"/.test(read('business.html'))) fail('business.html: segment must be a <select>');
+for (const page of ENT_LANDERS) {
+  if (exists(page) && /<nav class="nav__links"/.test(read(page))) fail(`${page}: lander should not carry the full nav links`);
+}
+
+// --- m. business hub links to the three segments, pricing + pilot copy ---
+if (exists('business.html')) {
+  const html = read('business.html');
+  for (const h of ['/schools', '/colleges', '/offices']) if (!html.includes(`href="${h}"`)) fail(`business.html: missing link to ${h}`);
+  if (!html.includes('From ₹79')) fail('business.html: missing "From ₹79" pricing');
+  if (!/3-month pilot at 10%/.test(html)) fail('business.html: missing pilot terms');
+}
+
+// --- n. pricing cards and footers send Enterprise to the enquiry form ---
+for (const page of ALL_PAGES) {
+  const html = read(page);
+  if (/Zaksha%20Enterprise%20enquiry/.test(html)) fail(`${page}: Enterprise mailto still present; use /business#enquire`);
+  if (html.includes('plan__tag">Offices &amp; schools')) {
+    for (const needle of ['From ₹79', 'minimum 10 devices', '3-month pilot at 10%', 'href="/business#enquire"']) {
+      if (!html.includes(needle)) fail(`${page}: Enterprise pricing card missing "${needle}"`);
+    }
+  }
+}
+
+// --- o. claim rules on the new pages (MESSAGING.md) ---
+const BANNED_CLAIMS = /SOC ?2|ISO ?27|compliance-ready|exam mode|exam lockdown|allow-?list|seamless|robust|comprehensive|leverage|empower|unlock|elevate|streamline|crucial|pivotal/i;
+for (const page of [...ENT_INDEXED, ...ENT_LANDERS]) {
+  if (!exists(page)) continue;
+  const text = read(page);
+  const hit = text.match(BANNED_CLAIMS);
+  if (hit) fail(`${page}: banned claim or word "${hit[0]}"`);
+  if (page !== 'schools.html' && /tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is only allowed on schools.html`);
+}
+if (exists('colleges.html')) {
+  const c = read('colleges.html');
+  if (!/VPN/.test(c)) fail('colleges.html: campus Wi-Fi mention needs the VPN / encrypted-DNS caveat');
+  if (!/lab/i.test(c)) fail('colleges.html: missing lab copy');
+}
+
+// --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref codes ---
+if (exists('privacy.html') && !/enquiry form[^<]*Google Ads[^<]*qualified lead/i.test(read('privacy.html'))) {
+  fail('privacy.html: missing the enquiry-form Google Ads qualified-lead disclosure');
+}
+for (const code of ['GS-ENT-SCH1', 'GS-ENT-COL1', 'GS-ENT-OFF1']) {
+  if (!read('MESSAGING.md').includes(code)) fail(`MESSAGING.md: missing ref code ${code}`);
 }
 
 // --- report ---
