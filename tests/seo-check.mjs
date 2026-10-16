@@ -26,6 +26,7 @@ const NOINDEX_PAGES = [
   'parental-control-iphone.html',
   'parental-control-windows.html',
   'schools.html',
+  'colleges.html',
 ];
 for (const page of NOINDEX_PAGES) {
   if (!exists(page)) {
@@ -62,7 +63,7 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/block-adult-content-android',
   'https://zaksha.com/block-adult-content-iphone',
   'https://zaksha.com/business',
-  'https://zaksha.com/colleges',
+  'https://zaksha.com/schools-and-colleges',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
@@ -73,6 +74,7 @@ const FORBIDDEN_SITEMAP_SLUGS = [
   'lp-colleges',
   'lp-offices',
   'schools',
+  'colleges',
   'offices',
   'pricing',
 ];
@@ -125,7 +127,7 @@ const CANONICAL_PAGES = {
   'block-adult-content-android.html': 'https://zaksha.com/block-adult-content-android',
   'block-adult-content-iphone.html': 'https://zaksha.com/block-adult-content-iphone',
   'business.html': 'https://zaksha.com/business',
-  'colleges.html': 'https://zaksha.com/colleges',
+  'schools-and-colleges.html': 'https://zaksha.com/schools-and-colleges',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -144,7 +146,8 @@ for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
 // --- e. redirect pages: canonical + target ---
 const REDIRECTS = {
   'pricing.html': { canonical: 'https://zaksha.com/', to: '/#pricing' },
-  'schools.html': { canonical: 'https://zaksha.com/business', to: '/business?for=school' },
+  'schools.html': { canonical: 'https://zaksha.com/schools-and-colleges', to: '/schools-and-colleges' },
+  'colleges.html': { canonical: 'https://zaksha.com/schools-and-colleges', to: '/schools-and-colleges' },
 };
 for (const [page, { canonical, to }] of Object.entries(REDIRECTS)) {
   if (!exists(page)) {
@@ -165,7 +168,7 @@ for (const [page, { canonical, to }] of Object.entries(REDIRECTS)) {
 // --- e2. removed enterprise pages are gone, and nothing links to them ---
 const REMOVED = ['offices.html', 'lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
 for (const page of REMOVED) if (exists(page)) fail(`${page}: must be removed (one unified /business page)`);
-const REMOVED_REF = /href="\/?(schools|offices)(\.html)?["#?]|(lp-(schools|colleges|offices)|offices)\.html|zaksha\.com\/(schools|offices)\b/;
+const REMOVED_REF = /href="\/?(schools|offices)(\.html)?["#?]|(lp-(schools|colleges|offices)|offices)\.html|zaksha\.com\/(schools|offices)(?![\w-])/;
 const SCAN = [...readdirSync(ROOT).filter((f) => /\.(html|js|xml)$/.test(f) && f !== 'schools.html'), 'README.md'];
 for (const file of SCAN) {
   const hit = read(file).match(REMOVED_REF);
@@ -240,7 +243,7 @@ const LINK_CHECK_PAGES = [
   'index.html', 'get.html', 'privacy.html', 'terms.html',
   'best-parental-control-app-india.html', 'google-family-link-alternative.html',
   'block-adult-content-android.html', 'block-adult-content-iphone.html',
-  'business.html', 'colleges.html',
+  'business.html', 'schools-and-colleges.html',
 ];
 for (const page of LINK_CHECK_PAGES) {
   if (!exists(page)) continue;
@@ -268,8 +271,10 @@ if (indexHtml) {
 }
 
 // --- j. enterprise page: indexable ---
-const ENT_INDEXED = ['business.html', 'colleges.html'];
-const INSTITUTION_PAGES = ENT_INDEXED;
+const ENT_INDEXED = ['business.html', 'schools-and-colleges.html'];
+const INSTITUTION_PAGES = ['business.html'];
+// pages that carry the business header (Solutions menu + Home | Business switch) instead
+const BUSINESS_HEADER_PAGES = ['schools-and-colleges.html'];
 for (const page of ENT_INDEXED) {
   if (!exists(page)) { fail(`${page}: file missing`); continue; }
   if (/<meta name="robots"[^>]*noindex/i.test(read(page))) fail(`${page}: must be indexable (no noindex)`);
@@ -278,6 +283,7 @@ for (const page of ENT_INDEXED) {
 // --- k. audience switch ("For families | For institutions") in every page header ---
 const ALL_PAGES = readdirSync(ROOT).filter((f) => f.endsWith('.html') && !Object.hasOwn(REDIRECTS, f));
 for (const page of ALL_PAGES) {
+  if (BUSINESS_HEADER_PAGES.includes(page)) continue;
   const html = read(page);
   const sw = html.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
   if (!sw) { fail(`${page}: missing audience switch (<div class="aud">)`); continue; }
@@ -367,20 +373,44 @@ for (const page of ENT_INDEXED) {
   if (/tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is not used on the enterprise page`);
 }
 
-// --- q. colleges page: one problem-first page with the enquiry form preselected to college ---
-if (exists('colleges.html')) {
-  const html = read('colleges.html');
-  for (const needle of ['id="enquire"', 'id="how"']) if (!html.includes(needle)) fail(`colleges.html: missing anchor ${needle}`);
+// --- q. schools-and-colleges page: family-page layout, business header, enquiry form with no preselect ---
+if (exists('schools-and-colleges.html')) {
+  const P = 'schools-and-colleges.html';
+  const html = read(P);
+  if (!/<section\b[^>]*class="fhero"[\s\S]*?<img\b[^>]*src="\/?img\/lifestyle\/[^"]+\.jpg"/.test(html)) fail(`${P}: hero needs a photo <img> under img/lifestyle/`);
+  if (!/class="marquee"/.test(html)) fail(`${P}: missing the app-logo marquee (.marquee)`);
+  for (const needle of ['id="enquire"', 'id="how"', 'id="pricing"', 'id="faq"']) if (!html.includes(needle)) fail(`${P}: missing anchor ${needle}`);
   const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
-  if (!form) fail('colleges.html: missing <form class="lead-form">');
+  if (!form) fail(`${P}: missing <form class="lead-form">`);
   else {
-    const sel = form[1].match(/<select[^>]*name="segment"[^>]*>([\s\S]*?)<\/select>/);
-    const picked = sel && [...sel[1].matchAll(/<option\b([^>]*)>/g)].filter((m) => /\bselected\b/.test(m[1]));
-    if (!sel) fail('colleges.html: segment must stay a visible <select>');
-    else if (picked.length !== 1 || !/value="college"/.test(picked[0][1])) fail('colleges.html: segment must be preselected to college');
+    if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"/.test(form[1])) fail(`${P}: honeypot "website" needs tabindex="-1" and autocomplete="off"`);
+    const sel = form[1].match(/<select[^>]*name="segment"[^>]*required[^>]*>([\s\S]*?)<\/select>/);
+    const opts = sel ? [...sel[1].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)] : [];
+    const picked = opts.filter((m) => /\bselected\b/.test(m[1]));
+    if (!sel) fail(`${P}: segment must be a required <select>`);
+    else if (picked.length !== 1 || picked[0][2].trim() !== 'Choose one' || !/\bdisabled\b/.test(picked[0][1]) || !/value=""/.test(picked[0][1])) {
+      fail(`${P}: segment must default to a disabled, selected "Choose one" placeholder (no preselect)`);
+    }
   }
-  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail('colleges.html: missing lead-form.js');
-  if (/exam mode|lockdown|allow-?list/i.test(html)) fail('colleges.html: contains exam mode / lockdown / allow-list wording');
+  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${P}: missing lead-form.js`);
+  if (/exam mode|lockdown|allow-?list/i.test(html)) fail(`${P}: contains exam mode / lockdown / allow-list wording`);
+  // business header: Solutions menu + Home | Business switch
+  const header = (html.match(/<header\b[\s\S]*?<\/header>/) || [''])[0];
+  const menu = header.match(/<details\b[^>]*>\s*<summary\b[^>]*>[^<]*Solutions[\s\S]*?<\/details>/);
+  if (!menu) fail(`${P}: header needs a "Solutions" menu`);
+  else {
+    if (!/href="\/schools-and-colleges"[^>]*>Schools and colleges</.test(menu[0])) fail(`${P}: Solutions menu needs "Schools and colleges" -> /schools-and-colleges`);
+    if (!/href="\/business"[^>]*>Small businesses and startups</.test(menu[0])) fail(`${P}: Solutions menu needs "Small businesses and startups" -> /business`);
+    if (!/href="\/business"[^>]*>Enterprise</.test(menu[0])) fail(`${P}: Solutions menu needs "Enterprise" -> /business`);
+    if (!menu[0].includes('Wi-Fi filtering for any of these, on request.')) fail(`${P}: Solutions menu needs the Wi-Fi note`);
+  }
+  for (const needle of ['href="#how"', 'href="#pricing"', 'href="#faq"', 'href="#enquire"']) if (!header.includes(needle)) fail(`${P}: header missing ${needle}`);
+  const sw = header.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
+  const links = sw ? [...sw[1].matchAll(/<a\b([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ attrs: m[1], text: m[2].trim() })) : [];
+  const home = links.find((l) => l.text === 'Home' && /href="\/"/.test(l.attrs));
+  const biz = links.find((l) => l.text === 'Business' && /href="\/business"/.test(l.attrs));
+  if (!home || !biz) fail(`${P}: header needs a "Home" -> / | "Business" -> /business switch`);
+  else if (!/aria-current="page"/.test(biz.attrs) || /aria-current/.test(home.attrs)) fail(`${P}: switch must mark "Business" with aria-current="page"`);
 }
 
 // --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref codes ---

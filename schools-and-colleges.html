@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaksha for schools and colleges — control what classroom and lab devices can reach</title>
+  <meta name="description" content="Keep school and college devices for classes and tests: adult sites blocked, AI tools off during a test, games and streaming off in class and lab hours, a record per device. No hardware, data kept in India." />
+  <link rel="canonical" href="https://zaksha.com/schools-and-colleges" />
+  <link rel="stylesheet" href="/fonts.css" />
+  <link rel="stylesheet" href="/zaksha-site.css" />
+  <link rel="preload" as="image" href="img/lifestyle/students-laptop-uniform.jpg" fetchpriority="high" />
+  <style>
+    /* ---------- copied from index.html's inline <style> so this page matches the family homepage ---------- */
+    /* hero — full-bleed family photo */
+    .fhero{ position:relative; min-height:min(78vh,660px); display:flex; align-items:flex-end; overflow:hidden; }
+    .fhero__bg{ position:absolute; inset:0; } .fhero__bg img{ width:100%; height:100%; object-fit:cover; object-position:72% center; }
+    .fhero__scrim{ position:absolute; inset:0; background:linear-gradient(90deg, rgba(8,40,44,.85) 0%, rgba(8,40,44,.52) 42%, rgba(8,40,44,.12) 72%, rgba(8,40,44,0) 100%), linear-gradient(0deg, rgba(8,40,44,.55) 0%, rgba(8,40,44,0) 42%); }
+    .fhero__in{ position:relative; padding-top:clamp(48px,7vw,84px); padding-bottom:clamp(40px,5vw,64px); max-width:660px; }
+    .fhero .eyebrow{ color:#7fe0e6; }
+    .fhero h1{ color:#fff; font-size:clamp(36px,6vw,62px); letter-spacing:-0.035em; line-height:1.04; margin-top:14px; }
+    .fhero p{ color:rgba(255,255,255,.9); font-size:clamp(16px,2vw,20px); line-height:1.5; margin-top:18px; max-width:520px; }
+    .fhero__btns{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
+    .fhero__facts{ margin-top:22px; display:flex; gap:8px 20px; flex-wrap:wrap; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.82); }
+    .fhero__facts span{ display:inline-flex; align-items:center; gap:7px; } .fhero__facts i{ font-size:16px; color:#7fe0e6; }
+
+    .avail{ border-bottom:1px solid var(--line); background:var(--surface); }
+    .avail__in{ display:flex; align-items:center; justify-content:center; gap:10px 26px; flex-wrap:wrap; padding:18px 0; }
+    .avail__lab{ font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-400); }
+    .avail__os{ display:inline-flex; align-items:center; gap:7px; font-size:14px; font-weight:700; color:var(--ink-700); } .avail__os i{ font-size:17px; color:var(--teal-700); }
+
+    .f-head{ max-width:720px; margin:0 auto clamp(32px,4vw,46px); text-align:center; }
+    .f-head h2{ font-size:clamp(27px,3.6vw,42px); letter-spacing:-0.03em; } .f-head p{ margin-top:13px; font-size:17.5px; color:var(--ink-500); }
+
+    .appic{ width:36px; height:36px; border-radius:9px; background:#fff; border:1px solid var(--line); display:grid; place-items:center; box-shadow:var(--sh-1); overflow:hidden; }
+    .appic img{ width:24px; height:24px; display:block; object-fit:contain; }
+    .blocknote{ margin:clamp(24px,3vw,32px) auto 0; max-width:720px; text-align:center; background:var(--teal-50); border:1px solid var(--teal-100); border-radius:var(--r-lg); padding:16px 22px; font-size:15px; color:var(--teal-800); }
+    .blocknote b{ font-weight:800; }
+    /* app wall (auto-scrolling row) + category switches */
+    .marquee{ position:relative; overflow:hidden; padding:6px 0; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); }
+    .marquee__track{ display:flex; width:max-content; animation:marq 40s linear infinite; }
+    .marquee:hover .marquee__track{ animation-play-state:paused; }
+    @keyframes marq{ from{ transform:translateX(0); } to{ transform:translateX(-33.3333%); } }
+    .marquee__set{ display:flex; gap:16px; padding-right:16px; flex:0 0 auto; }
+    .marquee .appic{ width:58px; height:58px; border-radius:15px; } .marquee .appic img{ width:34px; height:34px; }
+    @media (prefers-reduced-motion: reduce){ .marquee__track{ animation:none; } .marquee{ overflow-x:auto; } }
+    .chips{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:780px; margin:30px auto 0; }
+    .chip{ display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border:1px solid var(--line); border-radius:999px; background:var(--surface); font-size:14px; font-weight:700; color:var(--ink-700); }
+    .chip svg{ color:var(--teal-600); } .chip .sw{ width:30px; height:18px; border-radius:999px; background:var(--teal-600); position:relative; flex:0 0 auto; } .chip .sw::after{ content:""; position:absolute; top:2px; right:2px; width:14px; height:14px; border-radius:50%; background:#fff; }
+
+    /* schedules — 3 demos */
+    .demo3{ display:flex; flex-direction:column; gap:clamp(18px,2.5vw,26px); max-width:920px; margin:0 auto; }
+    .demorow{ display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(20px,3vw,40px); align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-xl); padding:clamp(22px,3vw,34px); }
+    .demorow:nth-child(even){ background:var(--bg); } @media (max-width:720px){ .demorow{ grid-template-columns:1fr; } }
+    .demorow h3{ font-size:20px; } .demorow p{ margin-top:8px; font-size:15px; color:var(--ink-500); } .demorow .eyebrow{ margin-bottom:8px; }
+    .mini{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--sh-1); padding:16px 18px; }
+    .mini__top{ display:flex; align-items:center; gap:11px; } .mini__ic{ width:36px; height:36px; border-radius:10px; background:var(--teal-50); color:var(--teal-600); display:grid; place-items:center; font-size:18px; flex:0 0 auto; }
+    .mini__nm{ font-size:14.5px; font-weight:800; display:block; } .mini__mt{ font-size:12px; color:var(--ink-400); display:block; }
+    .mini__badge{ margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--teal-700); background:var(--teal-50); border-radius:999px; padding:4px 10px; white-space:nowrap; }
+    .mini__win{ display:flex; align-items:center; gap:8px; margin-top:13px; padding-top:12px; border-top:1px solid var(--line-2); font-size:12.5px; font-weight:700; color:var(--ink-500); flex-wrap:wrap; }
+    .mini__chip{ font-family:var(--mono); font-size:11.5px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:3px 9px; color:var(--ink-900); }
+    .mini__pill{ font-size:11.5px; font-weight:700; border-radius:999px; padding:3px 10px; } .mini__pill--off{ background:var(--block-50); color:var(--block); }
+
+    /* built to stay on — dark zig-zag */
+    .stay{ background:#101a1c; color:#eaf3f2; }
+    .stay .wrap{ padding-top:clamp(60px,8vw,100px); padding-bottom:clamp(60px,8vw,100px); }
+    .stay__head{ max-width:680px; margin:0 auto clamp(34px,5vw,52px); text-align:center; }
+    .stay__head .eyebrow{ color:#4fd0d8; } .stay__head h2{ color:#fff; font-size:clamp(27px,3.6vw,42px); margin-top:12px; } .stay__head p{ color:#9fb3b2; margin-top:14px; font-size:17px; }
+
+    /* privacy with background image */
+    .privbg{ position:relative; overflow:hidden; }
+    .privbg__img{ position:absolute; inset:0; } .privbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+    .privbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
+    .privbg .wrap{ position:relative; }
+    .priv3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.5vw,24px); }
+    @media (max-width:760px){ .priv3{ grid-template-columns:1fr; max-width:420px; margin:0 auto; } }
+    .pcard{ background:rgba(255,255,255,.92); backdrop-filter:blur(4px); border:1px solid var(--line); border-radius:var(--r-lg); padding:26px; box-shadow:var(--sh-1); }
+    .pcard__ic{ width:44px; height:44px; border-radius:12px; background:var(--teal-50); color:var(--teal-600); display:grid; place-items:center; font-size:22px; }
+    .pcard h3{ font-size:17px; margin-top:16px; } .pcard p{ margin-top:8px; font-size:14.5px; color:var(--ink-500); line-height:1.55; }
+
+    /* schedules — blurred photo background (same idea as privacy) */
+    .schedbg{ position:relative; overflow:hidden; }
+    .schedbg__img{ position:absolute; inset:0; } .schedbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 35%; filter:blur(3px); transform:scale(1.06); }
+    .schedbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
+    .schedbg .wrap{ position:relative; }
+
+    /* why zaksha — what we do vs what we'll never do */
+    .split{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.4vw,26px); max-width:1000px; margin:0 auto; }
+    @media (max-width:760px){ .split{ grid-template-columns:1fr; max-width:520px; } }
+    .panel{ border-radius:var(--r-xl); padding:clamp(26px,3vw,34px); box-shadow:var(--sh-1); }
+    .panel--do{ background:var(--teal-600); color:#fff; }
+    .panel--dont{ background:var(--surface); border:1px solid var(--line); }
+    .panel h3{ font-size:18px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; }
+    .panel--do h3 i{ font-size:22px; }
+    .panel--dont h3{ color:var(--ink-900); } .panel--dont h3 i{ font-size:22px; color:var(--ink-400); }
+    .panel .sub{ font-size:13px; margin-top:6px; opacity:.85; }
+    .panel--dont .sub{ color:var(--ink-500); opacity:1; }
+    .panel ul{ list-style:none; margin:20px 0 0; padding:0; }
+    .panel li{ display:flex; gap:11px; align-items:flex-start; font-size:14.5px; line-height:1.5; }
+    .panel li + li{ margin-top:14px; }
+    .panel--do li i{ color:#bff0ea; font-size:19px; flex:none; }
+    .panel--dont li{ color:var(--ink-700); } .panel--dont li i{ color:var(--ink-300); font-size:19px; flex:none; }
+
+    /* ---------- this page only ---------- */
+    /* same overlay as the family hero, deeper stops: this photo is brighter and busier behind the text */
+    .fhero__scrim{ background:linear-gradient(90deg, rgba(8,40,44,.9) 0%, rgba(8,40,44,.78) 42%, rgba(8,40,44,.35) 72%, rgba(8,40,44,.1) 100%), linear-gradient(0deg, rgba(8,40,44,.55) 0%, rgba(8,40,44,0) 42%); }
+    /* business header: Solutions menu */
+    .sol{ position:relative; }
+    .sol summary{ list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:5px; font-size:14.5px; font-weight:600; color:var(--ink-500); padding:7px 12px; border-radius:var(--r-pill); }
+    .sol summary::-webkit-details-marker{ display:none; }
+    .sol summary:hover, .sol[open] summary{ color:var(--ink-900); background:var(--bg); }
+    .sol summary i{ font-size:14px; transition:transform .15s; } .sol[open] summary i{ transform:rotate(180deg); }
+    .sol__menu{ position:absolute; top:calc(100% + 8px); left:0; width:280px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--sh-2); padding:8px; z-index:60; }
+    .sol__menu a{ display:block; font-size:14.5px; font-weight:600; color:var(--ink-700); padding:9px 12px; border-radius:10px; }
+    .sol__menu a:hover{ background:var(--bg); color:var(--ink-900); } .sol__menu a[aria-current="page"]{ color:var(--teal-700); }
+    .sol__page{ display:none; border-top:1px solid var(--line-2); margin-top:6px; padding-top:6px; }
+    .sol__note{ border-top:1px solid var(--line-2); margin-top:6px; padding:9px 12px 4px; font-size:12.5px; color:var(--ink-400); }
+    .nav__in .nav__links{ margin-left:-20px; }
+    @media (max-width:760px){
+      .nav__in .nav__links{ display:none; } .sol__page{ display:block; }
+      .sol summary{ padding:7px 8px; font-size:14px; }
+      .sol__menu{ position:fixed; top:64px; left:16px; right:16px; width:auto; }
+    }
+    @media (max-width:400px){ .nav__in .brand__word{ display:none; } }
+
+    /* what goes wrong: two columns of cards */
+    .wrong{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.4vw,26px); max-width:1000px; margin:0 auto; }
+    @media (max-width:760px){ .wrong{ grid-template-columns:1fr; max-width:520px; } }
+    .wrong__col{ display:flex; flex-direction:column; gap:clamp(14px,2vw,18px); }
+    .wrong__col .eyebrow{ text-align:center; }
+
+    /* records row + Wi-Fi band */
+    .mini__log{ display:flex; align-items:center; gap:8px; margin-top:10px; font-size:12.5px; flex-wrap:wrap; }
+    .mini__log:first-of-type{ margin-top:13px; padding-top:12px; border-top:1px solid var(--line-2); }
+    .mini__t{ font-family:var(--mono); font-size:11.5px; color:var(--ink-400); }
+    .mini__log .mini__pill{ margin-left:auto; } .mini__pill--ok{ background:var(--allow-50); color:var(--allow); }
+    .wifi{ max-width:720px; margin:0 auto; }
+    .plans--one{ grid-template-columns:1fr; max-width:480px; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+</head>
+<body>
+  <!-- NAV (business header) -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="/">
+        <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+        <span class="brand__word">Zaksha</span>
+      </a>
+      <details class="sol" id="sol">
+        <summary>Solutions <i class="ph ph-caret-down"></i></summary>
+        <div class="sol__menu">
+          <a href="/schools-and-colleges" aria-current="page">Schools and colleges</a>
+          <a href="/business">Small businesses and startups</a>
+          <a href="/business">Enterprise</a>
+          <div class="sol__page">
+            <a href="#how">How it works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <p class="sol__note">Wi-Fi filtering for any of these, on request.</p>
+        </div>
+      </details>
+      <nav class="nav__links">
+        <a href="#how">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="aud" aria-label="Choose home or business">
+        <a href="/">Home</a>
+        <a href="/business" aria-current="page">Business</a>
+      </div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="#enquire">Talk to us</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="fhero">
+    <div class="fhero__bg"><img fetchpriority="high" decoding="async" src="img/lifestyle/students-laptop-uniform.jpg" alt="Five students in uniform working together on a laptop" /></div>
+    <div class="fhero__scrim"></div>
+    <div class="wrap fhero__in">
+      <span class="eyebrow">For schools, colleges and coaching centres</span>
+      <h1>Classroom tablets and lab PCs, kept for classes and tests.</h1>
+      <p>Zaksha controls what your school or college devices can reach and when. Adult and harmful sites stay blocked, AI tools go off during a test, and games and streaming go off in class and lab hours. If a parent or an examiner asks what a device was used for, you have the record.</p>
+      <div class="fhero__btns">
+        <a class="btn btn--onteal btn--lg" href="#enquire">Talk to us</a>
+        <a class="btn btn--onteal-ghost btn--lg" href="#how">See how it works</a>
+      </div>
+      <div class="fhero__facts">
+        <span><i class="ph ph-shield-check"></i> Hard to switch off</span>
+        <span><i class="ph ph-map-pin"></i> Data stays in India</span>
+        <span><i class="ph ph-check-circle"></i> No hardware to buy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVAILABLE FOR -->
+  <section class="avail">
+    <div class="wrap avail__in">
+      <span class="avail__lab">Available for</span>
+      <span class="avail__os"><i class="ph ph-windows-logo"></i> Windows</span>
+      <span class="avail__os"><i class="ph ph-desktop"></i> Mac</span>
+      <span class="avail__os"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</span>
+      <span class="avail__os"><i class="ph ph-android-logo"></i> Android</span>
+    </div>
+  </section>
+
+  <!-- WHAT YOU CAN BLOCK -->
+  <section class="section" id="block">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">What you can block</span><h2>Block a whole category in one go.</h2><p>Turn a category off and every app and site in it is blocked, in the app and in the browser.</p></div>
+    </div>
+    <div class="marquee">
+      <div class="marquee__track">
+        <div class="marquee__set">
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="ChatGPT" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="Gemini" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="Claude" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="Roblox" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="Steam" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="Epic Games" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="YouTube" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="Netflix" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="Instagram" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="Snapchat" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="X" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="Facebook" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="Spotify" /></span>
+        </div>
+        <div class="marquee__set" aria-hidden="true">
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="" /></span>
+        </div>
+        <div class="marquee__set" aria-hidden="true">
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/chatgpt.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/gemini.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/claude.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/roblox.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/steam.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/epicgames.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/youtube.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/netflix.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/instagram.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/snapchat.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/x.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/facebook.png" alt="" /></span>
+          <span class="appic"><img loading="lazy" decoding="async" src="img/appicons/real/spotify.png" alt="" /></span>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="chips">
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg> Adult content <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg> Gambling <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Social media <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> Streaming <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59A31 31 0 0 0 2 16a3 3 0 0 0 5 2l1.414-1.414A2 2 0 0 1 10.828 16h2.344a2 2 0 0 1 1.414.586L16 18a3 3 0 0 0 5-2 31 31 0 0 0-.702-7.41A4 4 0 0 0 17.32 5z"/></svg> Gaming <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg> Ads &amp; trackers <span class="sw"></span></span>
+        <span class="chip"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg> AI tools <span class="sw"></span></span>
+      </div>
+      <p class="blocknote"><b>Blocked in the app and in the browser.</b> Switching from the ChatGPT app to chatgpt.com in a browser doesn't get around it. Add any site of your own on top.</p>
+    </div>
+  </section>
+
+  <!-- WHAT GOES WRONG -->
+  <section class="section section--wash" id="problems">
+    <div class="wrap">
+      <div class="f-head"><h2>What goes wrong on shared devices</h2></div>
+      <div class="wrong">
+        <div class="wrong__col">
+          <span class="eyebrow">In schools</span>
+          <div class="pcard"><span class="pcard__ic"><i class="ph ph-warning"></i></span><h3>Something a child shouldn't see</h3><p>An adult or gambling site on a school tablet, and the parents call you.</p></div>
+          <div class="pcard"><span class="pcard__ic"><i class="ph ph-file-text"></i></span><h3>"What was this device used for?"</h3><p>When a parent asks, nobody can say.</p></div>
+        </div>
+        <div class="wrong__col">
+          <span class="eyebrow">In college labs</span>
+          <div class="pcard"><span class="pcard__ic"><i class="ph ph-robot"></i></span><h3>AI tools in the middle of a test</h3><p>ChatGPT, Gemini and others are a tab away during an online assessment.</p></div>
+          <div class="pcard"><span class="pcard__ic"><i class="ph ph-game-controller"></i></span><h3>Labs that turn into gaming rooms</h3><p>Between sessions, lab PCs are used for games and streaming.</p></div>
+        </div>
+      </div>
+      <p class="blocknote"><b>And in both:</b> a student changes the DNS setting or switches to an encrypted DNS service, and the filter is gone. Zaksha blocks that.</p>
+    </div>
+  </section>
+
+  <!-- SCHEDULES -->
+  <section class="section schedbg">
+    <div class="schedbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/computer-lab-rows.jpg" alt="Rows of students at desktop PCs in a computer lab" /></div>
+    <div class="schedbg__scrim"></div>
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Set it to your timetable</span><h2>Class hours, lab hours and test windows.</h2><p>Put devices in groups and give each group its own hours. It repeats every week.</p></div>
+      <div class="demo3">
+        <div class="demorow">
+          <div><span class="eyebrow">Class hours</span><h3>Class tablets for class work.</h3><p>During school hours social media, games and streaming are off. Adult sites stay off all the time.</p></div>
+          <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-books"></i></span><span><span class="mini__nm">Class 8 tablets</span><span class="mini__mt">Mon–Sat 8 AM–2 PM</span></span></div><div class="mini__win">Social · Gaming · Streaming <span class="mini__pill mini__pill--off">Paused</span></div></div>
+        </div>
+        <div class="demorow">
+          <div><span class="eyebrow">Test windows</span><h3>AI tools off while the test runs.</h3><p>Pick the lab group and the hours. ChatGPT, Gemini, Claude, Copilot and other AI tools are blocked inside the window and back after it.</p></div>
+          <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-graduation-cap"></i></span><span><span class="mini__nm">Lab 2 — Placement round</span><span class="mini__mt">Tue 10:00 AM–1:00 PM</span></span></div><div class="mini__win">AI tools <span class="mini__pill mini__pill--off">Paused now</span></div></div>
+        </div>
+        <div class="demorow">
+          <div><span class="eyebrow">Lab hours</span><h3>Games and streaming off in lab hours.</h3><p>Each lab gets its own schedule. Rules apply on the devices themselves, so they hold on any network.</p></div>
+          <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-desktop"></i></span><span><span class="mini__nm">Computer Lab A</span><span class="mini__mt">Mon–Sat 9 AM–5 PM</span></span></div><div class="mini__win">Gaming · Streaming <span class="mini__pill mini__pill--off">Paused</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORDS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="demo3">
+        <div class="demorow">
+          <div><span class="eyebrow">Records</span><h3>A record for every device.</h3><p>See which sites each device looked up in the last 7 days and what was blocked. Export it when you need to show it.</p></div>
+          <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-monitor-check"></i></span><span><span class="mini__nm">LAB2-PC14</span><span class="mini__mt">Last 7 days</span></span></div>
+            <div class="mini__log"><span class="mini__t">Tue 11:42 AM</span><span class="mini__chip">chat.openai.com</span><span class="mini__pill mini__pill--off">Blocked</span></div>
+            <div class="mini__log"><span class="mini__t">Tue 11:40 AM</span><span class="mini__chip">nptel.ac.in</span><span class="mini__pill mini__pill--ok">Allowed</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT TO STAY ON -->
+  <section class="stay" id="stay">
+    <div class="wrap">
+      <div class="stay__head">
+        <span class="eyebrow">Built to stay on</span>
+        <h2>A student can't just switch it off.</h2>
+        <p>On Windows, a student account without admin rights can't stop or remove Zaksha. On supervised iPads the profile can't be removed. Switching to an encrypted DNS service doesn't get around it, and if a device stops reporting, the console flags it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROTECTION, NOT SURVEILLANCE -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Why Zaksha</span><h2>Protection, not surveillance.</h2></div>
+      <div class="split">
+        <div class="panel panel--do">
+          <h3><i class="ph ph-shield-check"></i>Zaksha does</h3>
+          <ul>
+            <li><i class="ph ph-check-circle"></i>Blocks the categories and sites you choose</li>
+            <li><i class="ph ph-check-circle"></i>Follows class, lab and test hours</li>
+            <li><i class="ph ph-check-circle"></i>Keeps a 7-day record of sites looked up, per device</li>
+            <li><i class="ph ph-check-circle"></i>Keeps data in India</li>
+          </ul>
+        </div>
+        <div class="panel panel--dont">
+          <h3><i class="ph ph-prohibit"></i>Zaksha doesn't</h3>
+          <ul>
+            <li><i class="ph ph-x"></i>Read messages or chats</li>
+            <li><i class="ph ph-x"></i>Record keystrokes or take screenshots</li>
+            <li><i class="ph ph-x"></i>Need students' passwords</li>
+            <li><i class="ph ph-x"></i>Sell or share data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUS WI-FI -->
+  <section class="section privbg" id="wifi">
+    <div class="privbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/college-campus-students.jpg" alt="A group of college students on a campus bench" /></div>
+    <div class="privbg__scrim"></div>
+    <div class="wrap">
+      <div class="pcard wifi"><span class="pcard__ic"><i class="ph ph-wifi-high"></i></span><h3>Students' own phones on campus Wi-Fi?</h3><p>On request, your campus or hostel network can point at a dedicated Zaksha instance, so every device on that Wi-Fi gets the same rules, phones included. It is one policy for the whole network, and a VPN or mobile data gets around it. Ask us when you enquire.</p></div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="f-head"><h2>How it works</h2></div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__n">1</div>
+          <h3>Tell us about your devices</h3>
+          <p>How many, which kinds, and your class, lab and test hours. We call within one working day.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">2</div>
+          <h3>Install once</h3>
+          <p>The Windows installer pack runs on each PC. iPads, iPhones and Macs get a profile.</p>
+        </div>
+        <div class="step">
+          <div class="step__n">3</div>
+          <h3>Run it from the web console</h3>
+          <p>Groups, schedules and records in one place. Devices pick up changes without being touched again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section section--wash" id="pricing">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Pricing</span><h2>Priced per device, in rupees.</h2></div>
+      <div class="plans plans--one">
+        <div class="plan plan--home">
+          <div class="plan__name">Schools and colleges</div>
+          <div class="plan__price"><span class="plan__amt" style="font-size:30px;">From ₹79</span><span class="plan__per">per device / month</span></div>
+          <div class="plan__sub">₹65 billed yearly · minimum 10 devices · GST invoice</div>
+          <a class="btn btn--primary plan__btn" href="#enquire">Talk to us</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> Start with a 3-month pilot at 10% of the quote</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
+      <div class="faq">
+        <details class="faq__item">
+          <summary>Are adult sites blocked all the time, or only in school hours? <i class="ph ph-plus"></i></summary>
+          <p>All the time, once it's on. You choose which categories follow a schedule, such as social media, games, streaming and AI tools.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Can we turn AI tools off only during a test? <i class="ph ph-plus"></i></summary>
+          <p>Yes. Put the lab in a group with a schedule; AI tools are paused inside the window and back after it.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Does it read what students type? <i class="ph ph-plus"></i></summary>
+          <p>No. It sees which sites a device looks up and whether they were blocked.</p>
+        </details>
+        <details class="faq__item">
+          <summary>What if a student changes the DNS setting? <i class="ph ph-plus"></i></summary>
+          <p>On Windows without admin rights they can't change it. Encrypted DNS services are blocked, and a device that stops reporting shows up in the console.</p>
+        </details>
+        <details class="faq__item">
+          <summary>We already have a firewall. <i class="ph ph-plus"></i></summary>
+          <p>A firewall covers your network. Zaksha covers each device on any network, and keeps a record per device.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Where is our data? <i class="ph ph-plus"></i></summary>
+          <p>In India, on AWS Mumbai. A dedicated instance is available on paid contracts.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENQUIRY -->
+  <section class="section section--wash" id="enquire">
+    <div class="wrap">
+      <div class="f-head">
+        <h2>Talk to us about your school or college</h2>
+        <p>We call within one working day.</p>
+      </div>
+      <form class="lead-form" data-endpoint="https://api.zaksha.com/api/v1/public/leads">
+        <label>I'm enquiring for
+          <select name="segment" required>
+            <option value="" disabled selected>Choose one</option>
+            <option value="school">A school</option>
+            <option value="college">A college or institute</option>
+            <option value="team">A company or team</option>
+          </select>
+        </label>
+        <input type="hidden" name="ref" value="" />
+        <label>Organisation
+          <input type="text" name="org_name" autocomplete="organization" required />
+        </label>
+        <div class="lead-form__row">
+          <label>Your name
+            <input type="text" name="contact_name" autocomplete="name" required />
+          </label>
+          <label>Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+        <div class="lead-form__row">
+          <label>Phone <small>optional</small>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+          <label>How many devices? <small>optional</small>
+            <select name="devices">
+              <option value=""></option>
+              <option value="10">Up to 10</option>
+              <option value="50">11–50</option>
+              <option value="200">51–200</option>
+              <option value="500">More than 200</option>
+            </select>
+          </label>
+        </div>
+        <label>Anything we should know? <small>optional</small>
+          <textarea name="message"></textarea>
+        </label>
+        <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+        <button class="btn btn--primary btn--lg" type="submit">Talk to us</button>
+        <p class="lead-form__status" role="status"></p>
+        <p class="lead-form__alt">Prefer WhatsApp? <a href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">+91 89194 68618</a></p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid footer__grid--4">
+        <div>
+          <a class="brand" href="/">
+            <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Filtering for the devices your school, college or company owns. Made and run in India.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Institutions</h4>
+          <a href="/schools-and-colleges">Schools and colleges</a>
+          <a href="/business?for=team">Companies and teams</a>
+        </div>
+        <div class="footer__col">
+          <h4>Families</h4>
+          <a href="/">Zaksha for families</a>
+          <a href="/get">Get the app</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="/business#enquire">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/icons.js"></script>
+  <script src="/lead-form.js"></script>
+  <script>
+    // BIZ-COL unless the ad URL carries its own ?ref=
+    document.querySelector('form.lead-form').elements.ref.value = window.ZakshaLead.audienceFor('?for=college&' + location.search.slice(1)).ref;
+
+    // Solutions menu: close on outside click, Escape, or picking an item.
+    (function () {
+      var sol = document.getElementById('sol');
+      document.addEventListener('click', function (e) { if (!sol.contains(e.target) || e.target.closest('.sol__menu a')) sol.open = false; });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sol.open) { sol.open = false; sol.querySelector('summary').focus(); }
+      });
+    })();
+  </script>
+</body>
+</html>
