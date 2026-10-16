@@ -62,6 +62,7 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/block-adult-content-android',
   'https://zaksha.com/block-adult-content-iphone',
   'https://zaksha.com/business',
+  'https://zaksha.com/colleges',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
@@ -72,7 +73,6 @@ const FORBIDDEN_SITEMAP_SLUGS = [
   'lp-colleges',
   'lp-offices',
   'schools',
-  'colleges',
   'offices',
   'pricing',
 ];
@@ -125,6 +125,7 @@ const CANONICAL_PAGES = {
   'block-adult-content-android.html': 'https://zaksha.com/block-adult-content-android',
   'block-adult-content-iphone.html': 'https://zaksha.com/block-adult-content-iphone',
   'business.html': 'https://zaksha.com/business',
+  'colleges.html': 'https://zaksha.com/colleges',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -162,9 +163,9 @@ for (const [page, { canonical, to }] of Object.entries(REDIRECTS)) {
 }
 
 // --- e2. removed enterprise pages are gone, and nothing links to them ---
-const REMOVED = ['colleges.html', 'offices.html', 'lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
+const REMOVED = ['offices.html', 'lp-schools.html', 'lp-colleges.html', 'lp-offices.html'];
 for (const page of REMOVED) if (exists(page)) fail(`${page}: must be removed (one unified /business page)`);
-const REMOVED_REF = /href="\/?(schools|colleges|offices)(\.html)?["#?]|(lp-(schools|colleges|offices)|colleges|offices)\.html|zaksha\.com\/(schools|colleges|offices)\b/;
+const REMOVED_REF = /href="\/?(schools|offices)(\.html)?["#?]|(lp-(schools|colleges|offices)|offices)\.html|zaksha\.com\/(schools|offices)\b/;
 const SCAN = [...readdirSync(ROOT).filter((f) => /\.(html|js|xml)$/.test(f) && f !== 'schools.html'), 'README.md'];
 for (const file of SCAN) {
   const hit = read(file).match(REMOVED_REF);
@@ -239,7 +240,7 @@ const LINK_CHECK_PAGES = [
   'index.html', 'get.html', 'privacy.html', 'terms.html',
   'best-parental-control-app-india.html', 'google-family-link-alternative.html',
   'block-adult-content-android.html', 'block-adult-content-iphone.html',
-  'business.html',
+  'business.html', 'colleges.html',
 ];
 for (const page of LINK_CHECK_PAGES) {
   if (!exists(page)) continue;
@@ -267,7 +268,7 @@ if (indexHtml) {
 }
 
 // --- j. enterprise page: indexable ---
-const ENT_INDEXED = ['business.html'];
+const ENT_INDEXED = ['business.html', 'colleges.html'];
 const INSTITUTION_PAGES = ENT_INDEXED;
 for (const page of ENT_INDEXED) {
   if (!exists(page)) { fail(`${page}: file missing`); continue; }
@@ -364,6 +365,22 @@ for (const page of ENT_INDEXED) {
   const hit = text.match(BANNED_CLAIMS);
   if (hit) fail(`${page}: banned claim or word "${hit[0]}"`);
   if (/tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is not used on the enterprise page`);
+}
+
+// --- q. colleges page: one problem-first page with the enquiry form preselected to college ---
+if (exists('colleges.html')) {
+  const html = read('colleges.html');
+  for (const needle of ['id="enquire"', 'id="how"']) if (!html.includes(needle)) fail(`colleges.html: missing anchor ${needle}`);
+  const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
+  if (!form) fail('colleges.html: missing <form class="lead-form">');
+  else {
+    const sel = form[1].match(/<select[^>]*name="segment"[^>]*>([\s\S]*?)<\/select>/);
+    const picked = sel && [...sel[1].matchAll(/<option\b([^>]*)>/g)].filter((m) => /\bselected\b/.test(m[1]));
+    if (!sel) fail('colleges.html: segment must stay a visible <select>');
+    else if (picked.length !== 1 || !/value="college"/.test(picked[0][1])) fail('colleges.html: segment must be preselected to college');
+  }
+  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail('colleges.html: missing lead-form.js');
+  if (/exam mode|lockdown|allow-?list/i.test(html)) fail('colleges.html: contains exam mode / lockdown / allow-list wording');
 }
 
 // --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref codes ---

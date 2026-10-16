@@ -428,3 +428,75 @@ button { font: inherit; }
 .lead-form__alt { font-size: 14px; color: var(--ink-500); text-align: center; }
 .lead-form--done { text-align: center; font-size: 18px; font-weight: 600; display: block; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------------- enterprise solution pages (colleges.html, template for the rest) ----------------
+   Same look as the family homepage; its rules live in index.html's inline <style>, so the ones
+   these pages need are restated here under .ent-. */
+.ent-hero { position: relative; min-height: min(70vh, 600px); display: flex; align-items: flex-end; overflow: hidden; background: linear-gradient(135deg, #084d53 0%, #0a6168 45%, #101a1c 100%); }
+.ent-hero__in { position: relative; padding-top: clamp(48px, 7vw, 84px); padding-bottom: clamp(40px, 5vw, 64px); max-width: 700px; margin-left: 0; }
+.ent-hero .eyebrow { color: #7fe0e6; }
+.ent-hero h1 { color: #fff; font-size: clamp(32px, 5.4vw, 54px); letter-spacing: -0.035em; line-height: 1.06; margin-top: 14px; }
+.ent-hero p { color: rgba(255,255,255,.9); font-size: clamp(16px, 2vw, 19px); line-height: 1.5; margin-top: 18px; max-width: 560px; }
+.ent-hero__btns { margin-top: 26px; display: flex; gap: 12px; flex-wrap: wrap; }
+.ent-hero__facts { margin-top: 22px; display: flex; gap: 8px 20px; flex-wrap: wrap; font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,.82); }
+.ent-hero__facts span { display: inline-flex; align-items: center; gap: 7px; }
+.ent-hero__facts i { font-size: 16px; color: #7fe0e6; }
+
+.ent-avail { border-bottom: 1px solid var(--line); background: var(--surface); }
+.ent-avail__in { display: flex; align-items: center; justify-content: center; gap: 10px 26px; flex-wrap: wrap; padding: 18px 0; }
+.ent-avail__lab { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-400); }
+.ent-avail__os { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; color: var(--ink-700); }
+.ent-avail__os i { font-size: 17px; color: var(--teal-700); }
+
+.ent-head { max-width: 720px; margin: 0 auto clamp(32px, 4vw, 46px); text-align: center; }
+.ent-head h2 { font-size: clamp(27px, 3.6vw, 42px); letter-spacing: -0.03em; }
+.ent-head p { margin-top: 13px; font-size: 17.5px; color: var(--ink-500); }
+.ent-two { grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 0 auto; }
+@media (max-width: 600px) { .ent-two { grid-template-columns: 1fr; } }
+
+/* product rows: text left, console card right */
+.ent-rows { display: flex; flex-direction: column; gap: clamp(18px, 2.5vw, 26px); max-width: 920px; margin: 0 auto; }
+.ent-row { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(20px, 3vw, 40px); align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: clamp(22px, 3vw, 34px); }
+.ent-row:nth-child(even) { background: var(--bg); }
+@media (max-width: 720px) { .ent-row { grid-template-columns: 1fr; } }
+.ent-row h3 { font-size: 20px; }
+.ent-row p { margin-top: 8px; font-size: 15px; color: var(--ink-500); }
+.ent-row .eyebrow { margin-bottom: 8px; }
+.ent-mini { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh-1); padding: 16px 18px; }
+.ent-mini__top { display: flex; align-items: center; gap: 11px; }
+.ent-mini__ic { width: 36px; height: 36px; border-radius: 10px; background: var(--teal-50); color: var(--teal-600); display: grid; place-items: center; font-size: 18px; flex: 0 0 auto; }
+.ent-mini__nm { font-size: 14.5px; font-weight: 800; display: block; }
+.ent-mini__mt { font-size: 12px; color: var(--ink-400); display: block; }
+.ent-mini__win { display: flex; align-items: center; gap: 8px; margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line-2); font-size: 12.5px; font-weight: 700; color: var(--ink-500); flex-wrap: wrap; }
+.ent-mini__log { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12.5px; color: var(--ink-700); flex-wrap: wrap; }
+.ent-mini__log:first-of-type { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line-2); }
+.ent-mini__t { font-family: var(--mono); font-size: 11.5px; color: var(--ink-400); }
+.ent-mini__site { font-family: var(--mono); font-size: 11.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 3px 9px; color: var(--ink-900); }
+.ent-pill { margin-left: auto; font-size: 11.5px; font-weight: 700; border-radius: 999px; padding: 3px 10px; background: var(--block-50); color: var(--block); }
+.ent-pill--ok { background: var(--allow-50); color: var(--allow); }
+
+/* built to stay on (dark) */
+.ent-stay { background: #101a1c; color: #eaf3f2; }
+.ent-stay .wrap { padding-top: clamp(60px, 8vw, 100px); padding-bottom: clamp(60px, 8vw, 100px); max-width: 720px; text-align: center; }
+.ent-stay .eyebrow { color: #4fd0d8; }
+.ent-stay h2 { color: #fff; font-size: clamp(27px, 3.6vw, 42px); margin-top: 12px; }
+.ent-stay p { color: #9fb3b2; margin-top: 14px; font-size: 17px; }
+
+/* does / doesn't */
+.ent-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 26px); max-width: 1000px; margin: 0 auto; }
+@media (max-width: 760px) { .ent-split { grid-template-columns: 1fr; max-width: 520px; } }
+.ent-panel { border-radius: var(--r-xl); padding: clamp(26px, 3vw, 34px); box-shadow: var(--sh-1); }
+.ent-panel--do { background: var(--teal-600); color: #fff; }
+.ent-panel--dont { background: var(--surface); border: 1px solid var(--line); }
+.ent-panel h3 { font-size: 18px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 9px; }
+.ent-panel h3 i { font-size: 22px; }
+.ent-panel--dont h3 i { color: var(--ink-400); }
+.ent-panel ul { list-style: none; margin: 20px 0 0; padding: 0; }
+.ent-panel li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.5px; line-height: 1.5; }
+.ent-panel li + li { margin-top: 14px; }
+.ent-panel li i { font-size: 19px; flex: none; }
+.ent-panel--do li i { color: #bff0ea; }
+.ent-panel--dont li { color: var(--ink-700); }
+.ent-panel--dont li i { color: var(--ink-300); }
+
+.ent-plans { grid-template-columns: 1fr; max-width: 480px; }
