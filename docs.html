@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaksha help — setup, device status, troubleshooting and removal</title>
+  <meta name="description" content="How Zaksha works, what each device status means, why a blocked site might still open, what to do on hotel or flight Wi-Fi, and how to remove Zaksha from each device." />
+  <link rel="canonical" href="https://zaksha.com/docs" />
+
+  <link rel="stylesheet" href="/fonts.css" />
+  <link rel="stylesheet" href="zaksha-site.css" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zaksha" />
+  <meta property="og:title" content="Zaksha help — setup, device status, troubleshooting and removal" />
+  <meta property="og:description" content="What each device status means, why a blocked site might still open, what to do on hotel or flight Wi-Fi, and how to remove Zaksha." />
+  <meta property="og:url" content="https://zaksha.com/docs" />
+  <meta property="og:image" content="https://zaksha.com/og-image.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://zaksha.com/og-image.png" />
+  <style>
+    /* ---------- Docs page — additions not covered by zaksha-site.css ---------- */
+    .docs-hero { padding: clamp(40px, 6vw, 64px) 0 clamp(20px, 3vw, 32px); }
+    .docs-hero h1 { font-size: clamp(30px, 4.4vw, 46px); }
+    .docs-hero .lead { max-width: 620px; }
+    .docs-hero .checked { margin-top: 14px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-400); }
+
+    .docs { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); padding-bottom: clamp(56px, 7vw, 88px); }
+    @media (max-width: 860px) { .docs { grid-template-columns: 1fr; } }
+
+    .toc { position: sticky; top: 88px; align-self: start; font-size: 14px; }
+    .toc b { display: block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-400); font-weight: 500; margin-bottom: 10px; }
+    .toc a { display: block; padding: 6px 0 6px 12px; border-left: 2px solid var(--line); color: var(--ink-500); font-weight: 600; }
+    .toc a:hover { color: var(--teal-700); border-left-color: var(--teal-600); }
+    .toc a.sub { padding-left: 24px; font-weight: 500; font-size: 13.5px; }
+    @media (max-width: 860px) {
+      .toc { position: static; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 18px; }
+    }
+
+    .prose { max-width: 720px; }
+    .prose section { scroll-margin-top: 88px; }
+    .prose section + section { margin-top: clamp(40px, 5vw, 56px); }
+    .prose h2 { font-size: clamp(22px, 3vw, 28px); margin-bottom: 6px; }
+    .prose h3 { font-size: 17px; font-weight: 800; margin: 26px 0 0; scroll-margin-top: 88px; }
+    .prose p { color: var(--ink-700); font-size: 16px; line-height: 1.7; margin-top: 12px; }
+    .prose ul, .prose ol { margin: 12px 0 0; padding-left: 22px; color: var(--ink-700); font-size: 16px; line-height: 1.7; }
+    .prose li + li { margin-top: 6px; }
+    .prose a { color: var(--teal-700); font-weight: 700; }
+    .prose code { font-family: var(--mono); font-size: 13.5px; background: var(--slate-50, var(--teal-50)); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; overflow-wrap: anywhere; }
+    .prose .note { margin-top: 16px; padding: 14px 18px; border-radius: var(--r-md); background: var(--teal-50); border: 1px solid var(--teal-100); font-size: 15px; line-height: 1.6; color: var(--ink-700); }
+    .prose .note p { margin: 0; font-size: 15px; }
+    .prose .note p + p { margin-top: 8px; }
+
+    .st-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 15px; }
+    .st-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-700); line-height: 1.55; }
+    .st-table tr:last-child td { border-bottom: 0; }
+    .st-table td:first-child { white-space: nowrap; font-weight: 800; color: var(--ink-900); }
+    .st-wrap { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); margin-top: 14px; overflow: hidden; }
+    .st-wrap .st-table { margin-top: 0; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+    .dot--green { background: #10b981; } .dot--grey { background: #cbd5e1; } .dot--amber { background: #fbbf24; } .dot--red { background: #ef4444; }
+    @media (max-width: 560px) {
+      .st-table td { display: block; border: 0; padding: 4px 16px; }
+      .st-table td:first-child { padding-top: 14px; }
+      .st-table td:last-child { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+      .st-table tr:last-child td:last-child { border-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== NAV ============================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="/">
+        <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+        Zaksha
+      </a>
+      <nav class="nav__links">
+        <a href="/#how">How it works</a>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs">Help</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="https://app.zaksha.com">Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="docs-hero">
+    <div class="wrap">
+      <h1>Zaksha help</h1>
+      <p class="lead">How filtering works, what your dashboard is telling you, and what to do when something
+         doesn't behave. Can't find your answer? Write to <a href="mailto:support@zaksha.com" style="color:var(--teal-700);font-weight:700;">support@zaksha.com</a>.</p>
+      <p class="checked">Checked against the live product on 18 October 2026.</p>
+    </div>
+  </section>
+
+  <div class="wrap docs">
+    <nav class="toc" aria-label="On this page">
+      <b>On this page</b>
+      <a href="#how">How Zaksha works</a>
+      <a href="#setup">Setting up a device</a>
+      <a href="#status">Device status</a>
+      <a href="#alerts">Alerts</a>
+      <a href="#rules">Rules and schedules</a>
+      <a href="#trouble">When something's wrong</a>
+      <a class="sub" href="#still-opens">A blocked site still opens</a>
+      <a class="sub" href="#no-internet">The internet stopped working</a>
+      <a class="sub" href="#travel-wifi">Hotel or flight Wi-Fi</a>
+      <a href="#remove">Removing Zaksha</a>
+      <a href="#privacy">What we keep</a>
+      <a href="#support">Contacting support</a>
+    </nav>
+
+    <article class="prose">
+
+      <section id="how">
+        <h2>How Zaksha works</h2>
+        <p>Every time a device opens a website or an app connects to a server, it first looks up the
+           server's name, for example <code>youtube.com</code>. Zaksha answers those lookups. If a name
+           belongs to a category you've blocked, or is on your own block list, the device gets no address
+           and the site or app can't load. Everything else works as normal.</p>
+        <p>Zaksha runs on the device itself, as an app on phones, a small agent on Windows and a profile on
+           Mac. It keeps filtering on mobile data and on any Wi-Fi, not only at home.</p>
+        <p>Because Zaksha works on names, it sees which sites a device looked up and nothing more. It
+           doesn't see messages, passwords, photos or what's on a page.</p>
+      </section>
+
+      <section id="setup">
+        <h2>Setting up a device</h2>
+        <p>Start in your dashboard at <a href="https://app.zaksha.com">app.zaksha.com</a>: choose
+           <b>Add device</b> and pick the device type. Step-by-step instructions with screenshots are on
+           <a href="/get">Get the app</a>. In short:</p>
+        <h3>iPhone and iPad</h3>
+        <p>Install the Zaksha app from the link or QR code your dashboard shows, then enter the 8-digit
+           pairing code. The app then walks you through turning filtering on in the phone's Settings. Set a
+           Screen Time passcode so the app can't be deleted, and keep your Apple ID password private, since
+           Apple lets it reset that passcode.</p>
+        <h3>Android</h3>
+        <p>Install the Zaksha app and follow the steps in your dashboard. The standard setup alerts you if
+           the app is removed. The fresh-phone setup is done on a factory-reset phone, and Zaksha can't be
+           uninstalled from it.</p>
+        <h3>Windows</h3>
+        <p>Your dashboard gives you an installer for that PC. Run it from a parent or administrator account
+           and accept the one Windows prompt; the PC connects by itself within a minute. Give your child a
+           <b>Standard</b> Windows account, not an administrator one: anyone with the administrator
+           password can remove Zaksha.</p>
+        <div class="note"><p>Filtering on Windows needs <b>Windows 11</b>. A Windows 10 PC can be added and
+           shows up in your dashboard, but Zaksha doesn't filter it.</p></div>
+        <h3>Mac</h3>
+        <p>Download the configuration profile from your dashboard, open it, and approve it in
+           <b>System Settings → General → Device Management</b>. As on Windows, your child should use a standard
+           account, because an administrator can delete the profile.</p>
+      </section>
+
+      <section id="status">
+        <h2>Device status</h2>
+        <p>Each device in your dashboard shows one of these:</p>
+        <div class="st-wrap">
+          <table class="st-table">
+            <tr><td><span class="dot dot--green"></span>Online</td><td>The device has been filtered by Zaksha in the last 10 minutes.</td></tr>
+            <tr><td><span class="dot dot--grey"></span>Offline</td><td>The device hasn't been seen for a while, usually because it's switched off or asleep. Also shown when you've turned filtering off for it.</td></tr>
+            <tr><td><span class="dot dot--amber"></span>Setup pending</td><td>The device was added but hasn't connected yet. Finish the steps on the device.</td></tr>
+            <tr><td><span class="dot dot--amber"></span>Inactive</td><td>Nothing from the device for more than 3 days. Check it's still in use and the app is installed.</td></tr>
+            <tr><td><span class="dot dot--red"></span>Not filtering</td><td>The app on the device reports that filtering was switched off. You get an alert when this happens.</td></tr>
+            <tr><td><span class="dot dot--amber"></span>Apps paused</td><td>iPhone only, with tamper lock on. Filtering was switched off, so the apps you chose are paused until it's back on. This is tamper lock working as intended.</td></tr>
+            <tr><td><span class="dot dot--amber"></span>Removing…</td><td>You removed the device and it's taking itself off Zaksha.</td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section id="alerts">
+        <h2>Alerts</h2>
+        <p>Zaksha alerts you when filtering is switched off on a device, when a device goes quiet for a long
+           time, and before your subscription ends. Alerts arrive as a push notification on the phone where
+           you use the dashboard. If you've verified your WhatsApp number, you also get a WhatsApp message
+           about 10 minutes later if the problem is still there and you haven't opened the dashboard.</p>
+      </section>
+
+      <section id="rules">
+        <h2>Rules and schedules</h2>
+        <p>Categories (adult content, gambling, social media, gaming, streaming, AI chatbots and others) are
+           switched on or off per device. You can add up to 5 sites of your own to the block list.</p>
+        <p>Schedules turn the internet off for a device at set times, such as bedtime or homework hours.
+           You can create up to 5 schedules.</p>
+        <p>Changes reach the device within about 5 minutes; some apps hold on to an earlier answer for up
+           to 10 minutes.</p>
+      </section>
+
+      <section id="trouble">
+        <h2>When something's wrong</h2>
+
+        <h3 id="still-opens">A blocked site still opens</h3>
+        <ol>
+          <li><b>Give it 10 minutes.</b> A site that was open before you blocked it can keep working until
+              the device looks it up again.</li>
+          <li><b>Check the device is Online</b> in your dashboard. If it says Not filtering, Offline or
+              Setup pending, Zaksha isn't filtering it right now.</li>
+          <li><b>Check the browser's own secure DNS.</b> Chrome, Edge and Firefox can look up names
+              themselves instead of asking the device, which skips Zaksha. On a Windows PC, turn it off:
+              in Chrome or Edge, Settings → Privacy and security → <b>Use secure DNS</b> → off; in Firefox,
+              Settings → Privacy &amp; Security → <b>DNS over HTTPS</b> → Off.</li>
+          <li><b>Check for a VPN</b> or proxy app on the device. Android allows one VPN app at a time, and Zaksha's
+              app uses that slot. If another VPN app takes it, the Zaksha app shows <b>Not protected — tap to fix</b>.</li>
+          <li><b>Check the Windows or Mac account type.</b> If your child's account is an administrator,
+              they can change these settings or remove Zaksha.</li>
+          <li><b>Windows 10</b> isn't filtered (see <a href="#setup">setup</a>).</li>
+        </ol>
+
+        <h3 id="no-internet">The internet stopped working</h3>
+        <p>When a device can't reach Zaksha, it stops loading sites rather than going around the filter. That
+           is deliberate, but it means a network problem can look like Zaksha "breaking the internet". On a
+           Windows PC, these are the known cases:</p>
+        <ul>
+          <li>a <b>Wi-Fi login page</b> on hotel, airport, train or flight Wi-Fi (see the next section);</li>
+          <li>connecting a <b>VPN</b>, such as a work VPN;</li>
+          <li>a network with <b>no IPv4</b> at all (IPv6 only), which is rare in India.</li>
+        </ul>
+        <p>If it's none of these, check whether other devices on the same Wi-Fi are online. If they are,
+           <a href="#support">contact us</a> with the details below.</p>
+
+        <h3 id="travel-wifi">Hotel or flight Wi-Fi with a login page</h3>
+        <p>Many hotels, airports and airlines make you open a login page before the Wi-Fi works. Until you
+           log in, the network blocks every server except its own, Zaksha included. A Windows PC with Zaksha
+           then can't find the login page either, so it can't get online.</p>
+        <p>Today, the way around this is to take Zaksha off the PC before or during the trip:</p>
+        <ul>
+          <li><b>Before you travel</b>, remove the device in your dashboard while you still have internet.
+              The PC takes Zaksha off by itself within a minute.</li>
+          <li><b>If you're already stuck</b>, sign in to the PC as an administrator and uninstall
+              <b>Zaksha Agent</b> from Settings → Apps. The PC's normal settings come back; restart it if
+              websites still don't load.</li>
+        </ul>
+        <p>Add the PC again from your dashboard when you're back on a normal network.</p>
+      </section>
+
+      <section id="remove">
+        <h2>Removing Zaksha</h2>
+        <p>Remove the device from your dashboard first, so it stops counting towards your devices and you
+           don't get alerts about it. Then, on the device:</p>
+        <ul>
+          <li><b>Windows:</b> nothing else to do. The PC uninstalls Zaksha and puts its own settings back at
+              its next check-in, usually within a minute. If the PC is switched off, choose <b>Remove now</b>
+              in the dashboard and uninstall Zaksha Agent from Settings → Apps later.</li>
+          <li><b>iPhone and iPad:</b> after removing it in the dashboard, open the Zaksha app once, then
+              delete it. Then open Settings → General → VPN, DNS &amp; Device Management → DNS and delete
+              <b>Zaksha Filtering</b> if it's still there, and remove Zaksha's access in Settings → Screen Time.</li>
+          <li><b>Android:</b> uninstall the Zaksha app. A fresh-phone setup is removed by factory-resetting
+              the phone.</li>
+          <li><b>Mac:</b> delete the Zaksha profile in System Settings → General → Device Management.</li>
+        </ul>
+      </section>
+
+      <section id="privacy">
+        <h2>What we keep</h2>
+        <p>Zaksha keeps the names each device looked up, and whether they were blocked, for 7 days so you can
+           see them in your dashboard. It never sees messages, passwords, photos or page content. Everything
+           is processed and stored on servers in India. The full detail is in our
+           <a href="/privacy">Privacy Policy</a>.</p>
+      </section>
+
+      <section id="support">
+        <h2>Contacting support</h2>
+        <p>Email <a href="mailto:support@zaksha.com">support@zaksha.com</a>. These help us answer in one
+           reply:</p>
+        <ul>
+          <li>the device name as it appears in your dashboard, and its status;</li>
+          <li>what happened, and roughly when;</li>
+          <li>for a Windows PC, the output of this command, run in Command Prompt:<br/>
+              <code>"C:\Program Files\Zaksha\zaksha-agent.exe" status</code></li>
+        </ul>
+      </section>
+
+    </article>
+  </div>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid footer__grid--4">
+        <div>
+          <a class="brand" href="/">
+            <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Managed content filtering for families — and the organisations that need it. Made and run in India.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="/#how">How it works</a>
+          <a href="/#features">Features</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/get">Get the app</a>
+          <a href="/docs">Help</a>
+        </div>
+        <div class="footer__col">
+          <h4>Guides</h4>
+          <a href="/best-parental-control-app-india">Best parental control app in India</a>
+          <a href="/google-family-link-alternative">Family Link alternative</a>
+          <a href="/block-adult-content-android">Block adult content on Android</a>
+          <a href="/block-adult-content-iphone">Block adult content on iPhone</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="mailto:support@zaksha.com?subject=Zaksha%20Enterprise%20enquiry">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="icons.js"></script>
+</body>
+</html>
