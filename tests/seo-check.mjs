@@ -55,6 +55,7 @@ if (!exists('robots.txt')) {
 const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/',
   'https://zaksha.com/get',
+  'https://zaksha.com/docs',
   'https://zaksha.com/privacy',
   'https://zaksha.com/terms',
   'https://zaksha.com/best-parental-control-app-india',
@@ -112,6 +113,7 @@ if (!exists('sitemap.xml')) {
 const CANONICAL_PAGES = {
   'index.html': 'https://zaksha.com/',
   'get.html': 'https://zaksha.com/get',
+  'docs.html': 'https://zaksha.com/docs',
   'privacy.html': 'https://zaksha.com/privacy',
   'terms.html': 'https://zaksha.com/terms',
   'best-parental-control-app-india.html': 'https://zaksha.com/best-parental-control-app-india',
