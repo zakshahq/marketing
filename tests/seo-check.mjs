@@ -65,6 +65,8 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/business',
   'https://zaksha.com/schools-and-colleges',
   'https://zaksha.com/security',
+  'https://zaksha.com/small-business',
+  'https://zaksha.com/enterprise',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
@@ -130,6 +132,8 @@ const CANONICAL_PAGES = {
   'business.html': 'https://zaksha.com/business',
   'schools-and-colleges.html': 'https://zaksha.com/schools-and-colleges',
   'security.html': 'https://zaksha.com/security',
+  'small-business.html': 'https://zaksha.com/small-business',
+  'enterprise.html': 'https://zaksha.com/enterprise',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -273,7 +277,7 @@ if (indexHtml) {
 }
 
 // --- j. Business pages: indexable (ADR 0087 site shape: /business hub + one page per buyer) ---
-const ENT_INDEXED = ['business.html', 'schools-and-colleges.html'];
+const ENT_INDEXED = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'];
 // the Business side of the switch: solution pages plus /security
 const BUSINESS_SIDE = [...ENT_INDEXED, 'security.html'];
 for (const page of BUSINESS_SIDE) {
@@ -446,6 +450,67 @@ for (const page of ALL_PAGES.filter((f) => !['privacy.html', 'terms.html'].inclu
   const hit = read(page).match(/[^<>]{0,40}GST[^<>]{0,40}/);
   if (hit) fail(`${page}: remove the GST line ("${hit[0].trim()}")`);
 }
+
+// --- u. solution pages (approved decks, 2026-10-20): problem-first hero, demo + pilot by the main button ---
+const textOf = (h) => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, "'").replace(/\s+/g, ' ');
+const HEROES = {
+  'schools-and-colleges.html': 'Classroom tablets and lab PCs, kept for classes and tests.',
+  'small-business.html': 'No IT person, and a work laptop just opened a fake bank page.',
+  'enterprise.html': 'Someone asks if your web policy holds at every office. Show them.',
+};
+for (const [page, h1] of Object.entries(HEROES)) {
+  if (!exists(page)) continue;
+  const html = read(page);
+  const hero = (html.match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
+  if (!hero) { fail(`${page}: missing the photo hero (.fhero)`); continue; }
+  const h = hero.match(/<h1>([\s\S]*?)<\/h1>/);
+  if (!h || textOf(h[1]).trim() !== h1) fail(`${page}: hero h1 must be "${h1}"`);
+  if (!/<a\b[^>]*href="#enquire"[^>]*>Talk to us<\/a>/.test(hero)) fail(`${page}: hero needs "Talk to us" -> #enquire`);
+  if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Book a 15-minute demo<\/a>/.test(hero)) fail(`${page}: hero needs "Book a 15-minute demo" (href="#enquire" data-demo)`);
+  if (!/3-month pilot at 10% of the quote/.test(textOf(hero))) fail(`${page}: hero needs the pilot line`);
+  if (!/From ₹79 per device per month/.test(textOf(hero))) fail(`${page}: hero needs "From ₹79 per device per month"`);
+  if (!/class="marquee"/.test(html)) fail(`${page}: missing the category marquee`);
+  if (!html.includes('id="faq"')) fail(`${page}: missing #faq`);
+}
+// sb and ent follow the segment-page order
+for (const page of ['small-business.html', 'enterprise.html']) {
+  if (!exists(page)) continue;
+  const html = read(page);
+  const order = ['problem', 'why', 'how', 'uses', 'setup', 'proof', 'faq', 'pricing', 'enquire'];
+  const at = order.map((id) => html.indexOf(`id="${id}"`));
+  if (at.some((i) => i < 0)) fail(`${page}: needs sections ${order.map((i) => '#' + i).join(' ')} (missing ${order.filter((_, i) => at[i] < 0).join(', ')})`);
+  else if (at.some((v, i) => i > 0 && v < at[i - 1])) fail(`${page}: sections out of order; want ${order.join(' → ')}`);
+}
+if (exists('small-business.html')) {
+  const t = textOf(read('small-business.html'));
+  for (const n of ['Three ways offices try this today', 'Set up without an IT team', 'Not watching your staff', 'every support sign-in is recorded']) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
+  if (!/per person per month/i.test(t)) fail('small-business.html: monitoring software is priced "per person per month"');
+  if (/₹ ?2[0-9]{2}/.test(t)) fail('small-business.html: no price figure for monitoring software (Vasu: no number)');
+}
+if (exists('enterprise.html')) {
+  const t = textOf(read('enterprise.html'));
+  for (const n of ['The questions you get asked', 'Okta', 'Microsoft Entra ID', 'Google Workspace', 'On-premise: ask us', 'every support sign-in is recorded', 'up to a year', 'Moving from a firewall or proxy you already run']) if (!t.includes(n)) fail(`enterprise.html: missing "${n}"`);
+  if (/\bSLA\b|audit log|SIEM|DPDP[- ]compliant/i.test(t)) fail('enterprise.html: claims left off by the deck (SLA, audit log, SIEM, DPDP compliant)');
+}
+// schools diff: problems before the block list, CBSE section with the 2017 circular, 30-day records
+if (exists('schools-and-colleges.html')) {
+  const html = read('schools-and-colleges.html'), t = textOf(html);
+  const wrong = html.indexOf('What goes wrong on shared devices'), block = html.indexOf('Block a whole category in one go.'), cbse = html.indexOf('CBSE asks schools to filter their computers.');
+  if (wrong < 0 || block < 0 || wrong > block) fail('schools-and-colleges.html: "What goes wrong" must come before "What you can block"');
+  if (cbse < 0 || cbse < wrong || cbse > block) fail('schools-and-colleges.html: CBSE section goes between the problems and the block list');
+  if (!/deccanherald\.com\/india\/cbse-issues-guidelines-over-blue-2021678/.test(html)) fail('schools-and-colleges.html: CBSE section must cite the 2017 circular');
+  if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
+  if (!t.includes('in the last 30 days') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days');
+}
+
+// --- v. legal pages: shared hosting by default, no GST promise, real host, dated today ---
+if (exists('terms.html')) {
+  const t = textOf(read('terms.html'));
+  if (/dedicated, isolated instance/.test(t)) fail('terms.html: dedicated instance is quoted per deal, not a plan feature');
+  if (/GST/.test(t)) fail('terms.html: remove the GST invoicing line');
+}
+if (exists('privacy.html') && /GitHub Pages/.test(read('privacy.html'))) fail('privacy.html: the site is served by Cloudflare, not GitHub Pages');
+for (const page of ['terms.html', 'privacy.html']) if (exists(page) && !read(page).includes('Effective 20 October 2026')) fail(`${page}: Effective date must be 20 October 2026`);
 
 // --- report ---
 if (failures.length > 0) {

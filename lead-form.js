@@ -86,7 +86,16 @@
     });
   }
   if (typeof document !== 'undefined') {
-    var init = function () { document.querySelectorAll('form.lead-form').forEach(wire); };
+    var init = function () {
+      document.querySelectorAll('form.lead-form').forEach(wire);
+      // "Book a 15-minute demo" goes to the same form, with the message filled in
+      document.querySelectorAll('a[data-demo]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          var m = document.querySelector('form.lead-form textarea[name="message"]');
+          if (m && !m.value.trim()) m.value = "I'd like a 15-minute demo.";
+        });
+      });
+    };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   }
 })();
