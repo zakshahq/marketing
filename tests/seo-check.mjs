@@ -479,7 +479,7 @@ const HEROES = {
     'Malware and phishing blocked at the DNS level on Windows, Mac, iPhone, iPad and Android. One policy, adjusted per site, group or device.'],
   'small-business.html': ['DNS Filtering for Small Business: Block Phishing on Every Work Device',
     'Scam, phishing and malware sites are blocked on company laptops and phones, in the office and away from it. Set one policy from the browser.'],
-  'enterprise.html': ['DNS Filtering for Enterprises: One Policy, Every Site and Device',
+  'enterprise.html': ['DNS Filtering for Enterprises: One Policy Across Every Site',
     'Block malware, phishing and chosen categories across offices, groups and devices. Set the policy once, then adjust where a site or team needs it.'],
   'schools-and-colleges.html': ['Web Filtering for Schools and Colleges: Safe Browsing for Students',
     'Malware, phishing and adult sites blocked on every school device, all the time. Social media, games and AI tools follow your class and exam timetable.'],
@@ -525,7 +525,7 @@ for (const page of ['small-business.html', 'enterprise.html']) {
 }
 if (exists('small-business.html')) {
   const html = read('small-business.html'), t = textOf(html);
-  for (const n of ['Three ways offices try this today', 'every support sign-in is recorded', 'Rules for work hours and for all hours', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
+  for (const n of ['Three ways offices try this today', 'How small businesses use Zaksha', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
     "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
   if (!/per person per month/i.test(t)) fail('small-business.html: monitoring software is priced "per person per month"');
   const watched = html.match(/<summary>Will staff feel watched\?[\s\S]*?<\/details>/);
@@ -539,7 +539,7 @@ if (exists('small-business.html')) {
 }
 if (exists('enterprise.html')) {
   const t = textOf(read('enterprise.html'));
-  for (const n of ['Single sign-on (SSO): available on request.', 'On-premise: ask us', 'every support sign-in is recorded', 'up to a year', 'Already run a firewall or proxy?', 'Which devices does it cover?', 'On Android, a device that stops reporting is flagged Gone quiet in the console.']) if (!t.includes(n)) fail(`enterprise.html: missing "${n}"`);
+  for (const n of ['Single sign-on (SSO): available on request.', 'Dedicated or on-premise deployment, quoted per deal.', 'Only people you add can see activity.', 'up to a year', 'How organisations use Zaksha', 'Which devices does it cover?', 'On Android, a device that stops reporting is flagged Gone quiet in the console.']) if (!t.includes(n)) fail(`enterprise.html: missing "${n}"`);
   if (/\bSLA\b|audit log|SIEM|DPDP[- ]compliant/i.test(t)) fail('enterprise.html: claims left off by the deck (SLA, audit log, SIEM, DPDP compliant)');
 }
 for (const page of ALL_PAGES) {
@@ -550,13 +550,13 @@ for (const page of ALL_PAGES) {
 // schools: problems before the block list, CBSE section with the 2017 circular, 30-day records, keeps its categories
 if (exists('schools-and-colleges.html')) {
   const html = read('schools-and-colleges.html'), t = textOf(html);
-  const wrong = html.indexOf('What a school filter has to stop'), block = html.indexOf('Block a whole category in one go.'), cbse = html.indexOf('Filtering CBSE asks for.');
+  const wrong = html.indexOf('What a school filter has to stop'), block = html.indexOf('<h2>What you can block</h2>'), cbse = html.indexOf('Filtering CBSE asks for.');
   if (wrong < 0 || block < 0 || wrong > block) fail('schools-and-colleges.html: "What goes wrong" must come before "What you can block"');
   if (cbse < 0 || cbse < wrong || cbse > block) fail('schools-and-colleges.html: CBSE section goes between the problems and the block list');
   if (!/deccanherald\.com\/india\/cbse-issues-guidelines-over-blue-2021678/.test(html)) fail('schools-and-colleges.html: CBSE section must cite the 2017 circular');
   if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
   if (!t.includes('kept 30 days by default and longer by contract') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days by default, longer by contract');
-  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Records every support sign-in to your console', 'Does it work off campus?', 'Single sign-on (SSO): available on request.', 'Book a demo or a free 30-day pilot']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
+  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?', 'Single sign-on (SSO): available on request.', 'Book a demo or a free 30-day pilot']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
   if (/on by default/.test(t)) fail('schools-and-colleges.html: malware blocking is not on by default for organisations (ent_tenancy.go: a new organisation starts with no policy)');
   if (!/class="marquee"/.test(html)) fail('schools-and-colleges.html: keeps its category marquee');
 }
@@ -609,7 +609,7 @@ if (exists('business.html')) {
   const LEADS = {
     '/schools-and-colleges': 'Web filtering for schools and colleges: safe browsing for students.',
     '/small-business': 'DNS filtering for small business: block phishing on every work device.',
-    '/enterprise': 'DNS filtering for enterprises: one policy, every site and device.',
+    '/enterprise': 'DNS filtering for enterprises: one policy across every site.',
   };
   for (const [href, line] of Object.entries(LEADS)) {
     const card = html.match(new RegExp(`<a\\b[^>]*class="pcard solcard"[^>]*href="${href}"[^>]*>([\\s\\S]*?)<\\/a>`));
@@ -669,7 +669,7 @@ for (const page of ALL_PAGES) {
     'schools-and-colleges.html': 'On school laptops and PCs, removing it requires admin rights.' };
   for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
   for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html']) {
-    if (exists(page) && !/Install Zaksha on each device in a few minutes[^.]*\. We send you everything you need/.test(textOf(read(page)))) fail(`${page}: setup step reads "Install Zaksha on each device in a few minutes. We send you everything you need."`);
+    if (exists(page) && !/Set up from your browser\. Add each device in a few minutes/.test(textOf(read(page)))) fail(`${page}: setup step reads "Set up from your browser. Add each device in a few minutes."`);
   }
   if (exists('small-business.html') && /admin rights \(/.test(read('small-business.html'))) fail('small-business.html: comparison says "Not without admin rights"');
   const hero = (read('index.html').match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
@@ -680,7 +680,7 @@ for (const page of ALL_PAGES) {
 {
   const hub = exists('business.html') ? read('business.html') : '', ht = textOf(hub);
   for (const n of ['Choose your organisation', 'Supported devices', 'Ready-made policies', 'Schedules switch policies on and off by time, for example during exams.',
-    'Records kept 30 days by default, longer by contract. Support sign-ins are recorded.', 'Wi-Fi filtering for campuses and offices', 'Ask about Wi-Fi filtering',
+    'Records kept 30 days by default, longer by contract.', 'Wi-Fi filtering for campuses and offices', 'Ask about Wi-Fi filtering',
     'Quote after the pilot', "If a phone stops reporting, the console flags it as Gone quiet."]) if (!ht.includes(n)) fail(`business.html: missing "${n}"`);
   if (/See how it works/.test(ht)) fail('business.html: solution card links name their destination, not "See how it works"');
   for (const page of ALL_PAGES) {
@@ -691,7 +691,34 @@ for (const page of ALL_PAGES) {
     if (/\bMDM\b|device management tool/.test(t) && ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'].includes(page)) fail(`${page}: no "install through your MDM" line`);
     if (/\bDPDP\b/.test(t) && ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'].includes(page)) fail(`${page}: no DPDP claim on Business pages`);
   }
-  if (exists('enterprise.html') && !textOf(read('enterprise.html')).includes('On-premise')) fail('enterprise.html: keep "On-premise: ask us"');
+  if (exists('enterprise.html') && !/on-premise/i.test(textOf(read('enterprise.html')))) fail('enterprise.html: keep on-premise as an option');
+}
+
+// --- cc. Vasu's render review (2026-10-20) ---
+{
+  const BIZ = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'];
+  for (const page of BIZ) {
+    if (!exists(page)) continue;
+    const html = read(page), t = textOf(html);
+    if (/whole category|in one go/i.test(t)) fail(`${page}: family phrasing ("whole category", "in one go"); frame categories as part of the policy`);
+    if (/support sign-in|Support sign-in/i.test(t)) fail(`${page}: the support sign-in disclosure lives on /security, privacy and terms only`);
+    if (/We send you everything you need|stay on the call/.test(t)) fail(`${page}: setup is done from the browser console; no "we send you" / "stay on the call"`);
+    if (/<section\b[^>]*id="get"[\s\S]*?<\/section>/.test(html) && /class="f-head"/.test((html.match(/<section\b[^>]*id="get"[\s\S]*?<\/section>/) || [''])[0])) fail(`${page}: "What you get" has no heading; just the three cards`);
+  }
+  if (exists('enterprise.html')) {
+    const t = textOf(read('enterprise.html'));
+    if (/Already run a firewall or proxy/.test(t)) fail('enterprise.html: remove the firewall/proxy block');
+    if (/dedicated instance|On-premise: ask us/i.test(t)) fail('enterprise.html: one merged line, "Dedicated or on-premise deployment, quoted per deal."');
+    if (!/Set up from your browser, site by site\./.test(t)) fail('enterprise.html: setup reads "Set up from your browser, site by site."');
+  }
+  if (exists('small-business.html')) {
+    const html = read('small-business.html');
+    const tableRow = html.match(/<tr><th>Staff can switch it off<\/th>(?:<td>[^<]*<\/td>){3}<td class="cmp__us">([^<]*)<\/td><\/tr>/);
+    const cardRow = html.match(/<div class="cmp-card cmp-card--us">[\s\S]*?<dt>Staff can switch it off<\/dt><dd>([^<]*)<\/dd>/);
+    if (!tableRow || tableRow[1] !== 'No' || !cardRow || cardRow[1] !== 'No') fail('small-business.html: Zaksha "Staff can switch it off" is "No" in the table and the cards');
+  }
+  const head = exists('enterprise.html') ? read('enterprise.html') : '';
+  if (!/<title>[^<]*one policy across every site[^<]*<\/title>/i.test(head)) fail('enterprise.html: title matches the new H1');
 }
 
 // --- report ---
