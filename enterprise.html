@@ -29,18 +29,19 @@
           <a href="/schools-and-colleges">Schools and colleges</a>
           <a href="/small-business">Small businesses and startups</a>
           <a href="/enterprise" aria-current="page">Enterprise</a>
+          <a href="/business#wifi">Wi-Fi filtering</a>
           <div class="sol__page">
             <a href="#how">How it works</a>
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
           </div>
-          <p class="sol__note">Wi-Fi filtering for any of these, on request.</p>
         </div>
       </details>
       <nav class="nav__links">
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
+        <a href="/security">Security</a>
       </nav>
       <div class="nav__spacer"></div>
       <div class="aud" aria-label="Choose home or business">
@@ -125,11 +126,17 @@
           <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-clock-afternoon"></i></span><span><span class="mini__nm">Bengaluru office</span><span class="mini__mt">Mon–Fri 9 AM–6 PM</span></span></div><div class="mini__win">Social · Streaming<span class="mini__pill mini__pill--off" style="margin-left:auto;">Paused</span></div></div>
         </div>
         <div class="demorow">
-          <div><span class="eyebrow">One team</span><h3>Stricter rules where you need them.</h3><p>Finance devices blocked from file-sharing sites; the design team allowed YouTube.</p></div>
+          <div><span class="eyebrow">One team</span><h3>Stricter rules where you need them.</h3><p>Block file sharing for one team and allow YouTube for another.</p></div>
           <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-briefcase"></i></span><span><span class="mini__nm">Finance</span><span class="mini__mt">Always</span></span></div><div class="mini__win">File sharing<span class="mini__pill mini__pill--off" style="margin-left:auto;">Blocked</span></div></div>
         </div>
       </div>
-      <div class="pcard" style="max-width:920px;margin:clamp(24px,3vw,32px) auto 0;"><h3>Moving from a firewall or proxy you already run</h3><p>Keep it for the office network. Zaksha adds the devices that leave the building and a record per device. You don't need to change the router.</p></div>
+    </div>
+  </section>
+
+  <!-- ALREADY RUN A FIREWALL -->
+  <section class="section" id="migrate">
+    <div class="wrap">
+      <div class="pcard" style="max-width:920px;margin:0 auto;"><h3>Already run a firewall or proxy?</h3><p>Keep it for the office network. Zaksha adds the devices that leave the building and a record per device, with no router change.</p></div>
     </div>
   </section>
 
@@ -138,8 +145,8 @@
     <div class="wrap">
       <div class="f-head"><span class="eyebrow">Why Zaksha</span><h2>Why Zaksha</h2></div>
       <div class="grid3 why3">
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-map-pin"></i></span><h3>Records kept in India</h3><p>Shared hosting in India by default, on AWS Mumbai. A dedicated instance for your organisation is quoted per deal. On-premise: ask us. Only people you add can see activity; Zaksha support can sign in to help, and every support sign-in is recorded. Records are kept 30 days, up to a year by contract. <a href="/security">How we handle your data</a></p></div>
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-shield-check"></i></span><h3>Hard to switch off</h3><ul><li>On company laptops and PCs, removing it requires admin rights.</li><li>Encrypted DNS services and iCloud Private Relay are blocked as ways around it.</li><li>A device that stops reporting for two days, while others are active, is flagged as Gone quiet in the console.</li><li>On supervised Apple devices the profile can't be removed.</li></ul></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-map-pin"></i></span><h3>You control who sees it</h3><p>Only people you add can see activity. Zaksha support signs in only to help, and every support sign-in is recorded. Records are kept 30 days, up to a year by contract. Hosted in India; a dedicated instance is quoted per deal. On-premise: ask us. <a href="/security">How we handle your data</a></p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-shield-check"></i></span><h3>Hard to switch off</h3><ul><li>On company laptops and PCs, removing it requires admin rights.</li><li>Encrypted DNS services and iCloud Private Relay are blocked as ways around it.</li><li>On Android, a device that stops reporting is flagged Gone quiet in the console.</li><li>On supervised Apple devices the profile can't be removed.</li></ul></div>
         <div class="pcard"><span class="pcard__ic"><i class="ph ph-eye-slash"></i></span><h3>Not staff monitoring</h3><p>Zaksha records website names, never page content, messages, keystrokes or screens, and gives you a notice for staff. HR can read exactly what it collects on our security page.</p></div>
       </div>
     </div>
@@ -197,7 +204,11 @@
         </details>
         <details class="faq__item">
           <summary>Where is our data, and can it be somewhere of its own? <i class="ph ph-plus"></i></summary>
-          <p>In India, on AWS Mumbai. A dedicated instance is quoted per deal; on-premise, ask us.</p>
+          <p>In India. A dedicated instance is quoted per deal; on-premise, ask us.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Which devices does it cover? <i class="ph ph-plus"></i></summary>
+          <p>Windows and Mac laptops and PCs, iPhone and iPad (supervised devices can't remove it), and Android through Private DNS.</p>
         </details>
         <details class="faq__item">
           <summary>How long are records kept? <i class="ph ph-plus"></i></summary>
@@ -323,14 +334,13 @@
         <div class="footer__col">
           <h4>Company</h4>
           <a href="/privacy">Privacy Policy</a>
-          <a href="/security">Security and data</a>
+          <a href="/security">Security and trust</a>
           <a href="/terms">Terms &amp; Conditions</a>
           <a href="mailto:support@zaksha.com">Contact us</a>
-          <a href="/business#enquire">Enterprise enquiry</a>
         </div>
       </div>
       <div class="footer__bar">
-        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span>© 2026 Zaksha. All rights reserved.</span>
         <span class="mono">zaksha.com</span>
       </div>
     </div>
