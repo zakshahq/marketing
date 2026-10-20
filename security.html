@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaksha security and data handling — what we record and who can see it</title>
+  <meta name="description" content="What Zaksha records about your organisation's devices, where it is kept in India, how long, and who can see it. Plain answers for your security review." />
+  <link rel="canonical" href="https://zaksha.com/security" />
+  <link rel="stylesheet" href="/fonts.css" />
+  <link rel="stylesheet" href="/zaksha-site.css" />
+  <link rel="stylesheet" href="/biz.css" />
+  <style>
+    .sec{ max-width:820px; margin:0 auto; display:grid; gap:clamp(14px,2vw,18px); }
+    .sec .pcard ul{ margin:10px 0 0; padding-left:20px; color:var(--ink-500); font-size:14.5px; line-height:1.6; }
+    .sec .pcard li + li{ margin-top:6px; }
+    .sec__n{ font-family:var(--mono); font-size:12px; color:var(--teal-700); }
+    .rec{ margin-top:12px; font-family:var(--mono); font-size:13px; background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .rec .mini__pill{ margin-left:auto; }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+</head>
+<body>
+  <!-- NAV (business header) -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__in">
+      <a class="brand" href="/">
+        <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+        <span class="brand__word">Zaksha</span>
+      </a>
+      <details class="sol" id="sol">
+        <summary>Solutions <i class="ph ph-caret-down"></i></summary>
+        <div class="sol__menu">
+          <a href="/schools-and-colleges">Schools and colleges</a>
+          <a href="/small-business">Small businesses and startups</a>
+          <a href="/enterprise">Enterprise</a>
+          <div class="sol__page">
+            <a href="#record">What we record</a>
+            <a href="#who">Who can see it</a>
+            <a href="#delete">Deleting data</a>
+          </div>
+          <p class="sol__note">Wi-Fi filtering for any of these, on request.</p>
+        </div>
+      </details>
+      <nav class="nav__links">
+        <a href="#record">What we record</a>
+        <a href="#who">Who can see it</a>
+        <a href="#delete">Deleting data</a>
+      </nav>
+      <div class="nav__spacer"></div>
+      <div class="aud" aria-label="Choose home or business">
+        <a href="/">Home</a>
+        <a href="/business" aria-current="page">Business</a>
+      </div>
+      <div class="nav__cta">
+        <a class="btn btn--primary btn--sm" href="/business#enquire">Talk to us</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <section class="section section--wash">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Security and data handling</span><h1 style="font-size:clamp(30px,4.6vw,48px);letter-spacing:-0.03em;">What Zaksha records about your devices, and who can see it</h1><p>Zaksha filters the devices you enrol by checking each website name a device looks up. This page sets out what that means for your data, in plain terms, for your security review.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec">
+        <div class="pcard" id="record"><span class="sec__n">01</span><h3>What we record</h3><ul><li>For each device you enrol: the website names it looks up, whether each was allowed or blocked, and the minute it happened.</li><li>The device details you enter, such as its name and platform.</li><li>The name and email of each person you add to the console.</li></ul><div class="rec"><span>LAB2-PC14</span><span class="mini__t">Tue 11:42</span><span>chat.openai.com</span><span class="mini__pill mini__pill--off">Blocked</span></div><p>That line is the whole record. We never see the page itself, what was typed on it or what was read.</p></div>
+        <div class="pcard" id="where"><span class="sec__n">02</span><h3>Where it is kept</h3><ul><li>In India, on Amazon Web Services (AWS) in Mumbai. Device activity is not stored outside India.</li><li>The database is encrypted on disk and cannot be reached from the internet.</li><li>Connections are encrypted: the console uses HTTPS, and devices send their lookups over encrypted DNS (DNS over TLS or HTTPS).</li></ul></div>
+        <div class="pcard" id="retention"><span class="sec__n">03</span><h3>How long we keep it</h3><ul><li>Device activity is kept for 30 days by default, then deleted automatically. We clear out expired records every hour.</li><li>Your contract can set a longer period, up to a year.</li><li>When you remove a device from the console, its activity is deleted with it.</li><li>Backups are kept for 7 days, in the same Mumbai region.</li></ul></div>
+        <div class="pcard" id="who"><span class="sec__n">04</span><h3>Who can see it</h3><ul><li><b>Only people your organisation adds</b> to the console can see activity, and you choose each person's role.</li><li><b>No other customer.</b> Every request is checked against your organisation's account, so one organisation cannot see another's devices.</li><li><b>Zaksha's support team</b>, from our admin console. When a support person signs in to your console, we record who it was, when, and for how long. A support sign-in lasts at most 8 hours unless extended, and never beyond 24.</li></ul></div>
+        <div class="pcard" id="never"><span class="sec__n">05</span><h3>What Zaksha does not do</h3><ul><li>No screenshots, and no recording of keystrokes.</li><li>No reading of page content, messages or chats.</li><li>We do not sell your data, or anyone's.</li><li>No advertising or profiling from children's data.</li></ul></div>
+        <div class="pcard" id="delete"><span class="sec__n">06</span><h3>Deleting your data</h3><ul><li>On request, or when your contract ends, email <a href="mailto:support@zaksha.com">support@zaksha.com</a>. We delete your account with its devices, settings, activity records and the console logins that belong only to your organisation.</li><li>Any leftover activity is removed within 24 hours, and the last copies in backups expire within 7 days.</li></ul></div>
+        <div class="pcard" id="your-part"><span class="sec__n">07</span><h3>Your organisation's part</h3><ul><li>Under India's Digital Personal Data Protection Act, 2023, your organisation is the data fiduciary: it decides how its devices are used and gets any consent that is needed, such as from parents or guardians for a school.</li><li>Zaksha processes the data only on your organisation's behalf, under a data processing agreement.</li><li>Tell the people who use your devices that they are filtered and that site lookups are recorded.</li></ul></div>
+      </div>
+      <div class="f-head" style="margin-top:clamp(32px,4vw,46px);">
+        <p>Questions, data requests or complaints: <a href="mailto:support@zaksha.com">support@zaksha.com</a> (Grievance Officer). The full policy is our <a href="/privacy">Privacy Policy</a>.</p>
+        <div class="fhero__btns" style="justify-content:center;"><a class="btn btn--primary btn--lg" href="/business#enquire">Talk to us</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__grid footer__grid--4">
+        <div>
+          <a class="brand" href="/">
+            <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
+            Zaksha
+          </a>
+          <p class="footer__about">Filtering for the devices your school, college or company owns. Made and run in India.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Institutions</h4>
+          <a href="/schools-and-colleges">Schools and colleges</a>
+          <a href="/small-business">Small businesses and startups</a>
+          <a href="/enterprise">Enterprise</a>
+        </div>
+        <div class="footer__col">
+          <h4>Families</h4>
+          <a href="/">Zaksha for families</a>
+          <a href="/get">Get the app</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/security">Security and data</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="mailto:support@zaksha.com">Contact us</a>
+          <a href="/business#enquire">Enterprise enquiry</a>
+        </div>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 Zaksha. All rights reserved. · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+        <span class="mono">zaksha.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/icons.js"></script>
+  <script>
+    // Solutions menu: close on outside click, Escape, or picking an item.
+    (function () {
+      var sol = document.getElementById('sol');
+      document.addEventListener('click', function (e) { if (!sol.contains(e.target) || e.target.closest('.sol__menu a')) sol.open = false; });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sol.open) { sol.open = false; sol.querySelector('summary').focus(); }
+      });
+    })();
+  </script>
+</body>
+</html>

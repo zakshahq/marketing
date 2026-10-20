@@ -64,6 +64,7 @@ const EXPECTED_SITEMAP_URLS = [
   'https://zaksha.com/block-adult-content-iphone',
   'https://zaksha.com/business',
   'https://zaksha.com/schools-and-colleges',
+  'https://zaksha.com/security',
 ];
 const FORBIDDEN_SITEMAP_SLUGS = [
   'block',
@@ -128,6 +129,7 @@ const CANONICAL_PAGES = {
   'block-adult-content-iphone.html': 'https://zaksha.com/block-adult-content-iphone',
   'business.html': 'https://zaksha.com/business',
   'schools-and-colleges.html': 'https://zaksha.com/schools-and-colleges',
+  'security.html': 'https://zaksha.com/security',
 };
 for (const [page, expected] of Object.entries(CANONICAL_PAGES)) {
   if (!exists(page)) {
@@ -272,7 +274,9 @@ if (indexHtml) {
 
 // --- j. Business pages: indexable (ADR 0087 site shape: /business hub + one page per buyer) ---
 const ENT_INDEXED = ['business.html', 'schools-and-colleges.html'];
-for (const page of ENT_INDEXED) {
+// the Business side of the switch: solution pages plus /security
+const BUSINESS_SIDE = [...ENT_INDEXED, 'security.html'];
+for (const page of BUSINESS_SIDE) {
   if (!exists(page)) { fail(`${page}: file missing`); continue; }
   if (/<meta name="robots"[^>]*noindex/i.test(read(page))) fail(`${page}: must be indexable (no noindex)`);
 }
@@ -288,7 +292,7 @@ for (const page of ALL_PAGES) {
   const biz = links.find((l) => l.text === 'Business' && /href="\/business"/.test(l.attrs));
   if (!home || !biz || links.length !== 2) { fail(`${page}: switch must be exactly "Home" -> / and "Business" -> /business`); continue; }
   const marked = links.filter((l) => /aria-current="page"/.test(l.attrs));
-  const want = ENT_INDEXED.includes(page) ? biz : home;
+  const want = BUSINESS_SIDE.includes(page) ? biz : home;
   if (marked.length !== 1 || marked[0] !== want) fail(`${page}: switch must mark exactly "${want.text}" with aria-current="page"`);
 }
 
@@ -408,6 +412,39 @@ if (exists('privacy.html') && !/enquiry form[^<]*Google Ads[^<]*qualified lead/i
   if (!msg.includes('?ref=GS-ENT-')) fail('MESSAGING.md: must document the ?ref=GS-ENT-… ad scheme');
   const old = msg.match(/\?for=|BIZ-(SCH|COL|TEAM)|lp-(schools|colleges|offices)|one Enterprise page/);
   if (old) fail(`MESSAGING.md: stale entry "${old[0]}"`);
+}
+
+// --- r. /security: the data-handling page (kuchbhi#136 one-pager), linked from every Business page ---
+if (exists('security.html')) {
+  const html = read('security.html');
+  const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  for (const fact of ['AWS', 'Mumbai', '30 days', 'up to a year', 'every hour', 'Backups are kept for 7 days', 'at most 8 hours', 'never beyond 24',
+    'data processing agreement', 'data fiduciary', 'support@zaksha.com', 'Grievance Officer', 'Only people your organisation adds']) {
+    if (!text.includes(fact)) fail(`security.html: missing the fact "${fact}"`);
+  }
+  if (!/href="\/privacy"/.test(html)) fail('security.html: must link the full privacy policy');
+  if (/SOC ?2|ISO ?27|certified|DPDP[- ]compliant|compliance-ready/i.test(text)) fail('security.html: no certification or compliance claims');
+  if (/dedicated VPS/i.test(text)) fail('security.html: "dedicated VPS" is not how Enterprise runs (ADR 0087)');
+}
+for (const page of ENT_INDEXED) {
+  if (exists(page) && !/href="\/security"/.test(read(page))) fail(`${page}: must link /security`);
+}
+
+// --- s. privacy.html: shared hosting by default, and an Organisations section ---
+if (exists('privacy.html')) {
+  const html = read('privacy.html');
+  if (/dedicated VPS/i.test(html)) fail('privacy.html: remove "dedicated VPS" (Enterprise runs on the shared plane by default, ADR 0087)');
+  const org = html.match(/<section id="organisations">([\s\S]*?)<\/section>/);
+  if (!org) fail('privacy.html: missing <section id="organisations">');
+  else {
+    for (const fact of ['data fiduciary', 'data processing agreement', 'chooses who']) if (!org[1].includes(fact)) fail(`privacy.html: Organisations section must say "${fact}"`);
+  }
+}
+
+// --- t. no GST line on any price card (no GSTIN yet, ADR 0087 Consequences; Vasu 2026-10-20) ---
+for (const page of ALL_PAGES.filter((f) => !['privacy.html', 'terms.html'].includes(f))) {
+  const hit = read(page).match(/[^<>]{0,40}GST[^<>]{0,40}/);
+  if (hit) fail(`${page}: remove the GST line ("${hit[0].trim()}")`);
 }
 
 // --- report ---

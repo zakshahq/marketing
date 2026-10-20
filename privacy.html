@@ -71,16 +71,17 @@
         <li><a href="#collect">2. What we collect</a></li>
         <li><a href="#use">3. How we use it</a></li>
         <li><a href="#visibility">4. Who can see activity</a></li>
-        <li><a href="#retention">5. Data retention</a></li>
-        <li><a href="#processing">6. Where data is processed</a></li>
-        <li><a href="#share">7. Sharing &amp; processors</a></li>
-        <li><a href="#cookies">8. Cookies &amp; analytics</a></li>
-        <li><a href="#children">9. Children's data</a></li>
-        <li><a href="#rights">10. Your rights (DPDP)</a></li>
-        <li><a href="#security">11. Security &amp; breaches</a></li>
-        <li><a href="#grievance">12. Grievance redressal</a></li>
-        <li><a href="#changes">13. Changes</a></li>
-        <li><a href="#contact">14. Contact us</a></li>
+        <li><a href="#organisations">5. Organisations</a></li>
+        <li><a href="#retention">6. Data retention</a></li>
+        <li><a href="#processing">7. Where data is processed</a></li>
+        <li><a href="#share">8. Sharing &amp; processors</a></li>
+        <li><a href="#cookies">9. Cookies &amp; analytics</a></li>
+        <li><a href="#children">10. Children's data</a></li>
+        <li><a href="#rights">11. Your rights (DPDP)</a></li>
+        <li><a href="#security">12. Security &amp; breaches</a></li>
+        <li><a href="#grievance">13. Grievance redressal</a></li>
+        <li><a href="#changes">14. Changes</a></li>
+        <li><a href="#contact">15. Contact us</a></li>
       </ul>
     </aside>
 
@@ -145,12 +146,18 @@
         <p>This is <b>authorised visibility</b> granted to the account owner over devices they manage — for example, a parent over a child's device, or a business over a company-owned device. It is <b>not</b> anonymised or masked data, and we do not describe it as such. Account owners are responsible for using this visibility lawfully and for informing the people who use those devices, as required.</p>
       </section>
 
+      <section id="organisations">
+        <h2><span class="num">05</span> Organisations</h2>
+        <p>When a school, college or company uses Zaksha on devices it owns, that organisation is the <b>data fiduciary</b> under the DPDP Act: it decides which devices are enrolled and what is filtered, it tells the people who use those devices, and it obtains any consent that is needed. Zaksha processes that data only on the organisation's behalf, under a <b>data processing agreement</b> with it.</p>
+        <p>The organisation chooses who can see activity: only the people it adds to its console, each with the role it gives them. Zaksha's support team can sign in to an organisation's console to help it, and every such sign-in is recorded. Our <a href="/security">security page</a> sets out what we record, where it is kept and for how long.</p>
+      </section>
+
       <section id="retention">
-        <h2><span class="num">05</span> Data retention</h2>
+        <h2><span class="num">06</span> Data retention</h2>
         <p>We keep information only as long as it serves the purpose it was collected for. For DNS query data, the window you can view is the window we retain:</p>
         <ul>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Home (shared cloud):</b> raw DNS query history is kept for a rolling <b>7 days</b> and is then automatically and genuinely deleted.</span></li>
-          <li><i class="ph-fill ph-check-circle"></i><span><b>Enterprise (dedicated instance):</b> DNS query history is kept for <b>30 or 90 days</b>, as configured, held on the customer's dedicated VPS.</span></li>
+          <li><i class="ph-fill ph-check-circle"></i><span><b>Organisations (business plans):</b> DNS query history is kept for <b>30 days</b> by default and then deleted. An organisation's contract can set a longer period, up to <b>one year</b>.</span></li>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Changing the window</b> extends retention from the date of change and fills in over the following days. It does not recover history that has already been deleted.</span></li>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Account, device and billing data</b> is retained while your account is active and for a limited period afterward to meet legal, tax and accounting obligations.</span></li>
         </ul>
@@ -158,16 +165,16 @@
       </section>
 
       <section id="processing">
-        <h2><span class="num">06</span> Where your data is processed</h2>
-        <p>Your data is processed either on <b>Zaksha's managed cloud</b> (Home plans, and Enterprise by default) or on a <b>dedicated VPS provisioned for the customer</b> (Enterprise, where agreed). In both cases, DNS activity data is processed and stored <b>entirely within India</b> — in our production environment in the AWS Mumbai region — and is not transferred outside it. On the shared cloud, per-device isolation is <b>logical</b> — each device has its own DNS address and client identifier. On a dedicated instance, isolation is <b>physical</b> — the customer's data lives on a separate server. We do not claim that we never store data; we store what is described in this policy, for the periods stated, on the infrastructure described here.</p>
+        <h2><span class="num">07</span> Where your data is processed</h2>
+        <p>Your data is processed on <b>Zaksha's managed cloud</b>, for Home and business plans alike. Where an organisation's contract provides for it, its data can instead be held on a <b>dedicated instance</b> used only by that organisation. In both cases, DNS activity data is processed and stored <b>entirely within India</b> — in our production environment in the AWS Mumbai region — and is not transferred outside it. On the shared cloud, per-device isolation is <b>logical</b> — each device has its own DNS address and client identifier. On a dedicated instance, isolation is <b>physical</b> — the customer's data lives on a separate server. We do not claim that we never store data; we store what is described in this policy, for the periods stated, on the infrastructure described here.</p>
       </section>
 
       <section id="share">
-        <h2><span class="num">07</span> Sharing &amp; third-party processors</h2>
+        <h2><span class="num">08</span> Sharing &amp; third-party processors</h2>
         <p>We do not sell your personal data. We share it only in these limited circumstances, and our processors are bound by contract to use it only to provide their service to us:</p>
         <ul>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Payments</b> — Razorpay (Razorpay Software Private Limited, India) handles payment collection and GST invoicing; it receives the name, contact and transaction details needed to take payment. We do not store full card or UPI credentials.</span></li>
-          <li><i class="ph-fill ph-check-circle"></i><span><b>Hosting &amp; infrastructure</b> — Amazon Web Services (AWS), in the Asia Pacific (Mumbai) region, hosts the production Service and stores DNS activity data within India; Cloudflare provides edge, DNS and email routing; the marketing website is served from GitHub Pages. Enterprise data is held on the customer's dedicated instance.</span></li>
+          <li><i class="ph-fill ph-check-circle"></i><span><b>Hosting &amp; infrastructure</b> — Amazon Web Services (AWS), in the Asia Pacific (Mumbai) region, hosts the production Service and stores DNS activity data within India; Cloudflare provides edge, DNS and email routing; the marketing website is served from GitHub Pages. Where an organisation's contract provides for a dedicated instance, its data is held there, in the same region.</span></li>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Sign-in</b> — where you choose Google sign-in, Google authenticates you and provides your name and email to create or access your account.</span></li>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Advertising measurement</b> — where you reached us through a Google ad, and only on the parent/billing account, we send Google a conversion signal when you start a paid subscription: the ad-click identifier from your visit and a one-way hashed (irreversible) form of your email, used solely to measure which ad led to the purchase. We never send a child's data, browsing activity or device information to Google for advertising. When an organisation submits our enterprise enquiry form after clicking an ad, we may tell Google Ads that the enquiry turned into a qualified lead, using the ad click id and a hashed email.</span></li>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Notifications</b> — where you opt in to WhatsApp alerts, Meta Platforms' WhatsApp Business service delivers those messages to the number you verify; browser web-push alerts are delivered through your browser's own push service.</span></li>
@@ -178,12 +185,12 @@
       </section>
 
       <section id="cookies">
-        <h2><span class="num">08</span> Cookies &amp; analytics</h2>
+        <h2><span class="num">09</span> Cookies &amp; analytics</h2>
         <p>The marketing website uses only cookies and similar technologies necessary for it to function, and does not run third-party analytics or behavioural profiling. Where you arrive from a Google ad, the ad-click identifier Google adds to your link is carried through to sign-up so we can measure, after a purchase, which ad worked — as described under "Advertising measurement" above; we never use it to profile you or track your browsing. The dashboard uses cookies and local storage needed to keep you signed in and remember your preferences. We do not use cookies or identifiers to follow you across other websites.</p>
       </section>
 
       <section id="children">
-        <h2><span class="num">09</span> Children's data</h2>
+        <h2><span class="num">10</span> Children's data</h2>
         <p>Family and school use of Zaksha necessarily involves processing the browsing activity of <b>minors</b> on the devices being protected. Under the DPDP Act, processing children's personal data carries heightened obligations, including obtaining <b>verifiable consent of a parent or lawful guardian</b> and a prohibition on tracking, behavioural monitoring or targeted advertising directed at children.</p>
         <ul>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Family accounts.</b> The account is created and operated by a parent or guardian, who provides consent for the processing of their child's device activity for the purpose of filtering and the safety controls they configure.</span></li>
@@ -193,7 +200,7 @@
       </section>
 
       <section id="rights">
-        <h2><span class="num">10</span> Your rights under the DPDP Act</h2>
+        <h2><span class="num">11</span> Your rights under the DPDP Act</h2>
         <p>Subject to the DPDP Act and its conditions, you have the right to:</p>
         <ul>
           <li><i class="ph-fill ph-check-circle"></i><span><b>Access</b> — obtain a summary of the personal data we process about you and how we process it.</span></li>
@@ -207,12 +214,12 @@
       </section>
 
       <section id="security">
-        <h2><span class="num">11</span> Security &amp; breach notification</h2>
-        <p>We protect your information with encryption in transit, access controls that limit who can reach data, per-device isolation so accounts and histories don't mix, and routine monitoring for abuse. Enterprise customers run on a dedicated, isolated instance for physical data separation. No method of transmission or storage is completely secure, but we work to protect your data and to respond quickly if something goes wrong. In the event of a personal data breach, we intend to notify the Data Protection Board of India and affected users as required by the DPDP Act and its Rules.</p>
+        <h2><span class="num">12</span> Security &amp; breach notification</h2>
+        <p>We protect your information with encryption in transit, access controls that limit who can reach data, per-device isolation so accounts and histories don't mix, and routine monitoring for abuse. An organisation can ask for a dedicated instance under its contract. No method of transmission or storage is completely secure, but we work to protect your data and to respond quickly if something goes wrong. In the event of a personal data breach, we intend to notify the Data Protection Board of India and affected users as required by the DPDP Act and its Rules.</p>
       </section>
 
       <section id="grievance">
-        <h2><span class="num">12</span> Grievance redressal</h2>
+        <h2><span class="num">13</span> Grievance redressal</h2>
         <p>If you have a concern about how we handle your personal data, you can contact our Grievance Officer, who is responsible for addressing complaints under the DPDP Act:</p>
         <div class="contact-card">
           <div><b>Grievance Officer</b></div>
@@ -223,12 +230,12 @@
       </section>
 
       <section id="changes">
-        <h2><span class="num">13</span> Changes to this policy</h2>
+        <h2><span class="num">14</span> Changes to this policy</h2>
         <p>We may update this policy as the Service evolves or as the law changes. When we make material changes, we will revise the effective date above and, where appropriate, notify you by email or in the dashboard. Your continued use of the Service after an update means you accept the revised policy.</p>
       </section>
 
       <section id="contact">
-        <h2><span class="num">14</span> Contact us</h2>
+        <h2><span class="num">15</span> Contact us</h2>
         <p>For any question about this policy or how we handle your data, get in touch:</p>
         <div class="contact-card">
           <div><b>Zaksha</b></div>
