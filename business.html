@@ -162,15 +162,21 @@
         <p>Tell us about your organisation. We call within one working day.</p>
       </div>
       <form class="lead-form" data-endpoint="https://api.zaksha.com/api/v1/public/leads">
-        <label>I'm enquiring for
+        <label>Organisation type
           <select name="segment" required>
             <option value="" disabled selected>Choose one</option>
-            <option value="school">A school</option>
-            <option value="college">A college or institute</option>
-            <option value="team">A company or team</option>
+            <option value="msp">Managed Service Provider</option>
+            <option value="startup">Startup</option>
+            <option value="smb">Small/Medium Business</option>
+            <option value="education">School/Education</option>
+            <option value="nonprofit">Non-Profit/NGO</option>
+            <option value="reseller">Reseller</option>
+            <option value="distributor">Distributor</option>
+            <option value="enterprise">Enterprise</option>
           </select>
         </label>
         <input type="hidden" name="ref" value="" />
+        <input type="hidden" name="demo_requested" value="" />
         <label>Organisation
           <input type="text" name="org_name" autocomplete="organization" required />
         </label>
@@ -178,7 +184,7 @@
           <label>Your name
             <input type="text" name="contact_name" autocomplete="name" required />
           </label>
-          <label>Email
+          <label>Your business email address
             <input type="email" name="email" autocomplete="email" required />
           </label>
         </div>
@@ -199,6 +205,17 @@
         <label>Anything we should know? <small>optional</small>
           <textarea name="message"></textarea>
         </label>
+        <label>How did you hear about Zaksha? <small>optional</small>
+          <select name="heard_from">
+            <option value=""></option>
+            <option value="google">Google search</option>
+            <option value="recommendation">Recommendation from someone</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="event">Event or conference</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <div class="lead-form__terms" hidden><label class="lead-form__check"><input type="checkbox" name="terms_accepted" value="1" /> <span>I agree to the <a href="/terms" target="_blank">Terms</a> and <a href="/privacy" target="_blank">Privacy Policy</a></span></label></div>
         <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
         <button class="btn btn--primary btn--lg" type="submit">Talk to us</button>
         <p class="lead-form__status" role="status"></p>

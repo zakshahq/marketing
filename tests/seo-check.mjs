@@ -338,7 +338,7 @@ for (const page of ALL_PAGES) {
   if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${page}: missing lead-form.js`);
   if (!/id="enquire"/.test(html)) fail(`${page}: missing #enquire anchor`);
   if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail(`${page}: form needs the default data-endpoint`);
-  for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
+  for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'heard_from', 'demo_requested', 'terms_accepted', 'ref', 'website']) {
     if (!new RegExp(`name="${n}"`).test(body)) fail(`${page}: form missing field "${n}"`);
   }
   const hp = body.match(/<input\b[^>]*name="website"[^>]*>/);
@@ -350,10 +350,30 @@ for (const page of ALL_PAGES) {
   const seg = opts('segment');
   if (!seg) fail(`${page}: segment must be a <select>`);
   else {
-    if (JSON.stringify(seg.map((o) => o.slice(0, 2))) !== JSON.stringify([['', 'Choose one'], ['school', 'A school'], ['college', 'A college or institute'], ['team', 'A company or team']])) fail(`${page}: segment options wrong: ${JSON.stringify(seg)}`);
-    if (!seg[0][2] || seg.filter((o) => o[2]).length !== 1) fail(`${page}: segment must default to the "Choose one" placeholder (no preselect)`);
+    // Vasu 2026-10-20 (marketing#26); values from the kuchbhi#368 wire contract
+    const WANT = [['', 'Choose one'], ['msp', 'Managed Service Provider'], ['startup', 'Startup'], ['smb', 'Small/Medium Business'], ['education', 'School/Education'],
+      ['nonprofit', 'Non-Profit/NGO'], ['reseller', 'Reseller'], ['distributor', 'Distributor'], ['enterprise', 'Enterprise']];
+    if (JSON.stringify(seg.map((o) => o.slice(0, 2))) !== JSON.stringify(WANT)) fail(`${page}: segment options wrong: ${JSON.stringify(seg.map((o) => o.slice(0, 2)))}`);
+    const PRESELECT = { 'business.html': '', 'schools-and-colleges.html': 'education', 'small-business.html': 'smb', 'enterprise.html': 'enterprise' };
+    const picked = seg.filter((o) => o[2]);
+    if (picked.length !== 1 || picked[0][0] !== (PRESELECT[page] ?? '')) fail(`${page}: segment must preselect "${PRESELECT[page] ?? ''}"`);
   }
   if (!/<select[^>]*name="segment"[^>]*required/.test(body)) fail(`${page}: segment must be required`);
+  const labelOf = (name) => { const m = body.match(new RegExp(`<label\\b[^>]*>([^<]*)(?:<small>[^<]*</small>)?\\s*<(?:select|input|textarea)\\b[^>]*name="${name}"`)); return m ? m[1].trim() : null; };
+  if (labelOf('segment') !== 'Organisation type') fail(`${page}: segment label must be "Organisation type" (got "${labelOf('segment')}")`);
+  if (labelOf('email') !== 'Your business email address') fail(`${page}: email label must be "Your business email address" (got "${labelOf('email')}")`);
+  if (labelOf('heard_from') !== 'How did you hear about Zaksha?') fail(`${page}: heard_from label must be "How did you hear about Zaksha?"`);
+  const heard = opts('heard_from');
+  if (!heard || JSON.stringify(heard.map((o) => o.slice(0, 2))) !== JSON.stringify([['', ''], ['google', 'Google search'], ['recommendation', 'Recommendation from someone'], ['linkedin', 'LinkedIn'], ['event', 'Event or conference'], ['other', 'Other']])) fail(`${page}: heard_from options wrong`);
+  if (/<select[^>]*name="heard_from"[^>]*required/.test(body)) fail(`${page}: heard_from is optional`);
+  if (!/<input type="hidden" name="demo_requested" value="" \/>/.test(body)) fail(`${page}: hidden demo_requested must start empty (the demo button sets it)`);
+  const terms = body.match(/<div class="lead-form__terms" hidden>([\s\S]*?)<\/div>/);
+  if (!terms) fail(`${page}: terms checkbox block must start hidden (<div class="lead-form__terms" hidden>)`);
+  else {
+    if (!/<input type="checkbox" name="terms_accepted" value="1"/.test(terms[1])) fail(`${page}: terms checkbox must be name="terms_accepted" value="1"`);
+    if (/terms_accepted"[^>]*required/.test(terms[1])) fail(`${page}: terms checkbox is required only after "Book a 15-minute demo" (set by script)`);
+    if (!/I agree to the <a href="\/terms"[^>]*>Terms<\/a> and <a href="\/privacy"[^>]*>Privacy Policy<\/a>/.test(terms[1])) fail(`${page}: terms label must link /terms and /privacy`);
+  }
   const dev = opts('devices');
   if (!dev) fail(`${page}: devices must be a <select>`);
   else if (JSON.stringify(dev.map((o) => o.slice(0, 2))) !== JSON.stringify([['', ''], ['10', 'Up to 10'], ['50', '11–50'], ['200', '51–200'], ['500', 'More than 200']])) fail(`${page}: devices options wrong: ${JSON.stringify(dev)}`);

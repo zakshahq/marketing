@@ -421,6 +421,9 @@ button { font: inherit; }
 .lead-form textarea { min-height: 96px; resize: vertical; }
 .lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus { outline: 2px solid var(--teal-600); outline-offset: 1px; }
 .lead-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.lead-form label.lead-form__check { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+.lead-form__check input { width: 18px; height: 18px; padding: 0; margin: 2px 0 0; flex: none; accent-color: var(--teal-600); }
+.lead-form__check a { color: var(--teal-700); font-weight: 700; text-decoration: underline; }
 @media (max-width: 560px) { .lead-form__row { grid-template-columns: 1fr; } }
 .lead-form__err { font-size: 13px; font-weight: 600; color: #b3261e; }
 .lead-form__status { font-size: 14.5px; color: #b3261e; min-height: 0; }
