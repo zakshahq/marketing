@@ -597,16 +597,23 @@ if (exists('business.html')) {
   const hero = (html.match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
   if (!/class="fhero__facts"/.test(hero)) fail('business.html: keep the trust strip');
   if (/What changes once Zaksha is on/.test(html)) fail('business.html: remove the "What changes once Zaksha is on" feature section');
+  // Vasu 2026-10-20 (#26): each card = segment label + the page's category headline in sentence case
   const LEADS = {
-    '/schools-and-colleges': 'Classroom tablets and lab PCs, kept for classes and tests.',
-    '/small-business': 'No IT person, and a work laptop just opened a fake bank page.',
-    '/enterprise': 'Someone asks if your web policy holds at every office. Show them.',
+    '/schools-and-colleges': 'Web filtering for schools and colleges: safe browsing for students.',
+    '/small-business': 'DNS filtering for small business: block phishing on every work device.',
+    '/enterprise': 'DNS filtering for enterprises: one policy, every site and device.',
   };
   for (const [href, line] of Object.entries(LEADS)) {
     const card = html.match(new RegExp(`<a\\b[^>]*class="pcard solcard"[^>]*href="${href}"[^>]*>([\\s\\S]*?)<\\/a>`));
     if (!card) { fail(`business.html: missing the solution card for ${href}`); continue; }
     const h3 = card[1].match(/<h3>([\s\S]*?)<\/h3>/);
     if (!h3 || textOf(h3[1]).trim() !== line) fail(`business.html: ${href} card must lead with "${line}"`);
+  }
+}
+// retired problem lines (Vasu 2026-10-20: "garbled junk"); none may appear on any page
+for (const page of ALL_PAGES) {
+  for (const gone of ['No IT person, and a work laptop just opened a fake bank page', 'Someone asks if your web policy holds at every office', 'Classroom tablets and lab PCs, kept for classes and tests']) {
+    if (textOf(read(page)).includes(gone)) fail(`${page}: retired line "${gone}"`);
   }
 }
 // a dedicated instance is quoted per deal, never "on paid contracts" (2026-10-20)
