@@ -363,6 +363,8 @@ for (const page of ALL_PAGES) {
   const labelOf = (name) => { const m = body.match(new RegExp(`<label\\b[^>]*>([^<]*)(?:<small>[^<]*</small>)?\\s*<(?:select|input|textarea)\\b[^>]*name="${name}"`)); return m ? m[1].trim() : null; };
   if (labelOf('segment') !== 'Organisation type') fail(`${page}: segment label must be "Organisation type" (got "${labelOf('segment')}")`);
   if (labelOf('email') !== 'Your business email address') fail(`${page}: email label must be "Your business email address" (got "${labelOf('email')}")`);
+  // marketing#29: organisation email only
+  if (!/<input type="email" name="email"[^>]*>\s*<small>Use your work or school email address\.<\/small>/.test(body)) fail(`${page}: email field needs the hint "Use your work or school email address."`);
   if (labelOf('heard_from') !== 'How did you hear about Zaksha?') fail(`${page}: heard_from label must be "How did you hear about Zaksha?"`);
   const heard = opts('heard_from');
   if (!heard || JSON.stringify(heard.map((o) => o.slice(0, 2))) !== JSON.stringify([['', ''], ['google', 'Google search'], ['recommendation', 'Recommendation from someone'], ['linkedin', 'LinkedIn'], ['event', 'Event or conference'], ['other', 'Other']])) fail(`${page}: heard_from options wrong`);
@@ -764,6 +766,8 @@ for (const page of ['small-business.html', 'enterprise.html']) {
   if (pilot < 0 || quote < 0 || quote !== pilot || /quote/i.test(steps.slice(pilot + 1).join(' '))) fail('enterprise.html: the quote comes with the pilot step, before the site-by-site rollout');
   const sb = exists('small-business.html') ? textOf(read('small-business.html')) : '';
   if (/Nobody needs to/.test(sb)) fail('small-business.html: drop "Nobody needs to"');
+  // marketing#29, Vasu 2026-10-21: personal-email error copy (the WhatsApp link text follows it)
+  if (!read('lead-form.js').includes(`"Please use your organisation's email address."`)) fail('lead-form.js: personal-email error says "Please use your organisation\'s email address."');
   if (!/We'll reply within one working day/.test(read('lead-form.js'))) fail('lead-form.js: success message says "We\'ll reply within one working day."');
 }
 
