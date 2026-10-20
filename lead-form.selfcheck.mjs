@@ -20,7 +20,7 @@ const fields = {
 let p = buildPayload(fields, '');
 assert.deepEqual(p, {
   segment: 'college', org_name: 'Sunrise College', contact_name: 'A. Rao', email: 'a@sunrise.edu',
-  phone: '', devices: 200, message: '', ref: 'BIZ-COL', ad_attribution: '{}', website: '',
+  phone: '', devices: 200, message: '', heard_from: '', demo_requested: false, ref: 'BIZ-COL', ad_attribution: '{}', website: '',
 });
 // devices select values pass through as numbers
 for (const v of ['10', '50', '200', '500']) assert.equal(buildPayload({ ...fields, devices: v }, '').devices, Number(v));
@@ -36,6 +36,23 @@ assert.equal(buildPayload({ ...fields, ref: '' }, '?ref=IG-1').ref, 'IG-1');
 assert.equal(buildPayload(fields, '?ref=IG-1').ref, 'BIZ-COL');
 // honeypot value is passed through untouched
 assert.equal(buildPayload({ ...fields, website: 'http://spam' }, '').website, 'http://spam');
+
+// marketing#26 / kuchbhi#368 wire contract: heard_from passes through; a plain enquiry sends demo_requested:false
+// and no terms_accepted; a demo request sends both, terms_accepted true only when the box was ticked
+p = buildPayload({ ...fields, segment: 'education', heard_from: 'linkedin' }, '');
+assert.equal(p.segment, 'education');
+assert.equal(p.heard_from, 'linkedin');
+assert.equal(p.demo_requested, false);
+assert.ok(!('terms_accepted' in p), 'plain enquiry must not send terms_accepted');
+p = buildPayload({ ...fields, demo_requested: '1', terms_accepted: '1' }, '');
+assert.deepEqual([p.demo_requested, p.terms_accepted], [true, true]);
+p = buildPayload({ ...fields, demo_requested: '1' }, '');
+assert.deepEqual([p.demo_requested, p.terms_accepted], [true, false]);
+p = buildPayload({ ...fields, demo_requested: '', terms_accepted: '1' }, '');
+assert.ok(!('terms_accepted' in p) && p.demo_requested === false, 'terms only travel with a demo');
+// the API reports a missing terms tick as field "terms"; the form shows it on the checkbox
+assert.equal(lead.fieldFor('terms'), 'terms_accepted');
+assert.equal(lead.fieldFor('email'), 'email');
 
 // ad URL ?ref=GS-ENT-… plus the click id reach the payload (the page's hidden ref stays empty)
 p = buildPayload({ ...fields, ref: '' }, '?ref=GS-ENT-SCH1&gclid=G1&utm_campaign=GS-Ent-01');

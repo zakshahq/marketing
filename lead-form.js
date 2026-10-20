@@ -13,12 +13,20 @@
     var n = parseInt(t(f.devices), 10);
     var ref = t(f.ref) || new URLSearchParams(search).get('ref') || '';
     if (!/^[A-Za-z0-9_-]{1,40}$/.test(ref)) ref = ''; // the API rejects anything else; drop it rather than lose the lead
-    return {
+    var demo = t(f.demo_requested) === '1';
+    var out = {
       segment: t(f.segment), org_name: t(f.org_name), contact_name: t(f.contact_name),
       email: t(f.email), phone: t(f.phone), devices: isNaN(n) ? null : n, message: t(f.message),
+      heard_from: t(f.heard_from), demo_requested: demo,
       ref: ref, ad_attribution: JSON.stringify(window.ZakshaAd.adParams(search)), website: f.website == null ? '' : String(f.website)
     };
+    // terms travel only with a demo request (kuchbhi#368); an unticked box is absent from FormData
+    if (demo) out.terms_accepted = t(f.terms_accepted) === '1';
+    return out;
   }
+
+  // the API names the terms tick "terms"; on the form it is the terms_accepted checkbox
+  function fieldFor(apiField) { return apiField === 'terms' ? 'terms_accepted' : apiField; }
 
   // status null = the request never got an answer
   function classify(status, body) {
@@ -37,7 +45,7 @@
       .catch(function () { return classify(null, null); });
   }
 
-  var api = { buildPayload: buildPayload, classify: classify, send: send };
+  var api = { buildPayload: buildPayload, classify: classify, send: send, fieldFor: fieldFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ZakshaLead = api;
 
@@ -69,13 +77,13 @@
           var done = document.createElement('div');
           done.className = 'lead-form lead-form--done';
           done.setAttribute('role', 'status');
-          done.textContent = "Thanks. We'll call you within one working day. ";
+          done.textContent = "Thanks. We'll reply within one working day. ";
           var a = document.createElement('a');
           a.href = WA; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Or WhatsApp us now';
           done.appendChild(a);
           form.replaceWith(done);
-        } else if (r.kind === 'field_error' && r.field && form.elements[r.field] && form.elements[r.field].type !== 'hidden') {
-          var el = form.elements[r.field];
+        } else if (r.kind === 'field_error' && r.field && form.elements[fieldFor(r.field)] && form.elements[fieldFor(r.field)].type !== 'hidden') {
+          var el = form.elements[fieldFor(r.field)];
           var msg = document.createElement('span');
           msg.className = 'lead-form__err'; msg.setAttribute('role', 'alert'); msg.textContent = r.message;
           el.insertAdjacentElement('afterend', msg);
@@ -89,11 +97,24 @@
   if (typeof document !== 'undefined') {
     var init = function () {
       document.querySelectorAll('form.lead-form').forEach(wire);
-      // "Book a 15-minute demo" goes to the same form, with the message filled in
-      document.querySelectorAll('a[data-demo]').forEach(function (a) {
+      // "Book a 15-minute demo" goes to the same form: marks the demo, asks for the terms tick, fills the message
+      // "Start a free 30-day pilot" (schools hero) goes to the same form, with the message filled in
+      document.querySelectorAll('a[data-pilot]').forEach(function (a) {
         a.addEventListener('click', function () {
           var m = document.querySelector('form.lead-form textarea[name="message"]');
-          if (m && !m.value.trim()) m.value = "I'd like a 15-minute demo.";
+          if (m && !m.value.trim()) m.value = "I'd like a free 30-day pilot.";
+        });
+      });
+      document.querySelectorAll('a[data-demo]').forEach(function (a) {
+        a.addEventListener('click', function () {
+          var form = document.querySelector('form.lead-form');
+          if (!form) return;
+          form.elements.demo_requested.value = '1';
+          var terms = form.querySelector('.lead-form__terms');
+          terms.hidden = false;
+          form.elements.terms_accepted.required = true;
+          var m = form.elements.message;
+          if (!m.value.trim()) m.value = "I'd like a 15-minute demo.";
         });
       });
     };
