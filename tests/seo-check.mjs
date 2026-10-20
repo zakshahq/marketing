@@ -525,25 +525,19 @@ for (const page of ['small-business.html', 'enterprise.html']) {
 }
 if (exists('small-business.html')) {
   const html = read('small-business.html'), t = textOf(html);
-  for (const n of ['Three ways offices try this today', 'How small businesses use Zaksha', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
+  for (const n of ['How small businesses use Zaksha', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
     "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
-  if (!/per person per month/i.test(t)) fail('small-business.html: monitoring software is priced "per person per month"');
-
-  // phones: the comparison stacks as cards, Zaksha first
-  const cards = html.match(/<div class="cmp-cards">([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/) || html.match(/<div class="cmp-cards">([\s\S]*)/);
-  const first = cards && cards[1].match(/<div class="cmp-card[^"]*"><h4>([^<]*)<\/h4>/);
-  if (!first || first[1] !== 'Zaksha') fail('small-business.html: on phones the comparison stacks as .cmp-cards with Zaksha first');
-  const css = read('biz.css');
-  if (!/@media \(max-width: ?700px\)\s*\{[^}]*\.cmp\s*\{\s*display:\s*none/.test(css) || !/\.cmp-cards\s*\{\s*display:\s*none/.test(css)) fail('biz.css: below 700px hide the .cmp table and show .cmp-cards');
+  // Vasu 2026-10-20: the "Three ways offices try this today" comparison is cut
+  if (/Three ways offices try this today|class="cmp/.test(html) || /\.cmp\b|\.cmp-card/.test(read('biz.css'))) fail('small-business.html: the comparison table, its phone cards and their CSS are removed');
 }
 if (exists('enterprise.html')) {
   const t = textOf(read('enterprise.html'));
-  for (const n of ['Single sign-on (SSO): available on request.', 'Dedicated or on-premise deployment, quoted per deal.', 'You choose who in your organisation can see activity.', 'How organisations use Zaksha', 'Which devices does it cover?', 'On Android, a device that stops reporting is flagged Gone quiet in the console.']) if (!t.includes(n)) fail(`enterprise.html: missing "${n}"`);
+  for (const n of ['You choose who in your organisation can see activity.', 'How organisations use Zaksha', 'Which devices does it cover?', 'On Android, a device that stops reporting is flagged Gone quiet in the console.']) if (!t.includes(n)) fail(`enterprise.html: missing "${n}"`);
   if (/\bSLA\b|audit log|SIEM|DPDP[- ]compliant/i.test(t)) fail('enterprise.html: claims left off by the deck (SLA, audit log, SIEM, DPDP compliant)');
 }
 for (const page of ALL_PAGES) {
   const t = textOf(read(page));
-  if (/Google sign-in today/.test(t)) fail(`${page}: SSO reads "Single sign-on (SSO): available on request."`);
+  if (/Google sign-in today/.test(t)) fail(`${page}: no SSO line`);
   if (['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html', 'security.html'].includes(page) && /in rupees/i.test(t)) fail(`${page}: drop "in rupees"`);
 }
 // schools: problems before the block list, CBSE section with the 2017 circular, 30-day records, keeps its categories
@@ -556,7 +550,7 @@ if (exists('schools-and-colleges.html')) {
   if (/satisf|complian|meets the|fulfils/i.test(textOf((html.match(/<section\b[^>]*id="cbse"[\s\S]*?<\/section>/) || [''])[0]))) fail('schools-and-colleges.html: CBSE section must not imply Zaksha satisfies the circular');
   if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
   if (!t.includes('kept 30 days by default and longer by contract') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days by default, longer by contract');
-  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?', 'Single sign-on (SSO): available on request.', 'Request a demo or a free 30-day pilot']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
+  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?', 'Request a demo or a free 30-day pilot']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
   if (/on by default/.test(t)) fail('schools-and-colleges.html: malware blocking is not on by default for organisations (ent_tenancy.go: a new organisation starts with no policy)');
   if (!/class="marquee"/.test(html)) fail('schools-and-colleges.html: keeps its category marquee');
 }
@@ -582,8 +576,8 @@ const BIZ_PAGES = ['business.html', 'schools-and-colleges.html', 'small-business
 for (const page of ALL_PAGES) {
   const html = read(page), t = textOf(html);
   if (/3-month pilot|10% of the quote|at 10%|3 months, at 10%/.test(t)) fail(`${page}: old pilot terms (3 months at 10%); it's a free 30-day pilot`);
-  if (/₹ ?(79|65)\b/.test(html)) fail(`${page}: no per-device ₹ price anywhere; it's in the quote`);
-  if (BIZ_PAGES.includes(page) && /₹/.test(t)) fail(`${page}: no ₹ figure on Business pages`);
+  if (page !== 'small-business.html' && /₹ ?(79|65)\b/.test(html)) fail(`${page}: the per-device ₹ price is on /small-business only`);
+  if (page !== 'small-business.html' && BIZ_PAGES.includes(page) && /₹/.test(t)) fail(`${page}: no ₹ figure on Business pages except /small-business`);
   if (BIZ_PAGES.includes(page) && /by volume/.test(t)) fail(`${page}: say "Volume pricing", not "by volume"`);
 }
 // one pricing card per Business page (Vasu, render review 3): title, devices line, demo + pilot inside, quote after the pilot
@@ -592,17 +586,22 @@ for (const page of ['business.html', 'schools-and-colleges.html', 'small-busines
   const html = read(page), t = textOf(html);
   const sec = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
   if ((sec.match(/class="plan\b/g) || []).length !== 1 || /class="pcard/.test(sec)) fail(`${page}: pricing is ONE card (no separate demo/pilot cards)`);
-  if (!/<div class="plan__name">Volume pricing<\/div>/.test(sec)) fail(`${page}: pricing card title is "Volume pricing"`);
-  if ((t.match(/Volume pricing/g) || []).length !== 1) fail(`${page}: "Volume pricing" appears once on the page`);
-  for (const n of ['Priced by number of devices.', 'A 15-minute demo', 'Free 30-day pilot', 'Quote after the pilot.']) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
+  if (page === 'small-business.html') {
+    if (!/<div class="plan__name">From ₹79 per device \/ month<\/div>/.test(sec) || !st.includes('Minimum 10 devices.')) fail(`${page}: pricing card shows "From ₹79 per device / month" and "Minimum 10 devices." (ADR 0087)`);
+    if (/Volume pricing/.test(t)) fail(`${page}: /small-business shows its price, not "Volume pricing"`);
+  } else {
+    if (!/<div class="plan__name">Volume pricing<\/div>/.test(sec)) fail(`${page}: pricing card title is "Volume pricing"`);
+    if ((t.match(/Volume pricing/g) || []).length !== 1) fail(`${page}: "Volume pricing" appears once on the page`);
+    if (!st.includes('Priced by number of devices.')) fail(`${page}: pricing card needs "Priced by number of devices."`);
+  }
+  for (const n of ['A 15-minute demo', 'Free 30-day pilot', 'Quote after the pilot.']) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail(`${page}: pricing card needs "Request a demo" (data-demo)`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a pilot<\/a>/.test(sec)) fail(`${page}: pricing card needs "Start a pilot" (data-pilot)`);
   if (!/success criteria agreed up front/i.test(t)) fail(`${page}: pilot needs "success criteria agreed up front"`);
   if (/See it before you decide|Book a demo, try it free/.test(t)) fail(`${page}: old pricing lines`);
 }
-if (exists('enterprise.html') && !textOf((read('enterprise.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0]).includes('Dedicated or on-premise deployment, quoted per deal.')) fail('enterprise.html: pricing card keeps "Dedicated or on-premise deployment, quoted per deal."');
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
-if (/10% of the quote|3 months at 10%|From ₹79/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rules must say volume pricing + free 30-day pilot, no ₹ figure');
+if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');
 
 // --- y. /business hub copy (marketing#25): buyers' problems first, no feature list ---
 if (exists('business.html')) {
@@ -696,7 +695,6 @@ for (const page of ALL_PAGES) {
     if (/\bMDM\b|device management tool/.test(t) && ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'].includes(page)) fail(`${page}: no "install through your MDM" line`);
     if (/\bDPDP\b/.test(t) && ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'].includes(page)) fail(`${page}: no DPDP claim on Business pages`);
   }
-  if (exists('enterprise.html') && !/on-premise/i.test(textOf(read('enterprise.html')))) fail('enterprise.html: keep on-premise as an option');
 }
 
 // --- cc. Vasu's render review (2026-10-20) ---
@@ -716,14 +714,12 @@ for (const page of ALL_PAGES) {
   if (exists('enterprise.html')) {
     const t = textOf(read('enterprise.html'));
     if (/Already run a firewall or proxy/.test(t)) fail('enterprise.html: remove the firewall/proxy block');
-    if (/dedicated instance|On-premise: ask us/i.test(t)) fail('enterprise.html: one merged line, "Dedicated or on-premise deployment, quoted per deal."');
+    if (/dedicated|on-premise|quoted per deal/i.test(t)) fail('enterprise.html: own infrastructure is one FAQ only ("Need it on your own infrastructure?" → "Ask us.")');
+    if (!/<summary>Need it on your own infrastructure\? <i class="ph ph-plus"><\/i><\/summary>\s*<p>Ask us\.<\/p>/.test(read('enterprise.html'))) fail('enterprise.html: FAQ "Need it on your own infrastructure?" → "Ask us."');
     if (!/Set up from your browser, site by site\./.test(t)) fail('enterprise.html: setup reads "Set up from your browser, site by site."');
   }
   if (exists('small-business.html')) {
     const html = read('small-business.html');
-    const tableRow = html.match(/<tr><th>Staff can switch it off<\/th>(?:<td>[^<]*<\/td>){3}<td class="cmp__us">([^<]*)<\/td><\/tr>/);
-    const cardRow = html.match(/<div class="cmp-card cmp-card--us">[\s\S]*?<dt>Staff can switch it off<\/dt><dd>([^<]*)<\/dd>/);
-    if (!tableRow || tableRow[1] !== 'No' || !cardRow || cardRow[1] !== 'No') fail('small-business.html: Zaksha "Staff can switch it off" is "No" in the table and the cards');
   }
   const head = exists('enterprise.html') ? read('enterprise.html') : '';
   if (!/<title>[^<]*one policy across every site[^<]*<\/title>/i.test(head)) fail('enterprise.html: title matches the new H1');
@@ -769,6 +765,11 @@ for (const page of ['small-business.html', 'enterprise.html']) {
   const sb = exists('small-business.html') ? textOf(read('small-business.html')) : '';
   if (/Nobody needs to/.test(sb)) fail('small-business.html: drop "Nobody needs to"');
   if (!/We'll reply within one working day/.test(read('lead-form.js'))) fail('lead-form.js: success message says "We\'ll reply within one working day."');
+}
+
+// --- ff. Vasu's decisions on the independent review (2026-10-20) ---
+for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html']) {
+  if (exists(page) && /single sign-on|\bSSO\b/i.test(textOf(read(page)))) fail(`${page}: no SSO mention on Business pages`);
 }
 
 // --- report ---

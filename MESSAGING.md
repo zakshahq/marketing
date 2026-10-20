@@ -158,7 +158,7 @@ exclamation marks, no fear-mongering about children; parents know why they're he
 Enterprise ads land on the solution page for their segment with `?ref=GS-ENT-<code>` (for example
 `/schools-and-colleges?ref=GS-ENT-SCH1`). `lead-form.js` sends that ref, plus the allowlisted click
 params (`gclid` …), to `/api/v1/public/leads`; the page never sets a ref itself, so organic enquiries
-carry none. The visitor picks the segment in the form. Enterprise pricing copy (Vasu, 2026-10-20): no ₹ figure on any Business page; the price lives in the
-quote. Pages say "Volume pricing. Book a demo, try it free for 30 days, then get a quote." with "Get a
-quote". Pilot, everywhere: "a free 30-day pilot on one office or group, with success criteria agreed up
-front". The conversion date goes in the quote, never on a page. Never claim SOC2, ISO or "compliance-ready".
+carry none. The visitor picks the segment in the form. Enterprise pricing copy (Vasu, 2026-10-20): "From ₹79 per device / month", "Minimum 10 devices" on
+`/small-business` only (ADR 0087); the hub, `/enterprise` and `/schools-and-colleges` say "Volume pricing" with
+"Priced by number of devices." and no number. Every pricing card holds the demo and the pilot. Pilot, everywhere:
+"a free 30-day pilot on one office or group, with success criteria agreed up front"; the quote comes after it. Never claim SOC2, ISO or "compliance-ready".
