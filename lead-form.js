@@ -53,7 +53,7 @@
       status.textContent = text + ' ';
       if (withWa) {
         var a = document.createElement('a');
-        a.href = WA; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'WhatsApp +91 89194 68618';
+        a.href = WA; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Chat with us on WhatsApp';
         status.appendChild(a);
       }
     }
