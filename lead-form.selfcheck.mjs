@@ -8,7 +8,8 @@ globalThis.window = globalThis;
 globalThis.location = { search: '' };
 globalThis.document = { readyState: 'complete', querySelectorAll: () => [], addEventListener() {} };
 require('./icons.js');
-const { buildPayload, classify, send, audienceFor } = require('./lead-form.js');
+const lead = require('./lead-form.js');
+const { buildPayload, classify, send } = lead;
 
 const fields = {
   segment: 'college', org_name: ' Sunrise College ', contact_name: 'A. Rao', email: 'a@sunrise.edu',
@@ -36,15 +37,15 @@ assert.equal(buildPayload(fields, '?ref=IG-1').ref, 'BIZ-COL');
 // honeypot value is passed through untouched
 assert.equal(buildPayload({ ...fields, website: 'http://spam' }, '').website, 'http://spam');
 
-// audienceFor: ?for= picks segment, ref and hero; an explicit ?ref= wins; anything else is the default hero
-assert.deepEqual(audienceFor('?for=school'), { segment: 'school', ref: 'BIZ-SCH', hero: 'hero-school' });
-assert.deepEqual(audienceFor('?for=college'), { segment: 'college', ref: 'BIZ-COL', hero: 'hero-college' });
-assert.deepEqual(audienceFor('?for=team'), { segment: 'team', ref: 'BIZ-TEAM', hero: 'hero-team' });
-assert.equal(audienceFor('?for=school&ref=GS-X1').ref, 'GS-X1');
-assert.equal(audienceFor('?gclid=G1&for=team').segment, 'team');
-for (const q of ['', '?for=', '?for=office', '?for=constructor', '?for=toString', '?for=SCHOOL', '?ref=IG-1', '?x=1']) {
-  assert.deepEqual(audienceFor(q), { segment: '', ref: '', hero: 'hero-default' }, q);
-}
+// ad URL ?ref=GS-ENT-… plus the click id reach the payload (the page's hidden ref stays empty)
+p = buildPayload({ ...fields, ref: '' }, '?ref=GS-ENT-SCH1&gclid=G1&utm_campaign=GS-Ent-01');
+assert.equal(p.ref, 'GS-ENT-SCH1');
+assert.deepEqual(JSON.parse(p.ad_attribution), { gclid: 'G1', utm_campaign: 'GS-Ent-01' });
+// no ad params: no ref, empty attribution (organic visits aren't labelled as ads)
+p = buildPayload({ ...fields, ref: '' }, '');
+assert.deepEqual([p.ref, p.ad_attribution], ['', '{}']);
+// the ?for= audience variants are gone (ADR 0087: one page per buyer)
+assert.equal(lead.audienceFor, undefined);
 
 // response handling per status
 assert.equal(classify(201, {}).kind, 'success');

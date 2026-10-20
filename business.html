@@ -3,124 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zaksha for schools, colleges and companies — filtering for the devices you own</title>
-  <meta name="description" content="Decide what your institution's devices can reach and when, see what each one is used for, and keep the filter on. No hardware, no surveillance, data kept in India. From ₹79 per device per month." />
+  <title>Zaksha for business — filtering for the devices your organisation owns</title>
+  <meta name="description" content="Control what your school, college or company devices can reach and when, with a record per device. No hardware to buy, no surveillance, data kept in India. From ₹79 per device per month." />
   <link rel="canonical" href="https://zaksha.com/business" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/fonts.css" />
   <link rel="stylesheet" href="/zaksha-site.css" />
+  <link rel="preload" as="image" href="img/lifestyle/computer-lab-rows.jpg" fetchpriority="high" />
+  <link rel="stylesheet" href="/biz.css" />
+  <style>
+    .solgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.4vw,24px); max-width:1040px; margin:0 auto; }
+    @media (max-width:860px){ .solgrid{ grid-template-columns:1fr; max-width:520px; } }
+    .solcard{ display:flex; flex-direction:column; color:inherit; } .solcard:hover{ border-color:var(--teal-300); }
+    .solcard__go{ margin-top:auto; padding-top:16px; font-weight:700; color:var(--teal-700); font-size:14.5px; }
+    .devlist{ max-width:760px; margin:0 auto; display:grid; gap:12px; }
+  </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <style>
-    .feats--two { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 600px) { .feats--two { grid-template-columns: 1fr; } }
-    .hero__visual img { width: 100%; height: auto; display: block; border-radius: var(--r-lg); box-shadow: var(--sh-2); }
-    .device-list { max-width: 720px; margin: 0 auto; padding: 0; list-style: none; display: grid; gap: 14px; }
-    .device-list li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px 22px; font-size: 15.5px; color: var(--ink-500); }
-    .device-list b { color: var(--ink-900, inherit); }
-    .price-box { max-width: 640px; margin: 22px auto 0; padding: 18px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); text-align: center; font-size: 15.5px; }
-  </style>
 </head>
 <body>
+  <!-- NAV (business header) -->
   <header class="nav" id="nav">
     <div class="wrap nav__in">
       <a class="brand" href="/">
         <svg class="brand__mark" viewBox="9 9 46 55" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z" fill="#0e8088"/></svg>
-        Zaksha
+        <span class="brand__word">Zaksha</span>
       </a>
+      <details class="sol" id="sol">
+        <summary>Solutions <i class="ph ph-caret-down"></i></summary>
+        <div class="sol__menu">
+          <a href="/schools-and-colleges">Schools and colleges</a>
+          <a href="/small-business">Small businesses and startups</a>
+          <a href="/enterprise">Enterprise</a>
+          <div class="sol__page">
+            <a href="#how">How it works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#solutions">Solutions</a>
+          </div>
+          <p class="sol__note">Wi-Fi filtering for any of these, on request.</p>
+        </div>
+      </details>
       <nav class="nav__links">
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
+        <a href="#solutions">Solutions</a>
       </nav>
       <div class="nav__spacer"></div>
-      <div class="aud" aria-label="Choose your audience">
-        <a href="/">For families</a>
-        <a href="/business" aria-current="page">For institutions</a>
+      <div class="aud" aria-label="Choose home or business">
+        <a href="/">Home</a>
+        <a href="/business" aria-current="page">Business</a>
       </div>
       <div class="nav__cta">
         <a class="btn btn--primary btn--sm" href="#enquire">Talk to us</a>
       </div>
     </div>
   </header>
-  <section class="hero" id="hero-default">
-    <div class="wrap">
-      <span class="eyebrow">For schools, colleges and companies</span>
+
+  <!-- HERO -->
+  <section class="fhero">
+    <div class="fhero__bg"><img fetchpriority="high" decoding="async" src="img/lifestyle/computer-lab-rows.jpg" alt="Rows of desktop PCs in a computer lab" /></div>
+    <div class="fhero__scrim"></div>
+    <div class="wrap fhero__in">
+      <span class="eyebrow">Zaksha for business</span>
       <h1>The devices are yours. So is what happens on them.</h1>
-      <p class="lead">Zaksha decides what your school, college or company devices can reach and when, shows you what each one was used for, and stays on when someone tries to switch it off. No hardware to buy, no surveillance, data kept in India.</p>
-      <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" href="#enquire">Talk to us</a>
-        <a class="btn btn--ghost btn--lg" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">WhatsApp us</a>
+      <p>Zaksha decides what your school, college or company devices can reach and when, shows you what each one was used for, and stays on when someone tries to switch it off.</p>
+      <div class="fhero__btns">
+        <a class="btn btn--onteal btn--lg" href="#enquire">Talk to us</a>
+        <a class="btn btn--onteal-ghost btn--lg" href="#solutions">See the solutions</a>
+      </div>
+      <div class="fhero__facts">
+        <span><i class="ph ph-shield-check"></i> Hard to switch off</span>
+        <span><i class="ph ph-map-pin"></i> Data stays in India</span>
+        <span><i class="ph ph-check-circle"></i> No hardware to buy</span>
       </div>
     </div>
   </section>
-  <section class="hero" id="hero-school" hidden>
+
+  <!-- SOLUTIONS -->
+  <section class="section" id="solutions">
     <div class="wrap">
-      <span class="eyebrow">For schools</span>
-      <h1>A student finds something they shouldn't on a school tablet. The parents call you.</h1>
-      <p class="lead">Zaksha blocks adult, gambling and other harmful sites on school devices, follows your class timetable, and gives you a record of what each device was used for when a parent asks. It costs a fraction of a firewall and needs no hardware.</p>
-      <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" href="#enquire">Talk to us</a>
-        <a class="btn btn--ghost btn--lg" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">WhatsApp us</a>
+      <div class="f-head"><span class="eyebrow">Solutions</span><h2>Set up for the way you work.</h2></div>
+      <div class="solgrid">
+        <a class="pcard solcard" href="/schools-and-colleges"><span class="pcard__ic"><i class="ph ph-graduation-cap"></i></span><h3>Schools and colleges</h3><p>Classroom tablets and lab PCs, kept for classes and tests. Coaching centres too.</p><span class="solcard__go">Schools and colleges <i class="ph ph-arrow-right"></i></span></a>
+        <a class="pcard solcard" href="/small-business"><span class="pcard__ic"><i class="ph ph-storefront"></i></span><h3>Small businesses and startups</h3><p>Company laptops and phones kept for work: malware, phishing and time-wasting sites blocked in work hours or all day.</p><span class="solcard__go">Small businesses and startups <i class="ph ph-arrow-right"></i></span></a>
+        <a class="pcard solcard" href="/enterprise"><span class="pcard__ic"><i class="ph ph-buildings"></i></span><h3>Enterprise</h3><p>Larger fleets, with a dedicated, isolated instance in India on paid contracts.</p><span class="solcard__go">Enterprise <i class="ph ph-arrow-right"></i></span></a>
       </div>
     </div>
   </section>
-  <section class="hero" id="hero-college" hidden>
+
+  <!-- WHAT CHANGES -->
+  <section class="section section--wash">
     <div class="wrap">
-      <span class="eyebrow">For colleges and institutes</span>
-      <h1>Lab PCs are meant for tests and placement rounds. Between sessions they're used for anything.</h1>
-      <p class="lead">Zaksha controls what lab devices can reach and when: ChatGPT and other AI tools off during a test, games and streaming off during lab hours. Students can't get around it by switching to an encrypted DNS service, and you keep a per-device record if a session is questioned.</p>
-      <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" href="#enquire">Talk to us</a>
-        <a class="btn btn--ghost btn--lg" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">WhatsApp us</a>
+      <div class="f-head"><h2>What changes once Zaksha is on</h2></div>
+      <div class="wrong">
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-sliders-horizontal"></i></span><h3>You decide what's reachable</h3><p>Turn categories on or off: adult, gambling, social media, gaming, streaming, AI tools. Add your own sites to block or allow. Start from a ready-made policy, such as a security baseline that blocks malware and phishing.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-calendar-check"></i></span><h3>Rules follow your timetable</h3><p>Put devices in groups, such as a lab, a department or a floor, and give each group its own schedule.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-shield-check"></i></span><h3>It stays on</h3><p>On Windows, an account without admin rights can't stop or remove Zaksha. On supervised iPads and iPhones the profile can't be removed. If a device stops reporting, the console tells you.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-file-text"></i></span><h3>You can answer "what happened?"</h3><p>See which sites each device looked up in the last 7 days and which were blocked, then export it.</p></div>
       </div>
     </div>
   </section>
-  <section class="hero" id="hero-team" hidden>
+
+  <!-- DEVICES -->
+  <section class="section" id="devices">
     <div class="wrap">
-      <span class="eyebrow">For companies and teams</span>
-      <h1>Company devices slow the network, let malware in, and the filter you installed got uninstalled.</h1>
-      <p class="lead">Zaksha blocks malware, phishing and time-wasting sites on company devices, follows office hours, and on Windows a staff account without admin rights can't remove it. No keystroke logging, no screenshots.</p>
-      <div class="hero__btns">
-        <a class="btn btn--primary btn--lg" href="#enquire">Talk to us</a>
-        <a class="btn btn--ghost btn--lg" href="https://wa.me/918919468618?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20Zaksha%20for%20our%20organisation." target="_blank" rel="noopener">WhatsApp us</a>
+      <div class="f-head"><h2>Which devices</h2></div>
+      <div class="devlist">
+        <div class="pcard"><h3>Windows PCs and laptops</h3><p>The Zaksha agent. Staff and students without admin rights can't remove it.</p></div>
+        <div class="pcard"><h3>iPhones, iPads and Macs</h3><p>A configuration profile. It can't be removed on supervised devices.</p></div>
+        <div class="pcard"><h3>Android phones and tablets</h3><p>Private DNS. It works, but someone with access to Settings can turn it off. We'll tell you which setups to avoid.</p></div>
       </div>
     </div>
   </section>
-  <section class="section section--wash" id="what">
+
+  <!-- WI-FI -->
+  <section class="section privbg">
+    <div class="privbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/college-campus-students.jpg" alt="A group of college students on a campus bench" /></div>
+    <div class="privbg__scrim"></div>
     <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>What changes once Zaksha is on</h2>
-      </div>
-      <div class="feats feats--two">
-        <div class="feat">
-          <h3>You decide what's reachable</h3>
-          <p>Turn categories on or off: adult, gambling, social media, gaming, streaming, AI tools. Add your own sites to block or allow. Malware and phishing sites are blocked from day one.</p>
-        </div>
-        <div class="feat">
-          <h3>Rules follow your timetable</h3>
-          <p>Different rules for class hours, lab sessions, office hours and after. Put devices in groups, such as a lab, a department or a floor, and give each group its own schedule.</p>
-        </div>
-        <div class="feat">
-          <h3>It stays on</h3>
-          <p>On Windows, an account without admin rights can't stop or remove Zaksha. On supervised iPads and iPhones the profile can't be removed. If a device stops reporting, the console tells you.</p>
-        </div>
-        <div class="feat">
-          <h3>You can answer "what happened?"</h3>
-          <p>See which sites each device tried to reach in the last 7 days and which were blocked, then export it.</p>
-        </div>
-      </div>
-      <div class="hero__visual"><img src="/img/app-groups-business.png" width="1120" height="1164" loading="lazy" alt="Zaksha console showing two device groups, Marketing and Accounts, with a Monday to Friday work-hours schedule." /></div>
+      <div class="pcard wifi"><span class="pcard__ic"><i class="ph ph-wifi-high"></i></span><h3>Wi-Fi filtering, on request.</h3><p>Your campus, hostel or office network can point at a dedicated Zaksha instance, so every device on that Wi-Fi gets the same rules, phones included. It is one policy for the whole network, and a VPN or mobile data gets around it.</p><p>Running public Wi-Fi at a café, a coworking space or a hostel? Talk to us and we'll work it out with you.</p></div>
     </div>
   </section>
+
+  <!-- HOW IT WORKS -->
   <section class="section" id="how">
     <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>From a device list to filtered in a day</h2>
-      </div>
+      <div class="f-head"><h2>How it works</h2></div>
       <div class="steps">
         <div class="step">
           <div class="step__n">1</div>
@@ -140,117 +149,31 @@
       </div>
     </div>
   </section>
-  <section class="section section--wash" id="why">
-    <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>Why not a firewall or a monitoring tool?</h2>
-      </div>
-      <div class="feats feats--two">
-        <div class="feat">
-          <h3>No box to buy</h3>
-          <p>A firewall only covers devices on your network. Zaksha runs on the device, so the rules apply on campus Wi-Fi, at home and on mobile data.</p>
-        </div>
-        <div class="feat">
-          <h3>Not surveillance</h3>
-          <p>Zaksha sees which sites a device looks up. It does not read messages, record keystrokes or take screenshots.</p>
-        </div>
-        <div class="feat">
-          <h3>Your data stays in India</h3>
-          <p>Filtering and activity records are stored in India (AWS Mumbai) and handled under the DPDP Act, 2023. A dedicated, isolated instance is available on paid contracts.</p>
-        </div>
-        <div class="feat">
-          <h3>Indian pricing and support</h3>
-          <p>Prices in rupees, GST invoices, and support on WhatsApp from people in India.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="section" id="devices">
-    <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>Which devices</h2>
-      </div>
-      <ul class="device-list">
-        <li><b>Windows PCs and laptops</b> — the Zaksha agent; staff and students without admin rights can't remove it.</li>
-        <li><b>iPhones, iPads and Macs</b> — a configuration profile; can't be removed on supervised devices.</li>
-        <li><b>Android phones and tablets</b> — Private DNS; works, but someone with access to Settings can turn it off. We'll tell you which setups to avoid.</li>
-        <li><b>Students' own phones on campus Wi-Fi</b> — possible with a dedicated instance your network points at. A VPN gets around network filtering, and we say so up front. Ask us.</li>
-      </ul>
-    </div>
-  </section>
+
+  <!-- PRICING -->
   <section class="section section--wash" id="pricing">
     <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>Priced per device, in rupees</h2>
-      </div>
-      <p class="price-line"><b>From ₹79 per device per month</b>
-        <small>₹65 per device per month billed yearly · minimum 10 devices · GST invoice</small></p>
-      <p class="price-box">Start with a 3-month pilot at 10% of the quote. You run Zaksha on real devices before you commit to the full fleet.</p>
-    </div>
-  </section>
-  <section class="section" id="pilot">
-    <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>How a pilot works</h2>
-      </div>
-      <div class="steps steps--four">
-        <div class="step">
-          <div class="step__n">1</div>
-          <h3>Enquiry</h3>
-          <p>Fill in the form or WhatsApp us.</p>
-        </div>
-        <div class="step">
-          <div class="step__n">2</div>
-          <h3>Call and demo</h3>
-          <p>We call within one working day and show the console on your use case.</p>
-        </div>
-        <div class="step">
-          <div class="step__n">3</div>
-          <h3>Pilot</h3>
-          <p>3 months on a group of your devices, at 10% of the quote.</p>
-        </div>
-        <div class="step">
-          <div class="step__n">4</div>
-          <h3>Quote</h3>
-          <p>The full-fleet quote, with GST invoicing.</p>
+      <div class="f-head"><span class="eyebrow">Pricing</span><h2>Priced per device, in rupees.</h2></div>
+      <div class="plans plans--one">
+        <div class="plan plan--home">
+          <div class="plan__name">Business</div>
+          <div class="plan__price"><span class="plan__amt" style="font-size:30px;">From ₹79</span><span class="plan__per">per device / month</span></div>
+          <div class="plan__sub">₹65 billed yearly · minimum 10 devices · GST invoice</div>
+          <a class="btn btn--primary plan__btn" href="#enquire">Talk to us</a>
+          <ul class="plan__feats">
+            <li><i class="ph ph-check-circle"></i> Start with a 3-month pilot at 10% of the quote</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
-  <section class="section section--wash" id="faq">
-    <div class="wrap">
-      <div class="section-head section-head--center">
-        <h2>Common questions</h2>
-      </div>
-      <div class="faq">
-        <details class="faq__item">
-          <summary>Does Zaksha read messages or record screens? <i class="ph ph-plus"></i></summary>
-          <p>No. It sees which sites a device looks up and whether they were blocked. Nothing else.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Can someone switch it off? <i class="ph ph-plus"></i></summary>
-          <p>On Windows, not without admin rights. On supervised Apple devices, no. On Android, someone with access to Settings can, so we'll help you set it up to make that harder and tell you when a device stops reporting.</p>
-        </details>
-        <details class="faq__item">
-          <summary>We already have a firewall. Do we need this? <i class="ph ph-plus"></i></summary>
-          <p>A firewall filters your network. Zaksha filters the device, so it also covers laptops and tablets that leave the building, and it gives you per-device records a firewall usually doesn't.</p>
-        </details>
-        <details class="faq__item">
-          <summary>Where is our data kept? <i class="ph ph-plus"></i></summary>
-          <p>In India, on AWS Mumbai. A dedicated instance is available on paid contracts.</p>
-        </details>
-        <details class="faq__item">
-          <summary>How does billing work? <i class="ph ph-plus"></i></summary>
-          <p>A quote per device, monthly or yearly, with a GST invoice. The pilot is billed at 10% of that quote.</p>
-        </details>
-      </div>
-    </div>
-  </section>
+
+  <!-- ENQUIRY -->
   <section class="section" id="enquire">
     <div class="wrap">
-      <div class="section-head section-head--center">
+      <div class="f-head">
         <h2>Talk to us</h2>
-        <p>Tell us about your institution. We call within one working day.</p>
+        <p>Tell us about your organisation. We call within one working day.</p>
       </div>
       <form class="lead-form" data-endpoint="https://api.zaksha.com/api/v1/public/leads">
         <label>I'm enquiring for
@@ -297,6 +220,7 @@
       </form>
     </div>
   </section>
+
   <footer class="footer">
     <div class="wrap">
       <div class="footer__grid footer__grid--4">
@@ -309,9 +233,9 @@
         </div>
         <div class="footer__col">
           <h4>Institutions</h4>
-          <a href="/business?for=school">Schools</a>
-          <a href="/business?for=college">Colleges and institutes</a>
-          <a href="/business?for=team">Companies and teams</a>
+          <a href="/schools-and-colleges">Schools and colleges</a>
+          <a href="/small-business">Small businesses and startups</a>
+          <a href="/enterprise">Enterprise</a>
         </div>
         <div class="footer__col">
           <h4>Families</h4>
@@ -336,14 +260,13 @@
   <script src="/icons.js"></script>
   <script src="/lead-form.js"></script>
   <script>
+    // Solutions menu: close on outside click, Escape, or picking an item.
     (function () {
-      var a = window.ZakshaLead.audienceFor(location.search);
-      if (a.hero === 'hero-default') return;
-      document.getElementById('hero-default').hidden = true;
-      document.getElementById(a.hero).hidden = false;
-      var f = document.querySelector('form.lead-form');
-      f.elements.segment.value = a.segment;
-      f.elements.ref.value = a.ref;
+      var sol = document.getElementById('sol');
+      document.addEventListener('click', function (e) { if (!sol.contains(e.target) || e.target.closest('.sol__menu a')) sol.open = false; });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sol.open) { sol.open = false; sol.querySelector('summary').focus(); }
+      });
     })();
   </script>
 </body>

@@ -270,86 +270,103 @@ if (indexHtml) {
   }
 }
 
-// --- j. enterprise page: indexable ---
+// --- j. Business pages: indexable (ADR 0087 site shape: /business hub + one page per buyer) ---
 const ENT_INDEXED = ['business.html', 'schools-and-colleges.html'];
-const INSTITUTION_PAGES = ['business.html'];
-// pages that carry the business header (Solutions menu + Home | Business switch) instead
-const BUSINESS_HEADER_PAGES = ['schools-and-colleges.html'];
 for (const page of ENT_INDEXED) {
   if (!exists(page)) { fail(`${page}: file missing`); continue; }
   if (/<meta name="robots"[^>]*noindex/i.test(read(page))) fail(`${page}: must be indexable (no noindex)`);
 }
 
-// --- k. audience switch ("For families | For institutions") in every page header ---
+// --- k. "Home | Business" switch in every page header; Business pages mark Business ---
 const ALL_PAGES = readdirSync(ROOT).filter((f) => f.endsWith('.html') && !Object.hasOwn(REDIRECTS, f));
 for (const page of ALL_PAGES) {
-  if (BUSINESS_HEADER_PAGES.includes(page)) continue;
   const html = read(page);
   const sw = html.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
-  if (!sw) { fail(`${page}: missing audience switch (<div class="aud">)`); continue; }
+  if (!sw) { fail(`${page}: missing Home | Business switch (<div class="aud">)`); continue; }
   const links = [...sw[1].matchAll(/<a\b([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ attrs: m[1], text: m[2].trim() }));
-  const fam = links.find((l) => l.text === 'For families' && /href="\/"/.test(l.attrs));
-  const inst = links.find((l) => l.text === 'For institutions' && /href="\/business"/.test(l.attrs));
-  if (!fam || !inst) { fail(`${page}: audience switch needs "For families" -> / and "For institutions" -> /business`); continue; }
+  const home = links.find((l) => l.text === 'Home' && /href="\/"/.test(l.attrs));
+  const biz = links.find((l) => l.text === 'Business' && /href="\/business"/.test(l.attrs));
+  if (!home || !biz || links.length !== 2) { fail(`${page}: switch must be exactly "Home" -> / and "Business" -> /business`); continue; }
   const marked = links.filter((l) => /aria-current="page"/.test(l.attrs));
-  const want = INSTITUTION_PAGES.includes(page) ? inst : fam;
-  if (marked.length !== 1 || marked[0] !== want) {
-    fail(`${page}: audience switch must mark exactly "${want.text}" with aria-current="page"`);
+  const want = ENT_INDEXED.includes(page) ? biz : home;
+  if (marked.length !== 1 || marked[0] !== want) fail(`${page}: switch must mark exactly "${want.text}" with aria-current="page"`);
+}
+
+// --- k2. no ?for= audience variants left anywhere (ads use ?ref=GS-ENT-… on the solution page) ---
+for (const file of [...readdirSync(ROOT).filter((f) => /\.(html|js)$/.test(f)), 'README.md']) {
+  const hit = read(file).match(/[?&]for=|audienceFor|hero-(school|college|team)/);
+  if (hit) fail(`${file}: leftover ?for= audience wiring ("${hit[0]}")`);
+}
+
+// --- k3. every root-relative page link resolves to a file in the site ---
+for (const page of ALL_PAGES) {
+  for (const m of read(page).matchAll(/href="\/([a-z0-9-]+)(?:[?#][^"]*)?"/g)) {
+    if (!exists(`${m[1]}.html`)) fail(`${page}: links to /${m[1]}, which has no ${m[1]}.html`);
   }
 }
 
-// --- l. one unified page: four heros, one form, ?for= wiring ---
-if (exists('business.html')) {
-  const html = read('business.html');
-  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail('business.html: missing lead-form.js');
+// --- l. Business header on every Business page: Solutions menu + page links ---
+const SOLUTIONS = [['/schools-and-colleges', 'Schools and colleges'], ['/small-business', 'Small businesses and startups'], ['/enterprise', 'Enterprise']];
+for (const page of ENT_INDEXED) {
+  if (!exists(page)) continue;
+  const header = (read(page).match(/<header\b[\s\S]*?<\/header>/) || [''])[0];
+  const menu = header.match(/<details\b[^>]*>\s*<summary\b[^>]*>[^<]*Solutions[\s\S]*?<\/details>/);
+  if (!menu) { fail(`${page}: header needs a "Solutions" menu`); continue; }
+  for (const [href, text] of SOLUTIONS) {
+    if (!new RegExp(`href="${href}"[^>]*>${text}<`).test(menu[0])) fail(`${page}: Solutions menu needs "${text}" -> ${href}`);
+  }
+  if (!menu[0].includes('Wi-Fi filtering for any of these, on request.')) fail(`${page}: Solutions menu needs the Wi-Fi note`);
+  if (!header.includes('href="#enquire"')) fail(`${page}: header CTA must go to #enquire`);
+}
+
+// --- l2. the enquiry form, the same on every page that has one ---
+for (const page of ALL_PAGES) {
+  const html = read(page);
   const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
-  if (!form) fail('business.html: missing <form class="lead-form">');
+  if (!form) { if (ENT_INDEXED.includes(page)) fail(`${page}: missing <form class="lead-form">`); continue; }
+  const body = form[1];
+  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${page}: missing lead-form.js`);
+  if (!/id="enquire"/.test(html)) fail(`${page}: missing #enquire anchor`);
+  if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail(`${page}: form needs the default data-endpoint`);
+  for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
+    if (!new RegExp(`name="${n}"`).test(body)) fail(`${page}: form missing field "${n}"`);
+  }
+  const hp = body.match(/<input\b[^>]*name="website"[^>]*>/);
+  if (!hp || !/tabindex="-1"/.test(hp[0]) || !/autocomplete="off"/.test(hp[0])) fail(`${page}: honeypot "website" needs tabindex="-1" and autocomplete="off"`);
+  const opts = (name) => {
+    const sel = body.match(new RegExp(`<select[^>]*name="${name}"[^>]*>([\\s\\S]*?)</select>`));
+    return sel ? [...sel[1].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)].map((m) => [(m[1].match(/value="([^"]*)"/) || [])[1], m[2].trim(), /\bselected\b/.test(m[1])]) : null;
+  };
+  const seg = opts('segment');
+  if (!seg) fail(`${page}: segment must be a <select>`);
   else {
-    const body = form[1];
-    if (!/id="enquire"/.test(html)) fail('business.html: missing #enquire anchor');
-    if (!/data-endpoint="https:\/\/api\.zaksha\.com\/api\/v1\/public\/leads"/.test(form[0])) fail('business.html: form needs the default data-endpoint');
-    for (const n of ['segment', 'org_name', 'contact_name', 'email', 'phone', 'devices', 'message', 'ref', 'website']) {
-      if (!new RegExp(`name="${n}"`).test(body)) fail(`business.html: form missing field "${n}"`);
-    }
-    if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"|autocomplete="off"[^>]*name="website"[^>]*tabindex="-1"|tabindex="-1"[^>]*autocomplete="off"[^>]*name="website"|name="website"[^>]*autocomplete="off"[^>]*tabindex="-1"/.test(body)) {
-      fail('business.html: honeypot "website" needs tabindex="-1" and autocomplete="off"');
-    }
-    const opts = (name) => {
-      const sel = body.match(new RegExp(`<select[^>]*name="${name}"[^>]*>([\\s\\S]*?)</select>`));
-      return sel ? [...sel[1].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)].map((m) => [(m[1].match(/value="([^"]*)"/) || [])[1], m[2].trim()]) : null;
-    };
-    const seg = opts('segment');
-    if (!seg) fail('business.html: segment must be a <select>');
-    else if (JSON.stringify(seg) !== JSON.stringify([['', 'Choose one'], ['school', 'A school'], ['college', 'A college or institute'], ['team', 'A company or team']])) fail(`business.html: segment options wrong: ${JSON.stringify(seg)}`);
-    const dev = opts('devices');
-    if (!dev) fail('business.html: devices must be a <select>');
-    else if (JSON.stringify(dev) !== JSON.stringify([['', ''], ['10', 'Up to 10'], ['50', '11–50'], ['200', '51–200'], ['500', 'More than 200']])) fail(`business.html: devices options wrong: ${JSON.stringify(dev)}`);
-    if (/value="(office|schools|colleges)"/.test(body)) fail('business.html: old segment value in form');
-    if (!/<input type="hidden" name="ref" value=""/.test(body)) fail('business.html: hidden ref must start empty (the page script sets it)');
-    if (!/<button[^>]*type="submit"[^>]*>Talk to us<\/button>/.test(body)) fail('business.html: submit button must read "Talk to us"');
+    if (JSON.stringify(seg.map((o) => o.slice(0, 2))) !== JSON.stringify([['', 'Choose one'], ['school', 'A school'], ['college', 'A college or institute'], ['team', 'A company or team']])) fail(`${page}: segment options wrong: ${JSON.stringify(seg)}`);
+    if (!seg[0][2] || seg.filter((o) => o[2]).length !== 1) fail(`${page}: segment must default to the "Choose one" placeholder (no preselect)`);
   }
-  if (!html.includes('wa.me/918919468618')) fail('business.html: missing WhatsApp link');
-  // hero variants: default visible without JS, others hidden until the script picks one
-  for (const id of ['hero-default', 'hero-school', 'hero-college', 'hero-team']) {
-    const m = html.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>`));
-    if (!m) { fail(`business.html: missing hero #${id}`); continue; }
-    const hidden = /\bhidden\b/.test(m[0]);
-    if (id === 'hero-default' && hidden) fail('business.html: default hero must be visible without JS');
-    if (id !== 'hero-default' && !hidden) fail(`business.html: #${id} must carry the hidden attribute`);
-    if (!new RegExp(`id="${id}"[\\s\\S]*?<h1>`).test(html)) fail(`business.html: #${id} needs an <h1>`);
-  }
-  if (!/ZakshaLead\.audienceFor\(/.test(html)) fail('business.html: page script must call ZakshaLead.audienceFor');
-  if (/app-business\.png|app-fleetpack\.png/.test(html)) fail('business.html: must not use the old-brand screenshots');
-  for (const needle of ['id="how"', 'id="devices"', 'id="pricing"']) if (!html.includes(needle)) fail(`business.html: missing section ${needle}`);
+  if (!/<select[^>]*name="segment"[^>]*required/.test(body)) fail(`${page}: segment must be required`);
+  const dev = opts('devices');
+  if (!dev) fail(`${page}: devices must be a <select>`);
+  else if (JSON.stringify(dev.map((o) => o.slice(0, 2))) !== JSON.stringify([['', ''], ['10', 'Up to 10'], ['50', '11–50'], ['200', '51–200'], ['500', 'More than 200']])) fail(`${page}: devices options wrong: ${JSON.stringify(dev)}`);
+  // ref stays empty in the page; lead-form.js takes it from ?ref= on the ad URL
+  if (!/<input type="hidden" name="ref" value=""/.test(body)) fail(`${page}: hidden ref must be empty`);
+  if (/elements\.ref\.value\s*=/.test(html)) fail(`${page}: page script must not set the form's ref (it comes from ?ref=)`);
+  if (!/<button[^>]*type="submit"[^>]*>Talk to us<\/button>/.test(body)) fail(`${page}: submit button must read "Talk to us"`);
+  if (!html.includes('wa.me/918919468618')) fail(`${page}: missing WhatsApp link`);
 }
 
-// --- m. business page: pricing, pilot, device honesty ---
+// --- m. /business hub: one hero, a card per solution, pricing, pilot, device honesty ---
 if (exists('business.html')) {
   const html = read('business.html');
+  if ((html.match(/<h1\b/g) || []).length !== 1) fail('business.html: the hub has exactly one <h1>');
+  const main = html.replace(/<header\b[\s\S]*?<\/header>/, '').replace(/<footer\b[\s\S]*?<\/footer>/, '');
+  for (const [href] of SOLUTIONS) if (!main.includes(`href="${href}"`)) fail(`business.html: hub needs a solution card linking ${href}`);
   if (!html.includes('From ₹79')) fail('business.html: missing "From ₹79" pricing');
   if (!/3-month pilot at 10%/.test(html)) fail('business.html: missing pilot terms');
-  if (!/VPN/.test(html)) fail('business.html: campus Wi-Fi mention needs the VPN caveat');
+  if (!/VPN/.test(html)) fail('business.html: Wi-Fi mention needs the VPN caveat');
   if (!/Private DNS/.test(html)) fail('business.html: Android Private DNS caveat missing');
+  if (!/public Wi-Fi/i.test(html)) fail('business.html: missing the public Wi-Fi "talk to us" line (ADR 0087)');
+  if (/app-business\.png|app-fleetpack\.png/.test(html)) fail('business.html: must not use the old-brand screenshots');
+  for (const needle of ['id="how"', 'id="pricing"', 'id="enquire"']) if (!html.includes(needle)) fail(`business.html: missing section ${needle}`);
 }
 
 // --- n. pricing cards and footers send Enterprise to the enquiry form ---
@@ -363,65 +380,35 @@ for (const page of ALL_PAGES) {
   }
 }
 
-// --- o. claim rules on the new pages (MESSAGING.md) ---
-const BANNED_CLAIMS = /SOC ?2|ISO ?27|compliance-ready|exam mode|exam lockdown|allow-?list|seamless|robust|comprehensive|leverage|empower|unlock|elevate|streamline|crucial|pivotal/i;
+// --- o. claim rules on the Business pages (MESSAGING.md) ---
+const BANNED_CLAIMS = /SOC ?2|ISO ?27|compliance-ready|exam mode|exam lockdown|lockdown|allow-?list|seamless|robust|comprehensive|leverage|empower|unlock|elevate|streamline|crucial|pivotal/i;
 for (const page of ENT_INDEXED) {
   if (!exists(page)) continue;
   const text = read(page);
   const hit = text.match(BANNED_CLAIMS);
   if (hit) fail(`${page}: banned claim or word "${hit[0]}"`);
-  if (/tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is not used on the enterprise page`);
+  if (/tamper-proof/i.test(text)) fail(`${page}: "tamper-proof" is not used on the Business pages`);
 }
 
-// --- q. schools-and-colleges page: family-page layout, business header, enquiry form with no preselect ---
+// --- q. schools-and-colleges page: family-page layout ---
 if (exists('schools-and-colleges.html')) {
   const P = 'schools-and-colleges.html';
   const html = read(P);
   if (!/<section\b[^>]*class="fhero"[\s\S]*?<img\b[^>]*src="\/?img\/lifestyle\/[^"]+\.jpg"/.test(html)) fail(`${P}: hero needs a photo <img> under img/lifestyle/`);
   if (!/class="marquee"/.test(html)) fail(`${P}: missing the app-logo marquee (.marquee)`);
   for (const needle of ['id="enquire"', 'id="how"', 'id="pricing"', 'id="faq"']) if (!html.includes(needle)) fail(`${P}: missing anchor ${needle}`);
-  const form = html.match(/<form\b[^>]*class="lead-form"[^>]*>([\s\S]*?)<\/form>/);
-  if (!form) fail(`${P}: missing <form class="lead-form">`);
-  else {
-    if (!/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"/.test(form[1])) fail(`${P}: honeypot "website" needs tabindex="-1" and autocomplete="off"`);
-    const sel = form[1].match(/<select[^>]*name="segment"[^>]*required[^>]*>([\s\S]*?)<\/select>/);
-    const opts = sel ? [...sel[1].matchAll(/<option\b([^>]*)>([^<]*)<\/option>/g)] : [];
-    const picked = opts.filter((m) => /\bselected\b/.test(m[1]));
-    if (!sel) fail(`${P}: segment must be a required <select>`);
-    else if (picked.length !== 1 || picked[0][2].trim() !== 'Choose one' || !/\bdisabled\b/.test(picked[0][1]) || !/value=""/.test(picked[0][1])) {
-      fail(`${P}: segment must default to a disabled, selected "Choose one" placeholder (no preselect)`);
-    }
-  }
-  if (!/<script src="\/?lead-form\.js"><\/script>/.test(html)) fail(`${P}: missing lead-form.js`);
-  if (/exam mode|lockdown|allow-?list/i.test(html)) fail(`${P}: contains exam mode / lockdown / allow-list wording`);
-  // business header: Solutions menu + Home | Business switch
-  const header = (html.match(/<header\b[\s\S]*?<\/header>/) || [''])[0];
-  const menu = header.match(/<details\b[^>]*>\s*<summary\b[^>]*>[^<]*Solutions[\s\S]*?<\/details>/);
-  if (!menu) fail(`${P}: header needs a "Solutions" menu`);
-  else {
-    if (!/href="\/schools-and-colleges"[^>]*>Schools and colleges</.test(menu[0])) fail(`${P}: Solutions menu needs "Schools and colleges" -> /schools-and-colleges`);
-    if (!/href="\/business"[^>]*>Small businesses and startups</.test(menu[0])) fail(`${P}: Solutions menu needs "Small businesses and startups" -> /business`);
-    if (!/href="\/business"[^>]*>Enterprise</.test(menu[0])) fail(`${P}: Solutions menu needs "Enterprise" -> /business`);
-    if (!menu[0].includes('Wi-Fi filtering for any of these, on request.')) fail(`${P}: Solutions menu needs the Wi-Fi note`);
-  }
-  for (const needle of ['href="#how"', 'href="#pricing"', 'href="#faq"', 'href="#enquire"']) if (!header.includes(needle)) fail(`${P}: header missing ${needle}`);
-  const sw = header.match(/<div class="aud"[^>]*>([\s\S]*?)<\/div>/);
-  const links = sw ? [...sw[1].matchAll(/<a\b([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ attrs: m[1], text: m[2].trim() })) : [];
-  const home = links.find((l) => l.text === 'Home' && /href="\/"/.test(l.attrs));
-  const biz = links.find((l) => l.text === 'Business' && /href="\/business"/.test(l.attrs));
-  if (!home || !biz) fail(`${P}: header needs a "Home" -> / | "Business" -> /business switch`);
-  else if (!/aria-current="page"/.test(biz.attrs) || /aria-current/.test(home.attrs)) fail(`${P}: switch must mark "Business" with aria-current="page"`);
 }
 
-// --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref codes ---
+// --- p. privacy discloses the enquiry-form Google Ads conversion; MESSAGING has the ref scheme ---
 if (exists('privacy.html') && !/enquiry form[^<]*Google Ads[^<]*qualified lead/i.test(read('privacy.html'))) {
   fail('privacy.html: missing the enquiry-form Google Ads qualified-lead disclosure');
 }
-for (const code of ['BIZ-SCH', 'BIZ-COL', 'BIZ-TEAM', '?for=']) {
-  if (!read('MESSAGING.md').includes(code)) fail(`MESSAGING.md: missing ${code}`);
+{
+  const msg = read('MESSAGING.md');
+  if (!msg.includes('?ref=GS-ENT-')) fail('MESSAGING.md: must document the ?ref=GS-ENT-… ad scheme');
+  const old = msg.match(/\?for=|BIZ-(SCH|COL|TEAM)|lp-(schools|colleges|offices)|one Enterprise page/);
+  if (old) fail(`MESSAGING.md: stale entry "${old[0]}"`);
 }
-
-if (/GS-ENT|lp-(schools|colleges|offices)/.test(read('MESSAGING.md'))) fail('MESSAGING.md: old GS-ENT-* / lp-* lander entries must go');
 
 // --- report ---
 if (failures.length > 0) {

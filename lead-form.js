@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════════
    Enterprise enquiry form — posts JSON to the form's data-endpoint.
    Needs icons.js loaded first (shared ad-param allowlist, ZakshaAd).
-   buildPayload / classify / send / audienceFor are pure and covered by
+   buildPayload / classify / send are pure and covered by
    lead-form.selfcheck.mjs; the DOM wiring below is not.
    No third-party scripts, no pixels.
    ════════════════════════════════════════════════════════════════ */
@@ -17,18 +17,6 @@
       email: t(f.email), phone: t(f.phone), devices: isNaN(n) ? null : n, message: t(f.message),
       ref: ref, ad_attribution: JSON.stringify(window.ZakshaAd.adParams(search)), website: f.website == null ? '' : String(f.website)
     };
-  }
-
-  // ?for= on an ad URL picks the hero, the form's segment and the default ref; an explicit ?ref= wins
-  var AUDIENCES = {
-    school: { ref: 'BIZ-SCH', hero: 'hero-school' },
-    college: { ref: 'BIZ-COL', hero: 'hero-college' },
-    team: { ref: 'BIZ-TEAM', hero: 'hero-team' }
-  };
-  function audienceFor(search) {
-    var q = new URLSearchParams(search), a = Object.prototype.hasOwnProperty.call(AUDIENCES, q.get('for')) && AUDIENCES[q.get('for')];
-    if (!a) return { segment: '', ref: '', hero: 'hero-default' };
-    return { segment: q.get('for'), ref: q.get('ref') || a.ref, hero: a.hero };
   }
 
   // status null = the request never got an answer
@@ -48,7 +36,7 @@
       .catch(function () { return classify(null, null); });
   }
 
-  var api = { buildPayload: buildPayload, classify: classify, send: send, audienceFor: audienceFor };
+  var api = { buildPayload: buildPayload, classify: classify, send: send };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ZakshaLead = api;
 

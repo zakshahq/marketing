@@ -28,7 +28,7 @@ found the gap: rules that stop at the front door, or that the kid switched off i
 Price-sensitive, WhatsApp-first, pay by UPI. English copy, Indian context (exam prep,
 study hours, one phone shared in the family).
 
-Enterprise (schools, colleges, companies) is a separate track with its own page (`/business`) — never fold it into
+Enterprise (schools, colleges, companies) is a separate track with its own pages (the `/business` hub and one solution page per buyer) — never fold it into
 the Home story, and never frame Home as a small-business product.
 
 ## The four things it does
@@ -139,8 +139,9 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
 | `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
-| `/business` | The one Enterprise page, problem first: four hero variants, what changes, devices, pricing, pilot, FAQ, enquiry form | Indexed. Ads use `?for=school`, `?for=college` or `?for=team`; the visitor type is picked in the form, not in the site structure. Replaces the former `/schools`, `/colleges`, `/offices` pages and the `lp-*` landers (2026-10-16) |
-| `/schools.html` | Redirect to `/business?for=school` | noindex, canonical to `/business` |
+| `/business` | Business hub: the three solutions, what changes, devices, Wi-Fi (incl. public Wi-Fi), pricing, enquiry form | Indexed. Not an ad target; ads land on a solution page |
+| `/schools-and-colleges`, `/small-business`, `/enterprise` | One solution page per buyer, family-page components | Indexed. Ad target with `?ref=GS-ENT-…` |
+| `/schools`, `/colleges` | Redirect to `/schools-and-colleges` | noindex, canonical to `/schools-and-colleges` |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
 Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram, `YT-*`,
@@ -154,9 +155,9 @@ exclamation marks, no fear-mongering about children; parents know why they're he
 
 ## Enterprise ref codes
 
-Enterprise ads land on `/business?for=school|college|team`. The page script shows the matching hero,
-preselects the form's segment and sets the form's `ref` to `BIZ-SCH` (school), `BIZ-COL`
-(college) or `BIZ-TEAM` (team), unless the URL already has `?ref=`. The ref goes to
-`/api/v1/public/leads`, not into a signup link. Enterprise pricing copy, everywhere: "From ₹79 per
+Enterprise ads land on the solution page for their segment with `?ref=GS-ENT-<code>` (for example
+`/schools-and-colleges?ref=GS-ENT-SCH1`). `lead-form.js` sends that ref, plus the allowlisted click
+params (`gclid` …), to `/api/v1/public/leads`; the page never sets a ref itself, so organic enquiries
+carry none. The visitor picks the segment in the form. Enterprise pricing copy, everywhere: "From ₹79 per
 device per month, ₹65 billed yearly, minimum 10 devices. Pilot: 3 months at 10% of the
 quote." Never claim SOC2, ISO or "compliance-ready".
