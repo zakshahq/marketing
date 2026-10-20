@@ -570,6 +570,27 @@ for (const page of ALL_PAGES) {
   if (hit) fail(`${page}: "${hit[0]}" — a dedicated instance is quoted per deal`);
 }
 
+// --- z. the WhatsApp number is never shown (Vasu, marketing#25): only wa.me hrefs carry it ---
+for (const page of ALL_PAGES) {
+  const hit = textOf(read(page)).match(/\+?91[ -]?89194[ -]?68618|89194[ -]?68618|8919468618/);
+  if (hit) fail(`${page}: visible text shows the WhatsApp number ("${hit[0]}"); link "Chat with us on WhatsApp" instead`);
+}
+for (const page of ALL_PAGES) {
+  for (const m of read(page).matchAll(/<a\b[^>]*href="https:\/\/wa\.me\/[^"]*"[^>]*>([^<]*)<\/a>/g)) {
+    if (/\d{5}/.test(m[1])) fail(`${page}: WhatsApp link text "${m[1]}" shows a number`);
+  }
+}
+
+// --- z2. every Phosphor icon a page uses exists in icons.js (a missing one silently becomes a dot) ---
+{
+  const known = new Set([...read('icons.js').matchAll(/^\s+'?([a-z-]+)'?:\s*'/gm)].map((m) => m[1]));
+  for (const page of ALL_PAGES) {
+    for (const m of read(page).matchAll(/class="ph(?:-fill)? ph-([a-z-]+)"/g)) {
+      if (!known.has(m[1])) fail(`${page}: icon ph-${m[1]} is not in icons.js`);
+    }
+  }
+}
+
 // --- report ---
 if (failures.length > 0) {
   console.error(`FAIL: ${failures.length} check(s) failed:\n`);

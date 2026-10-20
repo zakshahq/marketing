@@ -81,4 +81,9 @@ assert.deepEqual([r.kind, r.field], ['field_error', 'org_name']);
 r = await send('u', {}, async () => ({ status: 429, json: async () => { throw new Error('no body'); } }));
 assert.equal(r.kind, 'rate_limited');
 
+// the WhatsApp fallback link never shows the number (Vasu, marketing#25)
+const src = (await import('node:fs')).readFileSync(new URL('./lead-form.js', import.meta.url), 'utf8');
+assert.ok(!/textContent\s*=\s*'[^']*\d{5}/.test(src), 'WhatsApp link text must not show the number');
+assert.ok(src.includes("'Chat with us on WhatsApp'"), 'WhatsApp link text is "Chat with us on WhatsApp"');
+
 console.log('lead-form self-check OK');
