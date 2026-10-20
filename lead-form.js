@@ -14,7 +14,7 @@
     'icloud.com', 'me.com', 'mac.com', 'aol.com', 'proton.me', 'protonmail.com', 'pm.me', 'zoho.com', 'zohomail.in',
     'zohomail.com', 'mail.com', 'tutanota.com', 'fastmail.com', 'rediffmail.com', 'rediff.com', 'indiatimes.com', 'sify.com'];
   var PERSONAL_PREFIXES = ['yahoo.', 'hotmail.', 'yandex.', 'gmx.']; // every country variant
-  var ORG_EMAIL_MSG = "Please use your organisation's email address, not a personal one. No work email?";
+  var ORG_EMAIL_MSG = "Please use your organisation's email address.";
 
   function isPersonalEmail(email) {
     var s = email == null ? '' : String(email);

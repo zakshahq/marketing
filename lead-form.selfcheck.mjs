@@ -99,7 +99,7 @@ r = await send('u', {}, async () => ({ status: 429, json: async () => { throw ne
 assert.equal(r.kind, 'rate_limited');
 
 // marketing#29 / kuchbhi#377: organisation email only, same list as the API (personal_email.go)
-const ORG_MSG = "Please use your organisation's email address, not a personal one. No work email?";
+const ORG_MSG = "Please use your organisation's email address."; // Vasu 2026-10-21; the WhatsApp link follows it
 const { isPersonalEmail } = lead;
 for (const e of ['a@gmail.com', 'A@Gmail.COM', 'a@googlemail.com', 'a@outlook.com', 'a@icloud.com', 'a@proton.me', 'a@zohomail.in',
   'a@rediffmail.com', 'a@indiatimes.com', 'a@yahoo.co.in', 'a@hotmail.co.uk', 'a@yandex.ru', 'a@gmx.de', ' a@gmail.com '])

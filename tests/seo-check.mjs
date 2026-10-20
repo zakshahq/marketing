@@ -766,6 +766,8 @@ for (const page of ['small-business.html', 'enterprise.html']) {
   if (pilot < 0 || quote < 0 || quote !== pilot || /quote/i.test(steps.slice(pilot + 1).join(' '))) fail('enterprise.html: the quote comes with the pilot step, before the site-by-site rollout');
   const sb = exists('small-business.html') ? textOf(read('small-business.html')) : '';
   if (/Nobody needs to/.test(sb)) fail('small-business.html: drop "Nobody needs to"');
+  // marketing#29, Vasu 2026-10-21: personal-email error copy (the WhatsApp link text follows it)
+  if (!read('lead-form.js').includes(`"Please use your organisation's email address."`)) fail('lead-form.js: personal-email error says "Please use your organisation\'s email address."');
   if (!/We'll reply within one working day/.test(read('lead-form.js'))) fail('lead-form.js: success message says "We\'ll reply within one working day."');
 }
 
