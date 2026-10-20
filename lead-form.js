@@ -77,7 +77,7 @@
           var done = document.createElement('div');
           done.className = 'lead-form lead-form--done';
           done.setAttribute('role', 'status');
-          done.textContent = "Thanks. We'll call you within one working day. ";
+          done.textContent = "Thanks. We'll reply within one working day. ";
           var a = document.createElement('a');
           a.href = WA; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Or WhatsApp us now';
           done.appendChild(a);
