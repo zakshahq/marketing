@@ -12,6 +12,7 @@
     var t = function (v) { return (v == null ? '' : String(v)).trim(); };
     var n = parseInt(t(f.devices), 10);
     var ref = t(f.ref) || new URLSearchParams(search).get('ref') || '';
+    if (!/^[A-Za-z0-9_-]{1,40}$/.test(ref)) ref = ''; // the API rejects anything else; drop it rather than lose the lead
     return {
       segment: t(f.segment), org_name: t(f.org_name), contact_name: t(f.contact_name),
       email: t(f.email), phone: t(f.phone), devices: isNaN(n) ? null : n, message: t(f.message),
@@ -73,14 +74,14 @@
           a.href = WA; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Or WhatsApp us now';
           done.appendChild(a);
           form.replaceWith(done);
-        } else if (r.kind === 'field_error' && r.field && form.elements[r.field]) {
+        } else if (r.kind === 'field_error' && r.field && form.elements[r.field] && form.elements[r.field].type !== 'hidden') {
           var el = form.elements[r.field];
           var msg = document.createElement('span');
           msg.className = 'lead-form__err'; msg.setAttribute('role', 'alert'); msg.textContent = r.message;
           el.insertAdjacentElement('afterend', msg);
           el.focus();
         } else {
-          say(r.message, r.kind !== 'field_error');
+          say(r.kind === 'field_error' ? "We couldn't send that. Please try again, or WhatsApp us." : r.message, true);
         }
       });
     });

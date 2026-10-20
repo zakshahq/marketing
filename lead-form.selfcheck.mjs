@@ -44,6 +44,10 @@ assert.deepEqual(JSON.parse(p.ad_attribution), { gclid: 'G1', utm_campaign: 'GS-
 // no ad params: no ref, empty attribution (organic visits aren't labelled as ads)
 p = buildPayload({ ...fields, ref: '' }, '');
 assert.deepEqual([p.ref, p.ad_attribution], ['', '{}']);
+// a ref the API would reject (it accepts ^[A-Za-z0-9_-]{1,40}$) is dropped, so the lead still goes through
+assert.equal(buildPayload({ ...fields, ref: '' }, '?ref=GS%20ENT.1&gclid=G1').ref, '');
+assert.equal(buildPayload({ ...fields, ref: '' }, '?ref=' + 'A'.repeat(41)).ref, '');
+assert.equal(buildPayload({ ...fields, ref: '' }, '?ref=' + 'A'.repeat(40)).ref, 'A'.repeat(40));
 // the ?for= audience variants are gone (ADR 0087: one page per buyer)
 assert.equal(lead.audienceFor, undefined);
 

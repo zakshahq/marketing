@@ -168,7 +168,9 @@ for (const [page, { canonical, to }] of Object.entries(REDIRECTS)) {
     fail(`${page}: canonical href is "${matches[0][1]}", expected "${canonical}"`);
   }
   if (!html.includes(`<meta http-equiv="refresh" content="0; url=${to}" />`)) fail(`${page}: missing meta refresh to ${to}`);
-  if (!html.includes(`location.replace('${to}')`)) fail(`${page}: missing location.replace('${to}')`);
+  // keep ?ref= / ?gclid= and the hash, so old ad links still attribute
+  const js = to.includes('#') ? `location.replace('${to}')` : `location.replace('${to}' + location.search + location.hash)`;
+  if (!html.includes(js)) fail(`${page}: missing ${js}`);
 }
 
 // --- e2. removed enterprise pages are gone, and nothing links to them ---
@@ -249,7 +251,7 @@ const LINK_CHECK_PAGES = [
   'index.html', 'get.html', 'privacy.html', 'terms.html',
   'best-parental-control-app-india.html', 'google-family-link-alternative.html',
   'block-adult-content-android.html', 'block-adult-content-iphone.html',
-  'business.html', 'schools-and-colleges.html',
+  'business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html', 'security.html',
 ];
 for (const page of LINK_CHECK_PAGES) {
   if (!exists(page)) continue;
@@ -511,6 +513,13 @@ if (exists('terms.html')) {
 }
 if (exists('privacy.html') && /GitHub Pages/.test(read('privacy.html'))) fail('privacy.html: the site is served by Cloudflare, not GitHub Pages');
 for (const page of ['terms.html', 'privacy.html']) if (exists(page) && !read(page).includes('Effective 20 October 2026')) fail(`${page}: Effective date must be 20 October 2026`);
+
+// --- w. privacy covers the enquiry form's data and how long it is kept ---
+if (exists('privacy.html')) {
+  const t = textOf(read('privacy.html'));
+  if (!/enquiry form: the organisation, your name, email/.test(t)) fail('privacy.html: "What we collect" must list the enquiry form fields');
+  if (!/Enquiries[^.]*kept for/.test(t)) fail('privacy.html: retention must say how long enquiries are kept');
+}
 
 // --- report ---
 if (failures.length > 0) {

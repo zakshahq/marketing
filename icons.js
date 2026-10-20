@@ -151,7 +151,7 @@
     ALLOW.forEach(function (k) { if (here.has(k)) out[k] = here.get(k); });
     return out;
   }
-  window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams, ALLOW: ALLOW };
+  window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', forward);
   else forward();
 })();
