@@ -14,6 +14,7 @@
     .solgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.4vw,24px); max-width:1040px; margin:0 auto; }
     @media (max-width:860px){ .solgrid{ grid-template-columns:1fr; max-width:520px; } }
     .solcard{ display:flex; flex-direction:column; color:inherit; } .solcard:hover{ border-color:var(--teal-300); }
+    .solcard__seg{ margin-top:16px; display:block; } .solcard h3{ margin-top:8px; }
     .solcard__go{ margin-top:auto; padding-top:16px; font-weight:700; color:var(--teal-700); font-size:14.5px; }
     .devlist{ max-width:760px; margin:0 auto; display:grid; gap:12px; }
   </style>
@@ -66,8 +67,8 @@
     <div class="fhero__scrim"></div>
     <div class="wrap fhero__in">
       <span class="eyebrow">Zaksha for business</span>
-      <h1>The devices are yours. So is what happens on them.</h1>
-      <p>Zaksha decides what your school, college or company devices can reach and when, shows you what each one was used for, and stays on when someone tries to switch it off.</p>
+      <h1>Work devices, kept for work. School devices, kept for school.</h1>
+      <p>Tell us what you run, and see how Zaksha handles it.</p>
       <div class="fhero__btns">
         <a class="btn btn--onteal btn--lg" href="#enquire">Talk to us</a>
         <a class="btn btn--onteal-ghost btn--lg" href="#solutions">See the solutions</a>
@@ -83,24 +84,11 @@
   <!-- SOLUTIONS -->
   <section class="section" id="solutions">
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Solutions</span><h2>Set up for the way you work.</h2></div>
+      <div class="f-head"><span class="eyebrow">Solutions</span><h2>Which of these sounds like you?</h2></div>
       <div class="solgrid">
-        <a class="pcard solcard" href="/schools-and-colleges"><span class="pcard__ic"><i class="ph ph-graduation-cap"></i></span><h3>Schools and colleges</h3><p>Classroom tablets and lab PCs, kept for classes and tests. Coaching centres too.</p><span class="solcard__go">Schools and colleges <i class="ph ph-arrow-right"></i></span></a>
-        <a class="pcard solcard" href="/small-business"><span class="pcard__ic"><i class="ph ph-storefront"></i></span><h3>Small businesses and startups</h3><p>Company laptops and phones kept for work: malware, phishing and time-wasting sites blocked in work hours or all day.</p><span class="solcard__go">Small businesses and startups <i class="ph ph-arrow-right"></i></span></a>
-        <a class="pcard solcard" href="/enterprise"><span class="pcard__ic"><i class="ph ph-buildings"></i></span><h3>Enterprise</h3><p>Larger fleets, with a dedicated, isolated instance in India on paid contracts.</p><span class="solcard__go">Enterprise <i class="ph ph-arrow-right"></i></span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT CHANGES -->
-  <section class="section section--wash">
-    <div class="wrap">
-      <div class="f-head"><h2>What changes once Zaksha is on</h2></div>
-      <div class="wrong">
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-sliders-horizontal"></i></span><h3>You decide what's reachable</h3><p>Turn categories on or off: adult, gambling, social media, gaming, streaming, AI tools. Add your own sites to block or allow. Start from a ready-made policy, such as a security baseline that blocks malware and phishing.</p></div>
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-calendar-check"></i></span><h3>Rules follow your timetable</h3><p>Put devices in groups, such as a lab, a department or a floor, and give each group its own schedule.</p></div>
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-shield-check"></i></span><h3>It stays on</h3><p>On Windows, an account without admin rights can't stop or remove Zaksha. On supervised iPads and iPhones the profile can't be removed. If a device stops reporting, the console tells you.</p></div>
-        <div class="pcard"><span class="pcard__ic"><i class="ph ph-file-text"></i></span><h3>You can answer "what happened?"</h3><p>See which sites each device looked up in the last 7 days and which were blocked, then export it.</p></div>
+        <a class="pcard solcard" href="/schools-and-colleges"><span class="pcard__ic"><i class="ph ph-graduation-cap"></i></span><span class="eyebrow solcard__seg">Schools and colleges</span><h3>Classroom tablets and lab PCs, kept for classes and tests.</h3><p>AI tools off during a test, games off in lab hours, and a record when a parent asks.</p><span class="solcard__go">See how it works <i class="ph ph-arrow-right"></i></span></a>
+        <a class="pcard solcard" href="/small-business"><span class="pcard__ic"><i class="ph ph-storefront"></i></span><span class="eyebrow solcard__seg">Small businesses and startups</span><h3>No IT person, and a work laptop just opened a fake bank page.</h3><p>Scam and malware sites blocked on every company device, and nobody has to look after it.</p><span class="solcard__go">See how it works <i class="ph ph-arrow-right"></i></span></a>
+        <a class="pcard solcard" href="/enterprise"><span class="pcard__ic"><i class="ph ph-buildings"></i></span><span class="eyebrow solcard__seg">Enterprise</span><h3>Someone asks if your web policy holds at every office. Show them.</h3><p>One policy at every office, records kept in India, and a dedicated instance quoted per deal.</p><span class="solcard__go">See how it works <i class="ph ph-arrow-right"></i></span></a>
       </div>
     </div>
   </section>

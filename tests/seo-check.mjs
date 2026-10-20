@@ -543,6 +543,33 @@ if (exists('small-business.html')) {
 }
 if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rules must say quote + free 30-day pilot');
 
+// --- y. /business hub copy (marketing#25): buyers' problems first, no feature list ---
+if (exists('business.html')) {
+  const html = read('business.html');
+  const hero = (html.match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
+  const h1 = hero.match(/<h1>([\s\S]*?)<\/h1>/);
+  if (!h1 || textOf(h1[1]).trim() !== 'Work devices, kept for work. School devices, kept for school.') fail('business.html: hero h1 must be "Work devices, kept for work. School devices, kept for school."');
+  if (!textOf(hero).includes('Tell us what you run, and see how Zaksha handles it.')) fail('business.html: hero lead must be "Tell us what you run, and see how Zaksha handles it."');
+  if (!/class="fhero__facts"/.test(hero)) fail('business.html: keep the trust strip');
+  if (/What changes once Zaksha is on/.test(html)) fail('business.html: remove the "What changes once Zaksha is on" feature section');
+  const LEADS = {
+    '/schools-and-colleges': 'Classroom tablets and lab PCs, kept for classes and tests.',
+    '/small-business': 'No IT person, and a work laptop just opened a fake bank page.',
+    '/enterprise': 'Someone asks if your web policy holds at every office. Show them.',
+  };
+  for (const [href, line] of Object.entries(LEADS)) {
+    const card = html.match(new RegExp(`<a\\b[^>]*class="pcard solcard"[^>]*href="${href}"[^>]*>([\\s\\S]*?)<\\/a>`));
+    if (!card) { fail(`business.html: missing the solution card for ${href}`); continue; }
+    const h3 = card[1].match(/<h3>([\s\S]*?)<\/h3>/);
+    if (!h3 || textOf(h3[1]).trim() !== line) fail(`business.html: ${href} card must lead with "${line}"`);
+  }
+}
+// a dedicated instance is quoted per deal, never "on paid contracts" (2026-10-20)
+for (const page of ALL_PAGES) {
+  const hit = textOf(read(page)).match(/dedicated[^.]{0,80}paid contracts?/i);
+  if (hit) fail(`${page}: "${hit[0]}" — a dedicated instance is quoted per deal`);
+}
+
 // --- report ---
 if (failures.length > 0) {
   console.error(`FAIL: ${failures.length} check(s) failed:\n`);
