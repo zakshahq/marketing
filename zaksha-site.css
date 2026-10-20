@@ -109,18 +109,18 @@ button { font: inherit; }
   background: rgba(255,255,255,.92); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.nav__in { display: flex; align-items: center; gap: 28px; height: 64px; }
+.nav__in { display: flex; align-items: center; gap: 16px; height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em; }
 .brand__mark { width: 24px; height: 27px; }
 .nav__links { display: flex; gap: 4px; }
 .nav__links a {
   font-size: 14.5px; font-weight: 600; color: var(--ink-500);
-  padding: 7px 12px; border-radius: var(--r-pill); transition: color .15s, background .15s;
+  padding: 7px 8px; border-radius: var(--r-pill); transition: color .15s, background .15s; white-space: nowrap;
 }
 .nav__links a:hover { color: var(--ink-900); background: var(--bg); }
 .nav__spacer { flex: 1; }
 .nav__cta { display: flex; align-items: center; gap: 10px; }
-@media (max-width: 720px) { .nav__links { display: none; } }
+@media (max-width: 1023px) { .nav__links { display: none; } } /* the one-row nav needs ~1000px (Vasu 2026-10-21) */
 
 /* ---------------- sections ---------------- */
 .section { padding: clamp(64px, 9vw, 112px) 0; }
