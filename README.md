@@ -11,7 +11,10 @@ and schools). Plain HTML/CSS/JS, no build step.
 - `index.html` — home (Home/family landing)
 - `get.html` — install steps per platform
 - `block.html`, `parental-control-android.html`, `parental-control-iphone.html`, `parental-control-windows.html` — unlisted ad landers
-- `schools.html` — unlisted Enterprise/schools page
+- `business.html` — Business hub (indexed): links the solution pages, holds the enquiry form
+- `schools-and-colleges.html`, `small-business.html`, `enterprise.html` — one solution page per buyer (indexed); `biz.css` is their shared style
+- `schools.html`, `colleges.html` — redirects to `/schools-and-colleges` (noindex)
+- `lead-form.js` — enquiry form logic; checks: `node tests/seo-check.mjs && node ad-forward.selfcheck.mjs && node lead-form.selfcheck.mjs`
 - `pricing.html` — redirect to `/#pricing`
 - `terms.html` — Terms & Conditions
 - `privacy.html` — Privacy Policy

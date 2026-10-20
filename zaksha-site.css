@@ -370,3 +370,61 @@ button { font: inherit; }
 .phone__cap { max-width: 250px; margin: 16px auto 0; }
 .phone__cap b { display: block; font-size: 15px; color: var(--ink-900); margin-bottom: 3px; }
 .phone__cap span { font-size: 13.5px; line-height: 1.5; color: var(--ink-500); }
+
+/* ---------------- audience switch (header) ---------------- */
+.aud { display: inline-flex; padding: 2px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--bg); }
+.aud a { font-size: 13px; font-weight: 600; color: var(--ink-500); padding: 5px 12px; border-radius: var(--r-pill); white-space: nowrap; }
+.aud a:hover { color: var(--ink-900); }
+.aud a[aria-current="page"] { background: var(--teal-600); color: #fff; }
+@media (max-width: 640px) {
+  .nav__in { gap: 10px; }
+  .aud a { font-size: 12px; padding: 5px 9px; }
+  .nav__cta .btn--ghost { display: none; }
+  .nav__cta .btn--sm { padding: 8px 12px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .nav__in { gap: 8px; }
+  .nav__in .brand { font-size: 16px; gap: 6px; }
+  .nav__in .brand__mark { width: 20px; height: 23px; }
+  .aud a { font-size: 11.5px; padding: 4px 7px; }
+  .nav__cta .btn--sm { padding: 7px 10px; font-size: 12.5px; }
+  .brand .mono { display: none; }
+}
+@media (max-width: 400px) { .aud a { font-size: 11px; padding: 4px 6px; } .nav__cta .btn--sm { padding: 7px 8px; } }
+
+/* ---------------- enterprise pages ---------------- */
+.steps--four { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .steps--four { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .steps--four { grid-template-columns: 1fr; } }
+.seg { display: flex; flex-direction: column; }
+.seg p { flex: 1; }
+.seg a.more { margin-top: 16px; font-weight: 700; color: var(--teal-700); }
+.price-line { max-width: 640px; margin: 0 auto; text-align: center; font-size: 19px; line-height: 1.55; }
+.price-line small { display: block; margin-top: 10px; font-size: 14.5px; color: var(--ink-500); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+@media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+.split img { width: 100%; max-width: 440px; height: auto; margin: 0 auto; display: block; border-radius: var(--r-lg); box-shadow: var(--sh-2); }
+.split h2 { font-size: clamp(24px, 3.2vw, 34px); }
+.split p { margin-top: 14px; color: var(--ink-500); font-size: 16.5px; }
+.callout { max-width: 720px; margin: 0 auto; padding: 24px 28px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); }
+.callout h3 { font-size: 17px; }
+.callout p { margin-top: 8px; font-size: 15px; color: var(--ink-500); }
+
+/* ---------------- enquiry form ---------------- */
+.lead-form { max-width: 600px; margin: 0 auto; padding: clamp(22px, 4vw, 36px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--sh-1); display: grid; gap: 16px; }
+.lead-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; color: var(--ink-700); }
+.lead-form label small { font-weight: 500; color: var(--ink-400); }
+.lead-form input[type="text"], .lead-form input[type="email"], .lead-form input[type="tel"], .lead-form input[type="number"], .lead-form select, .lead-form textarea {
+  font: inherit; font-size: 15.5px; font-weight: 500; color: var(--ink-900); padding: 11px 14px;
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); width: 100%;
+}
+.lead-form textarea { min-height: 96px; resize: vertical; }
+.lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus { outline: 2px solid var(--teal-600); outline-offset: 1px; }
+.lead-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .lead-form__row { grid-template-columns: 1fr; } }
+.lead-form__err { font-size: 13px; font-weight: 600; color: #b3261e; }
+.lead-form__status { font-size: 14.5px; color: #b3261e; min-height: 0; }
+.lead-form__status a, .lead-form__alt a, .lead-form--done a { color: var(--teal-700); font-weight: 700; text-decoration: underline; }
+.lead-form__alt { font-size: 14px; color: var(--ink-500); text-align: center; }
+.lead-form--done { text-align: center; font-size: 18px; font-weight: 600; display: block; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

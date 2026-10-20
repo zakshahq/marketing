@@ -145,7 +145,13 @@
     if (!ALLOW.some(function (k) { return here.has(k); })) return; // no ad params → leave links untouched
     document.querySelectorAll('a[href*="app.zaksha.com"]').forEach(function (a) { a.href = forwardHref(a.href, location.search); });
   }
-  window.ZakshaAd = { forwardHref: forwardHref };
+  // allowlisted ad params present in a query string; lead-form.js sends these with an enquiry
+  function adParams(search) {
+    var here = new URLSearchParams(search), out = {};
+    ALLOW.forEach(function (k) { if (here.has(k)) out[k] = here.get(k); });
+    return out;
+  }
+  window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', forward);
   else forward();
 })();

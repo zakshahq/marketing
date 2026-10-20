@@ -28,7 +28,7 @@ found the gap: rules that stop at the front door, or that the kid switched off i
 Price-sensitive, WhatsApp-first, pay by UPI. English copy, Indian context (exam prep,
 study hours, one phone shared in the family).
 
-Enterprise (offices, schools) is a separate track with its own page — never fold it into
+Enterprise (schools, colleges, companies) is a separate track with its own pages (the `/business` hub and one solution page per buyer) — never fold it into
 the Home story, and never frame Home as a small-business product.
 
 ## The four things it does
@@ -94,7 +94,7 @@ Home in general is **tamper-resistant**, not **tamper-proof**. Two setups earn t
 tamper-proof, because enforcement genuinely can't be removed: the **Android fresh-phone
 (device-owner) setup** — a Home option parents can choose over the standard
 tamper-evident install — and the **Enterprise/MDM track** (supervised fleets,
-schools.html). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
+`/business`). Never apply tamper-proof to the iPhone or Windows story, or to Home as a
 whole. **Windows** (standard-user setup) is strongly tamper-resistant — a machine-wide
 system service that's hard to switch off without the admin password — but we do **not**
 lead with a "not removable" / tamper-proof claim.
@@ -139,7 +139,9 @@ remove, "magic wall", 100% / guaranteed blocking.
 | `/block.html` | Ad lander: "block porn/adult sites" search intent | `?ref=GS-BLOCK1`; unlisted, noindex |
 | `/parental-control-android.html` | Ad lander: Family Link / parental-control comparison intent | `?ref=GS-PCA1`; unlisted, noindex |
 | `/parental-control-windows.html` | Ad lander (AG5): "parental control for Windows/PC" intent | `?ref=GS-WIN1`; unlisted, noindex; tamper-resistant framing ("built to stay on"), not a tamper-proof claim |
-| `/schools.html` | Enterprise + schools | Unlisted; the only place unqualified MDM tamper-proof language is allowed |
+| `/business` | Business hub: the three solutions, what changes, devices, Wi-Fi (incl. public Wi-Fi), pricing, enquiry form | Indexed. Not an ad target; ads land on a solution page |
+| `/schools-and-colleges`, `/small-business`, `/enterprise` | One solution page per buyer, family-page components | Indexed. Ad target with `?ref=GS-ENT-…` |
+| `/schools`, `/colleges` | Redirect to `/schools-and-colleges` | noindex, canonical to `/schools-and-colleges` |
 | `/pricing.html` | Redirect to `/#pricing` | Ads may link it directly |
 
 Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram, `YT-*`,
@@ -150,3 +152,13 @@ Every published link carries a channel ref code (`GS-*` search, `IG-*` Instagram
 Plain, specific, a little dry. Numbers over adjectives (₹199, 5 devices, 7 days — not
 "affordable", "generous", "strong"). Admit limits before the reader finds them. No
 exclamation marks, no fear-mongering about children; parents know why they're here.
+
+## Enterprise ref codes
+
+Enterprise ads land on the solution page for their segment with `?ref=GS-ENT-<code>` (for example
+`/schools-and-colleges?ref=GS-ENT-SCH1`). `lead-form.js` sends that ref, plus the allowlisted click
+params (`gclid` …), to `/api/v1/public/leads`; the page never sets a ref itself, so organic enquiries
+carry none. The visitor picks the segment in the form. Enterprise pricing copy (kuchbhi#353): a public price on `/small-business` only, "From ₹79 per
+device per month, ₹65 billed yearly, minimum 10 devices"; every other page says "Priced per device, by
+volume" with "Get a quote". Pilot, everywhere: "a free 30-day pilot on one office or group, with success
+criteria agreed up front". The conversion date goes in the quote, never on a page. Never claim SOC2, ISO or "compliance-ready".
