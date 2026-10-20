@@ -98,6 +98,19 @@ assert.deepEqual([r.kind, r.field], ['field_error', 'org_name']);
 r = await send('u', {}, async () => ({ status: 429, json: async () => { throw new Error('no body'); } }));
 assert.equal(r.kind, 'rate_limited');
 
+// marketing#29 / kuchbhi#377: organisation email only, same list as the API (personal_email.go)
+const ORG_MSG = "Please use your organisation's email address, not a personal one. No work email?";
+const { isPersonalEmail } = lead;
+for (const e of ['a@gmail.com', 'A@Gmail.COM', 'a@googlemail.com', 'a@outlook.com', 'a@icloud.com', 'a@proton.me', 'a@zohomail.in',
+  'a@rediffmail.com', 'a@indiatimes.com', 'a@yahoo.co.in', 'a@hotmail.co.uk', 'a@yandex.ru', 'a@gmx.de', ' a@gmail.com '])
+  assert.equal(isPersonalEmail(e), true, `${e} is personal`);
+for (const e of ['a@sunrise.edu', 'a@gmail.com.example.org', 'a@notgmail.com', 'a@zaksha.com', 'no-at-sign', ''])
+  assert.equal(isPersonalEmail(e), false, `${e} is not personal`);
+// the API's code becomes the issue's copy on the email field, with the WhatsApp link (the 400 has no message)
+r = classify(400, { error: 'leads/personal_email', field: 'email' });
+assert.deepEqual([r.kind, r.field, r.message, r.wa], ['field_error', 'email', ORG_MSG, true]);
+assert.equal(classify(400, { error: 'leads/invalid', field: 'email' }).wa, undefined); // other 400s unchanged
+
 // the WhatsApp fallback link never shows the number (Vasu, marketing#25)
 const src = (await import('node:fs')).readFileSync(new URL('./lead-form.js', import.meta.url), 'utf8');
 assert.ok(!/textContent\s*=\s*'[^']*\d{5}/.test(src), 'WhatsApp link text must not show the number');

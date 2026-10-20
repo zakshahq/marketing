@@ -427,7 +427,7 @@ button { font: inherit; }
 @media (max-width: 560px) { .lead-form__row { grid-template-columns: 1fr; } }
 .lead-form__err { font-size: 13px; font-weight: 600; color: #b3261e; }
 .lead-form__status { font-size: 14.5px; color: #b3261e; min-height: 0; }
-.lead-form__status a, .lead-form__alt a, .lead-form--done a { color: var(--teal-700); font-weight: 700; text-decoration: underline; }
+.lead-form__status a, .lead-form__err a, .lead-form__alt a, .lead-form--done a { color: var(--teal-700); font-weight: 700; text-decoration: underline; }
 .lead-form__alt { font-size: 14px; color: var(--ink-500); text-align: center; }
 .lead-form--done { text-align: center; font-size: 18px; font-weight: 600; display: block; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
