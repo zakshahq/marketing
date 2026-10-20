@@ -390,7 +390,6 @@ if (exists('business.html')) {
   if ((html.match(/<h1\b/g) || []).length !== 1) fail('business.html: the hub has exactly one <h1>');
   const main = html.replace(/<header\b[\s\S]*?<\/header>/, '').replace(/<footer\b[\s\S]*?<\/footer>/, '');
   for (const [href] of SOLUTIONS) if (!main.includes(`href="${href}"`)) fail(`business.html: hub needs a solution card linking ${href}`);
-  if (!/VPN/.test(html)) fail('business.html: Wi-Fi mention needs the VPN caveat');
   if (!/Private DNS/.test(html)) fail('business.html: Android Private DNS caveat missing');
   if (!/public Wi-Fi/i.test(html)) fail('business.html: missing the public Wi-Fi "talk to us" line (ADR 0087)');
   if (/app-business\.png|app-fleetpack\.png/.test(html)) fail('business.html: must not use the old-brand screenshots');
@@ -586,7 +585,10 @@ for (const page of ['business.html', 'schools-and-colleges.html', 'small-busines
   const html = read(page);
   const card = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0];
   if (!/<a\b[^>]*href="#enquire"[^>]*>Get a quote<\/a>/.test(card)) fail(`${page}: pricing card needs "Get a quote" -> #enquire`);
-  if (!textOf(card).includes('Volume pricing. Book a demo, try it free for 30 days, then get a quote.')) fail(`${page}: pricing must say "Volume pricing. Book a demo, try it free for 30 days, then get a quote."`);
+  const amt = (card.match(/<span class="plan__amt"[^>]*>([^<]*)<\/span>/) || [, ''])[1].trim();
+  const sub = textOf((card.match(/<div class="plan__sub">([\s\S]*?)<\/div>/) || [, ''])[1]).trim();
+  if (amt !== 'Volume pricing') fail(`${page}: plan__price must read "Volume pricing"`);
+  if (!sub.startsWith('Book a demo, try it free for 30 days, then get a quote.')) fail(`${page}: plan__sub starts "Book a demo, try it free for 30 days, then get a quote." (no second "Volume pricing.")`);
   if (!textOf(html).includes('success criteria agreed up front')) fail(`${page}: pilot needs "success criteria agreed up front"`);
 }
 if (/10% of the quote|3 months at 10%|From ₹79/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rules must say volume pricing + free 30-day pilot, no ₹ figure');
@@ -641,6 +643,31 @@ for (const page of ALL_PAGES) {
       if (!known.has(m[1])) fail(`${page}: icon ph-${m[1]} is not in icons.js`);
     }
   }
+}
+
+// --- aa. Vasu's local review of #26 (2026-10-20): no stated cons, no per-OS mechanics in setup, admin rights for laptops and PCs only ---
+{
+  const BIZ = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html'];
+  for (const page of ALL_PAGES) {
+    const t = textOf(read(page));
+    if (/VPN or mobile data gets around it/.test(t)) fail(`${page}: drop "a VPN or mobile data gets around it"`);
+    if (/\bLinux\b/.test(t)) fail(`${page}: there is no Linux agent; never mention Linux`);
+  }
+  for (const page of BIZ) {
+    if (!exists(page)) continue;
+    const t = textOf(read(page));
+    if (/On Windows[^.]*admin rights|admin rights \(Windows\)/.test(t)) fail(`${page}: admin-rights lines don't name Windows`);
+    if (/installer pack|Run the installer|get a (configuration )?profile;|get a profile\./.test(t)) fail(`${page}: setup copy doesn't explain per-OS mechanics`);
+  }
+  const ADMIN = { 'small-business.html': 'On company laptops and PCs, removing it requires admin rights.', 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
+    'schools-and-colleges.html': 'On school laptops and PCs, removing it requires admin rights.' };
+  for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
+  for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html']) {
+    if (exists(page) && !textOf(read(page)).includes('Install Zaksha on each device in a few minutes. We send you everything you need')) fail(`${page}: setup step reads "Install Zaksha on each device in a few minutes. We send you everything you need."`);
+  }
+  if (exists('small-business.html') && /admin rights \(/.test(read('small-business.html'))) fail('small-business.html: comparison says "Not without admin rights"');
+  const hero = (read('index.html').match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
+  if (!textOf(hero).includes('Zaksha filters the internet on every device your kids use, on any network, and stays on when they try to switch it off.')) fail('index.html: hero subline must be "Zaksha filters the internet on every device your kids use, on any network, and stays on when they try to switch it off."');
 }
 
 // --- report ---
