@@ -528,8 +528,7 @@ if (exists('small-business.html')) {
   for (const n of ['Three ways offices try this today', 'How small businesses use Zaksha', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
     "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
   if (!/per person per month/i.test(t)) fail('small-business.html: monitoring software is priced "per person per month"');
-  const watched = html.match(/<summary>Will staff feel watched\?[\s\S]*?<\/details>/);
-  if (!watched || !/notice/.test(watched[0])) fail('small-business.html: the staff notice is mentioned once, in "Will staff feel watched?"');
+
   // phones: the comparison stacks as cards, Zaksha first
   const cards = html.match(/<div class="cmp-cards">([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/) || html.match(/<div class="cmp-cards">([\s\S]*)/);
   const first = cards && cards[1].match(/<div class="cmp-card[^"]*"><h4>([^<]*)<\/h4>/);
@@ -586,17 +585,22 @@ for (const page of ALL_PAGES) {
   if (BIZ_PAGES.includes(page) && /₹/.test(t)) fail(`${page}: no ₹ figure on Business pages`);
   if (BIZ_PAGES.includes(page) && /by volume/.test(t)) fail(`${page}: say "Volume pricing", not "by volume"`);
 }
+// one pricing card per Business page (Vasu, render review 3): title, devices line, demo + pilot inside, quote after the pilot
 for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html']) {
   if (!exists(page)) continue;
-  const html = read(page);
-  const card = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0];
-  if (!/<a\b[^>]*href="#enquire"[^>]*>Get a quote<\/a>/.test(card)) fail(`${page}: pricing card needs "Get a quote" -> #enquire`);
-  const amt = (card.match(/<span class="plan__amt"[^>]*>([^<]*)<\/span>/) || [, ''])[1].trim();
-  const sub = textOf((card.match(/<div class="plan__sub">([\s\S]*?)<\/div>/) || [, ''])[1]).trim();
-  if (amt !== 'Volume pricing') fail(`${page}: plan__price must read "Volume pricing"`);
-  if (!/^Book a demo, (try it free for 30 days|run a free 30-day pilot[^,]*), then get a quote\./.test(sub)) fail(`${page}: plan__sub reads "Book a demo, … free 30 days/pilot …, then get a quote." (no second "Volume pricing.")`);
-  if (!/success criteria agreed up front/i.test(textOf(html))) fail(`${page}: pilot needs "success criteria agreed up front"`);
+  const html = read(page), t = textOf(html);
+  const sec = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
+  if ((sec.match(/class="plan\b/g) || []).length !== 1 || /class="pcard/.test(sec)) fail(`${page}: pricing is ONE card (no separate demo/pilot cards)`);
+  if (!/<div class="plan__name">Volume pricing<\/div>/.test(sec)) fail(`${page}: pricing card title is "Volume pricing"`);
+  if ((t.match(/Volume pricing/g) || []).length !== 1) fail(`${page}: "Volume pricing" appears once on the page`);
+  for (const n of ['Priced by number of devices.', 'A 15-minute demo', 'Free 30-day pilot', 'Quote after the pilot.']) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
+  if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Book a demo<\/a>/.test(sec)) fail(`${page}: pricing card needs "Book a demo" (data-demo)`);
+  if (!/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a pilot<\/a>/.test(sec)) fail(`${page}: pricing card needs "Start a pilot" (data-pilot)`);
+  if (!/success criteria agreed up front/i.test(t)) fail(`${page}: pilot needs "success criteria agreed up front"`);
+  if (/See it before you decide|Book a demo, try it free/.test(t)) fail(`${page}: old pricing lines`);
 }
+if (exists('enterprise.html') && !textOf((read('enterprise.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0]).includes('Dedicated or on-premise deployment, quoted per deal.')) fail('enterprise.html: pricing card keeps "Dedicated or on-premise deployment, quoted per deal."');
+if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
 if (/10% of the quote|3 months at 10%|From ₹79/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rules must say volume pricing + free 30-day pilot, no ₹ figure');
 
 // --- y. /business hub copy (marketing#25): buyers' problems first, no feature list ---
@@ -703,7 +707,10 @@ for (const page of ALL_PAGES) {
     if (/whole category|in one go/i.test(t)) fail(`${page}: family phrasing ("whole category", "in one go"); frame categories as part of the policy`);
     if (/support sign-in|Support sign-in/i.test(t)) fail(`${page}: the support sign-in disclosure lives on /security, privacy and terms only`);
     if (/We send you everything you need|stay on the call/.test(t)) fail(`${page}: setup is done from the browser console; no "we send you" / "stay on the call"`);
-    if (/<section\b[^>]*id="get"[\s\S]*?<\/section>/.test(html) && /class="f-head"/.test((html.match(/<section\b[^>]*id="get"[\s\S]*?<\/section>/) || [''])[0])) fail(`${page}: "What you get" has no heading; just the three cards`);
+    const getSec = (html.match(/<section\b[^>]*id="get"[\s\S]*?<\/section>/) || [''])[0];
+    const GET_H2 = { 'small-business.html': 'How Zaksha protects your business', 'enterprise.html': 'How Zaksha protects your organisation' }[page];
+    if (GET_H2 && (!getSec.includes(`<h2>${GET_H2}</h2>`) || /class="eyebrow"/.test(getSec))) fail(`${page}: the three cards sit under "${GET_H2}" with no eyebrow`);
+    if (/notice/i.test(t)) fail(`${page}: no staff-notice mention on Business pages`);
   }
   if (exists('enterprise.html')) {
     const t = textOf(read('enterprise.html'));
@@ -719,6 +726,15 @@ for (const page of ALL_PAGES) {
   }
   const head = exists('enterprise.html') ? read('enterprise.html') : '';
   if (!/<title>[^<]*one policy across every site[^<]*<\/title>/i.test(head)) fail('enterprise.html: title matches the new H1');
+}
+
+// --- dd. monitoring FAQ (render review 3) ---
+for (const page of ['small-business.html', 'enterprise.html']) {
+  if (!exists(page)) continue;
+  const m = read(page).match(/<summary>Does Zaksha monitor staff\? <i class="ph ph-plus"><\/i><\/summary>\s*<p>([^<]*)<\/p>/);
+  if (!m || m[1] !== 'No. It only sees which sites a device looks up. It never reads messages, takes screenshots or records keystrokes.') fail(`${page}: FAQ "Does Zaksha monitor staff?" with the agreed answer`);
+  const t = textOf(read(page).replace(/<div class="cmp">[\s\S]*?<\/table><\/div>/, '').replace(/<div class="cmp-cards">[\s\S]*?<\/dl><\/div>\s*<\/div>/, ''));
+  if ((t.match(/screenshots/g) || []).length > 1) fail(`${page}: the "never reads messages / screenshots / keystrokes" point is made more than once outside the comparison`);
 }
 
 // --- report ---

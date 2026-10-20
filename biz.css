@@ -178,3 +178,14 @@
 .chip-sm{ display:inline-block; margin-left:10px; vertical-align:middle; font-size:11.5px; font-weight:700; color:var(--teal-700); background:var(--teal-50); border:1px solid var(--teal-100); border-radius:999px; padding:3px 10px; }
 .f-note{ text-align:center; margin-top:18px; font-size:15px; color:var(--ink-500); }
 .f-trust{ font-size:13.5px !important; color:var(--ink-400) !important; } .f-trust a{ color:var(--teal-700); font-weight:700; }
+
+/* one pricing card: demo + pilot inside, side by side, stacked on phones (render review 3) */
+.price1{ max-width:640px; }
+.price1__line{ margin-top:8px; font-size:15px; color:var(--ink-500); }
+.price1__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.price1__opt{ border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 18px; background:var(--bg); display:flex; flex-direction:column; gap:8px; }
+.price1__opt h3{ font-size:16px; } .price1__opt p{ font-size:14px; color:var(--ink-500); flex:1; } .price1__opt .btn{ align-self:flex-start; }
+.price1__foot{ margin-top:16px; font-size:14px; font-weight:700; color:var(--ink-700); }
+@media (max-width: 600px) {
+  .price1__opts { grid-template-columns: 1fr; }
+}
