@@ -158,6 +158,7 @@ exclamation marks, no fear-mongering about children; parents know why they're he
 Enterprise ads land on the solution page for their segment with `?ref=GS-ENT-<code>` (for example
 `/schools-and-colleges?ref=GS-ENT-SCH1`). `lead-form.js` sends that ref, plus the allowlisted click
 params (`gclid` …), to `/api/v1/public/leads`; the page never sets a ref itself, so organic enquiries
-carry none. The visitor picks the segment in the form. Enterprise pricing copy, everywhere: "From ₹79 per
-device per month, ₹65 billed yearly, minimum 10 devices. Pilot: 3 months at 10% of the
-quote." Never claim SOC2, ISO or "compliance-ready".
+carry none. The visitor picks the segment in the form. Enterprise pricing copy (kuchbhi#353): a public price on `/small-business` only, "From ₹79 per
+device per month, ₹65 billed yearly, minimum 10 devices"; every other page says "Priced per device, by
+volume" with "Get a quote". Pilot, everywhere: "a free 30-day pilot on one office or group, with success
+criteria agreed up front". The conversion date goes in the quote, never on a page. Never claim SOC2, ISO or "compliance-ready".

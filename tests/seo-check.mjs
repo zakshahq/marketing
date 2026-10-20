@@ -370,8 +370,6 @@ if (exists('business.html')) {
   if ((html.match(/<h1\b/g) || []).length !== 1) fail('business.html: the hub has exactly one <h1>');
   const main = html.replace(/<header\b[\s\S]*?<\/header>/, '').replace(/<footer\b[\s\S]*?<\/footer>/, '');
   for (const [href] of SOLUTIONS) if (!main.includes(`href="${href}"`)) fail(`business.html: hub needs a solution card linking ${href}`);
-  if (!html.includes('From ₹79')) fail('business.html: missing "From ₹79" pricing');
-  if (!/3-month pilot at 10%/.test(html)) fail('business.html: missing pilot terms');
   if (!/VPN/.test(html)) fail('business.html: Wi-Fi mention needs the VPN caveat');
   if (!/Private DNS/.test(html)) fail('business.html: Android Private DNS caveat missing');
   if (!/public Wi-Fi/i.test(html)) fail('business.html: missing the public Wi-Fi "talk to us" line (ADR 0087)');
@@ -384,7 +382,7 @@ for (const page of ALL_PAGES) {
   const html = read(page);
   if (/Zaksha%20Enterprise%20enquiry/.test(html)) fail(`${page}: Enterprise mailto still present; use /business#enquire`);
   if (html.includes('plan__tag">Offices &amp; schools')) {
-    for (const needle of ['From ₹79', 'minimum 10 devices', '3-month pilot at 10%', 'href="/business#enquire"']) {
+    for (const needle of ['Priced per device, by volume', 'Free 30-day pilot', 'href="/business#enquire">Get a quote</a>']) {
       if (!html.includes(needle)) fail(`${page}: Enterprise pricing card missing "${needle}"`);
     }
   }
@@ -469,8 +467,9 @@ for (const [page, h1] of Object.entries(HEROES)) {
   if (!h || textOf(h[1]).trim() !== h1) fail(`${page}: hero h1 must be "${h1}"`);
   if (!/<a\b[^>]*href="#enquire"[^>]*>Talk to us<\/a>/.test(hero)) fail(`${page}: hero needs "Talk to us" -> #enquire`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Book a 15-minute demo<\/a>/.test(hero)) fail(`${page}: hero needs "Book a 15-minute demo" (href="#enquire" data-demo)`);
-  if (!/3-month pilot at 10% of the quote/.test(textOf(hero))) fail(`${page}: hero needs the pilot line`);
-  if (!/From ₹79 per device per month/.test(textOf(hero))) fail(`${page}: hero needs "From ₹79 per device per month"`);
+  if (!/free 30-day pilot/.test(textOf(hero))) fail(`${page}: hero needs the free 30-day pilot line`);
+  const priceLine = page === 'small-business.html' ? 'From ₹79 per device per month' : 'Priced per device, by volume';
+  if (!textOf(hero).includes(priceLine)) fail(`${page}: hero needs "${priceLine}"`);
   if (!/class="marquee"/.test(html)) fail(`${page}: missing the category marquee`);
   if (!html.includes('id="faq"')) fail(`${page}: missing #faq`);
 }
@@ -520,6 +519,29 @@ if (exists('privacy.html')) {
   if (!/enquiry form: the organisation, your name, email/.test(t)) fail('privacy.html: "What we collect" must list the enquiry form fields');
   if (!/Enquiries[^.]*kept for/.test(t)) fail('privacy.html: retention must say how long enquiries are kept');
 }
+
+// --- x. pricing (Vasu 2026-10-20, kuchbhi#353): a public price on /small-business only, a quote elsewhere; free 30-day pilot ---
+for (const page of ALL_PAGES) {
+  const html = read(page), t = textOf(html);
+  if (/3-month pilot|10% of the quote|at 10%|3 months, at 10%/.test(t)) fail(`${page}: old pilot terms (3 months at 10%); it's a free 30-day pilot`);
+  if (page !== 'small-business.html' && /₹ ?(79|65)\b/.test(html)) fail(`${page}: per-device price is public on /small-business only`);
+}
+for (const page of ['business.html', 'schools-and-colleges.html', 'enterprise.html']) {
+  if (!exists(page)) continue;
+  const html = read(page);
+  const card = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0];
+  if (!/<a\b[^>]*href="#enquire"[^>]*>Get a quote<\/a>/.test(card)) fail(`${page}: pricing card needs "Get a quote" -> #enquire`);
+  if (!textOf(card).includes('Priced per device, by volume')) fail(`${page}: pricing card must say "Priced per device, by volume"`);
+}
+for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html']) {
+  if (exists(page) && !textOf(read(page)).includes('free 30-day pilot') ) fail(`${page}: missing the free 30-day pilot`);
+  if (exists(page) && !textOf(read(page)).includes('success criteria agreed up front')) fail(`${page}: pilot needs "success criteria agreed up front"`);
+}
+if (exists('small-business.html')) {
+  const card = (read('small-business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0];
+  if (!card.includes('From ₹79')) fail('small-business.html: pricing card keeps "From ₹79"');
+}
+if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rules must say quote + free 30-day pilot');
 
 // --- report ---
 if (failures.length > 0) {
