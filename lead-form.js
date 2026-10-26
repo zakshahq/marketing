@@ -34,7 +34,7 @@
       segment: t(f.segment), org_name: t(f.org_name), contact_name: t(f.contact_name),
       email: t(f.email), phone: t(f.phone), devices: isNaN(n) ? null : n, message: t(f.message),
       heard_from: t(f.heard_from), demo_requested: demo,
-      ref: ref, ad_attribution: JSON.stringify(window.ZakshaAd.adParams(search)), website: f.website == null ? '' : String(f.website)
+      ref: ref, ad_attribution: JSON.stringify(window.ZakshaAd.adParams(window.ZakshaAd.adSearch(search))), website: f.website == null ? '' : String(f.website)
     };
     // terms travel only with a demo request (kuchbhi#368); an unticked box is absent from FormData
     if (demo) out.terms_accepted = t(f.terms_accepted) === '1';
