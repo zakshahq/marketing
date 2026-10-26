@@ -144,7 +144,7 @@
     .panel h3{ font-size:18px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; }
     .panel--do h3 i{ font-size:22px; }
     .panel--dont h3{ color:var(--ink-900); } .panel--dont h3 i{ font-size:22px; color:var(--ink-400); }
-    .panel .sub{ font-size:13px; margin-top:6px; opacity:.85; }
+    .panel .sub{ font-size:14.5px; margin-top:6px; }
     .panel--dont .sub{ color:var(--ink-500); opacity:1; }
     .panel ul{ list-style:none; margin:20px 0 0; padding:0; }
     .panel li{ display:flex; gap:11px; align-items:flex-start; font-size:14.5px; line-height:1.5; }
@@ -233,7 +233,6 @@
       <nav class="nav__links">
         <a href="#block">What it blocks</a>
         <a href="#why">Why Zaksha</a>
-        <a href="#devices-detail">Devices</a>
         <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -254,14 +253,14 @@
     <div class="fhero__bg"><img fetchpriority="high" decoding="async" src="img/lifestyle/child-tablet-cozy.jpg" alt="A child relaxing in a chair by a window at home, using a tablet" /></div>
     <div class="fhero__scrim"></div>
     <div class="wrap fhero__in">
-      <span class="eyebrow">Parental controls for Indian families</span>
-      <h1>Let them have the phone. You can stop watching it.</h1>
-      <p>Zaksha filters the internet on every device your kids use, on any network, and stays on when they try to switch it off.</p>
+      <span class="eyebrow">For Indian families</span>
+      <h1>Parental controls your child can't quietly switch off.</h1>
+      <p>Block adult content, games and social media on every phone and laptop your kids use. Set bedtime and study hours. Get an alert the moment it's switched off.</p>
       <div class="fhero__btns">
         <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup">Start your free trial</a>
-        <a class="btn btn--onteal-ghost btn--lg" href="#devices-detail">See every device</a>
+        <a class="btn btn--onteal-ghost btn--lg" href="#stay">See how it stays on</a>
       </div>
-      <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.82);">14 days free, then ₹199/month · 40% off the yearly plan this Diwali · cancel anytime</p>
+      <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.82);">14 days free, then ₹199/month · we remind you 3 days before the first charge · cancel anytime</p>
       <div class="fhero__facts">
         <span><i class="ph ph-shield-check"></i> Hard to switch off</span>
         <span><i class="ph ph-map-pin"></i> Data stays in India</span>
@@ -278,6 +277,19 @@
       <span class="avail__os"><i class="ph ph-desktop"></i> Mac</span>
       <span class="avail__os"><i class="ph ph-android-logo"></i> Android</span>
       <span class="avail__os"><i class="ph ph-apple-logo"></i> iPhone &amp; iPad</span>
+    </div>
+  </section>
+
+  <!-- WHY PAY — vs built-in app controls, Family Link, Screen Time (facts checked 2026-10-24) -->
+  <section class="section section--wash" id="compare">
+    <div class="wrap">
+      <div class="f-head"><span class="eyebrow">Why not the free controls?</span><h2>YouTube, Netflix and Family Link already have controls. Here's the gap.</h2></div>
+      <div class="blockgrid">
+        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-squares-four"></i></div><b>App controls cover one app</b><span>YouTube's and Netflix's settings stop at their own app. Zaksha covers every app and website on the device at once, in the app and the browser.</span></div>
+        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-desktop"></i></div><b>Free tools stop at one platform</b><span>Family Link's main controls work on Android, Screen Time only on Apple. Zaksha runs one set of rules across iPhone, Android, Windows and Mac.</span></div>
+        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-prohibit"></i></div><b>Age ratings aren't categories</b><span>Free tools filter by age rating and SafeSearch. Zaksha blocks whole categories: adult, gambling, social media, gaming, AI chatbots. One switch each.</span></div>
+      </div>
+      <p class="blocknote"><b>Where they still win:</b> they're free, and Family Link's screen-time timers are good. Many families keep them and add Zaksha for what they don't cover. <a href="/google-family-link-alternative" style="color:var(--teal-700);font-weight:700;">Full Family Link comparison →</a></p>
     </div>
   </section>
 
@@ -479,40 +491,6 @@
   </section>
 
 
-  <!-- EVERY DEVICE — feature / setup matrix -->
-  <section class="section section--wash dvxbg" id="devices-detail">
-    <div class="dvxbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/family-devices.jpg" alt="A family together at home, one on a laptop and one on a phone" /></div>
-    <div class="dvxbg__scrim"></div>
-    <div class="wrap">
-      <div class="fm-head">
-        <span class="eyebrow">Every device</span>
-        <h2>Works on all of them — at the strength you choose.</h2>
-        <p>Every device gets the core: category blocking, per-child schedules, and filtering that follows onto mobile data and any Wi-Fi. The only difference is whether locking it down needs a fresh-phone setup.</p>
-      </div>
-      <div class="fm2wrap">
-        <table class="fm2">
-          <thead>
-            <tr>
-              <th class="feat"></th>
-              <th class="dev"><b>iPhone &amp; iPad</b></th>
-              <th class="dev"><b>Android</b></th>
-              <th class="dev"><b>Windows</b></th>
-              <th class="dev"><b>Mac</b></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th class="feat">Blocks adult content &amp; every category</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Bedtime &amp; study-hour schedules</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Filtering on every network</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-            <tr><th class="feat">Runs as</th><td class="txt">App</td><td class="txt">App</td><td class="txt">System service</td><td class="txt">Config profile</td></tr>
-            <tr><th class="feat"><a href="#faq-turn-off">Tamper protection</a></th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="txt">Requires factory reset</td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="fm__note">You get guided, step-by-step setup for each platform when you add a device.</p>
-    </div>
-  </section>
-
   <!-- PRICING -->
   <section class="section section--wash" id="pricing">
     <div class="wrap">
@@ -585,6 +563,40 @@
           <p>Every account starts with a 14-day free trial. After that, pay by UPI or a debit or credit card — monthly, or annually at a discount (₹149/month, 40% off during the Diwali sale) — and cancel anytime.</p>
         </details>
       </div>
+    </div>
+  </section>
+
+  <!-- EVERY DEVICE — feature / setup matrix -->
+  <section class="section section--wash dvxbg" id="devices-detail">
+    <div class="dvxbg__img"><img loading="lazy" decoding="async" src="img/lifestyle/family-devices.jpg" alt="A family together at home, one on a laptop and one on a phone" /></div>
+    <div class="dvxbg__scrim"></div>
+    <div class="wrap">
+      <div class="fm-head">
+        <span class="eyebrow">Every device</span>
+        <h2>Works on all of them — at the strength you choose.</h2>
+        <p>Every device gets the core: category blocking, per-child schedules, and filtering that follows onto mobile data and any Wi-Fi. The only difference is whether locking it down needs a fresh-phone setup.</p>
+      </div>
+      <div class="fm2wrap">
+        <table class="fm2">
+          <thead>
+            <tr>
+              <th class="feat"></th>
+              <th class="dev"><b>iPhone &amp; iPad</b></th>
+              <th class="dev"><b>Android</b></th>
+              <th class="dev"><b>Windows</b></th>
+              <th class="dev"><b>Mac</b></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th class="feat">Blocks adult content &amp; every category</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Bedtime &amp; study-hour schedules</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Filtering on every network</th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+            <tr><th class="feat">Runs as</th><td class="txt">App</td><td class="txt">App</td><td class="txt">System service</td><td class="txt">Config profile</td></tr>
+            <tr><th class="feat"><a href="#faq-turn-off">Tamper protection</a></th><td class="yes"><i class="ph ph-check-circle"></i></td><td class="txt">Requires factory reset</td><td class="yes"><i class="ph ph-check-circle"></i></td><td class="yes"><i class="ph ph-check-circle"></i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fm__note">You get guided, step-by-step setup for each platform when you add a device.</p>
     </div>
   </section>
 

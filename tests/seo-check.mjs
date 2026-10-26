@@ -679,7 +679,7 @@ for (const page of ALL_PAGES) {
   }
   if (exists('small-business.html') && /admin rights \(/.test(read('small-business.html'))) fail('small-business.html: comparison says "Not without admin rights"');
   const hero = (read('index.html').match(/<section\b[^>]*class="fhero"[\s\S]*?<\/section>/) || [''])[0];
-  if (!textOf(hero).includes('Zaksha filters the internet on every device your kids use, on any network, and stays on when they try to switch it off.')) fail('index.html: hero subline must be "Zaksha filters the internet on every device your kids use, on any network, and stays on when they try to switch it off."');
+  if (!textOf(hero).includes('Block adult content, games and social media on every phone and laptop your kids use. Set bedtime and study hours. Get an alert the moment it\'s switched off.')) fail('index.html: hero subline must be the 2026-10-24 what-first line (see MESSAGING.md)');
 }
 
 // --- bb. competitor-comparison round (2026-10-20): hub, Wi-Fi, footer ---
