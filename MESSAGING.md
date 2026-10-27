@@ -15,10 +15,12 @@ changes, update this file in the same push as the site change that uses it.
 
 Shorter, for ads (30-char headline territory): "Parental controls that hold."
 
-Homepage hero (outcome-led, since 2026-09-16): "Let them have the phone. You can
-stop watching it." — support line: "Zaksha keeps your kids to the internet you're
-comfortable with — on every device, on any network — and holds the line when they
-try to switch it off."
+Homepage hero (what-first, since 2026-10-24; replaced "Let them have the phone. You can
+stop watching it.", which never said what Zaksha is): "Parental controls your child
+can't quietly switch off." — support line: "Block adult content, games and social media
+on every phone and laptop your kids use. Set bedtime and study hours. Get an alert the
+moment it's switched off." "Quietly" is deliberate: on iPhone a child can switch
+filtering off, but the parent is alerted and the chosen apps lock.
 
 ## Who it's for
 
@@ -67,7 +69,10 @@ Discount framing: "Diwali sale · up to 40% off" — annual ₹149/mo is 40% off
 Free trial (verified in `gates.go` — `const trialDays = 14`, first charge deferred):
 every account starts with a **14-day free trial**. Safe to lead CTAs with "Start your
 free trial" / "14 days free, then ₹199/month · cancel anytime". Don't use "Free to Start"
-(ads-policy phrasing to avoid); a plain "free trial" is fine.
+(ads-policy phrasing to avoid); a plain "free trial" is fine. The trial is subscribe-first: UPI or a card is set up to
+start it, and an automated reminder goes out 3 days before the first charge (confirmed
+2026-10-24). Never say "no card" — "we remind you 3 days before the first charge" is the
+safe line.
 
 ## Block list scale (verified 2026-09-16)
 

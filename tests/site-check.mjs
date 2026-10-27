@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+// Brand + homepage checks from the 2026-10 site review. Run: node tests/site-check.mjs
+import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const failures = [];
+const fail = (msg) => failures.push(msg);
+const read = (rel) => readFileSync(path.join(ROOT, rel), 'utf8');
+
+// --- a. one logo everywhere: the plain shield (same path as favicon.svg) ---
+const SHIELD = 'M18 11 H46 Q53 11 53 18 V34 Q53 51 32 62 Q11 51 11 34 V18 Q11 11 18 11 Z';
+if (!read('favicon.svg').includes(SHIELD)) fail('favicon.svg: no longer the plain shield, update SHIELD');
+for (const page of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
+  const html = read(page);
+  const marks = html.match(/<svg class="brand__mark"[\s\S]*?<\/svg>/g) || [];
+  if (html.includes('class="brand"') && marks.length === 0) fail(`${page}: brand link without a logo mark`);
+  for (const svg of marks) {
+    if (!svg.includes(SHIELD)) fail(`${page}: logo mark is not the plain shield`);
+  }
+}
+
+// --- b. "What Zaksha does" subline stays legible (no faded text on teal) ---
+const home = read('index.html');
+const subRule = home.match(/\.panel \.sub\{([^}]*)\}/);
+if (!subRule) fail('index.html: .panel .sub rule not found');
+else {
+  if (/opacity:\s*(0?\.\d+)/.test(subRule[1])) fail('index.html: .panel .sub fades text with opacity (fails contrast on teal)');
+  const size = parseFloat((subRule[1].match(/font-size:\s*([\d.]+)px/) || [])[1]);
+  if (!(size >= 14)) fail(`index.html: .panel .sub font-size ${size}px, want >= 14px`);
+}
+
+
+// --- c. no pre-signup app download on the homepage: the app is installed
+//     during guided setup after signup, so CTAs stay on the trial.
+const hero = (home.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
+if (hero.includes('apps.apple.com')) fail('index.html: hero links to the App Store before signup');
+
+// --- c2. "why pay when YouTube / Family Link are free?" is answered up front, before the feature tour ---
+const compareAt = home.indexOf('id="compare"'), blockAt = home.indexOf('id="block"');
+if (compareAt < 0) fail('index.html: no #compare section answering "why pay when built-in controls are free?"');
+else if (compareAt > blockAt) fail('index.html: #compare comes after #block, should be up front');
+
+// --- d. trial terms are honest: payment is set up to start the trial ---
+for (const page of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
+  if (/no card/i.test(read(page))) fail(`${page}: claims "no card" but the trial needs UPI or a card to start`);
+}
+if (!/remind you 3 days before/.test(hero)) fail('index.html: hero trial line does not say we remind before the first charge');
+
+if (failures.length) {
+  console.error(`FAIL (${failures.length})\n- ` + failures.join('\n- '));
+  process.exit(1);
+}
+console.log('site-check: all passed');

@@ -127,9 +127,9 @@
    the URL across the lander→app hop. Allowlist mirrors the app's
    AD_PARAMS (pwa/src/lib/adAttribution.ts). forwardHref is mirrored
    in ad-forward.selfcheck.mjs — keep the two in sync.
-   ponytail: forwards to app.zaksha.com links only, not lander→lander
-   internal hops (/get). Add internal-hop forwarding only if a detour
-   path must preserve gclid.
+   Params seen on landing are kept in sessionStorage (this tab only) so
+   a visitor who clicks through to another page before signing up still
+   carries them; storage blocked → only the landing page forwards.
    ════════════════════════════════════════════════════════════════ */
 (function () {
   var ALLOW = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'utm_source', 'utm_medium', 'utm_term', 'utm_campaign', 'gclsrc', 'gad_source', 'gad_campaignid'];
@@ -140,10 +140,19 @@
     ALLOW.forEach(function (k) { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
     return u.toString();
   }
+  // this visit's ad params: from the URL if it has any (saved for later pages in this tab), else the saved copy
+  function adSearch(search) {
+    var p = new URLSearchParams(adParams(search)).toString();
+    try {
+      if (p) sessionStorage.setItem('zk-ad-search', p);
+      else p = sessionStorage.getItem('zk-ad-search') || '';
+    } catch (e) {}
+    return p;
+  }
   function forward() {
-    var here = new URLSearchParams(location.search);
-    if (!ALLOW.some(function (k) { return here.has(k); })) return; // no ad params → leave links untouched
-    document.querySelectorAll('a[href*="app.zaksha.com"]').forEach(function (a) { a.href = forwardHref(a.href, location.search); });
+    var s = adSearch(location.search);
+    if (!s) return; // no ad params → leave links untouched
+    document.querySelectorAll('a[href*="app.zaksha.com"]').forEach(function (a) { a.href = forwardHref(a.href, s); });
   }
   // allowlisted ad params present in a query string; lead-form.js sends these with an enquiry
   function adParams(search) {
@@ -151,7 +160,7 @@
     ALLOW.forEach(function (k) { if (here.has(k)) out[k] = here.get(k); });
     return out;
   }
-  window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams };
+  window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams, adSearch: adSearch };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', forward);
   else forward();
 })();
