@@ -4,11 +4,12 @@
 import assert from 'node:assert';
 
 const ALLOW = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'utm_source', 'utm_medium', 'utm_term', 'utm_campaign', 'gclsrc', 'gad_source', 'gad_campaignid'];
+const FORWARD = ['ref'].concat(ALLOW);
 function forwardHref(href, search) {
   const here = new URLSearchParams(search);
   let u;
   try { u = new URL(href); } catch (e) { return href; }
-  ALLOW.forEach((k) => { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
+  FORWARD.forEach((k) => { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
   return u.toString();
 }
 
@@ -24,5 +25,13 @@ assert.equal(forwardHref('https://app.zaksha.com/signup', ''), 'https://app.zaks
 assert.equal(forwardHref('https://app.zaksha.com/signup?gclid=OLD', '?gclid=NEW'), 'https://app.zaksha.com/signup?gclid=OLD');
 // multiple params (utm + gclid) all carried
 assert.equal(forwardHref('https://app.zaksha.com/signup', '?gclid=G&utm_source=google&utm_campaign=iphone'), 'https://app.zaksha.com/signup?gclid=G&utm_source=google&utm_campaign=iphone');
+
+// a campaign ref on the lander rides to the app (kuchbhi ADR 0114: ref=GS-ENT-SMB1 → acquisition_code)
+assert.equal(forwardHref('https://app.zaksha.com/signup?type=business', '?ref=GS-ENT-SMB1&gclid=G'), 'https://app.zaksha.com/signup?type=business&ref=GS-ENT-SMB1&gclid=G');
+// a ref already on the link wins
+assert.equal(forwardHref('https://app.zaksha.com?ref=SEO-IPHONE', '?ref=GS-X'), 'https://app.zaksha.com/?ref=SEO-IPHONE');
+// the selfcheck copy and icons.js agree on the allowlist
+import { readFileSync } from 'node:fs';
+assert.ok(readFileSync(new URL('./icons.js', import.meta.url), 'utf8').includes(`var ALLOW = ${JSON.stringify(ALLOW).replace(/"/g, "'").replace(/,/g, ', ')};`), 'icons.js ALLOW differs from this copy');
 
 console.log('ad-forward self-check OK');

@@ -133,16 +133,19 @@
    ════════════════════════════════════════════════════════════════ */
 (function () {
   var ALLOW = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'utm_source', 'utm_medium', 'utm_term', 'utm_campaign', 'gclsrc', 'gad_source', 'gad_campaignid'];
+  // ref (a campaign code like GS-ENT-SMB1) rides to the app too, but it is not an ad-click param:
+  // the app stores it as accounts.acquisition_code, and enquiries send it in their own field.
+  var FORWARD = ['ref'].concat(ALLOW);
   function forwardHref(href, search) {
     var here = new URLSearchParams(search);
     var u;
     try { u = new URL(href); } catch (e) { return href; }
-    ALLOW.forEach(function (k) { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
+    FORWARD.forEach(function (k) { if (here.has(k) && !u.searchParams.has(k)) u.searchParams.set(k, here.get(k)); });
     return u.toString();
   }
   // this visit's ad params: from the URL if it has any (saved for later pages in this tab), else the saved copy
   function adSearch(search) {
-    var p = new URLSearchParams(adParams(search)).toString();
+    var p = new URLSearchParams(adParams(search, FORWARD)).toString();
     try {
       if (p) sessionStorage.setItem('zk-ad-search', p);
       else p = sessionStorage.getItem('zk-ad-search') || '';
@@ -155,9 +158,9 @@
     document.querySelectorAll('a[href*="app.zaksha.com"]').forEach(function (a) { a.href = forwardHref(a.href, s); });
   }
   // allowlisted ad params present in a query string; lead-form.js sends these with an enquiry
-  function adParams(search) {
+  function adParams(search, keys) {
     var here = new URLSearchParams(search), out = {};
-    ALLOW.forEach(function (k) { if (here.has(k)) out[k] = here.get(k); });
+    (keys || ALLOW).forEach(function (k) { if (here.has(k)) out[k] = here.get(k); });
     return out;
   }
   window.ZakshaAd = { forwardHref: forwardHref, adParams: adParams, adSearch: adSearch };
