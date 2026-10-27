@@ -9,6 +9,7 @@
 .fhero h1{ color:#fff; font-size:clamp(36px,6vw,62px); letter-spacing:-0.035em; line-height:1.04; margin-top:14px; }
 .fhero p{ color:rgba(255,255,255,.9); font-size:clamp(16px,2vw,20px); line-height:1.5; margin-top:18px; max-width:520px; }
 .fhero__btns{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
+.fhero__note{ margin-top:14px; font-size:14px; color:rgba(255,255,255,.82); max-width:520px; }
 .fhero__facts{ margin-top:22px; display:flex; gap:8px 20px; flex-wrap:wrap; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.82); }
 .fhero__facts span{ display:inline-flex; align-items:center; gap:7px; } .fhero__facts i{ font-size:16px; color:#7fe0e6; }
 
@@ -165,6 +166,7 @@
 .price1{ max-width:640px; }
 .price1__line{ margin-top:8px; font-size:15px; color:var(--ink-500); }
 .price1__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.price1__opts--3 { grid-template-columns: repeat(3, 1fr); }
 .price1__opt{ border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 18px; background:var(--bg); display:flex; flex-direction:column; gap:8px; }
 .price1__opt h3{ font-size:16px; } .price1__opt p{ font-size:14px; color:var(--ink-500); flex:1; } .price1__opt .btn{ align-self:flex-start; }
 .price1__foot{ margin-top:16px; font-size:14px; font-weight:700; color:var(--ink-700); }
