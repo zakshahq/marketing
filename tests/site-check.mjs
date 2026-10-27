@@ -48,6 +48,31 @@ for (const page of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
 }
 if (!/remind you 3 days before/.test(hero)) fail('index.html: hero trial line does not say we remind before the first charge');
 
+// --- d2. ads/trackers count matches what prod loads (malware 24 Lakh+ / total 30 Lakh+ kept by decision, see MESSAGING.md) ---
+for (const page of ['index.html', 'family.html']) {
+  if (!readdirSync(ROOT).includes(page)) continue;
+  const t = read(page);
+  for (const bad of ['2.2 Lakh+']) if (t.includes(bad)) fail(`${page}: "${bad}" overstates the block lists prod loads (see MESSAGING.md)`);
+}
+
+// --- e. /family: ad lander for the whole-family promise (ad test arm B, ?ref=GS-FAM1) ---
+const famExists = readdirSync(ROOT).includes('family.html');
+if (!famExists) fail('family.html: missing (ad test arm B lands on /family)');
+else {
+  const fam = read('family.html');
+  if (!fam.includes('<meta name="robots" content="noindex, nofollow" />')) fail('family.html: ad lander must be noindex');
+  if (read('sitemap.xml').includes('/family')) fail('sitemap.xml: lists the noindex /family lander');
+  const signups = fam.match(/href="https:\/\/app\.zaksha\.com\/signup[^"]*"/g) || [];
+  if (!signups.length) fail('family.html: no signup CTA');
+  for (const s of signups) if (!s.includes('ref=GS-FAM1')) fail(`family.html: signup CTA without ref=GS-FAM1: ${s}`);
+  const famHero = (fam.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
+  const famH1 = ((famHero.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || '');
+  if (!/whole family/i.test(famH1)) fail(`family.html: hero h1 should promise the whole family (got "${famH1}")`);
+  if (!/scam/i.test(famHero) || !/adult content/i.test(famHero)) fail('family.html: hero must name both scam sites and adult content');
+  if (!fam.includes('id="scams"')) fail('family.html: no #scams section explaining scam protection');
+  if (/stop(s)? every scam|all scams|100%/i.test(fam.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' '))) fail('family.html: overclaims scam protection');
+}
+
 if (failures.length) {
   console.error(`FAIL (${failures.length})\n- ` + failures.join('\n- '));
   process.exit(1);
