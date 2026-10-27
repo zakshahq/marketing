@@ -74,24 +74,20 @@ start it, and an automated reminder goes out 3 days before the first charge (con
 2026-10-24). Never say "no card" — "we remind you 3 days before the first charge" is the
 safe line.
 
-## Block list scale (verified 2026-09-16)
+## Block list scale (updated 2026-10-27)
 
-Approximate domain counts from the upstream lists the renderer compiles
-(`control-plane/config/lists.txt` — hagezi + Perflyst; refreshed on a cadence). Rounded
-DOWN with a "+" so they stay true as the lists shift. Safe to state:
+Approximate counts from the upstream lists the product loads. Rounded DOWN with a "+" so they
+stay true as the lists shift. Do not state exact figures.
 
-- Adult sites: **70,000+** (hagezi nsfw.txt ~74k)
-- Malware & phishing: **2,400,000+** (hagezi full **tif.txt** ~2.476M, version 2026.0916 — the Security
-  category moved from tif.mini to the full Threat Intelligence Feeds list)
-- Ad & tracker domains: **220,000+** (hagezi pro.txt ~226k)
-- On the block list overall: **3,000,000+** (union across all lists; old ~915k with tif.mini, plus the
-  ~2.29M net that full tif adds → ~3.2M)
-- (Gambling ~427k and streaming lists also load, category-gated.)
+- Adult sites: **90K+**
+- Malware & phishing: **24 Lakh+**. Check the internal card before changing this figure or
+  using it anywhere new (ads, decks, replies).
+- Ad & tracker domains: **2 Lakh+**
+- On the block list overall: **30 Lakh+**. Same rule as malware & phishing.
 
-Do not state exact figures — these upstream lists change; the "+" rounding is the claim.
-
-Site display uses Indian units (K for thousands, Lakh at ≥1 lakh): **70K+** adult, **24 Lakh+**
-malware/phishing, **2.2 Lakh+** ads/trackers, **30 Lakh+** on the block list.
+Scam and phishing protection (Basic Security) is on by default for every Home device, so "known
+scam and phishing sites blocked for everyone at home" is safe. The lists are global threat feeds:
+don't claim India-specific (UPI/KYC) scam coverage, and never claim it stops every scam.
 
 ## Anti-bypass language (non-negotiable)
 
