@@ -163,7 +163,10 @@ carry none. The visitor picks the segment in the form. Enterprise pricing copy (
 `/small-business` only (ADR 0087); the hub, `/enterprise` and `/schools-and-colleges` say "Volume pricing" with
 "Priced by number of devices." and no number. Every pricing card holds the demo and the pilot. Pilot, everywhere:
 "a free 30-day pilot on one office or group, with success criteria agreed up front"; the quote comes after it. Never claim SOC2, ISO or "compliance-ready".
-`/small-business` alone also offers a self-serve **14-day free trial, up to 5 devices** (kuchbhi ADR 0114, 2026-10-27):
+`/small-business` also offers a self-serve **14-day free trial, up to 5 devices** (kuchbhi ADR 0114, 2026-10-27):
 "Start 14-day free trial" → `https://app.zaksha.com/signup?type=business` is the hero's first button, "Talk to us"
 the second, and the pilot is offered to teams of more than 5. `icons.js` forwards `ref` and the click params on app
 links. Don't write "no card" on the site (the site check forbids it everywhere, for the Home trial's sake).
+Amended 2026-10-28 (kuchbhi ADR 0114 amendment): `/enterprise` and `/schools-and-colleges` offer the same trial. Hero:
+"Start 14-day free trial" first; the second button stays "Talk to us" (`/enterprise`) or "Start a free 30-day pilot"
+(`/schools-and-colleges`), and the note under them sends whole-office or whole-lab rollouts to the pilot. The `/business` hub stays quote-only.
