@@ -486,6 +486,7 @@ const HEROES = {
   'schools-and-colleges.html': ['Web Filtering for Schools and Colleges: Safe Browsing for Students',
     'Malware, phishing and adult sites blocked on school devices set up with Zaksha, all day. Social media, games and AI tools follow your class and exam timetable.'],
 };
+const TRIAL_PAGES = ['small-business.html', 'enterprise.html', 'schools-and-colleges.html'];
 for (const [page, [h1, sub]] of Object.entries(HEROES)) {
   if (!exists(page)) continue;
   const html = read(page);
@@ -495,8 +496,8 @@ for (const [page, [h1, sub]] of Object.entries(HEROES)) {
   if (!h || textOf(h[1]).trim() !== h1) fail(`${page}: hero h1 must be "${h1}"`);
   if (!textOf(hero).includes(sub)) fail(`${page}: hero subline must be "${sub}"`);
   const chips = (hero.match(/<div class="fhero__facts">([\s\S]*?)<\/div>/) || [, ''])[1];
-  // /small-business leads with the self-serve trial (kuchbhi ADR 0114); the pilot moves under "Talk to us".
-  const smb = page === 'small-business.html', offer = smb ? '14-day free trial' : 'Free 30-day pilot'
+  // The solution pages lead with the self-serve trial (kuchbhi ADR 0114); the pilot moves under the second button.
+  const smb = TRIAL_PAGES.includes(page), offer = smb ? '14-day free trial' : 'Free 30-day pilot'
   if (JSON.stringify(textOf(chips).trim().split(/\s{1,}(?=Hosted|No hardware|Free 30|14-day)/)) !== JSON.stringify(['Hosted in India', 'No hardware', offer])) fail(`${page}: hero chips must be "Hosted in India · No hardware · ${offer}" (got "${textOf(chips).trim()}")`);
   if (/India|hardware|₹/.test(textOf(h[1] || ''))) fail(`${page}: India / hardware / price stay out of the headline`);
   if (/fhero__offer/.test(hero)) fail(`${page}: no offer line under the buttons; the pilot is a chip`);

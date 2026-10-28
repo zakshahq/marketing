@@ -73,22 +73,25 @@ else {
   if (/stop(s)? every scam|all scams|100%/i.test(fam.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' '))) fail('family.html: overclaims scam protection');
 }
 
-// --- e. /small-business starts a self-serve Business trial (kuchbhi ADR 0114, marketing#34) ---
-const smb = read('small-business.html');
-const smbHero = (smb.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
-const trialLinks = smb.match(/<a [^>]*href="https:\/\/app\.zaksha\.com\/signup\?type=business"[^>]*>[^<]*<\/a>/g) || [];
-if (!/>Start 14-day free trial</.test(smbHero) || !smbHero.includes('href="https://app.zaksha.com/signup?type=business"'))
-  fail('small-business.html: hero has no "Start 14-day free trial" link to app.zaksha.com/signup?type=business');
-if (!/href="#enquire"[^>]*>Talk to us</.test(smbHero)) fail('small-business.html: hero lost the secondary "Talk to us"');
-if (smbHero.indexOf('Start 14-day free trial') > smbHero.indexOf('>Talk to us<')) fail('small-business.html: trial CTA must come before "Talk to us"');
-if (/Request a 15-minute demo/.test(smbHero)) fail('small-business.html: hero still has a third (demo) button');
-if (/Free 30-day pilot<\/span>/.test(smbHero)) fail('small-business.html: hero chip offers the pilot next to the trial');
-if (!/30-day pilot/.test(smbHero)) fail('small-business.html: hero no longer points larger teams at the 30-day pilot');
-if (trialLinks.length < 2) fail('small-business.html: the pricing card has no trial link');
-for (const page of ['enterprise.html', 'schools-and-colleges.html'])
-  if (read(page).includes('signup?type=business')) fail(`${page}: self-serve trial is small business only`);
-for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
-  if (bad.test(smb)) fail(`small-business.html: banned claim ${bad}`);
+// --- e. the solution pages start a self-serve Business trial (kuchbhi ADR 0114, marketing#34) ---
+// Same trial everywhere: 14 days, up to 5 devices; bigger rollouts go to the 30-day pilot.
+// Each page pre-selects its organisation type on the app's signup form (?segment=, the enquiry form's values).
+for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'], ['enterprise.html', 'Talk to us', 'enterprise'], ['schools-and-colleges.html', 'Start a free 30-day pilot', 'education']]) {
+  const trialHref = `https://app.zaksha.com/signup?type=business&amp;segment=${seg}`;
+  const html = read(page);
+  const hero = (html.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
+  const trialLinks = html.split(`href="${trialHref}"`).length - 1;
+  if (!/>Start 14-day free trial</.test(hero) || !hero.includes(`href="${trialHref}"`))
+    fail(`${page}: hero has no "Start 14-day free trial" link to ${trialHref}`);
+  if (!new RegExp(`href="#enquire"[^>]*>${second}<`).test(hero)) fail(`${page}: hero lost the secondary "${second}"`);
+  if (hero.indexOf('Start 14-day free trial') > hero.indexOf(`>${second}<`)) fail(`${page}: trial CTA must come before "${second}"`);
+  if (/Request a 15-minute demo/.test(hero)) fail(`${page}: hero still has a third (demo) button`);
+  if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
+  if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
+  if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
+  for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
+    if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
+}
 
 if (failures.length) {
   console.error(`FAIL (${failures.length})\n- ` + failures.join('\n- '));
