@@ -75,18 +75,20 @@ else {
 
 // --- e. the solution pages start a self-serve Business trial (kuchbhi ADR 0114, marketing#34) ---
 // Same trial everywhere: 14 days, up to 5 devices; bigger rollouts go to the 30-day pilot.
-for (const [page, second] of [['small-business.html', 'Talk to us'], ['enterprise.html', 'Talk to us'], ['schools-and-colleges.html', 'Start a free 30-day pilot']]) {
+// Each page pre-selects its organisation type on the app's signup form (?segment=, the enquiry form's values).
+for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'], ['enterprise.html', 'Talk to us', 'enterprise'], ['schools-and-colleges.html', 'Start a free 30-day pilot', 'education']]) {
+  const trialHref = `https://app.zaksha.com/signup?type=business&amp;segment=${seg}`;
   const html = read(page);
   const hero = (html.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
-  const trialLinks = html.match(/<a [^>]*href="https:\/\/app\.zaksha\.com\/signup\?type=business"[^>]*>[^<]*<\/a>/g) || [];
-  if (!/>Start 14-day free trial</.test(hero) || !hero.includes('href="https://app.zaksha.com/signup?type=business"'))
-    fail(`${page}: hero has no "Start 14-day free trial" link to app.zaksha.com/signup?type=business`);
+  const trialLinks = html.split(`href="${trialHref}"`).length - 1;
+  if (!/>Start 14-day free trial</.test(hero) || !hero.includes(`href="${trialHref}"`))
+    fail(`${page}: hero has no "Start 14-day free trial" link to ${trialHref}`);
   if (!new RegExp(`href="#enquire"[^>]*>${second}<`).test(hero)) fail(`${page}: hero lost the secondary "${second}"`);
   if (hero.indexOf('Start 14-day free trial') > hero.indexOf(`>${second}<`)) fail(`${page}: trial CTA must come before "${second}"`);
   if (/Request a 15-minute demo/.test(hero)) fail(`${page}: hero still has a third (demo) button`);
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
   if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
-  if (trialLinks.length < 2) fail(`${page}: the pricing card has no trial link`);
+  if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
 }
