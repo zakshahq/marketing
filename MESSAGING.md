@@ -177,5 +177,6 @@ quote comes after the trial, heroes carry no note under the buttons, and the Hom
 "Volume pricing · 14-day free trial". This supersedes every pilot line above.
 Amended 2026-10-30: the `/business` hub's pricing section shows one card per audience (Small business "From ₹79 per
 device / month", Schools and colleges "Volume pricing", Enterprise "Custom") and an "Every plan includes" list.
-Features we deliver on request (single sign-on for the team, API access, SIEM log streaming, router setup) carry a `*`
-and the footnote "*Available on request." The owner keeps email and password; single sign-on is for their team.
+Single sign-on for the team, API access, SIEM log streaming and router setup are on every plan, listed under "Every
+plan includes" with a `*` and the footnote "*We set this up with you during onboarding." Never frame them as an add-on
+or "on request". The owner keeps email and password; single sign-on is for their team.

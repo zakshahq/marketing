@@ -648,12 +648,16 @@ if (exists('business.html')) {
   const sec = (read('business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
   const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="eyebrow">[^<]*<\/span>\s*<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
   if (JSON.stringify(tiers) !== JSON.stringify(['Small business', 'Schools and colleges', 'Enterprise'])) fail(`business.html: pricing tiers must be Small business, Schools and colleges, Enterprise (got ${JSON.stringify(tiers)})`);
-  for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Volume pricing', 'Custom', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', '*Available on request.'])
+  for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Volume pricing', 'Custom', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', '*We set this up with you during onboarding.'])
     if (!st.includes(n)) fail(`business.html: pricing needs "${n}"`);
   for (const href of ['https://app.zaksha.com/signup?type=business&amp;segment=smb', '/small-business', '/schools-and-colleges', '/enterprise'])
     if (!sec.includes(`href="${href}"`)) fail(`business.html: pricing links ${href}`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail('business.html: pricing ends with "Request a demo" (data-demo)');
   if (/pilot/i.test(st)) fail('business.html: pricing offers no pilot');
+  // Vasu 2026-10-30: the * features are on every plan, not an enterprise add-on.
+  const incl = textOf((sec.match(/<div class="incl">[\s\S]*?<\/ul>/) || [''])[0]);
+  for (const n of ['Single sign-on for your team*', 'API access*', 'SIEM log streaming*', 'Router and network-wide setup*']) if (!incl.includes(n)) fail(`business.html: "${n}" is in Every plan includes`);
+  if (/tier__extras|on request|add-on/i.test(sec)) fail('business.html: no add-on framing (tier extras, "on request")');
 }
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
 if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/pilot is retired/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');
