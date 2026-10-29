@@ -586,6 +586,7 @@ if (exists('schools-and-colleges.html')) {
   const cards = [...probs.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]);
   if (JSON.stringify(cards) !== JSON.stringify(['Harmful content', 'Classroom distractions', 'Malware and phishing', 'Board guidelines']))
     fail(`schools-and-colleges.html: "why" cards must be Harmful content, Classroom distractions, Malware and phishing, Board guidelines (got ${JSON.stringify(cards)})`);
+  if (!/class="grid2 grid--row"/.test(probs)) fail('schools-and-colleges.html: "why" cards have the heading beside the icon (grid--row)');
   if (/id="cbse"/.test(html)) fail('schools-and-colleges.html: CBSE is a card in the "why" section, not its own section');
   if (!probs.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE card links the original circular (cbse.gov.in, 18 Aug 2017)');
   if (!probs.includes('href="https://ciet.ncert.gov.in/storage/app/public/files/14/cyber-safety/Cyber_safety_for_schools_Eng.pdf"')) fail('schools-and-colleges.html: CBSE and NCERT card links NCERT Cyber Safety and Security Guidelines for Schools (2020)');
