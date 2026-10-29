@@ -89,6 +89,10 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
   if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
   if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
+  // Two free offers side by side: each button says who it is for, right under it (29 Oct).
+  if (page === 'schools-and-colleges.html')
+    for (const [btn, cap] of [['Start 14-day free trial', 'Up to 5 devices, set it up yourself'], ['Start a free 30-day pilot', 'A whole lab or campus, we help you set up']])
+      if (!new RegExp(`>${btn}</a>\\s*<small class="fhero__cap">${cap}</small>`).test(hero)) fail(`${page}: "${btn}" has no "${cap}" line under it`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
 }
