@@ -480,7 +480,7 @@ const HEROES = {
   'business.html': ['DNS Filtering for Organisations: Block Threats on Every Device',
     'Malware and phishing blocked at the DNS level on Windows, Mac, iPhone, iPad and Android. One policy, adjusted per site, group or device.'],
   'small-business.html': ['DNS Filtering for Small Business: Block Phishing on Every Work Device',
-    'Scam, phishing and malware sites are blocked on company laptops and phones, in the office and away from it. Set one policy from the browser.'],
+    'AI-powered DNS filtering that stops scam, phishing and malware sites on every work laptop and phone, in the office or at home. Set it up from your browser in minutes, no IT team needed.'],
   'enterprise.html': ['DNS Filtering for Enterprises: One Policy Across Every Site',
     'Block malware, phishing and chosen categories across offices, groups and devices. Set the policy once, then adjust where a site or team needs it.'],
   'schools-and-colleges.html': ['Web Filtering for Schools and Colleges: Safe Browsing for Students',
@@ -547,11 +547,16 @@ for (const page of ALL_PAGES) {
 // schools: problems before the block list, CBSE section with the 2017 circular, 30-day records, keeps its categories
 if (exists('schools-and-colleges.html')) {
   const html = read('schools-and-colleges.html'), t = textOf(html);
-  const wrong = html.indexOf('What a school filter has to stop'), block = html.indexOf('<h2>What you can block</h2>'), cbse = html.indexOf('Filtering CBSE asks for.');
-  if (wrong < 0 || block < 0 || wrong > block) fail('schools-and-colleges.html: "What goes wrong" must come before "What you can block"');
-  if (cbse < 0 || cbse < wrong || cbse > block) fail('schools-and-colleges.html: CBSE section goes between the problems and the block list');
-  if (!html.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE section links the original circular (cbse.gov.in, 18 Aug 2017)');
-  if (/satisf|complian|meets the|fulfils/i.test(textOf((html.match(/<section\b[^>]*id="cbse"[\s\S]*?<\/section>/) || [''])[0]))) fail('schools-and-colleges.html: CBSE section must not imply Zaksha satisfies the circular');
+  // 2026-10-29: one "why" section, CBSE folded in as one of its four cards.
+  const why = html.indexOf('<h2>Why schools need web filtering</h2>'), block = html.indexOf('<h2>What you can block</h2>');
+  if (why < 0 || block < 0 || why > block) fail('schools-and-colleges.html: "Why schools need web filtering" must come before "What you can block"');
+  const probs = (html.match(/<section\b[^>]*id="problems"[\s\S]*?<\/section>/) || [''])[0];
+  const cards = [...probs.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]);
+  if (JSON.stringify(cards) !== JSON.stringify(['Harmful content', 'Classroom distractions', 'Malware and phishing', 'CBSE guidelines']))
+    fail(`schools-and-colleges.html: "why" cards must be Harmful content, Classroom distractions, Malware and phishing, CBSE guidelines (got ${JSON.stringify(cards)})`);
+  if (/id="cbse"/.test(html)) fail('schools-and-colleges.html: CBSE is a card in the "why" section, not its own section');
+  if (!probs.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE card links the original circular (cbse.gov.in, 18 Aug 2017)');
+  if (/satisf|complian|meets the|fulfils/i.test(textOf(probs))) fail('schools-and-colleges.html: CBSE card must not imply Zaksha satisfies the circular');
   if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
   if (!t.includes('kept 30 days by default and longer by contract') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days by default, longer by contract');
   for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
