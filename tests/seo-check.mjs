@@ -589,6 +589,7 @@ if (exists('schools-and-colleges.html')) {
   if (/id="cbse"/.test(html)) fail('schools-and-colleges.html: CBSE is a card in the "why" section, not its own section');
   if (!probs.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE card links the original circular (cbse.gov.in, 18 Aug 2017)');
   if (!probs.includes('href="https://ciet.ncert.gov.in/storage/app/public/files/14/cyber-safety/Cyber_safety_for_schools_Eng.pdf"')) fail('schools-and-colleges.html: CBSE and NCERT card links NCERT Cyber Safety and Security Guidelines for Schools (2020)');
+  if (/Sources?:/.test(textOf(probs)) || !/<a href="https:\/\/www\.cbse\.gov\.in[^"]*"[^>]*>CBSE<\/a> and <a href="https:\/\/ciet\.ncert\.gov\.in[^"]*"[^>]*>NCERT<\/a> ask schools/.test(probs)) fail('schools-and-colleges.html: CBSE and NCERT are links inside the sentence, no Sources line');
   if (/satisf|complian|meets the|fulfils/i.test(textOf(probs))) fail('schools-and-colleges.html: CBSE card must not imply Zaksha satisfies the circular');
   // 2026-10-30: "Why Zaksha" matches /small-business: a photo band, then 3x3 cards with the heading beside the icon.
   const whyS = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
