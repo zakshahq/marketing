@@ -14,7 +14,7 @@ Resized/compressed from the originals for the web.
 | computer-lab-rows.jpg | schools-and-colleges schedules background | Rows of students at desktop PCs in a computer lab | Pexels | Tuấn Nguyễn Văn | https://www.pexels.com/photo/computer-classroom-with-focused-students-35571660/ | Pexels License |
 | college-campus-students.jpg | schools-and-colleges campus Wi-Fi band | Group of Indian college students on a campus bench | Pexels | Arto Suraj | https://www.pexels.com/photo/group-of-indian-students-on-campus-bench-in-santiniketan-39006532/ | Pexels License |
 | office-laptop-pair.jpg | small-business page (planned) | Two people working on a laptop at a table | Pexels | Ketut Subiyanto | https://www.pexels.com/photo/happy-indian-couple-using-laptop-while-doing-homework-together-4308093/ | Pexels License |
-| office-india-desks.jpg | small-business "Why Zaksha" background | Indian office team at desks, one colleague standing | Pexels | RDNE Stock project | https://www.pexels.com/photo/people-sitting-on-swivel-chairs-7580648/ | Pexels License |
+| office-presenting.jpg | small-business "Why Zaksha" photo band | A colleague presenting ideas to his team in an office | Pexels | Vitaly Gariev | https://www.pexels.com/photo/office-worker-presenting-his-ideas-to-colleagues-23496667/ | Pexels License |
 
 ## App / brand logos (img/appicons/)
 

@@ -141,6 +141,12 @@
 .grid4 .pcard h3{ margin-top:0; }
 .grid--row .pcard{ display:grid; grid-template-columns:auto 1fr; column-gap:14px; align-items:center; align-content:start; }
 .grid--row .pcard p{ grid-column:1/-1; }
+.whyband{ position:relative; height:clamp(220px,32vw,400px); overflow:hidden; }
+.whyband img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 12%; }
+.whyband::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,40,44,.1) 30%, rgba(8,40,44,.7)); }
+.whyband .wrap{ position:relative; z-index:1; height:100%; display:flex; align-items:flex-end; padding-bottom:28px; }
+.whyband h2{ color:#fff; font-size:clamp(30px,4vw,46px); }
+.whycards{ padding-top:clamp(28px,4vw,44px); }
 .ba{ max-width:860px; margin:0 auto; display:grid; gap:12px; }
 .ba__row{ display:grid; grid-template-columns:1fr auto 1.3fr; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 20px; font-size:15px; }
 .ba__row span{ color:var(--ink-400); } .ba__row i{ color:var(--teal-600); font-size:18px; } .ba__row b{ color:var(--ink-900); font-weight:700; }

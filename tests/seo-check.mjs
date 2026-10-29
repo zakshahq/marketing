@@ -544,10 +544,11 @@ if (exists('small-business.html')) {
   if (!html.includes('<h2>Why your business needs DNS filtering</h2>') || !html.includes('<h2>Why Zaksha</h2>')) fail('small-business.html: the two headings are "Why your business needs DNS filtering" and "Why Zaksha"');
   // Layout: heading beside its icon; "Why Zaksha" is 4×2 over an office photo.
   const whySec = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
-  if (!/class="[^"]*privbg[^"]*"/.test(whySec) || !whySec.includes('img/lifestyle/office-india-desks.jpg')) fail('small-business.html: "Why Zaksha" sits on the office-team-desks photo');
+  // 2026-10-29: the photo is a band above the cards (cards on a photo hid it), not a background behind them.
+  if (!/class="whyband"/.test(whySec) || !whySec.includes('img/lifestyle/office-presenting.jpg') || /privbg/.test(whySec)) fail('small-business.html: "Why Zaksha" opens with the office-presenting photo band, cards below on plain background');
   if (!/class="grid3 grid--row"/.test(whySec) || !/id="need"[\s\S]*?class="grid3 grid--row"/.test(html)) fail('small-business.html: card grids are grid3 grid--row (heading beside icon), 3 across');
   if (/ph-clock-afternoon/.test(whySec)) fail('small-business.html: the clock icon overlaps its text; use another');
-  if (!read('img/lifestyle/CREDITS.md').includes('office-india-desks.jpg')) fail('img/lifestyle/CREDITS.md: credit office-india-desks.jpg');
+  if (!read('img/lifestyle/CREDITS.md').includes('office-presenting.jpg')) fail('img/lifestyle/CREDITS.md: credit office-presenting.jpg');
   // Threat blocking is list-based (hagezi TIF Mini + phishing-filter, 12 h refresh): no AI claim on it, say "known".
   if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
   if (!t.includes('Start from Security baseline, Adult and gambling or Work focus')) fail('small-business.html: ready-made policies name the real starters (ent_policies.go)');
