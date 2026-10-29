@@ -638,7 +638,7 @@ for (const page of ALL_PAGES) {
   if (BIZ_PAGES.includes(page) && /by volume/.test(t)) fail(`${page}: say "Volume pricing", not "by volume"`);
 }
 // one pricing card per Business page (Vasu, render review 3): title, devices line, demo + pilot inside, quote after the pilot
-for (const page of ['schools-and-colleges.html', 'small-business.html', 'enterprise.html']) {
+for (const page of ['small-business.html', 'enterprise.html']) {
   if (!exists(page)) continue;
   const html = read(page), t = textOf(html);
   const sec = (html.match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
@@ -676,6 +676,14 @@ if (exists('business.html')) {
   const incl = textOf((sec.match(/<div class="incl">[\s\S]*?<\/ul>/) || [''])[0]);
   for (const n of ['Single sign-on for your team*', 'API access*', 'SIEM log streaming*', 'Router and network-wide setup*']) if (!incl.includes(n)) fail(`business.html: "${n}" is in Every plan includes`);
   if (/tier__extras|on request|add-on/i.test(sec)) fail('business.html: no add-on framing (tier extras, "on request")');
+}
+// 2026-10-30: the schools page uses the hub's pricing style: its own card, then "Every plan includes".
+if (exists('schools-and-colleges.html')) {
+  const sec = (read('schools-and-colleges.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
+  if (!/<div class="tier tier--main">\s*<span class="tier__ic"><i class="ph ph-graduation-cap"><\/i><\/span>/.test(sec) || /class="plan\b/.test(sec)) fail('schools-and-colleges.html: pricing is one hub-style card (graduation cap), not the old plan card');
+  for (const n of ['Discounted rates for schools, colleges and registered non-profits.', 'Every plan includes', 'Quote after the trial.', '*We set this up with you during onboarding.']) if (!st.includes(n)) fail(`schools-and-colleges.html: pricing needs "${n}"`);
+  if (!sec.includes('href="https://app.zaksha.com/signup?type=business&amp;segment=education"') || !/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail('schools-and-colleges.html: pricing card has the trial (education) and Request a demo');
+  if (/₹|pilot/i.test(st)) fail('schools-and-colleges.html: no price or pilot on schools pricing');
 }
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
 if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/pilot is retired/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');
