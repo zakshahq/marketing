@@ -538,7 +538,7 @@ if (exists('small-business.html')) {
   const NEED = ['One click can cost you lakhs.', "You don't have an IT team, and attackers know it.", "Work doesn't stay in the office.",
     'Some sites are a legal risk.', 'Distractions are always one tab away.', 'Streaming slows everyone down.'];
   const WHY = ['Threat detection', 'No hardware required', 'Protection that travels with the device.',
-    'Rules that fit each team.', 'Ready-made policies', 'Stays on.', 'Insights and reports', 'Your data stays in India.', 'Less than ₹3 a day per device.'];
+    'Rules that fit each team.', 'Ready-made policies', 'Built to stay on', 'Insights and reports', 'Your data stays in India.', 'Less than ₹3 a day per device.'];
   if (JSON.stringify(titles('need')) !== JSON.stringify(NEED)) fail(`small-business.html: #need cards must be ${JSON.stringify(NEED)} (got ${JSON.stringify(titles('need'))})`);
   if (JSON.stringify(titles('why')) !== JSON.stringify(WHY)) fail(`small-business.html: #why cards must be ${JSON.stringify(WHY)} (got ${JSON.stringify(titles('why'))})`);
   if (!html.includes('<h2>Why your business needs DNS filtering</h2>') || !html.includes('<h2>Why Zaksha</h2>')) fail('small-business.html: the two headings are "Why your business needs DNS filtering" and "Why Zaksha"');
