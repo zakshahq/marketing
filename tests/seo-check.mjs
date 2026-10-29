@@ -588,6 +588,13 @@ if (exists('schools-and-colleges.html')) {
   if (/id="cbse"/.test(html)) fail('schools-and-colleges.html: CBSE is a card in the "why" section, not its own section');
   if (!probs.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE card links the original circular (cbse.gov.in, 18 Aug 2017)');
   if (/satisf|complian|meets the|fulfils/i.test(textOf(probs))) fail('schools-and-colleges.html: CBSE card must not imply Zaksha satisfies the circular');
+  // 2026-10-30: "Why Zaksha" matches /small-business: a photo band, then 3x3 cards with the heading beside the icon.
+  const whyS = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
+  const whyCards = [...whyS.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
+  const WANT_WHY = ['Threat detection', 'No hardware required', 'Class and exam schedules', 'Rules for each lab and class', 'Ready-made policies', 'Windows and Mac computers', 'Insights and reports', 'Data in India', 'Records sites, not students'];
+  if (JSON.stringify(whyCards) !== JSON.stringify(WANT_WHY)) fail(`schools-and-colleges.html: "Why Zaksha" cards must be ${JSON.stringify(WANT_WHY)} (got ${JSON.stringify(whyCards)})`);
+  if (!/class="whyband"/.test(whyS) || !whyS.includes('img/lifestyle/school-lab-teacher.jpg') || !/class="grid3 grid--row"/.test(whyS) || /panel--do/.test(whyS)) fail('schools-and-colleges.html: "Why Zaksha" is a photo band (school-lab-teacher) over grid3 grid--row cards');
+  if (!read('img/lifestyle/CREDITS.md').includes('school-lab-teacher.jpg')) fail('img/lifestyle/CREDITS.md: credit school-lab-teacher.jpg');
   if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
   if (!t.includes('kept 30 days by default and longer by contract') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days by default, longer by contract');
   for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
@@ -818,7 +825,7 @@ for (const page of ['small-business.html', 'enterprise.html']) {
     if (/every (school |company )?device, all the time|on every school device|on every company (laptop|device)/.test(t)) fail(`${page}: no "every device" absolutes; say "devices set up with Zaksha"`);
   }
   const sch = exists('schools-and-colleges.html') ? textOf(read('schools-and-colleges.html')) : '';
-  if (/Sell or share data/.test(sch) || !sch.includes('Sell your data')) fail('schools-and-colleges.html: "Sell your data" (we share with processors)');
+  if (/Sell or share data/i.test(sch) || !/sell your data/i.test(sch)) fail('schools-and-colleges.html: "Sell your data" (we share with processors)');
   if (!sch.includes('Export daily summaries as CSV.')) fail('schools-and-colleges.html: "Export daily summaries as CSV."');
   const ent = exists('enterprise.html') ? read('enterprise.html') : '', et = textOf(ent);
   if (/one group at a time/.test(et)) fail('enterprise.html: drop "A device belongs to one group at a time"');
