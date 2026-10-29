@@ -646,8 +646,8 @@ for (const page of ['schools-and-colleges.html', 'small-business.html', 'enterpr
 // and enterprise extras marked * with an "Available on request" footnote.
 if (exists('business.html')) {
   const sec = (read('business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
-  const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="eyebrow">[^<]*<\/span>\s*<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
-  if (JSON.stringify(tiers) !== JSON.stringify(['Small business', 'Schools and colleges', 'Enterprise'])) fail(`business.html: pricing tiers must be Small business, Schools and colleges, Enterprise (got ${JSON.stringify(tiers)})`);
+  const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="tier__ic"><i class="ph ph-([a-z-]+)"><\/i><\/span>\s*<span class="eyebrow">[^<]*<\/span>\s*<h3>([^<]+)<\/h3>/g)].map((m) => m[2] + ':' + m[1]);
+  if (JSON.stringify(tiers) !== JSON.stringify(['Small business:storefront', 'Schools and colleges:graduation-cap', 'Enterprise:buildings'])) fail(`business.html: pricing tiers (with icons) must be Small business:storefront, Schools and colleges:graduation-cap, Enterprise:buildings (got ${JSON.stringify(tiers)})`);
   for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Volume pricing', 'Custom', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
     if (!st.includes(n)) fail(`business.html: pricing needs "${n}"`);
   for (const href of ['https://app.zaksha.com/signup?type=business&amp;segment=smb', '/small-business', '/schools-and-colleges', '/enterprise'])

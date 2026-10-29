@@ -23,6 +23,8 @@
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>',
     'house-line': '<path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.5V19h12V9.5"/><path d="M4 21h16"/>',
     briefcase: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7M3 12.5h18"/>',
+    'storefront': '<path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v1a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M5 12.5V20h14v-7.5"/><path d="M10 20v-5h4v5"/>',
+    'buildings': '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/>',
     'graduation-cap': '<path d="M2 9l10-4 10 4-10 4-10-4z"/><path d="M6 11v4.5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5V11"/><path d="M22 9v5"/>',
     books: '<path d="M5 4h4v16H5zM9 4h4v16H9z"/><path d="M14.5 4.6l3.9 1 3.1 14.8-3.9-1z"/>',
     'moon-stars': '<path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/><path d="M18 4l.6 1.6L20 6l-1.4.4L18 8l-.6-1.6L16 6l1.4-.4z"/>',
