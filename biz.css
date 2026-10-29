@@ -184,3 +184,20 @@
 @media (max-width: 600px) {
   .price1__opts { grid-template-columns: 1fr; }
 }
+
+/* /business pricing: one card per audience (2026-10-30) */
+.tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,20px); max-width:1040px; margin:0 auto; }
+.tier{ background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:28px; box-shadow:var(--sh-1); display:flex; flex-direction:column; gap:10px; }
+.tier--main{ border-color:var(--teal-600); box-shadow:0 0 0 1px var(--teal-600), var(--sh-1); }
+.tier .eyebrow{ color:var(--teal-700); } .tier h3{ font-size:20px; }
+.tier__price{ font-size:18px; font-weight:800; color:var(--ink-900, #101a1c); }
+.tier p{ font-size:14.5px; color:var(--ink-500); line-height:1.55; flex:1; }
+.tier__extras{ list-style:none; padding:0; margin:-2px 0 4px; font-size:14px; color:var(--ink-700, #2b3a3c); display:grid; gap:4px; } .tier__extras li::before{ content:"+ "; color:var(--teal-600); font-weight:700; }
+.tier .btn{ align-self:flex-start; } .tier__more{ font-size:14px; font-weight:700; color:var(--teal-700); }
+.incl{ max-width:1040px; margin:clamp(22px,3vw,32px) auto 0; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:28px; }
+.incl h3{ font-size:17px; } .incl ul{ list-style:none; padding:0; margin:14px 0 0; display:grid; grid-template-columns:repeat(3,1fr); gap:10px 20px; }
+.incl li{ display:flex; gap:8px; align-items:center; font-size:14.5px; color:var(--ink-700, #2b3a3c); } .incl li i{ color:var(--teal-600); font-size:18px; }
+.incl__foot{ margin-top:18px; font-size:14.5px; } .incl__foot a{ color:var(--teal-700); font-weight:700; }
+.incl__note{ margin-top:6px; font-size:12px; color:var(--ink-500); }
+@media (max-width:860px){ .tiers{ grid-template-columns:1fr; max-width:520px; } .incl ul{ grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .incl ul{ grid-template-columns:1fr; } }
