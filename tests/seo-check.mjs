@@ -551,7 +551,7 @@ if (exists('small-business.html')) {
   // Threat blocking is list-based (hagezi TIF Mini + phishing-filter, 12 h refresh): no AI claim on it, say "known".
   if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
   if (!t.includes('Start from Security baseline, Adult and gambling or Work focus')) fail('small-business.html: ready-made policies name the real starters (ent_policies.go)');
-  if (!t.includes('threat lists updated twice a day')) fail('small-business.html: scam card says "threat lists updated twice a day"');
+  if (!t.includes('Advanced threat protection stops phishing, malware and scam sites before they can do any damage.')) fail('small-business.html: Threat detection card reads as a benefit, not a mechanism');
   if (!t.includes('Activity is stored in Mumbai. It filters sites, not people: no screen watching, no passwords.')) fail('small-business.html: Data in India card says where data is stored');
   if (/home Wi-?Fi/i.test(t)) fail('small-business.html: we filter the device, not home Wi-Fi');
   for (const n of ['Does it work for staff working from home?', "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
@@ -703,16 +703,9 @@ for (const page of ALL_PAGES) {
     if (/installer pack|Run the installer|get a (configuration )?profile;|get a profile\./.test(t)) fail(`${page}: setup copy doesn't explain per-OS mechanics`);
   }
   const ADMIN = { 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
-    'schools-and-colleges.html': 'Only your IT admin can remove Zaksha' };
-  // 2026-10-29: the schools "stay on" block sells outcomes, one headline and one line each, no ifs.
-  // Indian schools run desktops (Windows, some Linux) and rarely hand out phones or tablets: no phone lines.
-  if (exists('schools-and-colleges.html')) {
-    const stay = textOf((read('schools-and-colleges.html').match(/<section class="stay"[\s\S]*?<\/section>/) || [''])[0]);
-    for (const n of ["Students can't switch it off", 'Only your IT admin can remove Zaksha',
-      'No way around it', 'Secure DNS and iCloud Private Relay are shut',
-      'Nothing drops off your radar', 'Gone quiet']) if (!stay.includes(n)) fail(`schools-and-colleges.html: "stay on" block needs "${n}"`);
-    if (/\b(if|unless|when)\b/i.test(stay)) fail('schools-and-colleges.html: "stay on" block has an if/unless/when');
-  }
+ };
+  // 2026-10-29: the schools "stay on" section is removed.
+  if (exists('schools-and-colleges.html') && /class="stay"/.test(read('schools-and-colleges.html'))) fail('schools-and-colleges.html: the "stay on" section is removed');
   for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
   for (const page of ['business.html', 'schools-and-colleges.html']) {
     if (exists(page) && !/Set up from your browser\. Add each device in a few minutes/.test(textOf(read(page)))) fail(`${page}: setup step reads "Set up from your browser. Add each device in a few minutes."`);
