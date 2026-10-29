@@ -598,10 +598,13 @@ for (const page of ['business.html', 'schools-and-colleges.html', 'small-busines
     if ((t.match(/Volume pricing/g) || []).length !== 1) fail(`${page}: "Volume pricing" appears once on the page`);
     if (!st.includes('Priced by number of devices.')) fail(`${page}: pricing card needs "Priced by number of devices."`);
   }
-  for (const n of ['A 15-minute demo', 'Free 30-day pilot', 'Quote after the pilot.']) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
+  // 2026-10-29: schools pricing offers the trial and the demo only, no pilot.
+  const noPilot = page === 'schools-and-colleges.html';
+  for (const n of ['A 15-minute demo', noPilot ? 'Quote after the trial.' : 'Quote after the pilot.', ...(noPilot ? [] : ['Free 30-day pilot'])]) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
+  if (noPilot && /pilot/i.test(st)) fail(`${page}: pricing card offers no pilot`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail(`${page}: pricing card needs "Request a demo" (data-demo)`);
-  if (!/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a pilot<\/a>/.test(sec)) fail(`${page}: pricing card needs "Start a pilot" (data-pilot)`);
-  if (!/success criteria agreed up front/i.test(t)) fail(`${page}: pilot needs "success criteria agreed up front"`);
+  if (!noPilot && !/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a pilot<\/a>/.test(sec)) fail(`${page}: pricing card needs "Start a pilot" (data-pilot)`);
+  if (!noPilot && !/success criteria agreed up front/i.test(t)) fail(`${page}: pilot needs "success criteria agreed up front"`);
   if (/See it before you decide|Book a demo, try it free/.test(t)) fail(`${page}: old pricing lines`);
 }
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
