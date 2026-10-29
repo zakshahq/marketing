@@ -674,13 +674,14 @@ for (const page of ALL_PAGES) {
     if (/installer pack|Run the installer|get a (configuration )?profile;|get a profile\./.test(t)) fail(`${page}: setup copy doesn't explain per-OS mechanics`);
   }
   const ADMIN = { 'small-business.html': 'On company laptops and PCs, removing it requires admin rights.', 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
-    'schools-and-colleges.html': 'Laptops and PCs: only an admin can remove it.' };
+    'schools-and-colleges.html': 'Windows PCs and Macs: only an admin can remove it.' };
   // 2026-10-29: the schools "Hard to switch off" block is one plain line per device, no ifs.
   if (exists('schools-and-colleges.html')) {
     const stay = (read('schools-and-colleges.html').match(/<section class="stay"[\s\S]*?<\/section>/) || [''])[0];
     const items = [...stay.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => textOf(m[1]).trim());
-    const want = ['Laptops and PCs: only an admin can remove it.', "School-managed iPads and iPhones: it can't be removed.",
-      'Encrypted DNS services: blocked.', 'Android: a phone that stops reporting shows as Gone quiet.'];
+    // Indian schools run desktops (Windows, some Linux) and rarely hand out phones or tablets: no phone lines.
+    const want = ['Windows PCs and Macs: only an admin can remove it.', 'Encrypted DNS services: blocked.',
+      'A computer that stops reporting for 2 days shows as Gone quiet.'];
     if (JSON.stringify(items) !== JSON.stringify(want)) fail(`schools-and-colleges.html: "Hard to switch off" list must be ${JSON.stringify(want)} (got ${JSON.stringify(items)})`);
   }
   for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
