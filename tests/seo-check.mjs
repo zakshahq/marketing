@@ -554,7 +554,8 @@ if (exists('schools-and-colleges.html')) {
   if (/satisf|complian|meets the|fulfils/i.test(textOf((html.match(/<section\b[^>]*id="cbse"[\s\S]*?<\/section>/) || [''])[0]))) fail('schools-and-colleges.html: CBSE section must not imply Zaksha satisfies the circular');
   if (/NEP|CBSE[- ]compliant|approved by CBSE/.test(t)) fail('schools-and-colleges.html: no NEP, no compliance claim');
   if (!t.includes('kept 30 days by default and longer by contract') || /7-day record|last 7 days and what was blocked/.test(t)) fail('schools-and-colleges.html: records are 30 days by default, longer by contract');
-  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?', 'Request a demo or a free 30-day pilot']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
+  for (const n of ['Malware and phishing', 'Starter policies ready to apply: Security baseline, Adult and gambling, Work focus.', 'Pick the categories your policy blocks; add any site of your own.', 'Does it work off campus?']) if (!t.includes(n)) fail(`schools-and-colleges.html: missing "${n}"`);
+  if (!html.includes('<h2>Request a demo</h2>') || /demo or a free 30-day pilot/.test(t)) fail('schools-and-colleges.html: enquiry heading is "Request a demo", no pilot');
   if (/on by default/.test(t)) fail('schools-and-colleges.html: malware blocking is not on by default for organisations (ent_tenancy.go: a new organisation starts with no policy)');
   if (!/class="marquee"/.test(html)) fail('schools-and-colleges.html: keeps its category marquee');
 }
