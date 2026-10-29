@@ -405,7 +405,7 @@ for (const page of ALL_PAGES) {
   const html = read(page);
   if (/Zaksha%20Enterprise%20enquiry/.test(html)) fail(`${page}: Enterprise mailto still present; use /business#enquire`);
   if (html.includes('plan__tag">Offices &amp; schools')) {
-    for (const needle of ['Volume pricing', 'Free 30-day pilot', 'href="/business#enquire">Get a quote</a>']) {
+    for (const needle of ['Volume pricing · 14-day free trial', 'href="/business#enquire">Get a quote</a>']) {
       if (!html.includes(needle)) fail(`${page}: Enterprise pricing card missing "${needle}"`);
     }
   }
@@ -497,7 +497,7 @@ for (const [page, [h1, sub]] of Object.entries(HEROES)) {
   if (!textOf(hero).includes(sub)) fail(`${page}: hero subline must be "${sub}"`);
   const chips = (hero.match(/<div class="fhero__facts">([\s\S]*?)<\/div>/) || [, ''])[1];
   // The solution pages lead with the self-serve trial (kuchbhi ADR 0114); the pilot moves under the second button.
-  const smb = TRIAL_PAGES.includes(page), offer = smb ? '14-day free trial' : 'Free 30-day pilot'
+  const smb = TRIAL_PAGES.includes(page), offer = '14-day free trial'
   if (JSON.stringify(textOf(chips).trim().split(/\s{1,}(?=Hosted|No hardware|Free 30|14-day)/)) !== JSON.stringify(['Hosted in India', 'No hardware', offer])) fail(`${page}: hero chips must be "Hosted in India · No hardware · ${offer}" (got "${textOf(chips).trim()}")`);
   if (/India|hardware|₹/.test(textOf(h[1] || ''))) fail(`${page}: India / hardware / price stay out of the headline`);
   if (/fhero__offer/.test(hero)) fail(`${page}: no offer line under the buttons; the pilot is a chip`);
@@ -627,17 +627,14 @@ for (const page of ['business.html', 'schools-and-colleges.html', 'small-busines
     if ((t.match(/Volume pricing/g) || []).length !== 1) fail(`${page}: "Volume pricing" appears once on the page`);
     if (!st.includes('Priced by number of devices.')) fail(`${page}: pricing card needs "Priced by number of devices."`);
   }
-  // 2026-10-29: schools pricing offers the trial and the demo only, no pilot.
-  const noPilot = page === 'schools-and-colleges.html';
-  for (const n of ['A 15-minute demo', noPilot ? 'Quote after the trial.' : 'Quote after the pilot.', ...(noPilot ? [] : ['Free 30-day pilot'])]) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
-  if (noPilot && /pilot/i.test(st)) fail(`${page}: pricing card offers no pilot`);
+  // 2026-10-29: the 30-day pilot is retired; pricing offers the trial and the demo.
+  for (const n of ['A 15-minute demo', 'Quote after the trial.']) if (!st.includes(n)) fail(`${page}: pricing card needs "${n}"`);
+  if (/pilot/i.test(st)) fail(`${page}: pricing card offers no pilot`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail(`${page}: pricing card needs "Request a demo" (data-demo)`);
-  if (!noPilot && !/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a pilot<\/a>/.test(sec)) fail(`${page}: pricing card needs "Start a pilot" (data-pilot)`);
-  if (!noPilot && !/success criteria agreed up front/i.test(t)) fail(`${page}: pilot needs "success criteria agreed up front"`);
   if (/See it before you decide|Book a demo, try it free/.test(t)) fail(`${page}: old pricing lines`);
 }
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
-if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/free 30-day pilot/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');
+if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/pilot is retired/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');
 
 // --- y. /business hub copy (marketing#25): buyers' problems first, no feature list ---
 if (exists('business.html')) {
@@ -730,7 +727,7 @@ for (const page of ALL_PAGES) {
   const hub = exists('business.html') ? read('business.html') : '', ht = textOf(hub);
   for (const n of ['Choose your organisation', 'Supported devices', 'Ready-made policies', 'Schedules switch policies on and off by time, for example during exams.',
     'Records kept 30 days by default, longer by contract.', 'Wi-Fi filtering for campuses and offices', 'Ask about Wi-Fi filtering',
-    'Quote after the pilot', "If a phone stops reporting, the console flags it as Gone quiet."]) if (!ht.includes(n)) fail(`business.html: missing "${n}"`);
+    'Quote after the trial', "If a phone stops reporting, the console flags it as Gone quiet."]) if (!ht.includes(n)) fail(`business.html: missing "${n}"`);
   if (/See how it works/.test(ht)) fail('business.html: solution card links name their destination, not "See how it works"');
   for (const page of ALL_PAGES) {
     const t = textOf(read(page));
@@ -805,8 +802,8 @@ for (const page of ['small-business.html', 'enterprise.html']) {
   if (/one group at a time/.test(et)) fail('enterprise.html: drop "A device belongs to one group at a time"');
   if (!et.includes('Block streaming for one team and allow YouTube for another.')) fail('enterprise.html: team use case blocks streaming');
   const steps = [...ent.matchAll(/<div class="step__n">\d<\/div>\s*<h3>([^<]*)<\/h3>\s*<p>([^<]*)<\/p>/g)].map((m) => m[1] + ': ' + m[2]);
-  const pilot = steps.findIndex((x) => /^Pilot/.test(x)), quote = steps.findIndex((x) => /quote/i.test(x));
-  if (pilot < 0 || quote < 0 || quote !== pilot || /quote/i.test(steps.slice(pilot + 1).join(' '))) fail('enterprise.html: the quote comes with the pilot step, before the site-by-site rollout');
+  const trial = steps.findIndex((x) => /^Trial/.test(x)), quote = steps.findIndex((x) => /quote/i.test(x));
+  if (trial < 0 || quote < 0 || quote !== trial || /quote/i.test(steps.slice(trial + 1).join(' '))) fail('enterprise.html: the quote comes with the trial step, before the site-by-site rollout');
   const sb = exists('small-business.html') ? textOf(read('small-business.html')) : '';
   if (/Nobody needs to/.test(sb)) fail('small-business.html: drop "Nobody needs to"');
   // marketing#29, Vasu 2026-10-21: personal-email error copy (the WhatsApp link text follows it)
@@ -818,6 +815,13 @@ for (const page of ['small-business.html', 'enterprise.html']) {
 for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html']) {
   if (exists(page) && /single sign-on|\bSSO\b/i.test(textOf(read(page)))) fail(`${page}: no SSO mention on Business pages`);
 }
+
+// --- gg. the 30-day pilot is retired (Vasu 2026-10-29): no page, form or meta offers it ---
+for (const page of ALL_PAGES) {
+  const html = read(page).replace(/[Cc]opilot/g, '');
+  if (/pilot/i.test(html)) fail(`${page}: still mentions the retired pilot`);
+}
+if (/data-pilot|30-day pilot/.test(read('lead-form.js'))) fail('lead-form.js: drop the retired pilot prefill');
 
 // --- report ---
 if (failures.length > 0) {

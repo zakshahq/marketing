@@ -172,3 +172,6 @@ Amended 2026-10-28 (kuchbhi ADR 0114 amendment): `/enterprise` and `/schools-and
 (`/schools-and-colleges`), and the note under them sends whole-office or whole-lab rollouts to the pilot. The `/business` hub stays quote-only.
 Amended 2026-10-29: `/schools-and-colleges` also uses "Talk to us" as the second button. Two free buttons side by side
 confused visitors; the pilot stays in the note under the buttons.
+Amended 2026-10-29: the 30-day pilot is retired everywhere. Pricing cards offer the 14-day trial and the demo, the
+quote comes after the trial, heroes carry no note under the buttons, and the Home pages' Business card reads
+"Volume pricing · 14-day free trial". This supersedes every pilot line above.

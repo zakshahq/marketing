@@ -74,7 +74,7 @@ else {
 }
 
 // --- e. the solution pages start a self-serve Business trial (kuchbhi ADR 0114, marketing#34) ---
-// Same trial everywhere: 14 days, up to 5 devices; bigger rollouts go to the 30-day pilot.
+// Same trial everywhere: 14 days, up to 5 devices. The 30-day pilot was retired on 2026-10-29.
 // Each page pre-selects its organisation type on the app's signup form (?segment=, the enquiry form's values).
 for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'], ['enterprise.html', 'Talk to us', 'enterprise'], ['schools-and-colleges.html', 'Talk to us', 'education']]) {
   const trialHref = `https://app.zaksha.com/signup?type=business&amp;segment=${seg}`;
@@ -87,8 +87,7 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   if (hero.indexOf('Start 14-day free trial') > hero.indexOf(`>${second}<`)) fail(`${page}: trial CTA must come before "${second}"`);
   if (/Request a 15-minute demo/.test(hero)) fail(`${page}: hero still has a third (demo) button`);
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
-  if (page !== 'enterprise.html') { if (/fhero__note|pilot/.test(hero)) fail(`${page}: hero has no note under the buttons and no pilot`); }
-  else if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
+  if (/fhero__note|pilot/i.test(hero)) fail(`${page}: hero has no note under the buttons and no pilot`);
   if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
