@@ -136,6 +136,7 @@
 @media (max-width:860px){ .grid3{ grid-template-columns:1fr; max-width:520px; } }
 @media (max-width:760px){ .grid2{ grid-template-columns:1fr; max-width:520px; } }
 .grid2 .pcard h3, .grid3 .pcard h3{ margin-top:0; }
+.grid3 .pcard--wide{ grid-column:1/-1; }
 .ba{ max-width:860px; margin:0 auto; display:grid; gap:12px; }
 .ba__row{ display:grid; grid-template-columns:1fr auto 1.3fr; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 20px; font-size:15px; }
 .ba__row span{ color:var(--ink-400); } .ba__row i{ color:var(--teal-600); font-size:18px; } .ba__row b{ color:var(--ink-900); font-weight:700; }

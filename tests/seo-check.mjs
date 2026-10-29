@@ -480,7 +480,7 @@ const HEROES = {
   'business.html': ['DNS Filtering for Organisations: Block Threats on Every Device',
     'Malware and phishing blocked at the DNS level on Windows, Mac, iPhone, iPad and Android. One policy, adjusted per site, group or device.'],
   'small-business.html': ['DNS Filtering for Small Business: Block Phishing on Every Work Device',
-    'AI-powered DNS filtering that stops scam, phishing and malware sites on every work laptop and phone, in the office or at home. Set it up from your browser in minutes, no IT team needed.'],
+    'DNS filtering that stops known scam, phishing and malware sites on work laptops and phones, in the office or on the road. Set it up from your browser in minutes, no IT team needed.'],
   'enterprise.html': ['DNS Filtering for Enterprises: One Policy Across Every Site',
     'Block malware, phishing and chosen categories across offices, groups and devices. Set the policy once, then adjust where a site or team needs it.'],
   'schools-and-colleges.html': ['Web Filtering for Schools and Colleges: Safe Browsing for Students',
@@ -506,7 +506,7 @@ for (const [page, [h1, sub]] of Object.entries(HEROES)) {
   if (page !== 'business.html' && !html.includes('id="faq"')) fail(`${page}: missing #faq`);
 }
 // sb and ent: policy first, proof second, price last
-for (const page of ['small-business.html', 'enterprise.html']) {
+for (const page of ['enterprise.html']) {
   if (!exists(page)) continue;
   const html = read(page), t = textOf(html);
   const order = ['get', 'policy', 'uses', 'why', 'setup', 'faq', 'pricing', 'enquire'];
@@ -527,11 +527,26 @@ for (const page of ['small-business.html', 'enterprise.html']) {
   const does = (html.match(/Zaksha does<\/h3>([\s\S]*?)<\/ul>/) || [, ''])[1];
   if (/notice/i.test(does)) fail(`${page}: the staff notice belongs in the FAQ, not the "Zaksha does" list`);
 }
+// 2026-10-29: /small-business answers two questions and sells: why DNS filtering, then why Zaksha.
 if (exists('small-business.html')) {
   const html = read('small-business.html'), t = textOf(html);
-  for (const n of ['How small businesses use Zaksha', 'Does it work for staff working from home?', 'on Windows, Mac, iPhone and iPad, and Android',
-    "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
-  // Vasu 2026-10-20: the "Three ways offices try this today" comparison is cut
+  const order = ['need', 'why', 'faq', 'pricing', 'enquire'];
+  const at = order.map((id) => html.indexOf(`id="${id}"`));
+  if (at.some((i) => i < 0) || at.some((v, i) => i > 0 && v < at[i - 1])) fail(`small-business.html: sections must be ${order.map((i) => '#' + i).join(' → ')}`);
+  for (const gone of ['get', 'policy', 'uses', 'setup']) if (html.includes(`id="${gone}"`)) fail(`small-business.html: #${gone} folds into the two questions`);
+  const titles = (id) => [...((html.match(new RegExp(`<section\\b[^>]*id="${id}"[\\s\\S]*?<\\/section>`)) || [''])[0]).matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
+  const NEED = ['One click can cost you lakhs.', "You don't have an IT team, and attackers know it.", "Work doesn't stay in the office.",
+    'Some sites are a legal risk.', 'Distractions are always one tab away.', 'Streaming slows everyone down.'];
+  const WHY = ['Scams stopped before the page opens.', 'Running in minutes, no IT team.', 'Protection that travels with the device.',
+    'Rules that fit each team.', 'Stays on.', 'Your data stays in India.', 'Less than ₹3 a day per device.'];
+  if (JSON.stringify(titles('need')) !== JSON.stringify(NEED)) fail(`small-business.html: #need cards must be ${JSON.stringify(NEED)} (got ${JSON.stringify(titles('need'))})`);
+  if (JSON.stringify(titles('why')) !== JSON.stringify(WHY)) fail(`small-business.html: #why cards must be ${JSON.stringify(WHY)} (got ${JSON.stringify(titles('why'))})`);
+  if (!html.includes('<h2>Why your business needs DNS filtering</h2>') || !html.includes('<h2>Why Zaksha</h2>')) fail('small-business.html: the two headings are "Why your business needs DNS filtering" and "Why Zaksha"');
+  // Threat blocking is list-based (hagezi TIF Mini + phishing-filter, 12 h refresh): no AI claim on it, say "known".
+  if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
+  if (!t.includes('threat lists updated twice a day')) fail('small-business.html: scam card says "threat lists updated twice a day"');
+  if (/home Wi-?Fi/i.test(t)) fail('small-business.html: we filter the device, not home Wi-Fi');
+  for (const n of ['Does it work for staff working from home?', "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
   if (/Three ways offices try this today|class="cmp/.test(html) || /\.cmp\b|\.cmp-card/.test(read('biz.css'))) fail('small-business.html: the comparison table, its phone cards and their CSS are removed');
 }
 if (exists('enterprise.html')) {
@@ -682,7 +697,7 @@ for (const page of ALL_PAGES) {
     if (/On Windows[^.]*admin rights|admin rights \(Windows\)/.test(t)) fail(`${page}: admin-rights lines don't name Windows`);
     if (/installer pack|Run the installer|get a (configuration )?profile;|get a profile\./.test(t)) fail(`${page}: setup copy doesn't explain per-OS mechanics`);
   }
-  const ADMIN = { 'small-business.html': 'On company laptops and PCs, removing it requires admin rights.', 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
+  const ADMIN = { 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
     'schools-and-colleges.html': 'Only your IT admin can remove Zaksha' };
   // 2026-10-29: the schools "stay on" block sells outcomes, one headline and one line each, no ifs.
   // Indian schools run desktops (Windows, some Linux) and rarely hand out phones or tablets: no phone lines.
@@ -694,7 +709,7 @@ for (const page of ALL_PAGES) {
     if (/\b(if|unless|when)\b/i.test(stay)) fail('schools-and-colleges.html: "stay on" block has an if/unless/when');
   }
   for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
-  for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html']) {
+  for (const page of ['business.html', 'schools-and-colleges.html']) {
     if (exists(page) && !/Set up from your browser\. Add each device in a few minutes/.test(textOf(read(page)))) fail(`${page}: setup step reads "Set up from your browser. Add each device in a few minutes."`);
   }
   if (exists('small-business.html') && /admin rights \(/.test(read('small-business.html'))) fail('small-business.html: comparison says "Not without admin rights"');
@@ -729,7 +744,7 @@ for (const page of ALL_PAGES) {
     if (/support sign-in|Support sign-in/i.test(t)) fail(`${page}: the support sign-in disclosure lives on /security, privacy and terms only`);
     if (/We send you everything you need|stay on the call/.test(t)) fail(`${page}: setup is done from the browser console; no "we send you" / "stay on the call"`);
     const getSec = (html.match(/<section\b[^>]*id="get"[\s\S]*?<\/section>/) || [''])[0];
-    const GET_H2 = { 'small-business.html': 'How Zaksha protects your business', 'enterprise.html': 'How Zaksha protects your organisation' }[page];
+    const GET_H2 = { 'enterprise.html': 'How Zaksha protects your organisation' }[page];
     if (GET_H2 && (!getSec.includes(`<h2>${GET_H2}</h2>`) || /class="eyebrow"/.test(getSec))) fail(`${page}: the three cards sit under "${GET_H2}" with no eyebrow`);
     if (/notice/i.test(t)) fail(`${page}: no staff-notice mention on Business pages`);
   }
