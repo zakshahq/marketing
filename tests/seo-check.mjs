@@ -583,10 +583,11 @@ if (exists('schools-and-colleges.html')) {
   if (why < 0 || block < 0 || why > block) fail('schools-and-colleges.html: "Why schools need web filtering" must come before "What you can block"');
   const probs = (html.match(/<section\b[^>]*id="problems"[\s\S]*?<\/section>/) || [''])[0];
   const cards = [...probs.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]);
-  if (JSON.stringify(cards) !== JSON.stringify(['Harmful content', 'Classroom distractions', 'Malware and phishing', 'CBSE guidelines']))
-    fail(`schools-and-colleges.html: "why" cards must be Harmful content, Classroom distractions, Malware and phishing, CBSE guidelines (got ${JSON.stringify(cards)})`);
+  if (JSON.stringify(cards) !== JSON.stringify(['Harmful content', 'Classroom distractions', 'Malware and phishing', 'CBSE and NCERT guidelines']))
+    fail(`schools-and-colleges.html: "why" cards must be Harmful content, Classroom distractions, Malware and phishing, CBSE and NCERT guidelines (got ${JSON.stringify(cards)})`);
   if (/id="cbse"/.test(html)) fail('schools-and-colleges.html: CBSE is a card in the "why" section, not its own section');
   if (!probs.includes('href="https://www.cbse.gov.in/cbsenew/Examination_Circular/2017/19_CIRCULAR.pdf"')) fail('schools-and-colleges.html: CBSE card links the original circular (cbse.gov.in, 18 Aug 2017)');
+  if (!probs.includes('href="https://ciet.ncert.gov.in/storage/app/public/files/14/cyber-safety/Cyber_safety_for_schools_Eng.pdf"')) fail('schools-and-colleges.html: CBSE and NCERT card links NCERT Cyber Safety and Security Guidelines for Schools (2020)');
   if (/satisf|complian|meets the|fulfils/i.test(textOf(probs))) fail('schools-and-colleges.html: CBSE card must not imply Zaksha satisfies the circular');
   // 2026-10-30: "Why Zaksha" matches /small-business: a photo band, then 3x3 cards with the heading beside the icon.
   const whyS = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
