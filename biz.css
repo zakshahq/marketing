@@ -192,7 +192,7 @@
 .tier .eyebrow{ color:var(--teal-700); } .tier h3{ font-size:20px; }
 .tier__price{ font-size:18px; font-weight:800; color:var(--ink-900, #101a1c); }
 .tier p{ font-size:14.5px; color:var(--ink-500); line-height:1.55; flex:1; }
-.tier .btn{ align-self:flex-start; } .tier__more{ font-size:14px; font-weight:700; color:var(--teal-700); }
+.tier .btn{ align-self:stretch; justify-content:center; text-align:center; } .tier__more{ align-self:center; font-size:12.5px; font-weight:600; color:var(--teal-700); }
 .incl{ max-width:1040px; margin:clamp(22px,3vw,32px) auto 0; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:28px; }
 .incl h3{ font-size:17px; } .incl ul{ list-style:none; padding:0; margin:14px 0 0; display:grid; grid-template-columns:repeat(3,1fr); gap:10px 20px; }
 .incl li{ display:flex; gap:8px; align-items:center; font-size:14.5px; color:var(--ink-700, #2b3a3c); } .incl li i{ color:var(--teal-600); font-size:18px; }
