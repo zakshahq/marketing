@@ -537,19 +537,20 @@ if (exists('small-business.html')) {
   const titles = (id) => [...((html.match(new RegExp(`<section\\b[^>]*id="${id}"[\\s\\S]*?<\\/section>`)) || [''])[0]).matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
   const NEED = ['One click can cost you lakhs.', "You don't have an IT team, and attackers know it.", "Work doesn't stay in the office.",
     'Some sites are a legal risk.', 'Distractions are always one tab away.', 'Streaming slows everyone down.'];
-  const WHY = ['Scams stopped before the page opens.', 'Running in minutes, no IT team.', 'Protection that travels with the device.',
-    'Rules that fit each team.', 'Stays on.', 'See every block, device by device.', 'Your data stays in India.', 'Less than ₹3 a day per device.'];
+  const WHY = ['Threat detection', 'No hardware required', 'Protection that travels with the device.',
+    'Rules that fit each team.', 'Ready-made policies', 'Stays on.', 'See every block, device by device.', 'Your data stays in India.', 'Less than ₹3 a day per device.'];
   if (JSON.stringify(titles('need')) !== JSON.stringify(NEED)) fail(`small-business.html: #need cards must be ${JSON.stringify(NEED)} (got ${JSON.stringify(titles('need'))})`);
   if (JSON.stringify(titles('why')) !== JSON.stringify(WHY)) fail(`small-business.html: #why cards must be ${JSON.stringify(WHY)} (got ${JSON.stringify(titles('why'))})`);
   if (!html.includes('<h2>Why your business needs DNS filtering</h2>') || !html.includes('<h2>Why Zaksha</h2>')) fail('small-business.html: the two headings are "Why your business needs DNS filtering" and "Why Zaksha"');
   // Layout: heading beside its icon; "Why Zaksha" is 4×2 over an office photo.
   const whySec = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
   if (!/class="[^"]*privbg[^"]*"/.test(whySec) || !whySec.includes('img/lifestyle/office-team-desks.jpg')) fail('small-business.html: "Why Zaksha" sits on the office-team-desks photo');
-  if (!/class="grid4 grid--row"/.test(whySec) || !/id="need"[\s\S]*?class="grid3 grid--row"/.test(html)) fail('small-business.html: card grids use grid--row (heading beside icon); why is grid4');
+  if (!/class="grid3 grid--row"/.test(whySec) || !/id="need"[\s\S]*?class="grid3 grid--row"/.test(html)) fail('small-business.html: card grids are grid3 grid--row (heading beside icon), 3 across');
   if (/ph-clock-afternoon/.test(whySec)) fail('small-business.html: the clock icon overlaps its text; use another');
   if (!read('img/lifestyle/CREDITS.md').includes('office-team-desks.jpg')) fail('img/lifestyle/CREDITS.md: credit office-team-desks.jpg');
   // Threat blocking is list-based (hagezi TIF Mini + phishing-filter, 12 h refresh): no AI claim on it, say "known".
   if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
+  if (!t.includes('Start from Security baseline, Adult and gambling or Work focus')) fail('small-business.html: ready-made policies name the real starters (ent_policies.go)');
   if (!t.includes('threat lists updated twice a day')) fail('small-business.html: scam card says "threat lists updated twice a day"');
   if (/home Wi-?Fi/i.test(t)) fail('small-business.html: we filter the device, not home Wi-Fi');
   for (const n of ['Does it work for staff working from home?', "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
