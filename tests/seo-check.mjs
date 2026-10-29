@@ -530,10 +530,10 @@ for (const page of ['enterprise.html']) {
 // 2026-10-29: /small-business answers two questions and sells: why DNS filtering, then why Zaksha.
 if (exists('small-business.html')) {
   const html = read('small-business.html'), t = textOf(html);
-  const order = ['need', 'why', 'faq', 'pricing', 'enquire'];
+  const order = ['need', 'why', 'uses', 'faq', 'pricing', 'start', 'enquire'];
   const at = order.map((id) => html.indexOf(`id="${id}"`));
   if (at.some((i) => i < 0) || at.some((v, i) => i > 0 && v < at[i - 1])) fail(`small-business.html: sections must be ${order.map((i) => '#' + i).join(' → ')}`);
-  for (const gone of ['get', 'policy', 'uses', 'setup']) if (html.includes(`id="${gone}"`)) fail(`small-business.html: #${gone} folds into the two questions`);
+  for (const gone of ['get', 'policy', 'setup']) if (html.includes(`id="${gone}"`)) fail(`small-business.html: #${gone} folds into the two questions`);
   const titles = (id) => [...((html.match(new RegExp(`<section\\b[^>]*id="${id}"[\\s\\S]*?<\\/section>`)) || [''])[0]).matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
   const NEED = ['One click can cost you lakhs.', "You don't have an IT team, and attackers know it.", "Work doesn't stay in the office.",
     'Some sites are a legal risk.', 'Distractions are always one tab away.', 'Streaming slows everyone down.'];
@@ -549,6 +549,13 @@ if (exists('small-business.html')) {
   if (!/class="grid3 grid--row"/.test(whySec) || !/id="need"[\s\S]*?class="grid3 grid--row"/.test(html)) fail('small-business.html: card grids are grid3 grid--row (heading beside icon), 3 across');
   if (/ph-clock-afternoon/.test(whySec)) fail('small-business.html: the clock icon overlaps its text; use another');
   if (!read('img/lifestyle/CREDITS.md').includes('office-presenting.jpg')) fail('img/lifestyle/CREDITS.md: credit office-presenting.jpg');
+  // 2026-10-30, from Control D's SMB page: who uses it, a closing trial band, two more FAQs.
+  const USES = ['CA and accounting firms', 'Clinics and diagnostic labs', 'Retail stores and showrooms', 'Coaching and training centres', 'Startups and IT services', 'Travel, real estate and agencies'];
+  if (JSON.stringify(titles('uses')) !== JSON.stringify(USES)) fail(`small-business.html: #uses cards must be ${JSON.stringify(USES)} (got ${JSON.stringify(titles('uses'))})`);
+  if (!html.includes('<h2>Who uses Zaksha</h2>')) fail('small-business.html: #uses heading is "Who uses Zaksha"');
+  const start = (html.match(/<section\b[^>]*id="start"[\s\S]*?<\/section>/) || [''])[0];
+  if (!/class="ctaband"/.test(start) || !start.includes('href="https://app.zaksha.com/signup?type=business&amp;segment=smb"')) fail('small-business.html: #start is a trial band linking the smb signup');
+  for (const q of ['Can I choose what gets blocked?', 'How is this different from a firewall?']) if (!html.includes(`<summary>${q} <i class="ph ph-plus"></i></summary>`)) fail(`small-business.html: FAQ "${q}"`);
   // Threat blocking is list-based (hagezi TIF Mini + phishing-filter, 12 h refresh): no AI claim on it, say "known".
   if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
   if (!t.includes('Start from Security baseline, Adult and gambling or Work focus')) fail('small-business.html: ready-made policies name the real starters (ent_policies.go)');
