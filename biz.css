@@ -191,8 +191,8 @@
 .tier--main{ border-color:var(--teal-600); box-shadow:0 0 0 1px var(--teal-600), var(--sh-1); }
 .tier__ic{ width:48px; height:48px; border-radius:12px; background:var(--teal-50); color:var(--teal-600); display:grid; place-items:center; font-size:24px; }
 .tier .eyebrow{ color:var(--teal-700); margin-top:6px; } .tier h3{ font-size:20px; }
-.tier__top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-.tier__badge{ font-size:12.5px; font-weight:700; color:var(--teal-700); background:var(--teal-50); border:1px solid rgba(13,110,116,.25); border-radius:999px; padding:5px 11px; white-space:nowrap; }
+.tier__head{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.tier__badge{ font-size:12px; font-weight:700; color:var(--teal-700); background:var(--teal-50); border:1px solid rgba(13,110,116,.25); border-radius:999px; padding:4px 9px; white-space:nowrap; }
 .tier p{ font-size:14.5px; color:var(--ink-500); line-height:1.55; flex:1; }
 .tier .btn{ align-self:stretch; justify-content:center; text-align:center; } .tier__more{ align-self:center; font-size:12.5px; font-weight:600; color:var(--teal-700); }
 .incl{ max-width:1040px; margin:clamp(22px,3vw,32px) auto 0; background:#fff; border:1px solid var(--line); border-radius:var(--r-lg); padding:28px; }

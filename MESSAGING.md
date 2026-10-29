@@ -175,8 +175,8 @@ confused visitors; the pilot stays in the note under the buttons.
 Amended 2026-10-29: the 30-day pilot is retired everywhere. Pricing cards offer the 14-day trial and the demo, the
 quote comes after the trial, heroes carry no note under the buttons, and the Home pages' Business card reads
 "Volume pricing · 14-day free trial". This supersedes every pilot line above.
-Amended 2026-10-30: the `/business` hub's pricing section shows one card per audience; only Small business shows a price ("From ₹79 per
-device / month"). Schools and colleges says "Discounted rates for schools, colleges and registered non-profits.",
+Amended 2026-10-30: the `/business` hub's pricing section shows one card per audience; only Small business shows a price, as a badge beside its
+heading ("₹79/device/month"). Schools and colleges says "Discounted rates for schools, colleges and registered non-profits.",
 Enterprise "For many sites, teams and complex rollouts."; both go to Talk to us. Then an "Every plan includes" list.
 Single sign-on for the team, API access, SIEM log streaming and router setup are on every plan, listed under "Every
 plan includes" with a `*` and the footnote "*We set this up with you during onboarding." Never frame them as an add-on

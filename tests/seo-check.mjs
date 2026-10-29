@@ -646,14 +646,15 @@ for (const page of ['schools-and-colleges.html', 'small-business.html', 'enterpr
 // and enterprise extras marked * with an "Available on request" footnote.
 if (exists('business.html')) {
   const sec = (read('business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
-  const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*(?:<div class="tier__top">)?<span class="tier__ic"><i class="ph ph-([a-z-]+)"><\/i><\/span>(?:<span class="tier__badge">[^<]*<\/span><\/div>)?\s*<span class="eyebrow">[^<]*<\/span>\s*<h3>([^<]+)<\/h3>/g)].map((m) => m[2] + ':' + m[1]);
+  const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="tier__ic"><i class="ph ph-([a-z-]+)"><\/i><\/span>\s*<span class="eyebrow">[^<]*<\/span>\s*(?:<div class="tier__head">)?<h3>([^<]+)<\/h3>/g)].map((m) => m[2] + ':' + m[1]);
   if (JSON.stringify(tiers) !== JSON.stringify(['Small business:storefront', 'Schools and colleges:graduation-cap', 'Enterprise:buildings'])) fail(`business.html: pricing tiers (with icons) must be Small business:storefront, Schools and colleges:graduation-cap, Enterprise:buildings (got ${JSON.stringify(tiers)})`);
-  for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
+  for (const n of ['₹79/device/month', 'Minimum 10 devices.', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
     if (!st.includes(n)) fail(`business.html: pricing needs "${n}"`);
   for (const href of ['https://app.zaksha.com/signup?type=business&amp;segment=smb', '/small-business', '/schools-and-colleges', '/enterprise'])
     if (!sec.includes(`href="${href}"`)) fail(`business.html: pricing links ${href}`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail('business.html: pricing ends with "Request a demo" (data-demo)');
   if (/pilot/i.test(st)) fail('business.html: pricing offers no pilot');
+  if (!/<div class="tier__head"><h3>Small business<\/h3><span class="tier__badge">₹79\/device\/month<\/span><\/div>/.test(sec)) fail('business.html: the price badge sits beside the Small business heading');
   // Vasu 2026-10-30: only the small-business card shows a price.
   if ((sec.match(/class="tier__badge"/g) || []).length !== 1 || /tier__price/.test(sec) || /Volume pricing|>Custom</.test(sec.replace('<span class="eyebrow">Custom</span>', ''))) fail('business.html: only the small-business card shows a price');
   // Vasu 2026-10-30: the * features are on every plan, not an enterprise add-on.
