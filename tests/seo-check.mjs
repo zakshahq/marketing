@@ -593,7 +593,7 @@ if (exists('schools-and-colleges.html')) {
   const whyCards = [...whyS.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
   // Written for schools (Control D's school features as reference; no Safe Search or alerts, which we don't have).
   const WANT_WHY = ['Threat detection', 'Rules for each class and lab', 'Apps and websites', 'Timetable-aware filtering', 'Analytics & insights', 'Student privacy'];
-  if (!textOf(whyS).includes('Zaksha sees which sites a computer visits, never what is on the page.') || /keystrokes/.test(textOf(whyS))) fail('schools-and-colleges.html: Student privacy is one plain sentence, not a list of negatives');
+  if (!textOf(whyS).includes('Zaksha sees which sites a device visits, never what is on the page.') || /each computer|a computer visits/.test(textOf(whyS)) || /keystrokes/.test(textOf(whyS))) fail('schools-and-colleges.html: Student privacy is one plain sentence, not a list of negatives');
   if (!textOf(whyS).includes('Activity stays in India')) fail('schools-and-colleges.html: Student privacy card says activity stays in India');
   if (/go home|take home|home learning/i.test(textOf(whyS))) fail('schools-and-colleges.html: Indian schools rarely send laptops home; no home-learning card');
   const whyAt = html.indexOf('id="why"'), probAt = html.indexOf('id="problems"'), blockAt = html.indexOf('<h2>What you can block</h2>');
