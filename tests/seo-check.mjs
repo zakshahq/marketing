@@ -484,7 +484,7 @@ const HEROES = {
   'enterprise.html': ['DNS Filtering for Enterprises: One Policy Across Every Site',
     'Block malware, phishing and chosen categories across offices, groups and devices. Set the policy once, then adjust where a site or team needs it.'],
   'schools-and-colleges.html': ['Web Filtering for Schools and Colleges: Safe Browsing for Students',
-    'Malware, phishing and adult sites blocked on school devices set up with Zaksha, all day. Social media, games and AI tools follow your class and exam timetable.'],
+    'AI-powered web filtering for schools and colleges. Block adult and unsafe sites all day, switch games, social media and AI tools off for class and exams, all from one simple console.'],
 };
 const TRIAL_PAGES = ['small-business.html', 'enterprise.html', 'schools-and-colleges.html'];
 for (const [page, [h1, sub]] of Object.entries(HEROES)) {
