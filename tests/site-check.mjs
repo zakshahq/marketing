@@ -87,7 +87,8 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   if (hero.indexOf('Start 14-day free trial') > hero.indexOf(`>${second}<`)) fail(`${page}: trial CTA must come before "${second}"`);
   if (/Request a 15-minute demo/.test(hero)) fail(`${page}: hero still has a third (demo) button`);
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
-  if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
+  if (page === 'schools-and-colleges.html') { if (!hero.includes('Rolling out to a whole lab or campus? <a href="#enquire">Let us know</a>.') || /pilot/.test(hero)) fail(`${page}: hero note ends "Rolling out to a whole lab or campus? Let us know." with no pilot`); }
+  else if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
   if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
