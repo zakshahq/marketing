@@ -552,6 +552,7 @@ if (exists('small-business.html')) {
   if (/AI/.test(t)) fail('small-business.html: no AI claim; scam blocking is from threat lists');
   if (!t.includes('Start from Security baseline, Adult and gambling or Work focus')) fail('small-business.html: ready-made policies name the real starters (ent_policies.go)');
   if (!t.includes('threat lists updated twice a day')) fail('small-business.html: scam card says "threat lists updated twice a day"');
+  if (!t.includes('Activity is stored in Mumbai. It filters sites, not people: no screen watching, no passwords.')) fail('small-business.html: Data in India card says where data is stored');
   if (/home Wi-?Fi/i.test(t)) fail('small-business.html: we filter the device, not home Wi-Fi');
   for (const n of ['Does it work for staff working from home?', "Android phones use Android's built-in Private DNS. If a phone stops reporting, we flag it as Gone quiet on your Activity page."]) if (!t.includes(n)) fail(`small-business.html: missing "${n}"`);
   if (/Three ways offices try this today|class="cmp/.test(html) || /\.cmp\b|\.cmp-card/.test(read('biz.css'))) fail('small-business.html: the comparison table, its phone cards and their CSS are removed');
