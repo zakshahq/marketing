@@ -648,12 +648,14 @@ if (exists('business.html')) {
   const sec = (read('business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
   const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="tier__ic"><i class="ph ph-([a-z-]+)"><\/i><\/span>\s*<span class="eyebrow">[^<]*<\/span>\s*<h3>([^<]+)<\/h3>/g)].map((m) => m[2] + ':' + m[1]);
   if (JSON.stringify(tiers) !== JSON.stringify(['Small business:storefront', 'Schools and colleges:graduation-cap', 'Enterprise:buildings'])) fail(`business.html: pricing tiers (with icons) must be Small business:storefront, Schools and colleges:graduation-cap, Enterprise:buildings (got ${JSON.stringify(tiers)})`);
-  for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Volume pricing', 'Custom', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
+  for (const n of ['From ₹79 per device / month', 'Minimum 10 devices.', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
     if (!st.includes(n)) fail(`business.html: pricing needs "${n}"`);
   for (const href of ['https://app.zaksha.com/signup?type=business&amp;segment=smb', '/small-business', '/schools-and-colleges', '/enterprise'])
     if (!sec.includes(`href="${href}"`)) fail(`business.html: pricing links ${href}`);
   if (!/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a demo<\/a>/.test(sec)) fail('business.html: pricing ends with "Request a demo" (data-demo)');
   if (/pilot/i.test(st)) fail('business.html: pricing offers no pilot');
+  // Vasu 2026-10-30: only the small-business card shows a price.
+  if ((sec.match(/class="tier__price"/g) || []).length !== 1 || /Volume pricing|>Custom</.test(sec.replace('<span class="eyebrow">Custom</span>', ''))) fail('business.html: only the small-business card shows a price');
   // Vasu 2026-10-30: the * features are on every plan, not an enterprise add-on.
   const incl = textOf((sec.match(/<div class="incl">[\s\S]*?<\/ul>/) || [''])[0]);
   for (const n of ['Single sign-on for your team*', 'API access*', 'SIEM log streaming*', 'Router and network-wide setup*']) if (!incl.includes(n)) fail(`business.html: "${n}" is in Every plan includes`);
