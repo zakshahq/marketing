@@ -170,3 +170,14 @@ links. Don't write "no card" on the site (the site check forbids it everywhere, 
 Amended 2026-10-28 (kuchbhi ADR 0114 amendment): `/enterprise` and `/schools-and-colleges` offer the same trial. Hero:
 "Start 14-day free trial" first; the second button stays "Talk to us" (`/enterprise`) or "Start a free 30-day pilot"
 (`/schools-and-colleges`), and the note under them sends whole-office or whole-lab rollouts to the pilot. The `/business` hub stays quote-only.
+Amended 2026-10-29: `/schools-and-colleges` also uses "Talk to us" as the second button. Two free buttons side by side
+confused visitors; the pilot stays in the note under the buttons.
+Amended 2026-10-29: the 30-day pilot is retired everywhere. Pricing cards offer the 14-day trial and the demo, the
+quote comes after the trial, heroes carry no note under the buttons, and the Home pages' Business card reads
+"Volume pricing · 14-day free trial". This supersedes every pilot line above.
+Amended 2026-10-30: the `/business` hub's pricing section shows one card per audience; only Small business shows a price, as a badge beside its
+heading ("₹79/device/month"). Schools and colleges says "Discounted rates for schools, colleges and registered non-profits.",
+Enterprise "For many sites, teams and complex rollouts."; both go to Talk to us. Then an "Every plan includes" list.
+Single sign-on for the team, API access, SIEM log streaming and router setup are on every plan, listed under "Every
+plan includes" with a `*` and the footnote "*We set this up with you during onboarding." Never frame them as an add-on
+or "on request". The owner keeps email and password; single sign-on is for their team.

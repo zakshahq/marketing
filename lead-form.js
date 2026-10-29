@@ -121,13 +121,6 @@
     var init = function () {
       document.querySelectorAll('form.lead-form').forEach(wire);
       // "Book a 15-minute demo" goes to the same form: marks the demo, asks for the terms tick, fills the message
-      // "Start a free 30-day pilot" (schools hero) goes to the same form, with the message filled in
-      document.querySelectorAll('a[data-pilot]').forEach(function (a) {
-        a.addEventListener('click', function () {
-          var m = document.querySelector('form.lead-form textarea[name="message"]');
-          if (m && !m.value.trim()) m.value = "I'd like a free 30-day pilot.";
-        });
-      });
       document.querySelectorAll('a[data-demo]').forEach(function (a) {
         a.addEventListener('click', function () {
           var form = document.querySelector('form.lead-form');
