@@ -590,9 +590,10 @@ if (exists('schools-and-colleges.html')) {
   if (/satisf|complian|meets the|fulfils/i.test(textOf(probs))) fail('schools-and-colleges.html: CBSE card must not imply Zaksha satisfies the circular');
   // 2026-10-30: "Why Zaksha" matches /small-business: a photo band, then 3x3 cards with the heading beside the icon.
   const whyS = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
-  const whyCards = [...whyS.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
+  const whyCards = [...whyS.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1].replace(/&amp;/g, '&'));
   // Written for schools (Control D's school features as reference; no Safe Search or alerts, which we don't have).
-  const WANT_WHY = ['Threat detection', 'Rules for each class and lab', 'Apps and websites', 'Timetable-aware filtering', 'Reports for the principal', 'Home learning too', 'No hardware required', 'Data in India', 'Records sites, not students'];
+  const WANT_WHY = ['Threat detection', 'Rules for each class and lab', 'Apps and websites', 'Timetable-aware filtering', 'Analytics & insights', 'Windows and Mac labs', 'No hardware required', 'Data in India', 'Student privacy'];
+  if (/go home|take home|home learning/i.test(textOf(whyS))) fail('schools-and-colleges.html: Indian schools rarely send laptops home; no home-learning card');
   const whyAt = html.indexOf('id="why"'), probAt = html.indexOf('id="problems"'), blockAt = html.indexOf('<h2>What you can block</h2>');
   if (!(probAt < whyAt && whyAt < blockAt)) fail('schools-and-colleges.html: "Why Zaksha" sits right after "Why schools need web filtering", before "What you can block"');
   if (/safe ?search|alert/i.test(textOf(whyS))) fail('schools-and-colleges.html: no Safe Search or alerts claim in Why Zaksha');
