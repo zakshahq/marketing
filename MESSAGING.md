@@ -181,3 +181,5 @@ Enterprise "For many sites, teams and complex rollouts."; both go to Talk to us.
 Single sign-on for the team, API access, SIEM log streaming and router setup are on every plan, listed under "Every
 plan includes" with a `*` and the footnote "*We set this up with you during onboarding." Never frame them as an add-on
 or "on request". The owner keeps email and password; single sign-on is for their team.
+Amended 2026-10-30 (later): `/schools-and-colleges`, `/small-business` and `/enterprise` carry the `/business` pricing
+section unchanged (a site check fails on any difference). Edit it in `business.html`, then copy it to the three pages.
