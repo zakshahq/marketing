@@ -646,7 +646,7 @@ for (const page of ALL_PAGES) {
 if (exists('business.html')) {
   const sec = (read('business.html').match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0], st = textOf(sec);
   const tiers = [...sec.matchAll(/<div class="tier[^"]*">\s*<span class="tier__ic"><i class="ph ph-([a-z-]+)"><\/i><\/span>\s*<span class="eyebrow">[^<]*<\/span>\s*(?:<div class="tier__head">)?<h3>([^<]+)<\/h3>/g)].map((m) => m[2] + ':' + m[1]);
-  if (JSON.stringify(tiers) !== JSON.stringify(['Small business:storefront', 'Schools and colleges:graduation-cap', 'Enterprise:buildings'])) fail(`business.html: pricing tiers (with icons) must be Small business:storefront, Schools and colleges:graduation-cap, Enterprise:buildings (got ${JSON.stringify(tiers)})`);
+  if (JSON.stringify(tiers) !== JSON.stringify(['Schools and colleges:graduation-cap', 'Small business:storefront', 'Enterprise:buildings'])) fail(`business.html: pricing tiers (with icons) must be Schools and colleges:graduation-cap, Small business:storefront, Enterprise:buildings (got ${JSON.stringify(tiers)})`);
   for (const n of ['₹79/device/month', 'Minimum 10 devices.', 'Every plan includes', 'Every plan starts with a 14-day free trial on up to 5 devices.', 'Discounted rates for schools, colleges and registered non-profits.', '*We set this up with you during onboarding.'])
     if (!st.includes(n)) fail(`business.html: pricing needs "${n}"`);
   for (const href of ['https://app.zaksha.com/signup?type=business&amp;segment=smb', '/small-business', '/schools-and-colleges', '/enterprise'])
@@ -661,12 +661,20 @@ if (exists('business.html')) {
   for (const n of ['Single sign-on for your team*', 'API access*', 'SIEM log streaming*', 'Router and network-wide setup*']) if (!incl.includes(n)) fail(`business.html: "${n}" is in Every plan includes`);
   if (/tier__extras|on request|add-on/i.test(sec)) fail('business.html: no add-on framing (tier extras, "on request")');
 }
-// 2026-10-30: every Business solution page carries the hub's pricing section, byte for byte.
+// 2026-10-30: every Business solution page carries the hub's pricing section; only the highlighted card differs,
+// and it is the page's own solution (the hub highlights the self-serve small-business card).
 {
   const pricing = (page) => (read(page).match(/<section\b[^>]*id="pricing"[\s\S]*?<\/section>/) || [''])[0];
+  const plain = (sec) => sec.replace(/ tier--main/g, '');
+  const main = (sec) => (sec.match(/<div class="tier tier--main">[\s\S]*?<h3>([^<]+)<\/h3>/) || [, ''])[1];
   const hubSec = pricing('business.html');
-  for (const page of ['schools-and-colleges.html', 'small-business.html', 'enterprise.html'])
-    if (exists(page) && pricing(page) !== hubSec) fail(`${page}: pricing section must match /business exactly (copy it from business.html)`);
+  const MAIN = { 'business.html': 'Small business', 'schools-and-colleges.html': 'Schools and colleges', 'small-business.html': 'Small business', 'enterprise.html': 'Enterprise' };
+  for (const [page, want] of Object.entries(MAIN)) {
+    if (!exists(page)) continue;
+    const sec = pricing(page);
+    if (plain(sec) !== plain(hubSec)) fail(`${page}: pricing section must match /business apart from the highlight (copy it from business.html)`);
+    if ((sec.match(/tier--main/g) || []).length !== 1 || main(sec) !== want) fail(`${page}: pricing highlights "${want}" (got "${main(sec)}")`);
+  }
 }
 if (!/\.price1__opts\s*\{[^}]*grid-template-columns:\s*1fr 1fr/.test(read('biz.css')) || !/@media \(max-width: ?600px\)\s*\{[^}]*\.price1__opts\s*\{\s*grid-template-columns:\s*1fr/.test(read('biz.css'))) fail('biz.css: demo and pilot sit side by side, stacked below 600px');
 if (/10% of the quote|3 months at 10%/.test(read('MESSAGING.md')) || !/pilot is retired/.test(read('MESSAGING.md')) || !/From ₹79 per device \/ month[^.]*`\/small-business` only/.test(read('MESSAGING.md'))) fail('MESSAGING.md: pricing rule: "From ₹79 per device / month" on `/small-business` only, volume pricing elsewhere, free 30-day pilot');

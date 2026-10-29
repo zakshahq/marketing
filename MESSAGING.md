@@ -183,3 +183,5 @@ plan includes" with a `*` and the footnote "*We set this up with you during onbo
 or "on request". The owner keeps email and password; single sign-on is for their team.
 Amended 2026-10-30 (later): `/schools-and-colleges`, `/small-business` and `/enterprise` carry the `/business` pricing
 section unchanged (a site check fails on any difference). Edit it in `business.html`, then copy it to the three pages.
+Amended 2026-10-30 (pricing order): cards run Schools and colleges, Small business, Enterprise. Each solution page
+highlights its own card (`tier--main`); the `/business` hub highlights Small business. Everything else is identical.
