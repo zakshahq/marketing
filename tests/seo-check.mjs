@@ -674,15 +674,15 @@ for (const page of ALL_PAGES) {
     if (/installer pack|Run the installer|get a (configuration )?profile;|get a profile\./.test(t)) fail(`${page}: setup copy doesn't explain per-OS mechanics`);
   }
   const ADMIN = { 'small-business.html': 'On company laptops and PCs, removing it requires admin rights.', 'enterprise.html': 'On company laptops and PCs, removing it requires admin rights.',
-    'schools-and-colleges.html': 'Windows PCs and Macs: only an admin can remove it.' };
-  // 2026-10-29: the schools "Hard to switch off" block is one plain line per device, no ifs.
+    'schools-and-colleges.html': 'Only your IT admin can remove Zaksha' };
+  // 2026-10-29: the schools "stay on" block sells outcomes, one headline and one line each, no ifs.
+  // Indian schools run desktops (Windows, some Linux) and rarely hand out phones or tablets: no phone lines.
   if (exists('schools-and-colleges.html')) {
-    const stay = (read('schools-and-colleges.html').match(/<section class="stay"[\s\S]*?<\/section>/) || [''])[0];
-    const items = [...stay.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => textOf(m[1]).trim());
-    // Indian schools run desktops (Windows, some Linux) and rarely hand out phones or tablets: no phone lines.
-    const want = ['Windows PCs and Macs: only an admin can remove it.', 'Encrypted DNS services: blocked.',
-      'A computer that stops reporting for 2 days shows as Gone quiet.'];
-    if (JSON.stringify(items) !== JSON.stringify(want)) fail(`schools-and-colleges.html: "Hard to switch off" list must be ${JSON.stringify(want)} (got ${JSON.stringify(items)})`);
+    const stay = textOf((read('schools-and-colleges.html').match(/<section class="stay"[\s\S]*?<\/section>/) || [''])[0]);
+    for (const n of ["Students can't switch it off", 'Only your IT admin can remove Zaksha',
+      'No way around it', 'Secure DNS and iCloud Private Relay are shut',
+      'Nothing drops off your radar', 'Gone quiet']) if (!stay.includes(n)) fail(`schools-and-colleges.html: "stay on" block needs "${n}"`);
+    if (/\b(if|unless|when)\b/i.test(stay)) fail('schools-and-colleges.html: "stay on" block has an if/unless/when');
   }
   for (const [page, line] of Object.entries(ADMIN)) if (exists(page) && !textOf(read(page)).includes(line)) fail(`${page}: missing "${line}"`);
   for (const page of ['business.html', 'schools-and-colleges.html', 'small-business.html']) {
