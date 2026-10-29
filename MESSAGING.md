@@ -170,3 +170,5 @@ links. Don't write "no card" on the site (the site check forbids it everywhere, 
 Amended 2026-10-28 (kuchbhi ADR 0114 amendment): `/enterprise` and `/schools-and-colleges` offer the same trial. Hero:
 "Start 14-day free trial" first; the second button stays "Talk to us" (`/enterprise`) or "Start a free 30-day pilot"
 (`/schools-and-colleges`), and the note under them sends whole-office or whole-lab rollouts to the pilot. The `/business` hub stays quote-only.
+Amended 2026-10-29: `/schools-and-colleges` also uses "Talk to us" as the second button. Two free buttons side by side
+confused visitors; the pilot stays in the note under the buttons.

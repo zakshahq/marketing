@@ -76,7 +76,7 @@ else {
 // --- e. the solution pages start a self-serve Business trial (kuchbhi ADR 0114, marketing#34) ---
 // Same trial everywhere: 14 days, up to 5 devices; bigger rollouts go to the 30-day pilot.
 // Each page pre-selects its organisation type on the app's signup form (?segment=, the enquiry form's values).
-for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'], ['enterprise.html', 'Talk to us', 'enterprise'], ['schools-and-colleges.html', 'Start a free 30-day pilot', 'education']]) {
+for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'], ['enterprise.html', 'Talk to us', 'enterprise'], ['schools-and-colleges.html', 'Talk to us', 'education']]) {
   const trialHref = `https://app.zaksha.com/signup?type=business&amp;segment=${seg}`;
   const html = read(page);
   const hero = (html.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
@@ -89,10 +89,6 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
   if (!/30-day pilot/.test(hero)) fail(`${page}: hero no longer points larger rollouts at the 30-day pilot`);
   if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
-  // Two free offers side by side: each button says who it is for, right under it (29 Oct).
-  if (page === 'schools-and-colleges.html')
-    for (const [btn, cap] of [['Start 14-day free trial', 'Up to 5 devices, set it up yourself'], ['Start a free 30-day pilot', 'A whole lab or campus, we help you set up']])
-      if (!new RegExp(`>${btn}</a>\\s*<small class="fhero__cap">${cap}</small>`).test(hero)) fail(`${page}: "${btn}" has no "${cap}" line under it`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
 }

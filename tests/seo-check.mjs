@@ -501,8 +501,7 @@ for (const [page, [h1, sub]] of Object.entries(HEROES)) {
   if (JSON.stringify(textOf(chips).trim().split(/\s{1,}(?=Hosted|No hardware|Free 30|14-day)/)) !== JSON.stringify(['Hosted in India', 'No hardware', offer])) fail(`${page}: hero chips must be "Hosted in India · No hardware · ${offer}" (got "${textOf(chips).trim()}")`);
   if (/India|hardware|₹/.test(textOf(h[1] || ''))) fail(`${page}: India / hardware / price stay out of the headline`);
   if (/fhero__offer/.test(hero)) fail(`${page}: no offer line under the buttons; the pilot is a chip`);
-  if (page === 'schools-and-colleges.html') { if (!/<a\b[^>]*href="#enquire"[^>]*data-pilot[^>]*>Start a free 30-day pilot<\/a>/.test(hero)) fail(`${page}: hero needs "Start a free 30-day pilot" (href="#enquire" data-pilot)`); }
-  else if (!/<a\b[^>]*href="#enquire"[^>]*>Talk to us<\/a>/.test(hero)) fail(`${page}: hero needs "Talk to us" -> #enquire`);
+  if (!/<a\b[^>]*href="#enquire"[^>]*>Talk to us<\/a>/.test(hero)) fail(`${page}: hero needs "Talk to us" -> #enquire`);
   if (page !== 'business.html' && !smb && !/<a\b[^>]*href="#enquire"[^>]*data-demo[^>]*>Request a 15-minute demo<\/a>/.test(hero)) fail(`${page}: hero needs "Request a 15-minute demo" (href="#enquire" data-demo)`);
   if (page !== 'business.html' && !html.includes('id="faq"')) fail(`${page}: missing #faq`);
 }
