@@ -140,7 +140,7 @@
 .ba__row{ display:grid; grid-template-columns:1fr auto 1.3fr; gap:14px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:16px 20px; font-size:15px; }
 .ba__row span{ color:var(--ink-400); } .ba__row i{ color:var(--teal-600); font-size:18px; } .ba__row b{ color:var(--ink-900); font-weight:700; }
 @media (max-width:600px){ .ba__row{ grid-template-columns:1fr; gap:6px; } .ba__row i{ transform:rotate(90deg); } }
-.stay__list{ list-style:none; padding:0; margin:0 auto; max-width:760px; display:grid; gap:12px; }
+.stay__list{ list-style:none; padding:0; margin:0 auto; max-width:760px; width:fit-content; display:grid; gap:12px; }
 .stay__list li{ display:flex; gap:12px; align-items:flex-start; font-size:16px; line-height:1.5; color:#d7e4e3; }
 .stay__list i{ color:#4fd0d8; font-size:20px; flex:none; margin-top:2px; }
 .choice{ max-width:1000px; margin:clamp(14px,2vw,20px) auto 0; }
