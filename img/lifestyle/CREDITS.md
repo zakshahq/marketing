@@ -15,6 +15,7 @@ Resized/compressed from the originals for the web.
 | college-campus-students.jpg | schools-and-colleges campus Wi-Fi band | Group of Indian college students on a campus bench | Pexels | Arto Suraj | https://www.pexels.com/photo/group-of-indian-students-on-campus-bench-in-santiniketan-39006532/ | Pexels License |
 | office-laptop-pair.jpg | small-business page (planned) | Two people working on a laptop at a table | Pexels | Ketut Subiyanto | https://www.pexels.com/photo/happy-indian-couple-using-laptop-while-doing-homework-together-4308093/ | Pexels License |
 | office-presenting.jpg | small-business "Why Zaksha" photo band | A colleague presenting ideas to his team in an office | Pexels | Vitaly Gariev | https://www.pexels.com/photo/office-worker-presenting-his-ideas-to-colleagues-23496667/ | Pexels License |
+| school-lab-teacher.jpg | schools-and-colleges "Why Zaksha" photo band | A teacher helping students at computers in a college lab | Pexels | Poddar Group of Institutions | https://www.pexels.com/photo/37563954/ | Pexels License |
 
 ## App / brand logos (img/appicons/)
 

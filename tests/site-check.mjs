@@ -80,7 +80,6 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   const trialHref = `https://app.zaksha.com/signup?type=business&amp;segment=${seg}`;
   const html = read(page);
   const hero = (html.match(/<section class="fhero">[\s\S]*?<\/section>/) || [''])[0];
-  const trialLinks = html.split(`href="${trialHref}"`).length - 1;
   if (!/>Start 14-day free trial</.test(hero) || !hero.includes(`href="${trialHref}"`))
     fail(`${page}: hero has no "Start 14-day free trial" link to ${trialHref}`);
   if (!new RegExp(`href="#enquire"[^>]*>${second}<`).test(hero)) fail(`${page}: hero lost the secondary "${second}"`);
@@ -88,7 +87,8 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
   if (/Request a 15-minute demo/.test(hero)) fail(`${page}: hero still has a third (demo) button`);
   if (/Free 30-day pilot<\/span>/.test(hero)) fail(`${page}: hero chip offers the pilot next to the trial`);
   if (/fhero__note|pilot/i.test(hero)) fail(`${page}: hero has no note under the buttons and no pilot`);
-  if (trialLinks < 2) fail(`${page}: the pricing card has no trial link`);
+  // 2026-10-30: pricing is the shared /business section; it links the self-serve (smb) trial.
+  if (!/id="pricing"[\s\S]*?href="https:\/\/app\.zaksha\.com\/signup\?type=business[^"]*"/.test(html)) fail(`${page}: the pricing section has no trial link`);
   for (const bad of [/100%/, /tamper-proof/i, /unbreakable/i, /monitor employees/i, /compliance/i])
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
 }
