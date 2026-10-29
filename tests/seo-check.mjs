@@ -591,7 +591,11 @@ if (exists('schools-and-colleges.html')) {
   // 2026-10-30: "Why Zaksha" matches /small-business: a photo band, then 3x3 cards with the heading beside the icon.
   const whyS = (html.match(/<section\b[^>]*id="why"[\s\S]*?<\/section>/) || [''])[0];
   const whyCards = [...whyS.matchAll(/<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
-  const WANT_WHY = ['Threat detection', 'No hardware required', 'Class and exam schedules', 'Rules for each lab and class', 'Ready-made policies', 'Windows and Mac computers', 'Insights and reports', 'Data in India', 'Records sites, not students'];
+  // Written for schools (Control D's school features as reference; no Safe Search or alerts, which we don't have).
+  const WANT_WHY = ['Threat detection', 'Rules for each class and lab', 'Apps and websites', 'Timetable-aware filtering', 'Reports for the principal', 'Home learning too', 'No hardware required', 'Data in India', 'Records sites, not students'];
+  const whyAt = html.indexOf('id="why"'), probAt = html.indexOf('id="problems"'), blockAt = html.indexOf('<h2>What you can block</h2>');
+  if (!(probAt < whyAt && whyAt < blockAt)) fail('schools-and-colleges.html: "Why Zaksha" sits right after "Why schools need web filtering", before "What you can block"');
+  if (/safe ?search|alert/i.test(textOf(whyS))) fail('schools-and-colleges.html: no Safe Search or alerts claim in Why Zaksha');
   if (JSON.stringify(whyCards) !== JSON.stringify(WANT_WHY)) fail(`schools-and-colleges.html: "Why Zaksha" cards must be ${JSON.stringify(WANT_WHY)} (got ${JSON.stringify(whyCards)})`);
   if (!/class="whyband"/.test(whyS) || !whyS.includes('img/lifestyle/school-lab-teacher.jpg') || !/class="grid3 grid--row"/.test(whyS) || /panel--do/.test(whyS)) fail('schools-and-colleges.html: "Why Zaksha" is a photo band (school-lab-teacher) over grid3 grid--row cards');
   if (!read('img/lifestyle/CREDITS.md').includes('school-lab-teacher.jpg')) fail('img/lifestyle/CREDITS.md: credit school-lab-teacher.jpg');
