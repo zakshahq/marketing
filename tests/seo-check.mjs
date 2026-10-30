@@ -653,12 +653,14 @@ if (exists('privacy.html')) {
     [svc, 'terms.html #service', /new Home account blocks[^.]*Basic Security[^.]*Ads & Trackers[^.]*Adult Content[^.]*Private Relay/, 'default_on categories (083, 101) + seedAdultBlocked'],
     [svc, 'terms.html #service', /except Basic Security/, 'categories.go: basic_security is locked for families'],
     [svc, 'terms.html #service', /encrypted-DNS[^.]*\. This cannot be turned off/, 'list_global anti-bypass on every enabled device'],
-    [svc, 'terms.html #service', /organisation's devices block nothing else until it applies a policy/, 'enterprise.go: nothing set = allowed'],
+    [svc, 'terms.html #service', /organisation's devices start with iCloud Private Relay blocked and block nothing else until it applies a policy/, 'enterprise.go: nothing set = allowed; accounts.block_private_relay DEFAULT 1 (039)'],
     [use, 'privacy.html #use', /blocking that is on by default/, 'privacy names the default blocking'],
+    [use, 'privacy.html #use', /decide how hostnames should be categorised/, 'the hostname list purpose is listed as a use'],
     [ret, 'privacy.html #retention', /Hostname list:[^.]*every hostname/, 'seen_hosts'],
     [ret, 'privacy.html #retention', /no account, device or person attached/, 'migration 070: no account, token or device column'],
     [ret, 'privacy.html #retention', /kept indefinitely/, 'ADR 0091: nothing is pruned'],
-    [ret, 'privacy.html #retention', /categoris/, 'ADR 0091: kept to improve categorisation'],
+    [ret, 'privacy.html #retention', /use it to decide how hostnames should be categorised/, 'ADR 0091: kept to improve categorisation'],
+    [ret, 'privacy.html #retention', /closing your account does not remove hostnames/, 'no DELETE on seen_hosts; account deletion leaves it'],
   ]) if (!fact.test(t)) fail(`${where}: missing "${fact.source}" (${why})`);
 }
 
