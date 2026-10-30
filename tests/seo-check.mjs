@@ -645,6 +645,23 @@ if (exists('privacy.html')) {
   if (/window you can view is the window we retain/.test(t)) fail('privacy.html #retention: daily totals outlive the viewable window; drop "the window you can view is the window we retain"');
 }
 
+// --- w3. legal pages disclose default blocking (ADR 0054) and the account-free hostname list (ADR 0091, marketing#20) ---
+{
+  const sec = (page, id) => textOf((read(page).match(new RegExp(`<section id="${id}">([\\s\\S]*?)</section>`)) || ['', ''])[1]);
+  const svc = sec('terms.html', 'service'), use = sec('privacy.html', 'use'), ret = sec('privacy.html', 'retention');
+  for (const [t, where, fact, why] of [
+    [svc, 'terms.html #service', /new Home account blocks[^.]*Basic Security[^.]*Ads & Trackers[^.]*Adult Content[^.]*Private Relay/, 'default_on categories (083, 101) + seedAdultBlocked'],
+    [svc, 'terms.html #service', /except Basic Security/, 'categories.go: basic_security is locked for families'],
+    [svc, 'terms.html #service', /encrypted-DNS[^.]*\. This cannot be turned off/, 'list_global anti-bypass on every enabled device'],
+    [svc, 'terms.html #service', /organisation's devices block nothing else until it applies a policy/, 'enterprise.go: nothing set = allowed'],
+    [use, 'privacy.html #use', /blocking that is on by default/, 'privacy names the default blocking'],
+    [ret, 'privacy.html #retention', /Hostname list:[^.]*every hostname/, 'seen_hosts'],
+    [ret, 'privacy.html #retention', /no account, device or person attached/, 'migration 070: no account, token or device column'],
+    [ret, 'privacy.html #retention', /kept indefinitely/, 'ADR 0091: nothing is pruned'],
+    [ret, 'privacy.html #retention', /categoris/, 'ADR 0091: kept to improve categorisation'],
+  ]) if (!fact.test(t)) fail(`${where}: missing "${fact.source}" (${why})`);
+}
+
 // --- x. pricing (Vasu 2026-10-20): no ₹ figure on any Business page; "Volume pricing" + "Get a quote"; free 30-day pilot ---
 const BIZ_PAGES = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html', 'security.html'];
 for (const page of ALL_PAGES) {
