@@ -69,7 +69,20 @@ else {
   const famH1 = ((famHero.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || '');
   if (!/whole family/i.test(famH1)) fail(`family.html: hero h1 should promise the whole family (got "${famH1}")`);
   if (!/scam/i.test(famHero) || !/adult content/i.test(famHero)) fail('family.html: hero must name both scam sites and adult content');
-  if (!fam.includes('id="scams"')) fail('family.html: no #scams section explaining scam protection');
+  // the two questions a parent asks, in order, right after the hero (same template as /small-business)
+  const sec = (id) => (fam.match(new RegExp(`<section[^>]*id="${id}"[\\s\\S]*?</section>`)) || [''])[0];
+  const need = sec('need'), why = sec('why');
+  const cards = (html) => (html.match(/class="pcard"/g) || []).length;
+  if (!/<h2>Why your family needs DNS filtering<\/h2>/.test(need)) fail('family.html: no #need section asking "Why your family needs DNS filtering"');
+  else if (cards(need) !== 6) fail(`family.html: #need has ${cards(need)} cards, want 6`);
+  if (!why.includes('class="whyband"') || !/<h2>Why Zaksha<\/h2>/.test(why)) fail('family.html: #why is not the photo-band "Why Zaksha" from /small-business');
+  else if (cards(why) !== 9) fail(`family.html: #why has ${cards(why)} cards, want 9`);
+  const at = (id) => fam.indexOf(`id="${id}"`);
+  if (!(at('need') < at('why') && at('why') < at('block'))) fail('family.html: order should be hero, #need, #why, then #block');
+  for (const gone of ['scams', 'compare']) if (at(gone) >= 0) fail(`family.html: #${gone} is folded into the two questions, remove it`);
+  if ((fam.match(/>Why Zaksha</g) || []).length > 2) fail('family.html: more than one Why Zaksha section'); // nav link + band heading
+  if (!/known scam/i.test(need + why)) fail('family.html: scam claim must say "known" scam sites (MESSAGING.md)');
+  for (const [, id] of fam.matchAll(/href="#([\w-]+)"/g)) if (at(id) < 0) fail(`family.html: link to #${id} has no target`);
   if (/stop(s)? every scam|all scams|100%/i.test(fam.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' '))) fail('family.html: overclaims scam protection');
 }
 

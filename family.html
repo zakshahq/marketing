@@ -115,7 +115,7 @@
 
     /* privacy with background image */
     .privbg{ position:relative; overflow:hidden; }
-    .privbg__img{ position:absolute; inset:0; } .privbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+    .privbg__img{ position:absolute; inset:0; } .privbg__img img{ width:100%; height:100%; object-fit:cover; object-position:center 58%; }
     .privbg__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(247,250,249,.75) 0%, rgba(247,250,249,.55) 40%, rgba(8,40,44,.55) 100%); }
     .privbg .wrap{ position:relative; }
     .priv3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2.5vw,24px); }
@@ -178,6 +178,20 @@
 
     .was{ color:var(--ink-400); text-decoration:line-through; font-size:20px; font-weight:700; margin-right:8px; }
     .diwali{ display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#b4530f; background:#fbf0db; border:1px solid #f0dcb4; border-radius:999px; padding:5px 12px; }
+  /* /family: the two questions, card grid + photo band copied from biz.css (this page doesn't load it) */
+  .pcard{ background:rgba(255,255,255,.92); border:1px solid var(--line); border-radius:var(--r-lg); padding:26px; box-shadow:var(--sh-1); }
+  .pcard__ic{ width:44px; height:44px; border-radius:12px; background:var(--teal-50); color:var(--teal-600); display:grid; place-items:center; font-size:22px; }
+  .pcard h3{ font-size:17px; margin-top:0; } .pcard p{ margin-top:8px; font-size:14.5px; color:var(--ink-500); line-height:1.55; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,20px); max-width:1040px; margin:0 auto; }
+  @media (max-width:860px){ .grid3{ grid-template-columns:1fr; max-width:520px; } }
+  .grid--row .pcard{ display:grid; grid-template-columns:auto 1fr; column-gap:14px; align-items:center; align-content:start; }
+  .grid--row .pcard p{ grid-column:1/-1; }
+  .whyband{ position:relative; height:clamp(220px,32vw,400px); overflow:hidden; }
+  .whyband img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 58%; }
+  .whyband::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(8,40,44,.1) 30%, rgba(8,40,44,.7)); }
+  .whyband .wrap{ position:relative; z-index:1; height:100%; display:flex; align-items:flex-end; padding-bottom:28px; }
+  .whyband h2{ color:#fff; font-size:clamp(30px,4vw,46px); }
+  .whycards{ padding-top:clamp(28px,4vw,44px); }
   </style>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -236,7 +250,7 @@
       <p>Adult content blocked for the kids. Known scam and phishing sites blocked for everyone. Bedtime and study hours on a schedule. One plan for every phone and laptop in the house.</p>
       <div class="fhero__btns">
         <a class="btn btn--onteal btn--lg" href="https://app.zaksha.com/signup?ref=GS-FAM1">Start your free trial</a>
-        <a class="btn btn--onteal-ghost btn--lg" href="#scams">How scam blocking works</a>
+        <a class="btn btn--onteal-ghost btn--lg" href="#need">Why DNS filtering?</a>
       </div>
       <p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.82);">14 days free, then ₹199/month · we remind you 3 days before the first charge · cancel anytime</p>
       <div class="fhero__facts">
@@ -258,29 +272,41 @@
     </div>
   </section>
 
-  <!-- SCAMS — protection for everyone in the house (ad test arm B) -->
-  <section class="section" id="scams">
+  <!-- WHY DNS FILTERING — the first question a parent asks (ad test arm B; template: /small-business) -->
+  <section class="section section--wash" id="need">
     <div class="wrap">
-      <div class="f-head"><span class="eyebrow">For everyone at home</span><h2>Scam sites blocked, for your parents too.</h2><p>Fake KYC pages, phishing links in SMS and WhatsApp forwards, lookalike bank and payment sites. Zaksha blocks known scam, phishing and malware sites on every device you add.</p></div>
-      <div class="blockgrid">
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-warning"></i></div><b>Phishing links</b><span>Known fake bank, KYC and payment pages are blocked before they load, whoever taps the link.</span></div>
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-prohibit"></i></div><b>Malware sites</b><span>Known malicious sites are blocked, so a bad download link goes nowhere.</span></div>
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-device-mobile-camera"></i></div><b>Their phones too</b><span>Five devices are included. Add a grandparent's phone once; after that there's nothing for them to manage.</span></div>
+      <div class="f-head"><h2>Why your family needs DNS filtering</h2></div>
+      <div class="grid3 grid--row">
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-warning"></i></span><h3>One tap on a scam link can empty an account.</h3><p>Fake KYC pages, lookalike bank sites and phishing links in SMS and WhatsApp forwards. Parents and grandparents are targeted most.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-eye-slash"></i></span><h3>Adult content is one search away.</h3><p>Children usually find it by accident, through a misspelt search or a pop-up, long before they go looking.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-squares-four"></i></span><h3>App controls stop at one app.</h3><p>YouTube's and Netflix's settings cover their own app. A browser or a new app walks straight past them.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-monitor-check"></i></span><h3>Every device in the house is different.</h3><p>Family Link works on Android, Screen Time on Apple. The laptop and the family PC are left out.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-moon-stars"></i></span><h3>Late nights and study hours slip.</h3><p>Reels and games at midnight, a phone open during homework. Asking every night doesn't scale.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-wifi-high"></i></span><h3>Phones leave home Wi-Fi.</h3><p>A router filter stops at the front door. Mobile data and a friend's Wi-Fi go around it.</p></div>
       </div>
-      <p class="blocknote"><b>The honest limit:</b> Zaksha blocks scam sites that are already on regularly updated threat lists. A brand-new scam page may not be listed yet, so the usual care with OTPs and payment links still applies.</p>
     </div>
   </section>
 
-  <!-- WHY PAY — vs built-in app controls, Family Link, Screen Time (facts checked 2026-10-24) -->
-  <section class="section section--wash" id="compare">
-    <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Why not the free controls?</span><h2>YouTube, Netflix and Family Link already have controls. Here's the gap.</h2></div>
-      <div class="blockgrid">
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-squares-four"></i></div><b>App controls cover one app</b><span>YouTube's and Netflix's settings stop at their own app. Zaksha covers every app and website on the device at once, in the app and the browser.</span></div>
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-desktop"></i></div><b>Free tools stop at one platform</b><span>Family Link's main controls work on Android, Screen Time only on Apple. Zaksha runs one set of rules across iPhone, Android, Windows and Mac.</span></div>
-        <div class="bcell"><div class="bcell__ic" style="font-size:20px"><i class="ph ph-prohibit"></i></div><b>Age ratings aren't categories</b><span>Free tools filter by age rating and SafeSearch. Zaksha blocks whole categories: adult, gambling, social media, gaming, AI chatbots. One switch each.</span></div>
+  <!-- WHY ZAKSHA — the second question -->
+  <section id="why">
+    <div class="whyband">
+      <img loading="lazy" decoding="async" src="img/lifestyle/family-devices.jpg" alt="A family together at home, one on a laptop and one on a phone" />
+      <div class="wrap"><h2>Why Zaksha</h2></div>
+    </div>
+    <div class="section whycards">
+      <div class="wrap">
+      <div class="grid3 grid--row">
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-shield-check"></i></span><h3>Scam protection</h3><p>Known scam, phishing and malware sites are blocked on every device, for the kids and their grandparents.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-prohibit"></i></span><h3>Whole categories</h3><p>Adult, gambling, social media, gaming and AI chatbots. One switch each, in every app and browser.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-device-mobile-camera"></i></span><h3>Works anywhere</h3><p>Filtering follows phones onto mobile data and any Wi-Fi: at home, at school or at a friend's place.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-calendar-check"></i></span><h3>Bedtime and study hours</h3><p>Pick a time and what pauses. It repeats every week on its own.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-desktop"></i></span><h3>One plan, every device</h3><p>iPhone, Android, Windows and Mac under one set of rules. Five devices included.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-lock-key"></i></span><h3>Built to stay on</h3><p>Hard for a child to remove, and you get an alert the moment it's switched off.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-chats-circle"></i></span><h3>Protection, not surveillance</h3><p>Zaksha never reads messages or chats, tracks location or needs your child's passwords.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-map-pin"></i></span><h3>Data in India</h3><p>Your family's activity stays in India for 7 days. Never sold or used for ads.</p></div>
+        <div class="pcard"><span class="pcard__ic"><i class="ph ph-seal-check"></i></span><h3>Under ₹7 a day</h3><p>₹199 a month covers the whole household, so the family pays less than ₹7 a day.</p></div>
       </div>
-      <p class="blocknote"><b>Where they still win:</b> they're free, and Family Link's screen-time timers are good. Many families keep them and add Zaksha for what they don't cover. <a href="/google-family-link-alternative" style="color:var(--teal-700);font-weight:700;">Full Family Link comparison →</a></p>
+      </div>
     </div>
   </section>
 
@@ -376,39 +402,6 @@
         <div class="demorow">
           <div><span class="eyebrow">Study time</span><h3>Homework hours, distractions off.</h3><p>During study time the fun stuff pauses, so the phone stops competing with homework.</p></div>
           <div class="mini"><div class="mini__top"><span class="mini__ic"><i class="ph ph-graduation-cap"></i></span><span><span class="mini__nm">Study hours</span><span class="mini__mt">Mon–Fri</span></span><span class="mini__badge">7–9 PM</span></div><div class="mini__win">Social &amp; gaming <span class="mini__pill mini__pill--off">Paused</span> · calls stay on</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY ZAKSHA — protection vs surveillance -->
-  <section class="section" id="why">
-    <div class="wrap">
-      <div class="f-head"><span class="eyebrow">Why Zaksha</span><h2>Protection, not surveillance.</h2><p>Zaksha blocks what you don't want — without reading over your child's shoulder.</p></div>
-      <div class="split">
-        <div class="panel panel--do">
-          <h3><i class="ph ph-shield-check"></i>What Zaksha does</h3>
-          <p class="sub">Everything you need to keep them to a safer internet.</p>
-          <ul>
-            <li><i class="ph ph-check-circle"></i>Blocks adult, gambling, social, streaming, gaming, ads &amp; AI</li>
-            <li><i class="ph ph-check-circle"></i>Blocks in the app and the browser</li>
-            <li><i class="ph ph-check-circle"></i>Filtering follows onto mobile data &amp; any Wi-Fi</li>
-            <li><i class="ph ph-check-circle"></i>Bedtime &amp; study-hour schedules, pause on demand</li>
-            <li><i class="ph ph-check-circle"></i>Holds on when your child switches it off</li>
-            <li><i class="ph ph-check-circle"></i>Works without your child's passwords</li>
-          </ul>
-        </div>
-        <div class="panel panel--dont">
-          <h3><i class="ph ph-prohibit"></i>What we'll never do</h3>
-          <p class="sub">The things monitoring apps sell — we refuse them by design.</p>
-          <ul>
-            <li><i class="ph ph-x"></i>Read their messages or chats</li>
-            <li><i class="ph ph-x"></i>Track their location</li>
-            <li><i class="ph ph-x"></i>Log every site they visit</li>
-            <li><i class="ph ph-x"></i>Need your child's passwords</li>
-            <li><i class="ph ph-x"></i>Keep history beyond 7 days</li>
-            <li><i class="ph ph-x"></i>Sell or share your family's data</li>
-          </ul>
         </div>
       </div>
     </div>
