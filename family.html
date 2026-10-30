@@ -178,10 +178,8 @@
 
     .was{ color:var(--ink-400); text-decoration:line-through; font-size:20px; font-weight:700; margin-right:8px; }
     .diwali{ display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#b4530f; background:#fbf0db; border:1px solid #f0dcb4; border-radius:999px; padding:5px 12px; }
-  /* /family: the two questions, card grid + photo band copied from biz.css (this page doesn't load it) */
-  .pcard{ background:rgba(255,255,255,.92); border:1px solid var(--line); border-radius:var(--r-lg); padding:26px; box-shadow:var(--sh-1); }
-  .pcard__ic{ width:44px; height:44px; border-radius:12px; background:var(--teal-50); color:var(--teal-600); display:grid; place-items:center; font-size:22px; }
-  .pcard h3{ font-size:17px; margin-top:0; } .pcard p{ margin-top:8px; font-size:14.5px; color:var(--ink-500); line-height:1.55; }
+  /* /family: the two questions, card grid + photo band copied from biz.css (this page doesn't load it; .pcard itself is above) */
+  .grid3 .pcard h3{ margin-top:0; }
   .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,20px); max-width:1040px; margin:0 auto; }
   @media (max-width:860px){ .grid3{ grid-template-columns:1fr; max-width:520px; } }
   .grid--row .pcard{ display:grid; grid-template-columns:auto 1fr; column-gap:14px; align-items:center; align-content:start; }
