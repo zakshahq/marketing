@@ -107,6 +107,18 @@ for (const [page, second, seg] of [['small-business.html', 'Talk to us', 'smb'],
     if (bad.test(html)) fail(`${page}: banned claim ${bad}`);
 }
 
+// --- f. Home has no hard device cap: 5 included, more on request (marketing#23) ---
+// Business pages keep "up to 5 devices": that's the size of the Business trial, not a cap.
+const BUSINESS = ['business.html', 'enterprise.html', 'schools-and-colleges.html', 'small-business.html'];
+for (const page of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
+  const html = read(page);
+  if (/device packs?|expandable to 10/i.test(html)) fail(`${page}: device packs / "expandable to 10" are gone; it's 5 included, more on request`);
+  if (BUSINESS.includes(page)) continue;
+  for (const p of html.match(/<p>[^]*?<\/p>/g) || [])
+    if (/up to 5 devices/i.test(p) && !/more on request/i.test(p)) fail(`${page}: "up to 5 devices" reads as a cap; say 5 devices, more on request`);
+}
+if (!/5 included, more on request/.test(read('terms.html'))) fail('terms.html: §06 Home must say "5 included, more on request"');
+
 if (failures.length) {
   console.error(`FAIL (${failures.length})\n- ` + failures.join('\n- '));
   process.exit(1);
