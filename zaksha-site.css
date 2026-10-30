@@ -275,19 +275,7 @@ button { font: inherit; }
 /* ════════════════════════════════════════════════════════════════
    Legal pages (privacy.html, terms.html) — carried over from v1
    ════════════════════════════════════════════════════════════════ */
-.draftbar { background: var(--block-50); border-bottom: 1px solid #f0dcb4; color: #7a5310; }
-.draftbar__in { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; font-size: 14px; line-height: 1.5; }
-.draftbar i { font-size: 19px; color: var(--block); flex: 0 0 auto; margin-top: 1px; }
-.draftbar b { font-weight: 800; }
 
-.draftnote {
-  margin-top: 18px; background: var(--block-50); border: 1px solid #f0dcb4;
-  border-radius: var(--r-lg); padding: 18px 20px;
-  font-size: 14.5px; line-height: 1.6; color: #7a5310;
-  display: flex; gap: 12px; align-items: flex-start;
-}
-.draftnote i { font-size: 19px; color: var(--block); flex: 0 0 auto; margin-top: 1px; }
-.draftnote b { font-weight: 800; }
 .ph-placeholder { font-family: var(--mono); font-size: .92em; background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: 5px; padding: 1px 6px; color: var(--slate-700); white-space: nowrap; }
 
 .legal-hero { background: var(--bg); border-bottom: 1px solid var(--line); }
