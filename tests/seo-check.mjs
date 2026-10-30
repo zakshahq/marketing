@@ -630,6 +630,21 @@ if (exists('privacy.html')) {
   if (!/Enquiries[^.]*kept for/.test(t)) fail('privacy.html: retention must say how long enquiries are kept');
 }
 
+// --- w2. privacy retention matches kuchbhi (ADR 0093 + 0111, marketing#21) ---
+if (exists('privacy.html')) {
+  const sec = (read('privacy.html').match(/<section id="retention">([\s\S]*?)<\/section>/) || ['', ''])[1];
+  const t = textOf(sec);
+  for (const [fact, why] of [
+    [/including the free trial[^.]*7 days/, 'Home trial keeps 7 days (defHistoryDays)'],
+    [/every hour/i, 'the pruner runs hourly'],
+    [/no less than 7 days/, 'an organisation can shorten its window, floor 7 (account_settings.go)'],
+    [/clear all/, 'paid business plans can clear activity data (analytics_clear)'],
+    [/[Dd]aily totals[^.]*kept while your account is open/, 'activity_daily rollups are disclosed and kept with the account'],
+    [/backups for up to 7 days/, 'RDS backup_retention_period = 7'],
+  ]) if (!fact.test(t)) fail(`privacy.html #retention: missing "${fact.source}" (${why})`);
+  if (/window you can view is the window we retain/.test(t)) fail('privacy.html #retention: daily totals outlive the viewable window; drop "the window you can view is the window we retain"');
+}
+
 // --- x. pricing (Vasu 2026-10-20): no ₹ figure on any Business page; "Volume pricing" + "Get a quote"; free 30-day pilot ---
 const BIZ_PAGES = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html', 'security.html'];
 for (const page of ALL_PAGES) {
