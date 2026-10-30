@@ -119,6 +119,15 @@ for (const page of readdirSync(ROOT).filter((f) => f.endsWith('.html'))) {
 }
 if (!/5 included, more on request/.test(read('terms.html'))) fail('terms.html: §06 Home must say "5 included, more on request"');
 
+// --- g. the legal pages are in force, and the app's signup links resolve ---
+const terms = read('terms.html');
+if (/DRAFT|draftbar|draftnote|Draft note|\(Draft\)|Pending legal review|Not yet in force/.test(terms)) fail('terms.html: still marked as a draft; the terms are in force');
+// The app's signup consent links point at /legal/aup and /legal/privacy; they must land on the real pages.
+let redirects = '';
+try { redirects = read('_redirects'); } catch {}
+for (const [from, to] of [['/legal/aup', '/terms'], ['/legal/privacy', '/privacy'], ['/legal/terms', '/terms']])
+  if (!new RegExp(`^${from}\\s+${to}\\s+301$`, 'm').test(redirects)) fail(`_redirects: ${from} must 301 to ${to}`);
+
 if (failures.length) {
   console.error(`FAIL (${failures.length})\n- ` + failures.join('\n- '));
   process.exit(1);

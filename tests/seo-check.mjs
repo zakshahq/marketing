@@ -621,7 +621,7 @@ if (exists('terms.html')) {
   if (/GST/.test(t)) fail('terms.html: remove the GST invoicing line');
 }
 if (exists('privacy.html') && /GitHub Pages/.test(read('privacy.html'))) fail('privacy.html: the site is served by Cloudflare, not GitHub Pages');
-for (const page of ['terms.html', 'privacy.html']) if (exists(page) && !read(page).includes('Effective 20 October 2026')) fail(`${page}: Effective date must be 20 October 2026`);
+for (const page of ['terms.html', 'privacy.html']) if (exists(page) && !read(page).includes('Effective 30 October 2026')) fail(`${page}: Effective date must be 30 October 2026`);
 
 // --- w. privacy covers the enquiry form's data and how long it is kept ---
 if (exists('privacy.html')) {
