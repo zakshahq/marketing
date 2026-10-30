@@ -82,6 +82,7 @@ else {
   for (const gone of ['scams', 'compare']) if (at(gone) >= 0) fail(`family.html: #${gone} is folded into the two questions, remove it`);
   if ((fam.match(/>Why Zaksha</g) || []).length > 2) fail('family.html: more than one Why Zaksha section'); // nav link + band heading
   if (!/known scam/i.test(need + why)) fail('family.html: scam claim must say "known" scam sites (MESSAGING.md)');
+  if ((fam.match(/^\s*\.pcard\{/gm) || []).length !== 1) fail('family.html: .pcard is styled more than once; a second rule restyles the privacy cards');
   for (const [, id] of fam.matchAll(/href="#([\w-]+)"/g)) if (at(id) < 0) fail(`family.html: link to #${id} has no target`);
   if (/stop(s)? every scam|all scams|100%/i.test(fam.replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' '))) fail('family.html: overclaims scam protection');
 }
