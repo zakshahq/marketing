@@ -645,6 +645,37 @@ if (exists('privacy.html')) {
   if (/window you can view is the window we retain/.test(t)) fail('privacy.html #retention: daily totals outlive the viewable window; drop "the window you can view is the window we retain"');
 }
 
+// --- w3. legal pages disclose default blocking (ADR 0054) and the account-free hostname list (ADR 0091, marketing#20) ---
+{
+  const sec = (page, id) => textOf((read(page).match(new RegExp(`<section id="${id}">([\\s\\S]*?)</section>`)) || ['', ''])[1]);
+  const svc = sec('terms.html', 'service'), use = sec('privacy.html', 'use'), ret = sec('privacy.html', 'retention'), kids = sec('privacy.html', 'children'),
+    share = sec('privacy.html', 'share'), proc = sec('privacy.html', 'processing');
+  for (const [t, where, fact, why] of [
+    [svc, 'terms.html #service', /new Home account blocks[^.]*Basic Security[^.]*Ads & Trackers[^.]*Adult Content[^.]*Private Relay/, 'default_on categories (083, 101) + seedAdultBlocked'],
+    [svc, 'terms.html #service', /except Basic Security/, 'categories.go: basic_security is locked for families'],
+    [svc, 'terms.html #service', /encrypted-DNS[^.]*\. This cannot be turned off/, 'list_global anti-bypass on every enabled device'],
+    [svc, 'terms.html #service', /organisation's devices start with iCloud Private Relay blocked and block nothing else until it applies a policy/, 'enterprise.go: nothing set = allowed; accounts.block_private_relay DEFAULT 1 (039)'],
+    [use, 'privacy.html #use', /blocking that is on by default/, 'privacy names the default blocking'],
+    [use, 'privacy.html #use', /decide how hostnames should be categorised/, 'the hostname list purpose is listed as a use'],
+    [ret, 'privacy.html #retention', /Hostname list:[^.]*every hostname/, 'seen_hosts'],
+    [ret, 'privacy.html #retention', /no account, device or person attached/, 'migration 070: no account, token or device column'],
+    [ret, 'privacy.html #retention', /kept indefinitely/, 'ADR 0091: nothing is pruned'],
+    [ret, 'privacy.html #retention', /use it to decide how hostnames should be categorised/, 'ADR 0091: kept to improve categorisation'],
+    [ret, 'privacy.html #retention', /closing your account does not remove hostnames/, 'no DELETE on seen_hosts; account deletion leaves it'],
+    [kids, 'privacy.html #children', /only exception is the hostname list[^.]*nothing that links[^.]*account or device/, 'the categorisation list is carved out of the no-tracking line'],
+    [kids, 'privacy.html #children', /records nothing about who looked a hostname up/, 'seen_hosts has no account, token or device column'],
+    [kids, 'privacy.html #children', /uses, with the help of an AI model, to decide/, 'categorisation is AI-assisted'],
+    [use, 'privacy.html #use', /An AI model suggests categories[^.]*our team reviews/, 'the team approves AI suggestions'],
+    [ret, 'privacy.html #retention', /with the help of an AI model whose suggestions our team reviews and approves/, 'AI suggests, the team approves'],
+    [share, 'privacy.html #share', /Anthropic[^.]*AI model[^.]*suggests/, 'Anthropic is a processor for AI categorisation'],
+    [share, 'privacy.html #share', /AI categorisation[^]*no account, device or person attached/, 'only hostnames and counts are sent'],
+    [proc, 'privacy.html #processing', /linked to your account[^.]*entirely within India/, 'account-linked history stays in AWS Mumbai'],
+    [proc, 'privacy.html #processing', /hostnames sent for AI categorisation[^.]*processed outside India/, 'the classify call leaves India'],
+  ]) if (!fact.test(t)) fail(`${where}: missing "${fact.source}" (${why})`);
+  if (/could not tell who/i.test(kids)) fail('privacy.html #children: no "could not tell who" (a hostname can name a household)');
+  if (/DNS activity data is processed and stored entirely within India/.test(proc)) fail('privacy.html #processing: hostnames for AI categorisation leave India; qualify the in-India line');
+}
+
 // --- x. pricing (Vasu 2026-10-20): no ₹ figure on any Business page; "Volume pricing" + "Get a quote"; free 30-day pilot ---
 const BIZ_PAGES = ['business.html', 'schools-and-colleges.html', 'small-business.html', 'enterprise.html', 'security.html'];
 for (const page of ALL_PAGES) {
